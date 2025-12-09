@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+
+# Node/Next.js
+node_modules/
+.next/
+out/
+build/
+
+# Data & Logs
+data/
+*.db
+*.log
+*.hwp
+
+# IDE
+.vscode/
+.idea/
+.env
+
+# Cleanup
+_archive/
