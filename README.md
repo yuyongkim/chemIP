@@ -59,7 +59,10 @@ This script scans `S:\특허 논문 DB\downloaded_patents` and indexes patent da
 
 ```bash
 python scripts/build_global_index.py
+python scripts/build_global_index.py
 ```
+
+> **Important:** The generated index file (`data/global_patent_index.db`) can be very large (>100GB). It is excluded from Git via `.gitignore`. You must rebuild it locally or download a backup if available.
 
 *Note: This process may take a significant amount of time depending on the data size.*
 

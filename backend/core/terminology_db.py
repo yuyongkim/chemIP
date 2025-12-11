@@ -11,15 +11,28 @@ class TerminologyDB:
         self.create_tables()
 
     def create_tables(self):
+
         cursor = self.conn.cursor()
         
-        # Chemical Terms Table
+        # Chemical Terms Table (Original Source of Truth)
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS chemical_terms (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
                 cas_no TEXT,
                 description TEXT
+            )
+        ''')
+
+        # FTS5 Virtual Table for Search
+        # We index name, cas_no, and description for full-text search
+        cursor.execute('''
+            CREATE VIRTUAL TABLE IF NOT EXISTS chemical_terms_fts USING fts5(
+                name, 
+                cas_no, 
+                description, 
+                content='chemical_terms', 
+                content_rowid='id'
             )
         ''')
 
@@ -46,27 +59,47 @@ class TerminologyDB:
         ''')
         
         self.conn.commit()
+        self.sync_fts()
+
+    def sync_fts(self):
+        """
+        Syncs the FTS table with the main table.
+        This is a simple rebuild strategy. For huge DBs, triggers are better.
+        """
+        cursor = self.conn.cursor()
+        # Check if FTS is empty
+        cursor.execute("SELECT count(*) FROM chemical_terms_fts")
+        if cursor.fetchone()[0] == 0:
+            print("Building FTS index...")
+            cursor.execute('''
+                INSERT INTO chemical_terms_fts(rowid, name, cas_no, description)
+                SELECT id, name, cas_no, description FROM chemical_terms
+            ''')
+            self.conn.commit()
+            print("FTS index built.")
 
     def add_chemical_term(self, name, cas_no=None, description=None, chem_id=None):
         cursor = self.conn.cursor()
-        # Check if exists by chem_id or cas_no to avoid duplicates
-        # For now, let's use chem_id as unique identifier if provided, else name
         if chem_id:
             cursor.execute('SELECT id FROM chemical_terms WHERE description = ?', (f"KOSHA_ID:{chem_id}",))
             if cursor.fetchone():
-                return # Already exists
+                return 
         
         cursor.execute('''
             INSERT INTO chemical_terms (name, cas_no, description)
             VALUES (?, ?, ?)
         ''', (name, cas_no, f"KOSHA_ID:{chem_id}" if chem_id else description))
+        
+        # Sync FTS (Insert)
+        last_id = cursor.lastrowid
+        cursor.execute('''
+            INSERT INTO chemical_terms_fts (rowid, name, cas_no, description)
+            VALUES (?, ?, ?, ?)
+        ''', (last_id, name, cas_no, f"KOSHA_ID:{chem_id}" if chem_id else description))
+
         self.conn.commit()
 
     def upsert_chemical_term(self, data: dict):
-        """
-        Insert or Update chemical term.
-        data: {chemId, chemNameKor, casNo, ...}
-        """
         cursor = self.conn.cursor()
         chem_id = data.get('chemId')
         name = data.get('chemNameKor')
@@ -78,18 +111,38 @@ class TerminologyDB:
         row = cursor.fetchone()
         
         if row:
-            # Update
+            row_id = row[0]
+            # Update main table
             cursor.execute('''
                 UPDATE chemical_terms 
                 SET name = ?, cas_no = ?
                 WHERE id = ?
-            ''', (name, cas_no, row[0]))
+            ''', (name, cas_no, row_id))
+            
+            # Update FTS table
+            # FTS5 update usually involves delete + insert or specialized update.
+            # But 'external content' tables are tricky. 
+            # Ideally we use triggers, but here we'll just manually update the FTS index if it wasn't an external content table.
+            # With content='chemical_terms', we should use 'rebuild' or triggers. 
+            # For simplicity in this scale, valid approach:
+            cursor.execute('''
+                INSERT OR REPLACE INTO chemical_terms_fts (rowid, name, cas_no, description)
+                VALUES (?, ?, ?, ?)
+            ''', (row_id, name, cas_no, kosha_id_str))
+
         else:
             # Insert
             cursor.execute('''
                 INSERT INTO chemical_terms (name, cas_no, description)
                 VALUES (?, ?, ?)
             ''', (name, cas_no, kosha_id_str))
+            
+            last_id = cursor.lastrowid
+            cursor.execute('''
+                INSERT INTO chemical_terms_fts (rowid, name, cas_no, description)
+                VALUES (?, ?, ?, ?)
+            ''', (last_id, name, cas_no, kosha_id_str))
+            
         self.conn.commit()
 
     def upsert_msds_detail(self, chem_id, section_seq, section_name, content):
@@ -110,21 +163,34 @@ class TerminologyDB:
 
     def search_chemicals(self, query: str, limit: int = 10, offset: int = 0):
         cursor = self.conn.cursor()
-        search_term = f"%{query}%"
         
-        # Search in name or cas_no
+        # FTS5 Query Syntax
+        # We want to match prefix for typing (e.g. "Benz*")
+        # And ensure we sanitize the query to prevent syntax errors
+        safe_query = query.replace('"', '').replace("'", "")
+        fts_query = f'"{safe_query}"* OR {safe_query}*'
+        
+        # Using FTS5 match
+        # sort by rank is implicit or explicit depending on version, 
+        # usually default order is by relevance in FTS5
         sql = '''
-            SELECT id, name, cas_no, description 
-            FROM chemical_terms 
-            WHERE name LIKE ? OR cas_no LIKE ?
+            SELECT rowid, name, cas_no, description 
+            FROM chemical_terms_fts 
+            WHERE chemical_terms_fts MATCH ? 
+            ORDER BY rank 
             LIMIT ? OFFSET ?
         '''
-        cursor.execute(sql, (search_term, search_term, limit, offset))
+        
+        try:
+            cursor.execute(sql, (fts_query, limit, offset))
+        except sqlite3.OperationalError:
+            # Fallback for very weird queries or symbol-heavy ones
+             cursor.execute(sql, (f'"{safe_query}"', limit, offset))
+
         rows = cursor.fetchall()
         
         results = []
         for row in rows:
-            # Parse chem_id from description "KOSHA_ID:xxxxxx"
             chem_id = None
             if row[3] and row[3].startswith("KOSHA_ID:"):
                 chem_id = row[3].split(":")[1]
@@ -136,14 +202,17 @@ class TerminologyDB:
                 "chem_id": chem_id
             })
             
-        # Get total count for pagination
+        # Get total count (approximation for speed)
         count_sql = '''
             SELECT COUNT(*) 
-            FROM chemical_terms 
-            WHERE name LIKE ? OR cas_no LIKE ?
+            FROM chemical_terms_fts 
+            WHERE chemical_terms_fts MATCH ?
         '''
-        cursor.execute(count_sql, (search_term, search_term))
-        total_count = cursor.fetchone()[0]
+        try:
+            cursor.execute(count_sql, (fts_query,))
+            total_count = cursor.fetchone()[0]
+        except:
+            total_count = 0
         
         return {"items": results, "total": total_count}
 
@@ -235,3 +304,4 @@ class TerminologyDB:
 
     def close(self):
         self.conn.close()
+
