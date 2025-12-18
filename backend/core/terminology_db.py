@@ -3,9 +3,11 @@ import os
 import re
 
 class TerminologyDB:
-    def __init__(self, db_path="data/terminology.db"):
-        # Ensure data directory exists
-        # os.makedirs(os.path.dirname(db_path), exist_ok=True)
+    def __init__(self, db_path=None):
+        # Use absolute path based on project root
+        if db_path is None:
+            project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            db_path = os.path.join(project_root, "data", "terminology.db")
         self.db_path = db_path
         self.conn = sqlite3.connect(self.db_path, check_same_thread=False)
         self.create_tables()
@@ -107,28 +109,46 @@ class TerminologyDB:
         
         kosha_id_str = f"KOSHA_ID:{chem_id}"
         
-        cursor.execute('SELECT id FROM chemical_terms WHERE description = ?', (kosha_id_str,))
+        cursor.execute('SELECT id, name FROM chemical_terms WHERE description = ?', (kosha_id_str,))
         row = cursor.fetchone()
         
         if row:
             row_id = row[0]
+            existing_name = row[1]
+            
+            # Merge Logic
+            final_name = existing_name
+            if name and name != existing_name:
+                # Check for containment
+                if name in existing_name:
+                    pass
+                elif existing_name in name:
+                    final_name = name
+                else:
+                    # Both distinct (e.g. Benzene vs 벤젠)
+                    def has_korean(text):
+                        return any(ord('가') <= ord(char) <= ord('힣') for char in text)
+                    
+                    if has_korean(name) and not has_korean(existing_name):
+                        final_name = f"{name} ({existing_name})"
+                    elif has_korean(existing_name) and not has_korean(name):
+                        final_name = f"{existing_name} ({name})"
+                    else:
+                        final_name = f"{existing_name} ({name})"
+            
             # Update main table
             cursor.execute('''
                 UPDATE chemical_terms 
                 SET name = ?, cas_no = ?
                 WHERE id = ?
-            ''', (name, cas_no, row_id))
+            ''', (final_name, cas_no, row_id))
             
-            # Update FTS table
-            # FTS5 update usually involves delete + insert or specialized update.
-            # But 'external content' tables are tricky. 
-            # Ideally we use triggers, but here we'll just manually update the FTS index if it wasn't an external content table.
-            # With content='chemical_terms', we should use 'rebuild' or triggers. 
-            # For simplicity in this scale, valid approach:
+            # Update FTS table - Use DELETE then INSERT to avoid issues
+            cursor.execute('DELETE FROM chemical_terms_fts WHERE rowid = ?', (row_id,))
             cursor.execute('''
-                INSERT OR REPLACE INTO chemical_terms_fts (rowid, name, cas_no, description)
+                INSERT INTO chemical_terms_fts (rowid, name, cas_no, description)
                 VALUES (?, ?, ?, ?)
-            ''', (row_id, name, cas_no, kosha_id_str))
+            ''', (row_id, final_name, cas_no, kosha_id_str))
 
         else:
             # Insert
@@ -138,6 +158,8 @@ class TerminologyDB:
             ''', (name, cas_no, kosha_id_str))
             
             last_id = cursor.lastrowid
+            
+            # Use explicit columns including rowid
             cursor.execute('''
                 INSERT INTO chemical_terms_fts (rowid, name, cas_no, description)
                 VALUES (?, ?, ?, ?)
@@ -304,4 +326,3 @@ class TerminologyDB:
 
     def close(self):
         self.conn.close()
-

@@ -33,6 +33,9 @@ KOSHA_SERVICE_KEY_DECODED="your_service_key_here"
 
 # KIPRIS API Key (Optional)
 KIPRIS_API_KEY="your_kipris_key_here"
+
+# KOTRA API Key (Required for Market News)
+KOTRA_API_KEY_DECODED="your_kotra_key_here"
 ```
 
 ### 3. Backend Setup
@@ -109,3 +112,8 @@ Access the application at: [http://localhost:3000](http://localhost:3000)
 
 - **Endpoint**: `GET /api/global/patents/{chem_id}`
 - **Description**: Search for patents related to a chemical across all indexed jurisdictions.
+
+### Market News (KOTRA)
+
+- **Endpoint**: `GET /api/trade/news`
+- **Description**: Retrieve overseas market news and commodity trends for chemicals.
