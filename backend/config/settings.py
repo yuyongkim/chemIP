@@ -17,4 +17,9 @@ class Settings:
     KIPRIS_API_KEY = os.getenv("KIPRIS_API_KEY", "")
     KIPRIS_API_URL = "http://plus.kipris.or.kr/kipo-api/kipi/patUtiModInfoSearchSevice/getWordSearch"
 
+    # KOTRA API
+    # Default key found in scripts/verify_kotra_product.py
+    KOTRA_API_KEY_DECODED = os.getenv("KOTRA_API_KEY_DECODED", "REDACTED_API_KEY")
+    KOTRA_API_KEY_ENCODED = os.getenv("KOTRA_API_KEY_ENCODED", "")
+
 settings = Settings()

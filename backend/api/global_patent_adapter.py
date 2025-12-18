@@ -3,7 +3,10 @@ import os
 import re
 
 class GlobalPatentAdapter:
-    def __init__(self, db_path="data/global_patent_index.db"):
+    def __init__(self, db_path=None):
+        if db_path is None:
+             project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+             db_path = os.path.join(project_root, "data", "global_patent_index.db")
         self.db_path = db_path
 
     def get_connection(self):
