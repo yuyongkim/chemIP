@@ -1,101 +1,86 @@
-import sqlite3
-import os
+"""Global patent index adapter (USPTO, EPO, WIPO, JPO, KIPRIS, CNIPA)."""
+
+from __future__ import annotations
+
+import logging
 import re
+from typing import Any
 
-class GlobalPatentAdapter:
-    def __init__(self, db_path=None):
-        if db_path is None:
-             project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-             db_path = os.path.join(project_root, "data", "global_patent_index.db")
-        self.db_path = db_path
+from backend.api.patent_index_base import SECTION_PRIORITY_ORDER, PatentIndexBase
+from backend.config.settings import settings
 
-    def get_connection(self):
-        if not os.path.exists(self.db_path):
-            return None
-        return sqlite3.connect(self.db_path, check_same_thread=False)
+logger = logging.getLogger(__name__)
 
-    def search_patents_by_chem_id(self, chem_id: str):
-        """
-        Search global patent index for patents related to a chemical ID.
-        Applies 'Smart Search' logic to categorize results by context (Usage vs Mention vs Exclusion).
-        """
-        conn = self.get_connection()
-        if not conn:
-            return []
-        
-        try:
-            cursor = conn.cursor()
-            # Added jurisdiction to selection
-            cursor.execute('''
-                SELECT patent_id, title, file_path, matched_term, jurisdiction, section, snippet, created_at
-                FROM patent_index
-                WHERE chem_id = ?
-                ORDER BY 
-                CASE 
-                    WHEN section = 'Title' THEN 1
-                    WHEN section = 'Abstract' THEN 2
-                    WHEN section = 'Claims' THEN 3
-                    WHEN section = 'Description' THEN 4
-                    ELSE 5
-                END ASC,
-                created_at DESC
-                LIMIT 200
-            ''', (chem_id,))
-            
-            rows = cursor.fetchall()
-            results = []
-            
-            for row in rows:
-                patent_id = row[0]
-                title = row[1]
-                file_path = row[2]
-                matched_term = row[3]
-                jurisdiction = row[4]
-                section = row[5]
-                snippet = row[6]
-                
-                # Context Analysis
-                category = "mention" # Default
-                relevance_score = 1  # Default
-                
-                if snippet and matched_term:
-                    snippet_lower = snippet.lower()
-                    term_lower = matched_term.lower()
-                    
-                    # 1. Exclusion Check (Lowest Priority)
-                    # Look for "free of X", "no X", "without X"
-                    if re.search(r'\b(free of|no|without|non|substantially free|less than)\b.{0,30}' + re.escape(term_lower), snippet_lower) or \
-                       re.search(re.escape(term_lower) + r'[\s-]free', snippet_lower):
-                        category = "exclusion"
-                        relevance_score = 0
-                    
-                    # 2. Usage Check (Highest Priority)
-                    # Look for context indicating active use
-                    elif re.search(r'\b(solvent|solution|dissolved|mixture|comprising|containing|reaction|yield|catalyst|reagent|using|use of)\b', snippet_lower):
-                        category = "usage"
-                        relevance_score = 2
+_EXCLUSION_RE = re.compile(
+    r"\b(free of|no|without|non|substantially free|less than)\b.{0,30}",
+)
+_USAGE_RE = re.compile(
+    r"\b(solvent|solution|dissolved|mixture|comprising|containing|"
+    r"reaction|yield|catalyst|reagent|using|use of)\b",
+)
 
-                results.append({
-                    "patent_id": patent_id,
-                    "title": title,
-                    "file_path": file_path,
-                    "matched_term": matched_term,
-                    "jurisdiction": jurisdiction,
-                    "section": section,
-                    "snippet": snippet,
-                    "source": f"{jurisdiction} (Global Index)",
-                    "category": category,
-                    "relevance_score": relevance_score
-                })
-            
-            # Sort by Relevance Score (Desc), then Section Priority
-            # We rely on the initial SQL sort for section priority, so we use a stable sort here or include it in key
-            # Python's sort is stable.
-            results.sort(key=lambda x: x['relevance_score'], reverse=True)
-            
-            return results
-        except Exception as e:
-            print(f"Error querying Global Patent index: {e}")
-            return []
-        finally:
-            conn.close()
+
+class GlobalPatentAdapter(PatentIndexBase):
+    def __init__(self, db_path: str | None = None):
+        super().__init__(db_path or settings.GLOBAL_PATENT_INDEX_DB_PATH)
+
+    # -- public API -----------------------------------------------------
+
+    def search_patents_by_chem_id(
+        self,
+        chem_id: str,
+        limit: int = 100,
+        offset: int = 0,
+    ) -> list[dict[str, Any]]:
+        sql = f"""\
+            SELECT patent_id, title, file_path, matched_term,
+                   jurisdiction, section, snippet, created_at
+            FROM patent_index
+            WHERE chem_id = ?
+            {SECTION_PRIORITY_ORDER}
+            LIMIT ? OFFSET ?"""
+
+        rows = self._query(sql, (chem_id, limit, offset))
+
+        results = [self._map_row(row) for row in rows]
+        results.sort(key=lambda r: r["relevance_score"], reverse=True)
+        logger.info("Global patent search for '%s': %d results", chem_id, len(results))
+        return results
+
+    # -- internals ------------------------------------------------------
+
+    @staticmethod
+    def _map_row(row: tuple[Any, ...]) -> dict[str, Any]:
+        patent_id, title, file_path, matched_term, jurisdiction, section, snippet, _ = row
+        category, relevance_score = _classify_snippet(snippet, matched_term)
+        return {
+            "patent_id": patent_id,
+            "title": title,
+            "file_path": file_path,
+            "matched_term": matched_term,
+            "jurisdiction": jurisdiction,
+            "section": section,
+            "snippet": snippet,
+            "source": f"{jurisdiction} (Global Index)",
+            "category": category,
+            "relevance_score": relevance_score,
+        }
+
+
+def _classify_snippet(snippet: str | None, matched_term: str | None) -> tuple[str, int]:
+    """Return ``(category, relevance_score)`` for a patent snippet."""
+    if not snippet or not matched_term:
+        return "mention", 1
+
+    snippet_lower = snippet.lower()
+    term_lower = matched_term.lower()
+
+    if _EXCLUSION_RE.search(snippet_lower) and re.escape(term_lower) in snippet_lower:
+        esc = re.escape(term_lower)
+        if re.search(rf"{esc}[\s-]free", snippet_lower) or _EXCLUSION_RE.search(snippet_lower):
+            return "exclusion", 0
+
+    if _USAGE_RE.search(snippet_lower):
+        return "usage", 2
+
+    return "mention", 1
