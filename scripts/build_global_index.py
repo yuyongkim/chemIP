@@ -278,9 +278,17 @@ def build_index():
     total_size = 0
     
     # Walk through all subdirectories (CNIPA, EPO, JPO, KIPRIS, USPTO, WIPO)
+    # Walk through all subdirectories (CNIPA, EPO, JPO, KIPRIS, USPTO, WIPO)
     for root, dirs, filenames in os.walk(PATENT_DIR):
+        # Skip temp and hidden directories
+        dirs[:] = [d for d in dirs if not d.startswith('.') and d not in ('temp', 'logs', 'cache', 'output')]
+        
         for f in filenames:
-            if f.endswith(".gz") or f.endswith(".xml") or f.endswith(".txt"):
+            # Skip known log files
+            if f == "processing_log.txt" or f.endswith(".log"):
+                continue
+                
+            if f.endswith(".gz") or f.endswith(".xml") or f.endswith(".txt") or f.endswith(".jsonl"):
                 full_path = os.path.join(root, f)
                 files.append(full_path)
                 total_size += os.path.getsize(full_path)

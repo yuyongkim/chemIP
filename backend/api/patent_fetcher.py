@@ -3,6 +3,7 @@ from backend.api.kipris_adapter import KiprisAdapter
 class PatentFetcher:
     def __init__(self):
         self.adapter = KiprisAdapter()
+        self.last_error: str | None = None
 
     def fetch_patent_data(self, patent_id: str) -> dict:
         """
@@ -15,4 +16,6 @@ class PatentFetcher:
         """
         Search patents by keyword using KIPRIS API
         """
-        return self.adapter.search_patents(keyword)
+        results = self.adapter.search_patents(keyword)
+        self.last_error = getattr(self.adapter, "last_error", None)
+        return results

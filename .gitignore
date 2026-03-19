@@ -2,6 +2,7 @@
 __pycache__/
 *.pyc
 .venv/
+.pytest_cache/
 
 
 # Node/Next.js
@@ -13,13 +14,31 @@ build/
 # Data & Logs
 data/
 *.db
+*.sqlite
+*.sqlite3
 *.log
 *.hwp
+logs/*
+!logs/.gitkeep
+*.bak
 
 # IDE
 .vscode/
 .idea/
 .env
+.env.local
+.env.*.local
+
+# Local tool state
+.claude/
+.omx/
+oh-my-codex/
+project_analysis.json
+test-results/
+~$*
 
 # Cleanup
 _archive/
+archive/
+backups/
+dist/
