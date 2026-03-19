@@ -18,3 +18,16 @@ typing_extensions==4.15.0
 urllib3==2.6.1
 uvicorn==0.38.0
 pyahocorasick==2.0.0
+tqdm==4.67.1
+
+# Local LLM
+ollama==0.6.1
+httpx==0.28.1
+
+# Testing
+pytest==8.3.4
+pytest-asyncio==0.24.0
+
+# Development utilities
+aiofiles==24.1.0
+python-docx==1.1.2

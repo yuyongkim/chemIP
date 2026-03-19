@@ -28,7 +28,7 @@ def download_images():
             print(f"Downloading {code} from {url}...")
             # Use a proper user agent to avoid blocking
             headers = {'User-Agent': 'Mozilla/5.0'}
-            res = requests.get(url, headers=headers)
+            res = requests.get(url, headers=headers, timeout=10)
             if res.status_code == 200:
                 with open(path, 'wb') as f:
                     f.write(res.content)

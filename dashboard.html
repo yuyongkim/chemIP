@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Localhost Hub</title>
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --ok: #16a34a;
+      --down: #dc2626;
+      --warn: #d97706;
+      --border: #e5e7eb;
+      --track1: #2563eb;
+      --track2: #7c3aed;
+      --track3: #16a34a;
+      --track4: #f97316;
+      --system: #0f766e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 40%, #ecfeff 100%);
+      color: var(--text);
+    }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    h1 { margin: 0 0 4px; font-size: 30px; }
+    .sub { color: var(--muted); margin-bottom: 20px; }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 8px solid var(--track3);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+    }
+    .track-1 { border-left-color: var(--track1); }
+    .track-2 { border-left-color: var(--track2); }
+    .track-3 { border-left-color: var(--track3); }
+    .track-4 { border-left-color: var(--track4); }
+    .track-system { border-left-color: var(--system); }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .title { font-size: 18px; font-weight: 700; margin: 0; }
+    .badge {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: #374151;
+      border: 1px solid var(--border);
+    }
+    .status {
+      font-size: 13px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid;
+    }
+    .online { color: var(--ok); border-color: #86efac; background: #f0fdf4; }
+    .offline { color: var(--down); border-color: #fca5a5; background: #fef2f2; }
+    .warn { color: var(--warn); border-color: #fcd34d; background: #fffbeb; }
+    .mono { font-family: Consolas, Monaco, monospace; font-size: 13px; color: #1f2937; }
+    .links { margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .links a {
+      text-decoration: none;
+      color: #1d4ed8;
+      font-size: 13px;
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+      border-radius: 999px;
+      padding: 5px 10px;
+    }
+    .warnings {
+      margin-top: 18px;
+      background: #fff7ed;
+      border: 1px solid #fdba74;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 14px;
+    }
+    .warnings h3 { margin: 0 0 8px; font-size: 15px; color: #9a3412; }
+    .warnings ul { margin: 0; padding-left: 18px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Localhost Hub</h1>
+    <div class="sub">Track-based multi-project manager (5000-9099)</div>
+    <div class="meta">
+      <div id="updatedAt">Last update: -</div>
+      <div id="pm2State">PM2: checking...</div>
+      <div>Dashboard: <a href="http://localhost:9000">localhost:9000</a></div>
+    </div>
+
+    <div id="cards" class="grid"></div>
+    <div id="warnings" class="warnings" style="display:none"></div>
+  </div>
+
+  <script>
+    function trackClass(track) {
+      if (track.startsWith('Track 1')) return 'track-1';
+      if (track.startsWith('Track 2')) return 'track-2';
+      if (track.startsWith('Track 3')) return 'track-3';
+      if (track.startsWith('Track 4')) return 'track-4';
+      return 'track-system';
+    }
+
+    function statusBadge(item) {
+      if (item.conflict) return '<span class="status warn">⚠️ Port conflict</span>';
+      return item.running
+        ? '<span class="status online">🟢 Running</span>'
+        : '<span class="status offline">🔴 Stopped</span>';
+    }
+
+    function render(payload) {
+      document.getElementById('updatedAt').textContent = `Last update: ${payload.generated_at}`;
+      document.getElementById('pm2State').textContent = payload.pm2_detected ? 'PM2: detected' : 'PM2: not detected';
+
+      const cards = document.getElementById('cards');
+      cards.innerHTML = payload.services.map((item) => {
+        const docsLink = item.docs_url ? `<a href="${item.docs_url}" target="_blank" rel="noreferrer">API Docs</a>` : '';
+        return `
+          <div class="card ${trackClass(item.track)}">
+            <div class="row">
+              <h3 class="title">${item.project}</h3>
+              ${statusBadge(item)}
+            </div>
+            <div class="row" style="margin-top:6px;">
+              <span class="badge">${item.track}</span>
+              <span class="badge">${item.component}</span>
+            </div>
+            <div class="mono" style="margin-top:10px;">${item.app_name}</div>
+            <div class="mono">localhost:${item.port} (pid: ${item.pid || '-'})</div>
+            <div class="mono">PM2: ${item.pm2_state}</div>
+            <div class="links">
+              <a href="${item.url}" target="_blank" rel="noreferrer">Open Service</a>
+              ${docsLink}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const warnings = document.getElementById('warnings');
+      if (payload.unmanaged_ports && payload.unmanaged_ports.length > 0) {
+        warnings.style.display = 'block';
+        warnings.innerHTML = `
+          <h3>Unmanaged occupied ports (5000-9099)</h3>
+          <ul>
+            ${payload.unmanaged_ports.map((p) => `<li>Port ${p.port} is listening (pid ${p.pid})</li>`).join('')}
+          </ul>
+        `;
+      } else {
+        warnings.style.display = 'none';
+      }
+    }
+
+    async function load() {
+      try {
+        const res = await fetch('/api/status', { cache: 'no-store' });
+        const payload = await res.json();
+        render(payload);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    load();
+    setInterval(load, 5000);
+  </script>
+</body>
+</html>
