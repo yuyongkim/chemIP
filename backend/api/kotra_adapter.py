@@ -8,43 +8,27 @@ from typing import Any, Dict, Optional
 import requests
 
 from backend.api.http_client import safe_get
+from backend.api.text_utils import (
+    coalesce,
+    element_to_dict,
+    extract_items,
+    html_to_text,
+    normalize_text,
+    parse_json_response,
+    parse_xml_response,
+)
 from backend.config.settings import settings
 
 logger = logging.getLogger(__name__)
 
 
-def _coalesce(*values):
-    for value in values:
-        if value is None:
-            continue
-        if isinstance(value, str) and value.strip() == "":
-            continue
-        return value
-    return ""
-
-
 class KotraAdapter:
     def __init__(self):
         self.kotra_key = settings.KOTRA_SERVICE_KEY
-        self.tourism_key = _coalesce(settings.TOURISM_API_KEY_DECODED, self.kotra_key)
+        self.tourism_key = coalesce(settings.TOURISM_API_KEY_DECODED, self.kotra_key)
 
     def _normalize_text(self, obj):
-        if isinstance(obj, str):
-            text = obj.strip()
-            if not text:
-                return ""
-            try:
-                repaired = text.encode("latin1").decode("utf-8")
-                if re.search(r"[가-힣]", repaired) and not re.search(r"[가-힣]", text):
-                    return repaired
-            except Exception:
-                pass
-            return unescape(text)
-        if isinstance(obj, list):
-            return [self._normalize_text(item) for item in obj]
-        if isinstance(obj, dict):
-            return {key: self._normalize_text(value) for key, value in obj.items()}
-        return obj
+        return normalize_text(obj)
 
     def _parse_json(self, raw: str) -> Dict[str, Any]:
         try:
