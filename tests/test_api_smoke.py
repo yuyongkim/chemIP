@@ -1,6 +1,7 @@
 from fastapi.testclient import TestClient
 
 from backend.api.routes import ai, chemicals, drugs, guides, patents, trade
+from backend.core import evidence_collector
 from backend.main import app
 
 
@@ -462,8 +463,8 @@ def test_ai_analyze_returns_sources_and_guides(monkeypatch) -> None:
 
     monkeypatch.setattr(ai, "TerminologyDB", FakeDB)
     monkeypatch.setattr(ai, "guide_store", FakeGuideStore())
-    monkeypatch.setattr(ai, "PatentFetcher", FakePatentFetcher)
-    monkeypatch.setattr(ai, "GlobalPatentAdapter", lambda: FakeGlobalPatentAdapter())
+    monkeypatch.setattr(evidence_collector, "PatentFetcher", FakePatentFetcher)
+    monkeypatch.setattr(evidence_collector, "GlobalPatentAdapter", lambda: FakeGlobalPatentAdapter())
     monkeypatch.setattr(
         ai,
         "recommend_guides",
@@ -543,8 +544,8 @@ def test_ai_analyze_llm_fallback_when_unavailable(monkeypatch) -> None:
 
     monkeypatch.setattr(ai, "TerminologyDB", FakeDB)
     monkeypatch.setattr(ai, "guide_store", FakeGuideStore())
-    monkeypatch.setattr(ai, "PatentFetcher", FakePatentFetcher)
-    monkeypatch.setattr(ai, "GlobalPatentAdapter", lambda: FakeGlobalPatentAdapter())
+    monkeypatch.setattr(evidence_collector, "PatentFetcher", FakePatentFetcher)
+    monkeypatch.setattr(evidence_collector, "GlobalPatentAdapter", lambda: FakeGlobalPatentAdapter())
     # Force LLM to appear unavailable via the ai module's imported reference
     monkeypatch.setattr(
         ai,
