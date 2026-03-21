@@ -21,7 +21,7 @@ logger.info(f"CWD: {os.getcwd()}")
 # Add project root to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from backend.api.routes import ai, chemicals, docs, drugs, guides, patents, trade
+from backend.api.routes import ai, chemicals, docs, drugs, guides, patents, regulations, trade
 from backend.config.settings import settings
 
 app = FastAPI(title="ChemIP Platform API")
@@ -132,6 +132,7 @@ app.include_router(patents.router, prefix="/api/patents", tags=["Patents"])
 app.include_router(trade.router, prefix="/api/trade", tags=["Trade"])
 app.include_router(drugs.router, prefix="/api/drugs", tags=["Drugs"])
 app.include_router(guides.router, prefix="/api/guides", tags=["Guides"])
+app.include_router(regulations.router, prefix="/api/regulations", tags=["Regulations"])
 app.include_router(ai.router, prefix="/api/ai", tags=["AI"])
 app.include_router(docs.router, prefix="/api/docs", tags=["Docs"])
 
@@ -173,6 +174,8 @@ def readiness_check():
         "kotra_key_configured": bool(settings.KOTRA_SERVICE_KEY),
         "kipris_key_configured": bool(settings.KIPRIS_API_KEY),
         "drug_key_configured": bool(settings.DRUG_SERVICE_KEY),
+        "echa_available": True,  # No key needed
+        "comptox_key_configured": bool(settings.COMPTOX_API_KEY),
         "cors_origins_configured": bool(settings.cors_origins_list),
         "rate_limit_enabled": settings.RATE_LIMIT_ENABLED,
     }

@@ -83,6 +83,9 @@ class Settings:
     NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID", "")
     NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET", "")
 
+    # EPA CompTox (US toxicity/exposure data)
+    COMPTOX_API_KEY = os.getenv("COMPTOX_API_KEY", "")
+
     # Local LLM (Ollama)
     LLM_ENABLED = os.getenv("LLM_ENABLED", "true").lower() == "true"
     LLM_BASE_URL = os.getenv("LLM_BASE_URL", "http://localhost:11434")

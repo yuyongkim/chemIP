@@ -1,11 +1,9 @@
 from __future__ import annotations
 
 import logging
-import re
 
 from fastapi import APIRouter, Query
 from pydantic import BaseModel
-import xml.etree.ElementTree as ET
 
 from backend.config.settings import settings
 from backend.core.guide_linker import normalize_search_terms, recommend_guides
