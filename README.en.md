@@ -1,26 +1,54 @@
 ﻿# ChemIP Platform
 
-ChemIP is an integrated research platform for chemical safety, patents, trade intelligence, and drug information.
+An open-source, self-hostable web platform that integrates nine public data sources — MSDS, patents, trade intelligence, pharmaceuticals, chemical classification, and literature — into a single-query workflow for chemical safety decision-making.
 
-- `MSDS`: KOSHA-based chemical safety lookup and detail retrieval
-- `Patents`: KIPRIS live search + local patent indexes (USPTO/global)
-- `Trade`: KOTRA market/strategy/price/fraud data + Naver fallback
-- `Drugs`: MFDS + OpenFDA + PubMed unified search
-- `AI`: chemical detail page analysis report generation
+**Repository:** [github.com/yuyongkim/chemIP](https://github.com/yuyongkim/chemIP) | **License:** AGPL-3.0 | **CI:** ![tests](https://img.shields.io/badge/tests-19%20passed-brightgreen)
 
-Document basis: code synced on `2026-03-01`.
+---
 
-## Product Overview
+## Quick Start (Reviewer / Demo Mode)
 
-### What It Is
-- A single workflow for multi-domain chemical decision support.
-- Connects safety, IP, market, and medical evidence in one UI.
-- Combines Korean public APIs with local large-scale indexes for speed and coverage.
+Get the core platform running in under 5 minutes — no patent database or LLM required.
+
+```bash
+# 1. Clone and install
+git clone https://github.com/yuyongkim/chemIP.git && cd chemIP
+pip install -r requirements.txt
+cd frontend && npm ci && cd ..
+
+# 2. Configure minimal API keys
+cp .env.example .env
+# Edit .env — only KOSHA_SERVICE_KEY_DECODED and KIPRIS_API_KEY are needed
+# for basic chemical search. Get free keys at https://www.data.go.kr
+
+# 3. Start
+python -m uvicorn backend.main:app --port 7010 &
+cd frontend && npm run dev -- --port 7000
+# Open http://localhost:7000
+```
+
+**What works without API keys:** Local chemical database search (48,000+ substances), cached MSDS sections, guide recommendations, and the full frontend UI.
+
+**What needs API keys:** Live MSDS section fetch (KOSHA), patent search (KIPRIS), trade data (KOTRA), drug info (MFDS). All keys are free from [data.go.kr](https://www.data.go.kr).
+
+**Optional components (not needed for review):**
+- Patent index database (large, separate build step)
+- Ollama LLM server (rule-based fallback works without it)
+
+---
+
+## Overview
+
+### What It Does
+- Unifies fragmented government data portals into a single search workflow
+- Covers: MSDS safety, patents, trade intelligence, drugs, chemical classification, literature
+- Supports local deployment for privacy-sensitive industrial environments
+- Provides AI-assisted summaries with deterministic rule-based fallback
 
 ### Target Users
 - Chemical/material R&D teams
-- Regulatory and safety teams
-- Trade and market intelligence teams
+- Regulatory and safety compliance teams
+- Trade and market intelligence analysts
 - IP and technology commercialization teams
 
 ## Current Capabilities (Code-Verified)

@@ -107,7 +107,6 @@ def test_chemicals_detail_fetches_all_sections_when_db_is_empty(monkeypatch) -> 
         }
 
     monkeypatch.setattr(chemicals, "TerminologyDB", FakeDB)
-    monkeypatch.setattr(chemicals, "_is_kosha_reachable", lambda timeout=2.0: True)
     monkeypatch.setattr(chemicals.adapter, "get_msds_detail", fake_get_msds_detail)
 
     response = client.get("/api/chemicals/CHEM-123")

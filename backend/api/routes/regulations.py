@@ -10,6 +10,8 @@ from fastapi import APIRouter, Query
 from backend.api.echa_adapter import EchaAdapter
 from backend.api.comptox_adapter import CompToxAdapter
 from backend.api.niosh_adapter import NioshAdapter
+from backend.api.kischem_adapter import KischemAdapter
+from backend.api.ncis_adapter import NcisAdapter
 from backend.api.routes.utils import handle_adapter_result
 
 router = APIRouter()
@@ -18,6 +20,8 @@ logger = logging.getLogger(__name__)
 _echa = EchaAdapter()
 _comptox = CompToxAdapter()
 _niosh = NioshAdapter()
+_kischem = KischemAdapter()
+_ncis = NcisAdapter()
 
 
 # ------------------------------------------------------------------
@@ -164,6 +168,48 @@ def niosh_carcinogens():
 
 
 # ------------------------------------------------------------------
+# KISCHEM (화학물질안전원 — exposure symptoms & first-aid)
+# ------------------------------------------------------------------
+
+@router.get("/kischem/search")
+def kischem_search(
+    q: str = Query("", description="Chemical name (Korean/English)"),
+    cas: str = Query("", description="CAS number"),
+    limit: int = Query(20, ge=1, le=100),
+):
+    """Search KISCHEM for exposure symptoms and first-aid info."""
+    result = _kischem.search(keyword=q.strip(), cas_no=cas.strip(), num_of_rows=limit)
+    return handle_adapter_result(result)
+
+
+@router.get("/kischem/cas/{cas}")
+def kischem_by_cas(cas: str):
+    """Get KISCHEM safety data by CAS number."""
+    result = _kischem.get_by_cas(cas)
+    return handle_adapter_result(result)
+
+
+# ------------------------------------------------------------------
+# NCIS (한국환경공단 — substance classification & molecular data)
+# ------------------------------------------------------------------
+
+@router.get("/ncis/cas/{cas}")
+def ncis_by_cas(cas: str):
+    """Get NCIS substance classification by CAS number."""
+    result = _ncis.search_by_cas(cas)
+    return handle_adapter_result(result)
+
+
+@router.get("/ncis/search")
+def ncis_search(
+    q: str = Query(..., min_length=1, description="Substance name"),
+):
+    """Search NCIS by substance name."""
+    result = _ncis.search_by_name(q.strip())
+    return handle_adapter_result(result)
+
+
+# ------------------------------------------------------------------
 # Aggregated search across all regulatory sources
 # ------------------------------------------------------------------
 
@@ -221,6 +267,34 @@ def search_all_regulations(
     else:
         results["sources"]["niosh"] = {
             "error": niosh_result.get("message", "Unknown error"),
+            "data": [],
+            "total": 0,
+        }
+
+    # KISCHEM (Korean chemical safety — exposure/first-aid)
+    kischem_result = _kischem.search(keyword=q.strip(), num_of_rows=limit)
+    if kischem_result.get("status") == "success":
+        results["sources"]["kischem"] = {
+            "data": kischem_result.get("data", []),
+            "total": kischem_result.get("total", 0),
+        }
+    else:
+        results["sources"]["kischem"] = {
+            "error": kischem_result.get("message", "Unknown error"),
+            "data": [],
+            "total": 0,
+        }
+
+    # NCIS (Korean environmental — substance classification)
+    ncis_result = _ncis.search_by_name(q.strip())
+    if ncis_result.get("status") == "success":
+        results["sources"]["ncis"] = {
+            "data": ncis_result.get("data", []),
+            "total": ncis_result.get("total", 0),
+        }
+    else:
+        results["sources"]["ncis"] = {
+            "error": ncis_result.get("message", "Unknown error"),
             "data": [],
             "total": 0,
         }

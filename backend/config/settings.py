@@ -24,6 +24,7 @@ class Settings:
     KOSHA_SERVICE_KEY = KOSHA_SERVICE_KEY_DECODED
 
     KOSHA_API_URL = "https://msds.kosha.or.kr/openapi/service/msdschem"
+    KOSHA_FALLBACK_API_URL = "https://apis.data.go.kr/B552468/msdschem"
 
     # KIPRIS API
     KIPRIS_API_KEY = os.getenv("KIPRIS_API_KEY", "")

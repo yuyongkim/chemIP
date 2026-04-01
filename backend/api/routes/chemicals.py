@@ -1,5 +1,4 @@
 import logging
-import socket
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any
 
@@ -19,16 +18,6 @@ adapter = KoshaMsdsAdapter()
 _mfds = MFDSClient()
 _fda = OpenFDAClient()
 _pubmed = PubMedClient()
-
-
-def _is_kosha_reachable(timeout: float = 2.0) -> bool:
-    """Quick TCP check before attempting KOSHA API calls."""
-    try:
-        sock = socket.create_connection(("msds.kosha.or.kr", 443), timeout=timeout)
-        sock.close()
-        return True
-    except (OSError, socket.timeout):
-        return False
 
 SECTION_TITLES = {
     1: "Chemical Product and Company Identification",
@@ -103,7 +92,7 @@ def get_chemical_details(chem_id: str):
         details = db.get_msds_details_by_chem_id(chem_id)
         english_safety = db.get_msds_english_by_chem_id(chem_id)
 
-        if not details and _is_kosha_reachable():
+        if not details:
             logger.info("MSDS details for %s not found in DB. Fetching from API (parallel).", chem_id)
             try:
                 def _fetch_section(seq: int) -> tuple[int, dict]:

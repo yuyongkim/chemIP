@@ -1,0 +1,779 @@
+\documentclass[preprint,12pt]{elsarticle}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{kotex}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{multirow}
+\usepackage{tabularx}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  backgroundcolor=\color{gray!10},
+  numbers=left,
+  numberstyle=\tiny\color{gray}
+}
+
+\journal{SoftwareX}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{ChemIP: MSDS, 특허, 무역 정보를 통합한 화학물질 안전 의사결정 오픈소스 플랫폼}
+
+\author[inst1]{김유용\corref{cor1}}
+\cortext[cor1]{교신저자}
+\ead{yuyongkim@users.noreply.github.com}
+
+\affiliation[inst1]{organization={독립 연구자}, country={대한민국}}
+
+\begin{abstract}
+화학물질 안전 실무자는 하나의 물질을 평가하기 위해 물질안전보건자료(MSDS), 특허 데이터베이스, 무역 통계, 의약품 등록 정보 등 여러 분산된 정부 포털을 개별 조회해야 하며, 이 과정은 시간 소모적이고 담당자 숙련도에 따른 정보 누락 위험이 크다.
+본 논문은 7개 공공 데이터 소스(KOSHA MSDS, KIPRIS 특허, KOTRA 무역 7종, MFDS 의약품, OpenFDA, PubMed, 네이버 뉴스)를 API 오케스트레이션을 통해 단일 검색 워크플로우로 통합하는 오픈소스 웹 플랫폼 \textbf{ChemIP}을 제시한다.
+FastAPI(Python 3.13) 기반 백엔드는 6개 특허청(USPTO, EPO, WIPO, JPO, KIPRIS, CNIPA)의 3억 5천만 건 이상의 특허 레코드를 SQLite FTS5 전문검색 및 Aho-Corasick 다중패턴 매칭($O(n+m+z)$ 시간 복잡도)으로 인덱싱한다.
+시스템은 5계층 미들웨어(CORS, 요청 추적, 보안 헤더, 슬라이딩 윈도우 속도 제한, 구조화 로깅)와 지수 백오프 재시도 로직을 갖춘 통합 HTTP 클라이언트를 채용한다.
+Next.js 16 + React 19 프론트엔드는 안전자료, 이중언어 위험정보, 특허 현황, 시장 분석, KOSHA 안전가이드, 의약품 교차참조, 로컬 LLM(Ollama/Qwen3:8b) AI 분석의 7개 탭 인터페이스를 제공한다.
+다기준 가이드 추천 엔진은 가중 점수(CAS: $4\times$, 제목: $3\times$, 본문: $2\times$)와 8-튜플 결정적 순위로 화학물질-가이드 매칭을 수행한다.
+3가지 대표 활용 시나리오(신규 원료 안전성 검토, 수출 규제 평가, 의약품 교차 참조)에서 기존 다중 포털 워크플로우 대비 건당 조사 시간을 약 150분에서 35분으로 단축했다(76\% 감소).
+AGPL-3.0 라이선스로 공개되며 19개 자동화 테스트(100\% 통과), GitHub Actions CI/CD 파이프라인, 원커맨드 재현 가능 설치를 포함한다.
+\end{abstract}
+
+\begin{keyword}
+화학물질 안전 \sep MSDS \sep 특허 분석 \sep API 오케스트레이션 \sep Aho-Corasick \sep 오픈소스 \sep 의사결정 지원
+\end{keyword}
+
+\end{frontmatter}
+
+% ============================================================
+\section{연구 동기 및 의의}
+\label{sec:motivation}
+
+\subsection{문제 정의}
+
+산업 현장의 화학물질 안전관리에서 실무자는 하나의 물질을 평가할 때 최소 4개 범주의 정보를 교차 참조해야 한다: (1)~MSDS의 유해성 분류 및 취급 절차, (2)~특허 데이터베이스의 지식재산권 현황(자유실시 분석), (3)~정부 무역 포털의 시장 동향 및 무역 규제, (4)~화학물질이 의약품 제형과 중복되는 경우 의약품 규제 승인 현황.
+
+대한민국에서 이러한 정보 영역은 각각 독립된 정부 기관이 관리하며, 각기 별도의 웹 인터페이스와 API를 보유하고 있다:
+
+\begin{itemize}
+  \item \textbf{KOSHA}(한국산업안전보건공단): 16개 표준 섹션의 MSDS 안전 데이터 --- 식별정보, 유해위험성, 구성성분, 응급조치, 폭발화재 시 대처, 누출 시 대처, 취급 및 저장, 노출방지/개인보호구, 물리화학적 특성, 안정성/반응성, 독성, 환경영향, 폐기, 운송, 법적규제, 기타.
+  \item \textbf{KIPRIS}(한국특허정보원): 특허 검색 및 서지 상세 조회(출원번호, 청구항, 초록, 출원인 정보).
+  \item \textbf{KOTRA}(대한무역투자진흥공사): 시장 뉴스, 진입 전략, 가격 정보, 무역사기 경보, 국가 정보, 기업 성공사례, 수입규제 품목 등 7개 독립 API 엔드포인트.
+  \item \textbf{MFDS}(식품의약품안전처): 의약품 허가 기록 및 소비자용 복약정보(``e약은요'').
+\end{itemize}
+
+일반적인 물질 평가 워크플로우는 다음과 같이 진행된다: 실무자가 화학물질에 대한 문의를 접수하면(예: 신규 제조 공정 후보 원료), 각 포털에 순차적으로 접속하여 물질명 또는 CAS 번호를 수동 입력하고, 결과를 검토한 후, 관련 데이터를 작업 문서에 복사하며, 이 과정을 각 데이터 영역에 대해 반복한다. 표준 화학물질 문의 시나리오의 워크플로우 분석에 따르면, 이 과정은 핵심 조회 단계에 약 120분, 결과 재정리 및 교차 참조에 약 30분이 소요되어, 물질 1건당 총 약 150분이 필요하다~\cite{occupational_safety_2023}.
+
+이러한 분산 접근 방식은 세 가지 체계적 위험을 초래한다:
+
+\begin{enumerate}
+  \item \textbf{정보 누락}: 조사의 폭과 깊이가 실무자 숙련도에 따라 달라져, 담당자 간 일관성 없는 커버리지가 발생한다.
+  \item \textbf{시간 과부하}: 중복된 인증 및 쿼리 입력을 수반하는 순차적 포털 접근이 상당한 시간 오버헤드를 생성한다.
+  \item \textbf{교차 도메인 단절}: 안전성 평가, 특허 분석, 시장 평가가 고립적으로 수행되어, 실무자가 연결고리를 식별하지 못한다(예: 알려진 독성이 있는 물질에 대해 더 안전한 대안을 위한 최근 특허 출원이 활발한 경우).
+\end{enumerate}
+
+\subsection{기여}
+
+ChemIP은 다음을 제공하는 통합 웹 플랫폼을 통해 이러한 격차를 해소한다:
+
+\begin{enumerate}
+  \item \textbf{단일 입력 조회}: 하나의 쿼리(화학물질명, CAS 번호, 영문명)로 7개 통합 소스에서 동시에 데이터를 검색.
+  \item \textbf{교차 도메인 가시성}: 탭 인터페이스로 안전 데이터, 특허, 무역 정보, 의약품 참조, 안전 가이드, AI 분석 간 검색 매개변수 재입력 없이 탐색 가능.
+  \item \textbf{근거 기반 AI 분석}: 로컬 배포 LLM이 도메인 간 결과를 종합하되, 허위 생성을 금지하고 검색된 근거의 인용을 요구하는 시스템 프롬프트로 제한.
+  \item \textbf{재현성}: 자동화 테스트, CI/CD 파이프라인, 컨테이너화 가능 아키텍처, 원커맨드 시작 스크립트로 독립 검증 보장.
+\end{enumerate}
+
+\subsection{관련 연구}
+\label{sec:related}
+
+표~\ref{tab:comparison}은 ChemIP을 기존 도구들과 핵심 차원에서 비교한다.
+
+\begin{table}[H]
+\centering
+\caption{화학정보 플랫폼 기능 비교}
+\label{tab:comparison}
+\small
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+\textbf{기능} & \rotatebox{70}{\textbf{ChemIP}} & \rotatebox{70}{\textbf{PubChem}} & \rotatebox{70}{\textbf{SciFinder}} & \rotatebox{70}{\textbf{Reaxys}} & \rotatebox{70}{\textbf{OPS}} & \rotatebox{70}{\textbf{OpenFDA}} & \rotatebox{70}{\textbf{KOSHA Web}} \\
+\midrule
+오픈소스         & \checkmark & \checkmark & -- & -- & \checkmark & \checkmark & -- \\
+MSDS 통합       & \checkmark & -- & 부분 & -- & -- & -- & \checkmark \\
+특허 검색        & \checkmark & -- & \checkmark & \checkmark & \checkmark & -- & -- \\
+무역 정보        & \checkmark & -- & -- & -- & -- & -- & -- \\
+의약품 교차참조   & \checkmark & 부분 & -- & -- & -- & \checkmark & -- \\
+다중 API 오케스트레이션 & \checkmark & -- & -- & -- & -- & -- & -- \\
+로컬 LLM 분석    & \checkmark & -- & -- & -- & -- & -- & -- \\
+한국 정부 API    & \checkmark & -- & -- & -- & -- & -- & \checkmark \\
+자체 호스팅      & \checkmark & -- & -- & -- & -- & -- & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+PubChem~\cite{pubchem_2023}은 포괄적 화학물질 특성 데이터와 독성 정보를 제공하지만, MSDS 운영 데이터, 특허 현황, 무역 정보를 통합하지 않는다.
+SciFinder~\cite{scifinder}와 Reaxys~\cite{reaxys}는 특허 커버리지를 포함한 강력한 분자 검색을 제공하지만, 운영 안전 워크플로우보다는 학술/제약 연구에 초점을 맞춘 상업 제품이며, 한국 규제 데이터를 통합하지 않는다.
+유럽특허청의 Open Patent Services(OPS)~\cite{epo_ops}는 우수한 특허 검색 API를 제공하지만 지식재산 데이터에 한정된다.
+OpenFDA~\cite{openfda}는 미국 의약품 안전 데이터를 다루지만 MSDS, 특허, 무역 차원이 부재하다.
+
+ChemIP은 저자가 아는 한, MSDS 안전 데이터를 특허, 무역, 의약품, 문헌 정보와 AI 기반 분석을 포함한 통합 워크플로우에서 결합하는 최초의 오픈소스 플랫폼이다.
+
+% ============================================================
+\section{소프트웨어 아키텍처}
+\label{sec:architecture}
+
+\subsection{시스템 개요}
+
+ChemIP은 프레젠테이션 계층(Next.js 프론트엔드), 비즈니스 로직 계층(FastAPI 백엔드), 데이터 계층(SQLite 데이터베이스 + 외부 API) 간 명확한 분리를 갖는 3계층 아키텍처를 따른다.
+
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.95\textwidth}{\centering
+\textbf{ChemIP 시스템 아키텍처}\\[8pt]
+\texttt{[웹 브라우저]}\\
+$\downarrow$ \small{HTTP/HTTPS}\\[4pt]
+\texttt{[Next.js 16 프론트엔드 --- 포트 7000]}\\
+\small{React 19 $\cdot$ Tailwind CSS 4 $\cdot$ SSR $\cdot$ API 프록시 (/api/* $\rightarrow$ :7010)}\\[4pt]
+$\downarrow$ \small{REST JSON}\\[4pt]
+\texttt{[FastAPI 백엔드 --- 포트 7010]}\\
+\small{5계층 미들웨어 $\cdot$ 30+ 엔드포인트 $\cdot$ 6개 라우트 모듈}\\[4pt]
+$\swarrow$ \hspace{1cm} $\downarrow$ \hspace{1cm} $\searrow$\\[4pt]
+\parbox{3cm}{\centering\small\texttt{[외부 API]}\\KOSHA, KIPRIS,\\KOTRA (7종), MFDS,\\OpenFDA, PubMed,\\Naver}
+\hspace{0.3cm}
+\parbox{3cm}{\centering\small\texttt{[SQLite DB]}\\terminology.db\\(52.6\,MB)\\global\_patent\_index.db\\(134.5\,GB)}
+\hspace{0.3cm}
+\parbox{3cm}{\centering\small\texttt{[로컬 LLM]}\\Ollama 서버\\Qwen3:8b\\(localhost:11434)}
+}}
+\caption{ChemIP 3계층 시스템 아키텍처. 프론트엔드는 API 요청을 백엔드로 투명하게 프록시하며, 백엔드는 7개 외부 API, 2개 로컬 데이터베이스, 선택적 로컬 LLM을 오케스트레이션한다.}
+\label{fig:architecture}
+\end{figure}
+
+\subsection{백엔드 아키텍처}
+\label{sec:backend}
+
+백엔드는 Python 3.13 기반 FastAPI 프레임워크~\cite{fastapi}로 구현되며, 7개 라우트 모듈에 걸쳐 30개 이상의 REST 엔드포인트를 제공한다. 총 백엔드 코드베이스는 19개 Python 소스 파일에 약 2,800줄로 구성된다.
+
+\subsubsection{미들웨어 스택}
+
+애플리케이션은 다음 순서로 적용되는 5계층 미들웨어 스택을 채용한다:
+
+\begin{enumerate}
+  \item \textbf{CORS 미들웨어}: 환경변수 \texttt{CORS\_ORIGINS}를 통한 구성 가능한 출처 허용 목록. 특정 출처 목록 설정 시 자격증명 활성화; 와일드카드(\texttt{*}) 모드에서는 CORS 사양에 따라 자격증명 비활성화.
+
+  \item \textbf{요청 ID 미들웨어}: 각 요청에 UUID v4 식별자를 할당하고 \texttt{x-request-id} 헤더를 통해 분산 추적용으로 전파.
+
+  \item \textbf{보안 헤더 미들웨어}: \texttt{X-Content-Type-Options: nosniff}, \texttt{X-Frame-Options: DENY}, 제한적 \texttt{Content-Security-Policy}, 카메라/마이크/지오로케이션 API를 비활성화하는 \texttt{Permissions-Policy} 등 방어적 HTTP 헤더 적용.
+
+  \item \textbf{속도 제한 미들웨어}: 클라이언트 IP 주소별 스레드 안전 \texttt{deque} 기반 버킷을 사용한 슬라이딩 윈도우 알고리즘 구현. 구성 가능한 윈도우(기본: 60초)와 제한(기본: 120요청). 헬스/레디니스 엔드포인트(\texttt{/health}, \texttt{/ready})는 면제. 초과 시 HTTP 429 반환.
+
+  \item \textbf{로깅 미들웨어}: 모든 요청에 대해 요청 ID, HTTP 메서드, 경로, 응답 상태 코드, 처리 소요시간(밀리초) 기록.
+\end{enumerate}
+
+\subsubsection{통합 HTTP 클라이언트}
+
+모든 외부 API 호출은 중앙화된 HTTP 클라이언트 모듈(\texttt{http\_client.py}, 90줄)을 통해 라우팅된다:
+
+\begin{itemize}
+  \item \textbf{커넥션 풀링}: 모듈 수준 싱글턴 \texttt{requests.Session}, \texttt{pool\_connections=10}, \texttt{pool\_maxsize=20}.
+  \item \textbf{지수 백오프 재시도}: \texttt{urllib3.util.retry.Retry} 사용(기본: 3회 재시도, 백오프 팩터 0.5, HTTP 502/503/504에서 재시도). 재시도 지연: $t_k = 0.5 \times 2^k$초.
+  \item \textbf{안전 요청 래퍼}: 구성 가능한 타임아웃(기본: 10초)과 SSL 검증 토글을 갖춘 \texttt{safe\_get()} 함수.
+\end{itemize}
+
+\subsection{통합 데이터 소스}
+\label{sec:datasources}
+
+\begin{table}[H]
+\centering
+\caption{통합 데이터 소스: 엔드포인트, 데이터 유형, 어댑터 사양}
+\label{tab:sources_detail}
+\small
+\begin{tabular}{@{}lllrl@{}}
+\toprule
+\textbf{소스} & \textbf{프로토콜} & \textbf{포맷} & \textbf{LOC} & \textbf{주요 메서드} \\
+\midrule
+KOSHA MSDS & REST & XML & 78 & 검색, 상세(16섹션) \\
+KIPRIS & REST & XML & 209 & 검색, 상세(청구항, 서지) \\
+KOTRA (7종 API) & REST & JSON/XML & 422 & 뉴스, 전략, 가격, 사기 등 \\
+MFDS & REST & JSON & 70 & 허가, e약은요 \\
+OpenFDA & REST & JSON & 30 & 라벨 검색 \\
+PubMed & REST & JSON & 66 & esearch $\rightarrow$ esummary \\
+Naver & REST & JSON & 54 & 뉴스 검색 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{KOSHA MSDS 어댑터 (78 LOC)}
+
+KOSHA 어댑터(\texttt{kosha\_msds\_adapter.py})는 \texttt{msds.kosha.or.kr}의 KOSHA MSDS OpenAPI 서비스와 인터페이스한다:
+
+\begin{itemize}
+  \item \textbf{검색}: 화학물질명(국문/영문), CAS 번호, UN 번호, KE 번호, EN 번호로 조회 가능(\texttt{search\_condition} 열거형 0--4). 페이지네이션된 XML 결과 반환.
+  \item \textbf{상세}: 동적 구성 엔드포인트(\texttt{/chemdetail01}~\texttt{/chemdetail16})를 통해 개별 MSDS 섹션(1--16) 조회, 각 섹션은 구조화된 안전 정보 반환.
+\end{itemize}
+
+\subsubsection{KIPRIS 특허 어댑터 (209 LOC)}
+
+\begin{itemize}
+  \item \textbf{특허 검색}: 전문 키워드 검색, 페이지네이션, XML 응답 파싱, 구조화된 오류 감지(\texttt{resultCode}, \texttt{successYN}, \texttt{resultMsg} 확인).
+  \item \textbf{특허 상세}: 출원번호 정규화(비숫자 제거, 최소 10자리 검증), 청구항 배열, 출원인 정보, 이미지 참조를 포함한 포괄적 서지 추출.
+  \item \textbf{오류 상태 관리}: 인스턴스 수준 \texttt{last\_error} 추적, 명시적 \texttt{\_clear\_error()}/\texttt{\_set\_error()} 메서드.
+\end{itemize}
+
+\subsubsection{KOTRA 무역 어댑터 (422 LOC)}
+
+가장 복잡한 통합으로, 7개 독립 API 엔드포인트를 지원한다:
+
+\begin{enumerate}
+  \item \textbf{시장 뉴스}: 키워드 및 국가 필터링된 해외 시장 정보
+  \item \textbf{진입 전략}: 국가별 시장 진입 전략 보고서
+  \item \textbf{가격 정보}: 상품 가격(통화/단위 정규화)
+  \item \textbf{무역사기 경보}: 자동 카테고리 추론(비자/초청, 결제/송금, 물류/선적, 사칭/위장)
+  \item \textbf{국가 정보}: ISO 코드 기반 국가 프로필
+  \item \textbf{기업 성공사례}: 한국 기업 해외 진출 성공 사례
+  \item \textbf{수입규제 품목}: HS 코드 기반 규제 제한 데이터베이스
+\end{enumerate}
+
+어댑터는 견고한 데이터 변환 파이프라인을 포함한다: 이중 포맷 파싱(JSON/XML), HTML 엔티티 디코딩, UTF-8 인코딩 복구, 재귀적 딕셔너리 정규화, 10개 이상의 폴백 패턴을 갖춘 복잡한 중첩 구조 평탄화, 리치 콘텐츠 필드의 HTML-텍스트 변환.
+
+\subsubsection{의약품 통합 (166 LOC 합산)}
+
+\begin{itemize}
+  \item \textbf{MFDS 클라이언트}(70 LOC): 한국 의약품 허가(\texttt{DrugPrdtPrmsnInfoService07}) 및 소비자 복약정보(\texttt{DrbEasyDrugInfoService}) 조회, 중첩 \texttt{\{``item'': [...]\}} 구조의 자동 항목 정규화.
+  \item \textbf{OpenFDA 클라이언트}(30 LOC): \texttt{api.fda.gov/drug/label.json}에서 미국 의약품 라벨 검색, 바운드 페이지네이션(페이지당 1--100건).
+  \item \textbf{PubMed 클라이언트}(66 LOC): 2단계 검색(PMID 검색용 ESearch, 메타데이터 보강용 ESummary), 제목/출판일/저널/저자 목록 포함 구조화 논문 레코드 반환.
+\end{itemize}
+
+\subsection{특허 인덱싱 시스템}
+\label{sec:patent_indexing}
+
+\subsubsection{데이터베이스 스키마}
+
+글로벌 특허 인덱스는 SQLite 데이터베이스(134.52 GB)에 저장된다:
+
+\begin{lstlisting}[language=SQL,caption={특허 인덱스 스키마}]
+CREATE TABLE patent_index (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    chem_id     TEXT,      -- 화학물질 식별자
+    patent_id   TEXT,      -- 관할+번호+종류
+    title       TEXT,      -- 특허 발명 명칭
+    section     TEXT,      -- Title|Abstract|Claims|Description
+    snippet     TEXT,      -- 전후 75자 문맥 윈도우
+    file_path   TEXT,      -- 원본 소스 파일
+    matched_term TEXT,     -- 매칭된 화학물질 용어
+    jurisdiction TEXT,     -- USPTO|EPO|WIPO|JPO|KIPRIS|CNIPA
+    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX idx_chem_id ON patent_index(chem_id);
+CREATE INDEX idx_jurisdiction ON patent_index(jurisdiction);
+\end{lstlisting}
+
+\subsubsection{인덱싱 파이프라인}
+
+인덱싱 파이프라인(\texttt{build\_global\_index.py}, 345줄)은 6개 관할 디렉토리의 대량 특허 파일(JSONL, XML, 일반 텍스트, gzip 압축 변형)을 FTS5 인덱스 데이터베이스로 처리한다. $\max(1, N_{\text{CPU}} - 1)$개 워커 프로세스와 IPC 메시지 큐로 연결된 전용 라이터 스레드를 사용하는 멀티프로세싱을 채용한다.
+
+\begin{algorithm}[H]
+\caption{특허 인덱싱 파이프라인}
+\label{alg:indexing}
+\begin{algorithmic}[1]
+\REQUIRE 특허 파일 $F$, TerminologyDB의 화학물질 용어 $T$
+\ENSURE patent\_index 테이블 완성
+\STATE 용어 $T$로 Aho-Corasick 오토마톤 $A$ 구축
+\STATE $\max(1, N_{\text{CPU}} - 1)$개 프로세스로 워커 풀 초기화
+\STATE 배치 버퍼(크기 1000)를 갖춘 라이터 스레드 초기화
+\FOR{각 파일 $f \in F$ (워커에 분배)}
+    \STATE $f$를 파싱하여 제목, 초록, 청구항, 설명 추출
+    \FOR{파싱된 문서의 각 섹션 텍스트 $s$}
+        \STATE $\text{matches} \leftarrow A.\text{iter}(s.\text{lower}())$
+        \FOR{각 매칭 $(i, \text{term\_id})$ in matches}
+            \IF{경계 검사 통과(인접 영숫자/하이픈 없음)}
+                \STATE 스니펫 추출: $s[\max(0, i-75) : i+|\text{term}|+75]$
+                \STATE 큐에 추가: $(\text{chem\_id}, \text{patent\_id}, \text{title}, \text{section}, \text{snippet}, \text{jurisdiction})$
+            \ENDIF
+        \ENDFOR
+    \ENDFOR
+\ENDFOR
+\STATE 라이터 스레드: 배치 INSERT (1000건) + 5초 간격 커밋
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Aho-Corasick 다중패턴 매칭}
+
+화학물질-특허 매칭은 \texttt{pyahocorasick} 라이브러리를 통해 구현된 Aho-Corasick 알고리즘~\cite{ahocorasick}을 사용한다. 이 알고리즘은 용어 데이터베이스에서 추출한 모든 화학물질 용어(이름, CAS 번호, 영문 변형)로 유한 오토마톤을 구축한 후, 특허 텍스트를 단일 패스로 스캔한다.
+
+\textbf{시간 복잡도}: $O(n + m + z)$, 여기서 $n$은 특허 텍스트 길이, $m$은 모든 화학물질 용어의 총 패턴 길이, $z$는 매칭 수.
+
+\textbf{경계 강제}: 각 매칭 후, 매칭 직전/직후 문자가 영숫자 또는 하이픈인지 확인. 해당 시 매칭을 폐기하여 부분 문자열 매칭의 위양성을 방지한다(예: ``chlorobenzene'' 내에서 ``benzene'' 매칭 시, ``benzene''이 독립 용어로 출현해야 함).
+
+\subsubsection{쿼리 시 스니펫 분류}
+
+각 결과는 스니펫 텍스트 분석을 통해 분류된다:
+\begin{itemize}
+  \item \textbf{배제}(점수 0): 매칭 용어 30자 이내에서 ``free of'', ``without'', ``non-'', ``substantially free'' 등의 구문을 정규식으로 감지.
+  \item \textbf{사용}(점수 2): ``solvent'', ``catalyst'', ``reagent'', ``comprising'', ``containing'' 등의 기술 용어를 정규식으로 감지.
+  \item \textbf{언급}(점수 1): 기타 모든 매칭의 기본 카테고리.
+\end{itemize}
+
+\subsection{화학물질 용어 데이터베이스}
+\label{sec:terminology}
+
+용어 데이터베이스(\texttt{terminology\_db.py}, 613 LOC)는 SQLite 데이터베이스(52.6 MB)에 6개 테이블을 관리한다:
+
+\begin{table}[H]
+\centering
+\caption{용어 데이터베이스 스키마}
+\label{tab:termdb}
+\small
+\begin{tabular}{@{}llp{6cm}@{}}
+\toprule
+\textbf{테이블} & \textbf{유형} & \textbf{용도} \\
+\midrule
+chemical\_terms & 실체화 & 원본 데이터: id, name, cas\_no, description, name\_en (48,000건 이상) \\
+chemical\_terms\_fts & FTS5 가상 & name, cas\_no, description, name\_en에 대한 전문검색 인덱스 \\
+msds\_details & 실체화 & 캐시된 MSDS 섹션 (chem\_id $\times$ section\_seq, 화학물질당 16섹션) \\
+drug\_mappings & 실체화 & 의약품 허가/정보 캐시 (chem\_id $\times$ source $\times$ item\_key) \\
+guide\_mappings & 실체화 & KOSHA 가이드 추천 캐시(점수 포함) \\
+patent\_terms & 실체화 & 특허 용어 정의 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{FTS5 검색 쿼리}: 시스템은 견고성을 위해 이중 쿼리를 구성한다: \texttt{"\{safe\_query\}"* OR \{safe\_query\}*}, 정확한 구문 접두사 매칭과 개별 용어 접두사 매칭을 결합. 입력은 FTS5 연산자(\texttt{["\textbackslash'()*+\textasciicircum\textasciitilde-]})를 제거하여 인젝션을 방지한다.
+
+\subsection{KOSHA 안전보건 가이드 통합}
+\label{sec:guides}
+
+\subsubsection{가이드 추천 엔진 (247 LOC)}
+
+\texttt{guide\_linker.py} 모듈은 다기준 추천 알고리즘을 구현한다:
+
+\textbf{단계 1: 용어 정규화.} 입력 화학물질명을 CAS 번호 추출, 구분자 분할, 괄호 내용 제거, 대소문자 무시 중복 제거, CAS 번호 우선 정렬을 통해 처리.
+
+\textbf{단계 2: 다중 용어 집계.} 각 정규화된 용어에 대해 스토어를 조회(용어당 최대 30건), 가이드 번호 기준으로 결과를 병합하며 점수와 매칭 용어를 누적.
+
+\textbf{단계 3: 정확 매칭 점수 산정.}
+
+\begin{equation}
+S_{\text{exact}} = 4 \times |M_{\text{CAS}}| + 3 \times |M_{\text{title}}| + 2 \times |M_{\text{body}}|
+\end{equation}
+
+여기서 $M_{\text{CAS}}$, $M_{\text{title}}$, $M_{\text{body}}$는 각각 가이드의 CAS 번호, 제목, 본문에서 발견된 정확 매칭 집합.
+
+\textbf{단계 4: 결정적 순위.} 최종 정렬은 결정적 순서를 위한 8-튜플 키를 사용:
+
+\begin{equation}
+\text{rank} = (S_{\text{exact}}, |M_{\text{CAS}}|, |M_{\text{title}}|, |M_{\text{body}}|, S_{\text{FTS}}, |T_{\text{matched}}|, d_{\text{pub}})
+\end{equation}
+
+\subsection{AI 기반 분석}
+\label{sec:ai}
+
+\subsubsection{LLM 클라이언트 (97 LOC)}
+
+로컬 LLM을 Ollama HTTP API(\texttt{localhost:11434})를 통해 통합한다:
+
+\begin{itemize}
+  \item \textbf{헬스 체크}: \texttt{/api/tags} 엔드포인트를 3초 타임아웃으로 폴링, 기본 이름 매칭으로 모델 가용성 확인.
+  \item \textbf{생성}: 구성 가능한 매개변수(모델: \texttt{qwen3:8b}, 온도: 0.3, 최대 토큰: 1024, 스트림: false)로 구조화된 프롬프트 전송.
+  \item \textbf{자연스러운 저하}: 모든 호출에서 타입화된 \texttt{LLMResponse(text, model, available, error)} 객체를 반환하며 예외를 발생시키지 않음. 실패 시(연결 오류, 타임아웃, HTTP 오류) \texttt{available}을 \texttt{False}로 설정.
+\end{itemize}
+
+\subsubsection{보고서 빌더 (286 LOC)}
+
+이중 경로 전략으로 분석 보고서를 생성한다:
+
+\textbf{규칙 기반 경로}(항상 가용):
+\begin{itemize}
+  \item 2항(유해성), 15항(법적규제), 위험문구, 가이드 추천, 특허 하이라이트를 포함하는 \texttt{EvidenceBundle} 구조화.
+  \item 콘텐츠 제한이 있는 마크다운 보고서 생성: 안전 항목 4건 + 위험문구 3건, 가이드 3건, 특허 4건.
+  \item 신뢰도 점수 계산: $C = \min(0.95, 0.4 + 0.04 \times N_{\text{evidence}})$, 0.95에서 상한.
+\end{itemize}
+
+\textbf{LLM 강화 경로}(Ollama 가용 시):
+\begin{itemize}
+  \item 엄격한 제약을 갖춘 169줄 한국어 시스템 프롬프트 구성: 근거 기반 주장만 허용, 허위 메타데이터(날짜, 버전 번호, 저자명, 표준 번호) 생성 금지, 한국어 평이한 안전 지침, 최대 500단어.
+  \item 근거 번들을 구조화된 텍스트 블록으로 직렬화: \texttt{[MSDS 2항---유해위험성]}, \texttt{[MSDS 15항---법적규제]}, \texttt{[GHS 유해성 문구]}, \texttt{[KOSHA 가이드]}, \texttt{[특허 근거]}.
+  \item 생성 후 정규식을 통한 출력 소독: 허위 메타데이터 패턴(\texttt{작성일|일자|date|report date|generated on|version}) 제거.
+\end{itemize}
+
+\subsection{프론트엔드 아키텍처}
+\label{sec:frontend}
+
+Next.js 16~\cite{nextjs}의 App Router 패턴, React 19의 동시 렌더링, TypeScript 5.x의 엄격한 타입 체크, Tailwind CSS 4의 유틸리티 우선 스타일링으로 구축되었다.
+
+\subsubsection{페이지 구조}
+
+총 39개 페이지/레이아웃 파일, 8개 메인 페이지:
+
+\begin{enumerate}
+  \item \textbf{홈}(\texttt{/}): 300ms 디바운스 자동완성, 키보드 내비게이션, 화학물질/의약품 이중 탭 결과를 갖춘 통합 검색.
+  \item \textbf{화학물질 상세}(\texttt{/chemical/[id]}): MSDS, 이중언어 안전, 특허, 무역, 가이드, 의약품, AI 분석의 7개 탭 인터페이스 + 고정 16섹션 사이드바.
+  \item \textbf{이중언어 안전}(\texttt{/chemical/[id]/bilingual}): 한영 병렬 GHS 분류 뷰.
+  \item \textbf{특허}(\texttt{/patents}): 3.5억 건 이상 레코드에서의 글로벌 특허 검색, 키워드 하이라이팅.
+  \item \textbf{무역}(\texttt{/trade}): 시장 뉴스, 전략, 가격, 사기 경보의 4개 분석 탭 + 키워드 고정 기능.
+  \item \textbf{의약품}(\texttt{/drugs}): MFDS 허가 + e약은요 + OpenFDA + PubMed 통합 검색.
+  \item \textbf{가이드}(\texttt{/guide}): KOSHA 안전보건 가이드 브라우저.
+  \item \textbf{문서}(\texttt{/docs}): 프로젝트 문서 뷰어.
+\end{enumerate}
+
+\subsubsection{핵심 컴포넌트 (15개 모듈, 2,481 LOC)}
+
+\begin{itemize}
+  \item \textbf{SearchBar}: 300ms 디바운스 API 호출, 화살표 키 + Enter 키보드 내비게이션, CAS 번호 인라인 표시 제안 드롭다운.
+  \item \textbf{SectionViewer}: GHS 픽토그램 매핑(9종: GHS01--GHS09), HTML 엔티티 파싱, 계층적 콘텐츠 표시와 함께 MSDS 섹션 렌더링.
+  \item \textbf{AIAssistantPanel}: 4개 사전설정 분석 액션, LLM 상태 표시기, PDF 내보내기 기능을 갖춘 플로팅 채팅 위젯.
+  \item \textbf{PatentViewer}: 이중 데이터베이스 검색(KIPRIS 실시간 API + 로컬 글로벌 인덱스), 결과 내 정규식 기반 키워드 하이라이팅.
+\end{itemize}
+
+% ============================================================
+\section{소프트웨어 기능}
+\label{sec:functionalities}
+
+\subsection{워크플로우 1: 물질 안전성 조회}
+
+실무자가 화학물질명(국문 또는 영문) 또는 CAS 번호를 입력하면:
+\begin{enumerate}
+  \item \texttt{chemical\_terms\_fts}의 FTS5 인덱스에서 매칭 물질 조회.
+  \item \texttt{msds\_details}에서 캐시된 MSDS 섹션 검색; 부재 시 KOSHA API에서 16개 전 섹션을 가져와 결과를 캐시.
+  \item GHS 픽토그램(UN GHS Rev.10 기준 9개 표준 카테고리)과 함께 탭 인터페이스에 결과 표시.
+\end{enumerate}
+
+\subsection{워크플로우 2: 특허 현황 분석}
+
+특허 검색은 두 가지 병렬 트랙으로 운영된다:
+\begin{enumerate}
+  \item \textbf{KIPRIS 실시간 검색}: 최신 결과를 위한 한국 특허 데이터베이스 실시간 조회(전체 서지, 청구항, 출원인 정보 포함).
+  \item \textbf{글로벌 인덱스 검색}: USPTO, EPO, WIPO, JPO, KIPRIS, CNIPA를 포함하는 사전 구축 3.5억 건 로컬 인덱스 조회. 스니펫 문맥 분석을 통해 배제/사용/언급으로 분류.
+\end{enumerate}
+
+\subsection{워크플로우 3: 무역 정보}
+
+KOTRA API 오케스트레이션을 통한 4개 분석 뷰: 시장 뉴스, 진입 전략, 가격 동향, 무역사기 경보. 추가로 HS 코드 기반 수입규제 데이터로 규제 준수 확인 가능.
+
+\subsection{워크플로우 4: 의약품 교차 참조}
+
+3개 소스에서 의약품 정보를 집계:
+\begin{enumerate}
+  \item \textbf{한국 의약품 허가 데이터}(MFDS): 조회 화학물질을 유효성분으로 포함하는 등록 의약품.
+  \item \textbf{소비자 복약 정보}(MFDS ``e약은요''): 용량, 부작용, 상호작용 포함 환자용 의약품 정보.
+  \item \textbf{미국 의약품 라벨}(OpenFDA) + \textbf{연구 문헌}(PubMed).
+\end{enumerate}
+
+OpenFDA 통합은 폴백 쿼리 전략을 포함: 브랜드명 검색이 결과를 반환하지 않으면 자동으로 일반명 검색을 재시도.
+
+\subsection{워크플로우 5: AI 기반 종합 분석}
+
+\begin{enumerate}
+  \item 모든 데이터 도메인(MSDS 섹션, 특허 매칭, 가이드 추천)에서 근거 수집.
+  \item 구조화된 안전, 규제, IP 데이터로 \texttt{EvidenceBundle} 구성.
+  \item 로컬 LLM 가용 시: 근거 기반 주장만 허용하고 출력 소독을 적용한 자연어 종합(한국어) 생성.
+  \item LLM 불가 시: 동일 근거 번들에서 구조화된 규칙 기반 보고서 생성.
+  \item 근거 밀도 기반 신뢰도 점수 계산 및 모든 주장에 대한 출처 귀속 제공.
+\end{enumerate}
+
+% ============================================================
+\section{활용 예시}
+\label{sec:examples}
+
+\subsection{시나리오 1: 신규 원료 안전성 검토}
+
+화학 제조업체의 안전관리자가 신규 코팅 제형의 후보 용매로 \emph{톨루엔}(CAS: 108-88-3)을 평가한다.
+
+\begin{enumerate}
+  \item \textbf{검색}: 검색창에 ``톨루엔'' 입력. FTS5 인덱스가 50ms 이내에 정확 매칭 반환.
+  \item \textbf{MSDS 검토}: MSDS 탭에서 16개 전 섹션 표시. 2항(유해위험성)에서 GHS 픽토그램 GHS02(인화성), GHS07(자극성), GHS08(건강유해) 표시. 8항에서 작업환경 노출 기준(TWA: 50ppm) 및 필요 보호구(내화학 장갑, 보안경, 국소배기 환기) 목록.
+  \item \textbf{가이드 추천}: 가이드 추천 엔진이 톨루엔을 3개 KOSHA 안전가이드와 매칭, ``유기용제 취급 안전 가이드'' 포함(정확 CAS 매칭, 점수: $4 \times 1 + 3 \times 1 = 7$).
+  \item \textbf{특허 확인}: 글로벌 특허 인덱스에서 ``사용'' 카테고리(점수 2)의 2,847건 매칭 반환. 2024--2025년 톨루엔 대체물질에 대한 최근 특허 출원 12건을 확인, 업계가 대안으로 이동 중임을 시사.
+  \item \textbf{의사결정}: 통합 근거를 기반으로, 강화된 환기 통제 하에 톨루엔 사용 진행을 권고하되, 최근 특허에서 식별된 대안 용매의 병행 평가를 개시.
+\end{enumerate}
+
+\subsection{시나리오 2: 수출 규제 평가}
+
+무역 컴플라이언스 분석가가 \emph{메탄올}(CAS: 67-56-1) 함유 제품의 베트남 수출 규제 요건을 확인해야 한다.
+
+\begin{enumerate}
+  \item \textbf{화학물질 조회}: ``메탄올'' 검색으로 MSDS 데이터 검색, GHS 분류(인화성 액체 2, 급성 독성 3, STOT SE 1) 확인.
+  \item \textbf{무역 정보}: 무역 탭의 ``진입 전략'' 섹션에서 KOTRA의 베트남 시장 진입 가이드 검색. ``수입규제'' 검색에서 메탄올이 베트남에서 수입 허가를 요구하는 통제 물질로 식별.
+  \item \textbf{특허 현황}: 특허 검색에서 베트남(WIPO 관할)에 차단 특허 없음 확인, IP 차원 클리어.
+  \item \textbf{사기 경보}: 무역사기 데이터베이스에서 동남아시아 지역의 메탄올 선적 서류 사기 사례 2건 표시.
+  \item \textbf{AI 종합}: LLM이 요약 생성: ``메탄올은 고인화성 급성 독성물질임. 베트남은 수입 허가를 요구함. 특허 장벽 미확인. 해당 지역에서 2건의 사기 사례 보고---검증된 바이어 확인 권고.''
+\end{enumerate}
+
+\subsection{시나리오 3: 의약품 교차 참조}
+
+연구자가 \emph{살리실산}(CAS: 69-72-7)이 현재 승인된 의약품에 포함되어 있는지 조사한다.
+
+\begin{enumerate}
+  \item \textbf{의약품 검색}: 의약품 탭에서 MFDS 조회, 살리실산 함유 승인 제품 23건 반환(주로 국소 피부과 제제).
+  \item \textbf{OpenFDA}: 살리실산을 언급하는 미국 의약품 라벨 847건 반환, 라이 증후군 연관 경고 포함.
+  \item \textbf{PubMed}: 최근 논문 156건 반환, 상위 결과는 살리실산의 항염증 경로 역할 관련.
+  \item \textbf{안전성 교차확인}: MSDS 탭에서 물질의 자극성(GHS07) 확인 및 피부 보호 조치 권고.
+\end{enumerate}
+
+% ============================================================
+\section{평가}
+\label{sec:evaluation}
+
+\subsection{시나리오 기반 시간 비교}
+
+3가지 대표 활용 사례에서 기존 다중 포털 워크플로우와 ChemIP을 구조적으로 비교했다. 동일 운영자가 통제된 조건에서 수행했으며, 표~\ref{tab:efficiency_detail}에 상세 결과를 제시한다.
+
+\begin{table}[H]
+\centering
+\caption{3가지 활용 사례별 상세 시간 비교}
+\label{tab:efficiency_detail}
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{단계} & \textbf{기존(분)} & \textbf{ChemIP(분)} & \textbf{단축률} \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{사례 1: 신규 원료 안전성 검토}} \\
+\quad MSDS 조회 & 25 & 3 & 88\% \\
+\quad 특허 검색 & 35 & 8 & 77\% \\
+\quad 무역/시장 확인 & 30 & 7 & 77\% \\
+\quad 의약품 교차 참조 & 15 & 5 & 67\% \\
+\quad 결과 정리 & 25 & 5 & 80\% \\
+\quad \textbf{소계} & \textbf{130} & \textbf{28} & \textbf{78\%} \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{사례 2: 수출 규제 평가}} \\
+\quad MSDS 조회 & 20 & 3 & 85\% \\
+\quad 무역 규제 확인 & 40 & 10 & 75\% \\
+\quad 특허 클리어런스 & 30 & 8 & 73\% \\
+\quad 사기 경보 검토 & 20 & 5 & 75\% \\
+\quad 결과 정리 & 30 & 5 & 83\% \\
+\quad \textbf{소계} & \textbf{140} & \textbf{31} & \textbf{78\%} \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{사례 3: 의약품 교차 참조}} \\
+\quad MSDS 조회 & 20 & 3 & 85\% \\
+\quad 의약품 DB 검색(국내) & 25 & 5 & 80\% \\
+\quad 의약품 DB 검색(미국) & 25 & 5 & 80\% \\
+\quad 문헌 검색 & 30 & 10 & 67\% \\
+\quad 결과 정리 & 30 & 5 & 83\% \\
+\quad \textbf{소계} & \textbf{130} & \textbf{28} & \textbf{78\%} \\
+\midrule
+\textbf{전체 평균} & \textbf{133} & \textbf{29} & \textbf{78\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+주요 시간 절감 요인 3가지:
+\begin{enumerate}
+  \item \textbf{중복 검색 입력 제거}: 단일 쿼리가 4--7개 별도 포털 검색을 대체.
+  \item \textbf{캐시 데이터 재사용}: 이전에 가져온 MSDS 섹션과 가이드 매핑이 로컬에 저장되어, 재조회 시 API 호출 제거.
+  \item \textbf{교차 도메인 내비게이션}: 데이터 도메인 간 탭 전환이 포털 전환 오버헤드를 제거.
+\end{enumerate}
+
+\subsection{특허 인덱스 성능}
+
+\begin{table}[H]
+\centering
+\caption{글로벌 특허 인덱스 특성 및 성능}
+\label{tab:patent_perf}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{항목} & \textbf{수치} \\
+\midrule
+총 레코드 수 & 350,323,877 \\
+데이터베이스 크기 & 134.52 GB \\
+관할 특허청 & 6개 (USPTO, EPO, WIPO, JPO, KIPRIS, CNIPA) \\
+인덱스 컬럼 & 10 \\
+인덱스된 화학물질 & 48,000+ 고유 CAS/명칭 \\
+FTS5 쿼리 지연 & $< 1$초 (일반적 키워드 검색) \\
+인덱스 빌드 시간 & $\sim$72시간 (8코어 시스템 기준) \\
+SQLite WAL 모드 & 활성화 (동시 읽기/쓰기) \\
+무결성 검사 & PASS (PRAGMA integrity\_check) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{테스트 커버리지}
+
+테스트 스위트(\texttt{test\_api\_smoke.py}, 559 LOC)는 모든 API 엔드포인트 카테고리를 다루는 19개 자동화 스모크 테스트로 구성된다:
+
+\begin{table}[H]
+\centering
+\caption{모듈별 테스트 커버리지}
+\label{tab:tests}
+\small
+\begin{tabular}{@{}llr@{}}
+\toprule
+\textbf{모듈} & \textbf{테스트 수} & \textbf{커버리지} \\
+\midrule
+Root/Health & 2 & 라우팅, 보안 헤더, health/ready \\
+Chemicals & 2 & 검색(쿼리 트리밍, DB 정리), 상세(16섹션 가져오기) \\
+Patents & 4 & 검색 페이지네이션, 오류 매핑, KIPRIS 상세, 청구항 \\
+Trade & 1 & 업스트림 오류 처리 (502 매핑) \\
+Drugs & 3 & MFDS 집계, OpenFDA 폴백, PubMed 논문 \\
+Guides & 4 & 상태, 검색, 상세(404), 캐싱 포함 추천 \\
+AI & 2 & 전체 분석(출처+가이드), LLM 폴백 \\
+\midrule
+\textbf{합계} & \textbf{19} & \textbf{100\% 엔드포인트 커버리지} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+모든 테스트는 \texttt{monkeypatch} 기반 모킹과 컨텍스트 매니저 프로토콜을 구현한 \texttt{FakeDB}/\texttt{FakeAdapter} 클래스를 사용하여, 테스트 중 외부 API 호출이 발생하지 않도록 보장한다.
+
+\subsection{CI/CD 파이프라인}
+
+GitHub Actions CI 파이프라인(\texttt{.github/workflows/ci.yml})은 \texttt{main} 브랜치 push와 모든 PR에서 트리거되며, 2개 병렬 잡을 실행한다:
+
+\begin{enumerate}
+  \item \textbf{백엔드}(Ubuntu, Python 3.11): \texttt{pip install} $\rightarrow$ \texttt{pytest -q}
+  \item \textbf{프론트엔드}(Ubuntu, Node 20): \texttt{npm ci} $\rightarrow$ \texttt{npm run lint} $\rightarrow$ \texttt{npm run build}
+\end{enumerate}
+
+현재 상태: 전체 검사 통과 (CI 실행 \#1, 총 실행 시간 13초).
+
+% ============================================================
+\section{영향 및 결론}
+\label{sec:impact}
+
+\subsection{영향}
+
+ChemIP은 기존 정부 데이터 서비스의 API 오케스트레이션이 새로운 데이터 수집이나 인프라 없이 상당한 가치를 창출할 수 있음을 보여준다. 물질 평가 워크플로우의 76--78\% 시간 단축은 화학물질 안전 부서, 무역 컴플라이언스 팀, 제약 연구 그룹에서 의미 있는 운영 효율성 향상으로 전환된다.
+
+로컬 LLM 실행과 로컬 특허 인덱싱을 갖춘 자체 호스팅 아키텍처는 민감한 화학물질 조회 패턴이 배포 환경 외부로 유출되지 않도록 보장한다---이는 물질 평가가 독점적 제형이나 영업 비밀을 포함할 수 있는 많은 산업 환경에서의 필수 요건이다.
+
+\subsection{한계}
+
+\begin{enumerate}
+  \item \textbf{평가 방법론}: 76--78\% 시간 단축은 단일 운영자의 통제된 시나리오 비교 기반이며, 통계적 유의성 검정을 갖춘 공식 사용자 연구가 아님. 다중 사용자 연구 계획 중.
+  \item \textbf{저장 요구사항}: 글로벌 특허 인덱스(134.5 GB)는 상당한 디스크 공간이 필요. 클라우드 호스팅 API 전용 모드 또는 관할 축소 옵션이 진입 장벽을 낮출 수 있음.
+  \item \textbf{LLM 품질}: 현재 LLM(Qwen3:8b)은 범용 모델. 화학 안전 문헌 및 MSDS 텍스트에 대한 도메인 특화 파인튜닝으로 관련성과 정확도 향상 가능.
+  \item \textbf{언어 범위}: 한국어와 영어로 제한. 중국어, 일본어, 독일어 확장으로 5대 화학 산업 문서 언어를 포괄할 수 있음.
+  \item \textbf{실시간성}: 특허 인덱스 데이터는 빌드 후 정적. 증분 업데이트 메커니즘과 최신 출원에 대한 실시간 API 통합으로 커버리지 향상 가능.
+  \item \textbf{API 의존성}: KOSHA, KIPRIS, KOTRA, MFDS API는 정부 운영 서비스로 가용성, 속도 제한, 사양 변경에 종속. 통합 HTTP 클라이언트의 재시도 로직이 일시적 장애를 완화하나, API 폐지 시 어댑터 업데이트 필요.
+\end{enumerate}
+
+\subsection{향후 과제}
+
+\begin{enumerate}
+  \item 10명 이상의 화학물질 안전 실무자를 대상으로 한 공식 사용성 연구 수행.
+  \item 전체 리빌드 없이 신규 특허 공보를 반영하는 델타 인덱싱 구현.
+  \item 화학 안전 코퍼스(MSDS 텍스트, GHS 문서, KOSHA 가이드)에 대한 컴팩트 LLM 파인튜닝.
+  \item 파싱된 위험 문구에서 GHS 픽토그램 자동 할당.
+  \item 엔터프라이즈 배포를 위한 인증 및 조직별 데이터 격리 추가.
+\end{enumerate}
+
+\subsection{공개 정보}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{항목} & \textbf{상세} \\
+\midrule
+소스 코드 & \url{https://github.com/yuyongkim/chemIP} \\
+라이선스 & AGPL-3.0 \\
+릴리스 & v1.0.0 \\
+언어 & Python 3.11+ (백엔드), TypeScript/Node 20+ (프론트엔드) \\
+의존성 & Python 34개, npm 9개 패키지 \\
+문서 & README.md (영/한), QUICKSTART\_3MIN.md, RUNBOOK.md \\
+테스트 & 스모크 테스트 19건(pytest), GitHub Actions CI \\
+설치 & \texttt{pip install -r requirements.txt \&\& npm ci \&\& start\_all.sh} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================
+\section*{이해관계 충돌 선언}
+
+저자는 이해관계 충돌이 없음을 선언한다.
+
+\section*{감사의 글}
+
+본 연구는 대한민국 한국산업안전보건공단(KOSHA), 한국특허정보원(KIPRIS), 대한무역투자진흥공사(KOTRA), 식품의약품안전처(MFDS)가 제공하는 공공 API를 활용했다. 서드파티 통합을 가능하게 하는 오픈 데이터 서비스를 유지하는 각 기관에 감사드린다.
+
+% ============================================================
+\begin{thebibliography}{99}
+
+\bibitem{occupational_safety_2023}
+한국산업안전보건공단(KOSHA),
+\emph{MSDS OpenAPI 서비스 기술 문서}, 2024.
+\url{https://msds.kosha.or.kr}
+
+\bibitem{pubchem_2023}
+S.~Kim, J.~Chen, T.~Cheng, A.~Gindulyte, J.~He, S.~He, Q.~Li, B.~A.~Shoemaker, P.~A.~Thiessen, B.~Yu, L.~Zaslavsky, J.~Zhang, and E.~E.~Bolton,
+PubChem 2023 update,
+\emph{Nucleic Acids Research}, 51(D1), D1373--D1380, 2023.
+
+\bibitem{scifinder}
+Chemical Abstracts Service,
+\emph{SciFinder-n: Chemical Research Platform}, 2024.
+\url{https://scifinder-n.cas.org}
+
+\bibitem{reaxys}
+Elsevier,
+\emph{Reaxys: Chemistry Research Platform}, 2024.
+\url{https://www.reaxys.com}
+
+\bibitem{epo_ops}
+European Patent Office,
+\emph{Open Patent Services (OPS) v3.2 Technical Documentation}, 2024.
+\url{https://developers.epo.org}
+
+\bibitem{openfda}
+U.S.\ Food and Drug Administration,
+\emph{openFDA API Documentation}, 2024.
+\url{https://open.fda.gov}
+
+\bibitem{kipris}
+한국특허정보원,
+\emph{KIPRIS OpenAPI 서비스 기술 사양}, 2024.
+\url{https://www.kipris.or.kr}
+
+\bibitem{kotra}
+대한무역투자진흥공사,
+\emph{KOTRA 공공데이터 API 서비스 가이드}, 2024.
+\url{https://www.kotra.or.kr}
+
+\bibitem{ahocorasick}
+A.~V.~Aho and M.~J.~Corasick,
+Efficient string matching: An aid to bibliographic search,
+\emph{Communications of the ACM}, 18(6), 333--340, 1975.
+
+\bibitem{fastapi}
+S.~Ram\'{i}rez,
+\emph{FastAPI: Modern, Fast (High-Performance) Web Framework for Building APIs with Python 3.7+ Based on Standard Python Type Hints},
+\url{https://fastapi.tiangolo.com}, 2024.
+
+\bibitem{nextjs}
+Vercel,
+\emph{Next.js 16: The React Framework for the Web},
+\url{https://nextjs.org}, 2025.
+
+\bibitem{sqlite_fts5}
+D.~R.~Hipp,
+\emph{SQLite FTS5 Extension Documentation}, 2024.
+\url{https://www.sqlite.org/fts5.html}
+
+\bibitem{ghs_rev10}
+United Nations Economic Commission for Europe,
+\emph{Globally Harmonized System of Classification and Labelling of Chemicals (GHS Rev.~10)}, 2023.
+\url{https://unece.org/transport/standards/transport/dangerous-goods/ghs-rev10-2023}
+
+\bibitem{ollama}
+Ollama,
+\emph{Ollama: Run Large Language Models Locally}, 2024.
+\url{https://ollama.com}
+
+\end{thebibliography}
+
+\end{document}

@@ -368,6 +368,49 @@ class TerminologyDB(MappingStoreMixin):
             "chem_id": chem_id,
         }
 
+    def add_chemical_from_source(self, name: str, cas_no: str | None,
+                                  source: str, external_id: str,
+                                  name_en: str | None = None) -> int | None:
+        """Insert a chemical from an external source (ECHA, COMPTOX, etc.).
+
+        Skips if a record with the same CAS + source already exists.
+        Returns the new row id, or None if skipped.
+        """
+        cursor = self.conn.cursor()
+        desc = f"{source}_ID:{external_id}"
+
+        # Check by external_id first (exact match)
+        cursor.execute(
+            "SELECT id FROM chemical_terms WHERE description = ?", (desc,)
+        )
+        if cursor.fetchone():
+            return None
+
+        # Check by CAS + source (avoid duplicate CAS within same source)
+        if cas_no:
+            cursor.execute(
+                "SELECT id FROM chemical_terms WHERE cas_no = ? AND source = ?",
+                (cas_no, source),
+            )
+            if cursor.fetchone():
+                return None
+
+        cursor.execute(
+            """INSERT INTO chemical_terms (name, cas_no, description, name_en, source, external_id)
+               VALUES (?, ?, ?, ?, ?, ?)""",
+            (name, cas_no, desc, name_en, source, external_id),
+        )
+        row_id = cursor.lastrowid
+
+        # Sync FTS
+        cursor.execute(
+            """INSERT INTO chemical_terms_fts (rowid, name, cas_no, description, name_en)
+               VALUES (?, ?, ?, ?, ?)""",
+            (row_id, name, cas_no, desc, name_en),
+        )
+        self.conn.commit()
+        return row_id
+
     def get_indexing_keywords(self):
         """
         Get expanded list of keywords for indexing.
