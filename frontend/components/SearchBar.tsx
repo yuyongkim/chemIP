@@ -85,7 +85,7 @@ export default function SearchBar({ onSearch, initialValue = '', placeholder = "
         <div ref={wrapperRef} className="relative w-full max-w-2xl mx-auto">
             <form onSubmit={handleSubmit} className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                    <Search className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-200" />
+                    <Search className="h-5 w-5 text-gray-500 group-focus-within:text-blue-500 transition-colors duration-200" />
                 </div>
                 <input
                     type="text"
@@ -103,7 +103,7 @@ export default function SearchBar({ onSearch, initialValue = '', placeholder = "
                         <button
                             type="button"
                             onClick={() => setQuery('')}
-                            className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-all"
+                            className="p-1.5 rounded-lg text-gray-500 hover:text-gray-600 hover:bg-gray-100 transition-all"
                             title="Clear search"
                             aria-label="Clear search"
                         >
@@ -137,13 +137,13 @@ export default function SearchBar({ onSearch, initialValue = '', placeholder = "
                                                     {stripHtml(item.name)}
                                                 </span>
                                                 {item.cas_no && (
-                                                    <span className="ml-2 text-xs text-gray-400 font-mono">
+                                                    <span className="ml-2 text-xs text-gray-500 font-mono">
                                                         {item.cas_no}
                                                     </span>
                                                 )}
                                             </div>
                                         </div>
-                                        <span className="text-xs text-gray-400 group-hover:text-blue-500 transition-colors">&rarr;</span>
+                                        <span className="text-xs text-gray-500 group-hover:text-blue-500 transition-colors">&rarr;</span>
                                     </button>
                                 </li>
                             ))}

@@ -10,13 +10,14 @@ import { COUNTRIES, TAB_DESCRIPTIONS } from './constants';
 import { buildDynamicPriceKeywords, buildDynamicProductKeywords, stripHtml, toDateValue } from './utils';
 import { useTradeData } from './useTradeData';
 import { useStrategyInsights } from './useStrategyInsights';
+import nextDynamic from 'next/dynamic';
 import TradeHero from './components/TradeHero';
 import TradeFilters from './components/TradeFilters';
-import ProductResults from './components/ProductResults';
-import StrategyBrief from './components/StrategyBrief';
-import StrategyResults from './components/StrategyResults';
-import PriceResults from './components/PriceResults';
-import FraudResults from './components/FraudResults';
+const ProductResults = nextDynamic(() => import('./components/ProductResults'));
+const StrategyBrief = nextDynamic(() => import('./components/StrategyBrief'));
+const StrategyResults = nextDynamic(() => import('./components/StrategyResults'));
+const PriceResults = nextDynamic(() => import('./components/PriceResults'));
+const FraudResults = nextDynamic(() => import('./components/FraudResults'));
 
 export const dynamic = 'force-dynamic';
 

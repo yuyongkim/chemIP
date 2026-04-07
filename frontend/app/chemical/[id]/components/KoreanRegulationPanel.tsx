@@ -104,7 +104,7 @@ export default function KoreanRegulationPanel({ chemId, chemicalName }: KoreanRe
         </div>
         <div className="p-6">
           {ncisData.length === 0 ? (
-            <p className="text-gray-400 text-sm">No NCIS registration data found for this substance.</p>
+            <p className="text-gray-500 text-sm">No NCIS registration data found for this substance.</p>
           ) : (
             <div className="space-y-4">
               {ncisData.map((item, i) => (
@@ -114,7 +114,7 @@ export default function KoreanRegulationPanel({ chemId, chemicalName }: KoreanRe
                     <InfoRow label="Name (EN)" value={item.name_en} />
                     <InfoRow label="CAS No." value={item.cas_no} />
                     <InfoRow label="KE No." value={item.ke_no} />
-                    <InfoRow label="Molecular Formula" value={item.molecular_formula} icon={<FlaskConical className="w-4 h-4 text-gray-400" />} />
+                    <InfoRow label="Molecular Formula" value={item.molecular_formula} icon={<FlaskConical className="w-4 h-4 text-gray-500" />} />
                     <InfoRow label="Molecular Weight" value={item.molecular_weight ? `${item.molecular_weight} g/mol` : undefined} />
                   </div>
                   {item.synonyms_ko && (
@@ -158,7 +158,7 @@ export default function KoreanRegulationPanel({ chemId, chemicalName }: KoreanRe
         </div>
         <div className="p-6">
           {kischemData.length === 0 ? (
-            <p className="text-gray-400 text-sm">No KISCHEM registration data found for this substance.</p>
+            <p className="text-gray-500 text-sm">No KISCHEM registration data found for this substance.</p>
           ) : (
             <div className="space-y-4">
               {kischemData.map((item, i) => (

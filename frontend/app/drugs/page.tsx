@@ -1,16 +1,17 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar';
-import PatentViewer from '@/components/PatentViewer';
-import MarketNewsSection from '@/components/MarketNewsSection';
+const PatentViewer = dynamic(() => import('@/components/PatentViewer'));
+const MarketNewsSection = dynamic(() => import('@/components/MarketNewsSection'));
 
 import DrugsHero from './components/DrugsHero';
 import DrugsInitialState from './components/DrugsInitialState';
 import DrugsTabs from './components/DrugsTabs';
-import EasyInfoPanel from './components/EasyInfoPanel';
-import ApprovalPanel from './components/ApprovalPanel';
-import OpenFDAPanel from './components/OpenFDAPanel';
-import PubMedPanel from './components/PubMedPanel';
+const EasyInfoPanel = dynamic(() => import('./components/EasyInfoPanel'));
+const ApprovalPanel = dynamic(() => import('./components/ApprovalPanel'));
+const OpenFDAPanel = dynamic(() => import('./components/OpenFDAPanel'));
+const PubMedPanel = dynamic(() => import('./components/PubMedPanel'));
 import { useDrugSearch } from './useDrugSearch';
 
 export default function DrugsPage() {

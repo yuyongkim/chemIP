@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
-import ReactMarkdown from "react-markdown";
+import dynamic from "next/dynamic";
+const ReactMarkdown = dynamic(() => import("react-markdown"), { ssr: false });
 import { FileText, ChevronLeft, Clock, FolderOpen } from "lucide-react";
 
 interface DocItem {
@@ -76,7 +77,7 @@ export default function DocsPage() {
                   onClick={() => openDoc(doc.filename)}
                   className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-200 hover:border-gray-400 hover:shadow-sm transition-all text-left group"
                 >
-                  <FileText className="w-5 h-5 text-gray-400 group-hover:text-gray-700 shrink-0" />
+                  <FileText className="w-5 h-5 text-gray-500 group-hover:text-gray-700 shrink-0" />
                   <div className="flex-1 min-w-0">
                     <div className="font-medium text-gray-900 truncate">
                       {doc.filename.replace(/\.md$/, "").replace(/_/g, " ")}
@@ -113,7 +114,7 @@ export default function DocsPage() {
 
             <div className="bg-white rounded-xl border border-gray-200 p-6 md:p-10">
               {loading ? (
-                <p className="text-gray-400 text-center py-12">
+                <p className="text-gray-500 text-center py-12">
                   Loading...
                 </p>
               ) : (

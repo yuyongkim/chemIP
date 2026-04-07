@@ -28,7 +28,7 @@ export default function FraudResults({ items }: FraudResultsProps) {
                 {item.country && <span className="text-xs px-2 py-0.5 bg-rose-50 rounded-full text-rose-700">{item.country}</span>}
                 {item.category && <span className="text-xs px-2 py-0.5 bg-gray-100 rounded-full text-gray-700">{item.category}</span>}
                 {item.amount && <span className="text-xs px-2 py-0.5 bg-amber-50 rounded-full text-amber-700">Damage: {item.amount}</span>}
-                {item.date && <span className="text-xs text-gray-400">{item.date}</span>}
+                {item.date && <span className="text-xs text-gray-500">{item.date}</span>}
               </div>
               {item.content && <p className="text-sm text-gray-700 line-clamp-4">{item.content}</p>}
               <div className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-rose-700">

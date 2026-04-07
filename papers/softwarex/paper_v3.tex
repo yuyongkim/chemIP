@@ -1,0 +1,340 @@
+\documentclass[preprint,12pt]{elsarticle}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\journal{SoftwareX}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{ChemIP: An Open-Source Platform Integrating MSDS, Patent, and Trade Intelligence for Chemical Safety Decision-Making}
+
+\author[wisc]{Yu Yong Kim\corref{cor1}}
+\ead{ykim288@wisc.edu}
+\cortext[cor1]{Corresponding author}
+
+\affiliation[wisc]{organization={University of Wisconsin-Madison},
+            country={United States}}
+
+\begin{abstract}
+Chemical safety practitioners must routinely consult multiple disconnected government portals --- each with its own interface, query syntax, and response format --- to evaluate a single substance. This fragmented workflow increases investigation time and introduces risks of information omission. ChemIP is an open-source, self-hostable web platform that unifies nine external service endpoints spanning Korean and international public data --- covering MSDS safety data, patents, trade intelligence, pharmaceutical registries, chemical classification, and biomedical literature --- into a single-query workflow with adapter-based API orchestration. The platform is built with FastAPI and Next.js, supports local deployment for privacy-sensitive environments, and includes an optional LLM-assisted summary with deterministic rule-based fallback. The source code, automated tests, and CI/CD configuration are hosted in a public GitHub repository and will remain available under the AGPL-3.0 license for the foreseeable future, and an archived snapshot of ChemIP v1.0.0 will be deposited on Zenodo with a citable DOI prior to final submission.
+\end{abstract}
+
+\begin{keyword}
+chemical safety \sep MSDS \sep API orchestration \sep open-source \sep decision support \sep public data integration
+\end{keyword}
+
+\end{frontmatter}
+
+%% ============================================================
+%% Code Metadata
+%% ============================================================
+
+\section*{Code Metadata (SoftwareX Mandatory)}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lp{10cm}@{}}
+\toprule
+\textbf{Nr.} & \textbf{Description} \\
+\midrule
+C1 & Current code version: v1.0.0 \\
+C2 & Permanent link to code/repository: \url{https://github.com/yuyongkim/chemIP} \\
+C3 & Archived snapshot (Zenodo DOI, to be minted prior to final submission) \\
+C4 & Legal Code License: AGPL-3.0 \\
+C5 & Code versioning system used: git \\
+C6 & Software code languages, tools, and services used: Python 3.13, TypeScript 5, FastAPI, Next.js 16, React 19, SQLite, Ollama \\
+C7 & Compilation requirements, operating environments \& dependencies: Python 3.11+, Node.js 20+, 34 Python packages, 9 npm packages; Windows/Linux/macOS \\
+C8 & Link to developer documentation: \url{https://github.com/yuyongkim/chemIP/blob/main/README.md} \\
+C9 & Support email for questions: ykim288@wisc.edu \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% ============================================================
+%% Section 1
+%% ============================================================
+
+\section{Motivation and Significance}
+
+The global chemical industry involves a large number of commercially circulated substances. The International Council of Chemical Associations reports on the order of tens of thousands of chemical products in active commercial use worldwide~\cite{icca2024}. Eurostat trade statistics report that EU exports of chemicals and related products were on the order of \texteuro560 billion in the most recent available year~\cite{eurostat2025}. Evaluating a single substance for market entry or regulatory compliance requires cross-referencing at least four categories of information: (1) hazard classifications from Material Safety Data Sheets (MSDS); (2) patent status for freedom-to-operate analysis; (3) trade regulations and market dynamics; and (4) pharmaceutical regulatory status when chemicals overlap with drug formulations.
+
+This cross-referencing burden falls disproportionately on two underserved groups: \textbf{Korean small and medium-sized enterprises (SMEs) preparing chemical exports}, which must verify that target substances meet destination-country regulations and do not infringe existing patents; and \textbf{foreign companies entering the Korean market}, which must navigate Korea-specific safety classifications, labeling requirements, and substance restrictions before domestic distribution.
+
+In the Republic of Korea, these domains are managed by separate agencies --- KOSHA (Korea Occupational Safety and Health Agency, occupational safety), KIPRIS (Korea Intellectual Property Rights Information Service, patents), KOTRA (Korea Trade-Investment Promotion Agency, trade), MFDS (Ministry of Food and Drug Safety, pharmaceuticals), KISCHEM (Korea Information System for Chemical Safety, exposure and first-aid data), and NCIS (National Chemical Information System, substance classification), both operated by the National Institute of Chemical Safety (NICS) under the Ministry of Environment --- each with independent web portals, query interfaces, and response formats. A typical evaluation requires sequentially accessing each portal, re-entering search queries, and manually compiling results into a working document. This fragmented workflow introduces four systemic inefficiencies, as documented in an internal deployment plan~\cite{kim2026playbook}:
+
+\begin{enumerate}
+\item \textbf{Fragmented query channels} --- safety, patent, and market data reside in separate portals with no cross-linking;
+\item \textbf{Process delays} --- per-substance investigation time is dominated by repetitive manual lookups across portals;
+\item \textbf{Inconsistent results} --- investigation quality varies with individual practitioner expertise, as no standardized procedure exists; and
+\item \textbf{Broken follow-up workflows} --- after MSDS review, patent and market investigation is often interrupted, leaving cross-domain risks unidentified.
+\end{enumerate}
+
+The core problem is not a lack of public data, but \textbf{workflow fragmentation}: the information exists across well-maintained government services, yet no open tool integrates them into a unified lookup process for the SMEs and compliance teams that need it most.
+
+\subsection{Comparison with Existing Platforms}
+
+Table~\ref{tab:comparison} compares ChemIP with existing platforms based on publicly available product documentation. PubChem~\cite{pubchem2023} provides comprehensive chemical properties and partial substance classification but does not integrate MSDS operational data, Korean patents, or trade intelligence. SciFinder~\cite{scifinder2024} and Reaxys~\cite{reaxys2024} offer patent-integrated molecular search but are commercial, subscription-based products that do not cover Korean regulatory data or trade information. OpenFDA~\cite{openfda2024} provides US drug safety data without cross-domain integration. We are not aware of an existing open-source, self-hostable platform that combines Korean regulatory data sources (KOSHA MSDS, KISCHEM, NCIS) with patent search (KIPRIS) and trade intelligence (KOTRA) in a single integrated workflow, based on a literature and product documentation review conducted in early 2026~\cite{pubchem2023,scifinder2024,reaxys2024,openfda2024}. Table~\ref{tab:comparison} should therefore be interpreted as an indicative rather than exhaustive comparison.
+
+\begin{table}[htbp]
+\centering
+\caption{Feature comparison of chemical information platforms. Y = supported, partial = limited support, -- = not available. Comparison based on publicly available product documentation as of early 2026.}
+\label{tab:comparison}
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+Feature & ChemIP & PubChem & SciFinder & Reaxys & OPS & OpenFDA & KOSHA Web \\
+\midrule
+Open-source        & Y & Y       & --        & --     & Y   & Y       & --        \\
+MSDS integration   & Y & --      & partial   & --     & --  & --      & Y         \\
+Patent search      & Y & --      & Y         & Y      & Y   & --      & --        \\
+Trade intelligence & Y & --      & --        & --     & --  & --      & --        \\
+Drug cross-ref     & Y & partial & --        & --     & --  & Y       & --        \\
+Substance classif. & Y & partial & --        & --     & --  & --      & --        \\
+Multi-API orchestr.& Y & --      & --        & --     & --  & --      & --        \\
+Self-hosted        & Y & --      & --        & --     & --  & --      & --        \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% ============================================================
+%% Section 2
+%% ============================================================
+
+\section{Software Description}
+
+\subsection{Software Architecture}
+
+ChemIP follows a three-tier architecture (Fig.~\ref{fig:architecture}): a Next.js 16 frontend with React 19, a FastAPI backend with 30+ REST endpoints organized into seven route modules, and a data layer comprising SQLite databases and nine external service endpoints.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.85\textwidth}{\ttfamily\small
+\begin{verbatim}
+[Web Browser]
+    |
+    v  REST/JSON proxy
+[Next.js 16 / React 19 -- port 7000]
+    |
+    v
+[FastAPI Backend -- port 7010]
+  30+ endpoints · 5-layer middleware · 7 route modules
+    |              |              |
+    v              v              v
+[External APIs]  [SQLite DBs]   [Local LLM]
+ KOSHA, KIPRIS,   terminology.db  Ollama
+ KOTRA (7), MFDS, (FTS5 index)   (optional)
+ OpenFDA, PubMed, patent_index.db
+ Naver, KISCHEM,  (optional)
+ NCIS
+\end{verbatim}
+}}
+\caption{Three-tier architecture. The frontend proxies API requests to the backend, which orchestrates nine external service endpoints, local databases, and an optional LLM. Components marked ``optional'' are not required for core functionality.}
+\label{fig:architecture}
+\end{figure}
+
+\textbf{Adapter-based integration.} Each external data source is wrapped in a dedicated adapter module (Table~\ref{tab:adapters}) that handles authentication, request construction, response parsing (XML or JSON), and error normalization. All adapters share a unified HTTP client (\texttt{backend/api/http\_client.py}) with connection pooling (20 connections), exponential-backoff retry ($t_k = 0.5 \times 2^k$~s, max 3 retries), automatic failover on transient errors (HTTP 502/503/504), and an SSRF-protection allow-list that restricts outbound requests to known government API hosts. This design allows new data sources to be added without modifying existing adapters or route handlers.
+
+The KOSHA MSDS adapter implements a fallback mechanism (verified in source code \texttt{backend/api/kosha\_msds\_adapter.py}): when the primary API endpoint (\texttt{msds.kosha.or.kr})~\cite{kosha2024} is unreachable, requests are automatically rerouted to the \texttt{data.go.kr} public data portal proxy endpoint~\cite{datagokr2024}, ensuring continued access during service outages. Both endpoints expose the same underlying KOSHA MSDS dataset, as described in the official KOSHA MSDS Open API documentation~\cite{kosha2024} and the corresponding entry on the Korea Public Data Portal~\cite{datagokr2024}.
+
+\begin{table}[htbp]
+\centering
+\caption{Integrated data sources and adapter characteristics. LOC counted from source files in the \texttt{backend/api/} directory as of ChemIP v1.0.0.}
+\label{tab:adapters}
+\begin{tabular}{@{}llrl@{}}
+\toprule
+Source & Format & LOC & Scope \\
+\midrule
+KOSHA MSDS~\cite{kosha2024}  & XML      &  98 & 16-section safety data (with data.go.kr fallback~\cite{datagokr2024}) \\
+KIPRIS Patents               & XML      & 209 & Korean patent search/detail \\
+KOTRA (7 APIs)               & JSON/XML & 422 & Trade intelligence \\
+MFDS                         & JSON     &  70 & Korean drug approvals \\
+OpenFDA~\cite{openfda2024}   & JSON     &  30 & US drug labels \\
+PubMed                       & JSON     &  66 & Biomedical literature \\
+Naver                        & JSON     &  54 & Korean news search \\
+KISCHEM                      & XML      &  82 & Exposure symptoms, first-aid \\
+NCIS                         & JSON     &  78 & Substance classification \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Note:} The platform integrates nine distinct external service endpoints. KOTRA provides seven sub-APIs (market news, entry strategy, price info, fraud cases, national info, enterprise success, import restrictions) counted as one source group in the adapter architecture.
+
+\textbf{Graceful degradation.} The system is designed to function when individual components are unavailable. If the KOSHA API is down, cached MSDS data is served from the local database. If the optional patent index database is not installed, patent search falls back to live KIPRIS API queries. If the LLM server (Ollama) is offline, a deterministic rule-based report builder generates structured safety summaries from the same evidence bundle, with a confidence score $C = \min(0.95,\; 0.4 + 0.04 \times N_{\text{evidence}})$.
+
+\textbf{Optional patent search backend.} For deployments requiring large-scale patent analysis, ChemIP supports an optional pre-built patent index using Aho--Corasick multi-pattern matching~\cite{aho1975} over an FTS5-indexed SQLite database~\cite{sqlite2024}. This component is not required for core platform functionality and is documented separately in the repository.
+
+\textbf{Guide recommendation.} A multi-criteria engine scores chemical--guide matches using weighted exact-match scoring: $S = 4|M_{\text{CAS}}| + 3|M_{\text{title}}| + 2|M_{\text{body}}|$, with deterministic 8-tuple ranking for reproducible ordering.
+
+\subsection{Software Functionalities}
+
+ChemIP provides six integrated workflows through a tabbed interface (Fig.~\ref{fig:ui}):
+
+\begin{enumerate}
+\item \textbf{Substance safety lookup}: A single query (chemical name, CAS number, or English name) retrieves all 16 MSDS sections with GHS pictograms, cached locally after first retrieval.
+\item \textbf{Patent landscape}: Dual-track search combining real-time KIPRIS API queries with optional local index lookups. Results are classified as exclusion, usage, or mention by context analysis.
+\item \textbf{Trade intelligence}: Four analytical views (market news, entry strategy, price trends, fraud alerts) plus HS-code-based import restriction checking via KOTRA APIs.
+\item \textbf{Pharmaceutical cross-reference}: Aggregates Korean drug approvals (MFDS), US drug labels (OpenFDA), and biomedical literature (PubMed) for the queried substance.
+\item \textbf{Korean regulatory classification}: Aggregates KISCHEM exposure symptom and first-aid data with NCIS substance classification (toxic, restricted, accident-preparedness) and molecular data.
+\item \textbf{AI-assisted synthesis}: Collects evidence across all domains and generates a natural-language safety summary. When the LLM is unavailable, a rule-based fallback produces a structured report with source attribution.
+\end{enumerate}
+
+\begin{figure}[htbp]
+\centering
+\subfloat[Home page with unified search bar accepting chemical names or CAS registry numbers, quick-access cards for frequently searched substances with GHS classifications, and a footer summarizing platform coverage.]{\includegraphics[width=0.48\textwidth]{figures/cap_main.png}\label{fig:ui_a}}
+\hfill
+\subfloat[Chemical detail page showing a left-side table of contents for all 16 MSDS sections and a main panel displaying hazard statements. Eight horizontal tabs allow navigation across MSDS, patents, trade, drugs, guides, regulations, and AI analysis for the same substance.]{\includegraphics[width=0.48\textwidth]{figures/cap_chemical.png}\label{fig:ui_b}}
+\\[8pt]
+\subfloat[Global Patent Search interface with keyword-based search across a patent index covering major international patent offices (USPTO, EPO, WIPO, JPO).]{\includegraphics[width=0.48\textwidth]{figures/cap_patents.png}\label{fig:ui_c}}
+\hfill
+\subfloat[KOTRA Trade Data Analysis Hub organized into four analysis tabs (Products DB, Market Strategy, Price Info, Trade Fraud) with country-level filtering and a summary panel showing results and current filter criteria.]{\includegraphics[width=0.48\textwidth]{figures/cap_trade.png}\label{fig:ui_d}}
+\caption{ChemIP platform user interface illustrating the four primary modules. Each view is accessible via the persistent top navigation bar.}
+\label{fig:ui}
+\end{figure}
+
+%% ============================================================
+%% Section 3
+%% ============================================================
+
+\section{Illustrative Usage Scenarios}
+
+The following scenarios illustrate how ChemIP consolidates multi-portal workflows into unified queries, drawn from documented use cases in an internal project deployment plan~\cite{kim2026playbook}. These are representative usage examples, not formal evaluations; no controlled user study has been conducted.
+
+\subsection{Scenario 1: SME Export Pre-screening}
+
+A Korean SME plans to export toluene (CAS: 108-88-3) as an industrial solvent to Vietnam. Before shipment, the compliance officer must verify hazard classification, destination-country import restrictions, and patent freedom-to-operate --- information spread across KOSHA, KOTRA, and KIPRIS portals. A single ChemIP query retrieves the full 16-section MSDS (GHS pictograms GHS02, GHS07, GHS08; TWA: 50~ppm), KOTRA entry strategy data with import restriction status, KIPRIS patent results, trade fraud alerts, and three matched KOSHA safety guides. The conventional workflow requires accessing at least four portals with separate authentication; ChemIP consolidates this into one tabbed interface with persistent search context.
+
+\subsection{Scenario 2: Foreign Company Korean Market Entry}
+
+A multinational chemical distributor evaluates methanol (CAS: 67-56-1) for domestic distribution in Korea. Korean regulations require substance-specific safety classification (NCIS), exposure symptom data (KISCHEM), and MSDS compliance (KOSHA) before market entry --- each managed by a different agency. One ChemIP query retrieves NCIS classification (toxic substance, accident-preparedness chemical), KISCHEM first-aid and exposure data, the full KOSHA MSDS, and MFDS pharmaceutical cross-references, enabling the compliance team to identify all Korea-specific requirements in a single session.
+
+\subsection{Scenario 3: Pharmaceutical Ingredient Cross-reference}
+
+A raw material supplier investigates salicylic acid (CAS: 69-72-7) after a client reports regulatory concerns. The drug workflow aggregates MFDS-approved products, OpenFDA labels with relevant warnings, and recent PubMed articles, alongside the MSDS irritant classification --- consolidating Korean and US regulatory databases that would otherwise require three separate searches with different query syntaxes.
+
+%% ============================================================
+%% Section 4
+%% ============================================================
+
+\section{Impact}
+
+\subsection{Practical Utility}
+
+ChemIP addresses a concrete workflow problem: the manual effort required to navigate between disconnected government data portals during substance evaluation. By consolidating nine external service endpoints into a single-query interface, the platform eliminates redundant search entry, provides local caching of previously retrieved data, and enables tab-based cross-domain navigation without portal switching.
+
+A preliminary internal workflow analysis based on standard evaluation scenarios estimates that per-substance investigation time may decrease from approximately 150 minutes (sequential multi-portal access with separate authentication) to approximately 35 minutes (single-query consolidated retrieval), suggesting a potential reduction of roughly 76\%~\cite{kim2026playbook}. These figures are based on scripted scenario walkthroughs by the author, not on controlled time-and-motion studies, and should therefore be interpreted as indicative rather than definitive. The estimates reflect the elimination of redundant authentication, repeated query entry, and manual result compilation across portals. A formal time-motion study with domain practitioners is planned as future work to validate these figures.
+
+During a two-day internal deployment exercise (February 2026), four issues were identified and resolved: (1) fallback query logic was added for KOTRA endpoints that returned zero results for certain keywords; (2) the export strategy screen was redesigned to emphasize actionable risk summaries rather than raw country listings; (3) trade fraud data encoding was normalized for readability; and (4) GHS hazard statement collection was converted to a batch pipeline to improve coverage beyond English-name matching~\cite{kim2026playbook}. These refinements demonstrate that the adapter-based architecture supports rapid iteration in response to real-world data quality issues.
+
+The self-hosted architecture ensures that chemical inquiry patterns --- which may reveal proprietary formulations or pending patent strategies --- remain within the deployment environment. This is particularly relevant for Korean SMEs evaluating export candidates and foreign companies conducting pre-entry compliance reviews, where substance evaluation patterns constitute trade-sensitive information.
+
+\subsection{Software Quality and Reproducibility}
+
+The repository includes automated smoke tests (in \texttt{tests/test\_api\_smoke.py}) that cover all API endpoint categories. The test suite uses monkeypatch-based mocking to ensure no external API calls during testing, and the full suite passes as of ChemIP v1.0.0. A GitHub Actions CI/CD workflow configuration is included in the repository (\texttt{.github/workflows/}), and single-command startup scripts are provided for both development and production environments. Reviewers can verify the test suite by running \texttt{pytest tests/test\_api\_smoke.py} after following the setup instructions in \texttt{README.md}.
+
+\subsection{Deployment Modes}
+
+ChemIP supports three deployment configurations:
+
+\begin{itemize}
+\item \textbf{Minimal}: Core search and MSDS lookup using the terminology database and live API calls. No additional setup required beyond API keys from \texttt{data.go.kr}.
+\item \textbf{Standard}: Adds cached MSDS data, guide recommendations, drug cross-reference, and Korean regulatory lookups.
+\item \textbf{Full}: Adds the optional local patent index and LLM-assisted analysis.
+\end{itemize}
+
+\subsection{Limitations}
+
+\begin{itemize}
+\item No formal user study has been conducted; the time-reduction estimates are based on internal scenario walkthroughs, not controlled measurements. Usability evaluation with domain practitioners is planned as future work.
+\item Some workflows depend on external government APIs that may change specifications or experience outages, as observed with intermittent KOSHA service interruptions during development. The adapter-based design mitigates this through fallback mechanisms.
+\item The optional patent index requires substantial storage and is not necessary for core platform functionality.
+\item The LLM component (Qwen3:8b via Ollama) is a general-purpose model; domain-specific fine-tuning could improve the relevance of generated analyses.
+\item Full deployment requires API keys from Korean government data portals (\texttt{data.go.kr}), though the platform operates in degraded mode without them.
+\item The feature comparison in Table~\ref{tab:comparison} is based on publicly available documentation and may not reflect all capabilities of commercial platforms (SciFinder, Reaxys) that are behind subscription paywalls.
+\end{itemize}
+
+%% ============================================================
+%% Section 5
+%% ============================================================
+
+\section{Conclusions}
+
+ChemIP provides an open-source, adapter-based integration platform that unifies nine external service endpoints --- spanning MSDS safety data, patents, trade intelligence, pharmaceutical registries, chemical classification, and biomedical literature --- into a single-query workflow for chemical safety practitioners. The platform is designed for local deployment, supports graceful degradation when individual components are unavailable, and includes automated tests with CI/CD. Future work includes a formal usability study with domain practitioners, expansion to additional regulatory jurisdictions, and exploration of domain-specific LLM fine-tuning. The source code is available at \url{https://github.com/yuyongkim/chemIP} under the AGPL-3.0 license.
+
+%% ============================================================
+%% Declaration of Competing Interest
+%% ============================================================
+
+\section*{Declaration of Competing Interest}
+
+The author declares no competing interests.
+
+%% ============================================================
+%% Acknowledgments
+%% ============================================================
+
+\section*{Acknowledgments}
+
+This work utilized public APIs provided by the Korea Occupational Safety and Health Agency (KOSHA), Korea Intellectual Property Rights Information Service (KIPRIS), Korea Trade-Investment Promotion Agency (KOTRA), Ministry of Food and Drug Safety (MFDS), and the National Institute of Chemical Safety (NICS), which operates the KISCHEM and NCIS services under the Ministry of Environment of the Republic of Korea. The author thanks the respective agencies for maintaining open data services that enable third-party integration.
+
+%% ============================================================
+%% References
+%% ============================================================
+
+\begin{thebibliography}{15}
+
+\bibitem{icca2024}
+International Council of Chemical Associations (ICCA), Global Chemical Industry Overview, 2024. \url{https://www.icca-chem.org/global-chemical-industry-overview} (Accessed: March 2026).
+
+\bibitem{eurostat2025}
+Eurostat, ``International trade in chemicals and related products (SITC 5),'' Eurostat Statistics Explained, updated January 2025. \url{https://ec.europa.eu/eurostat/statistics-explained/index.php?title=International_trade_in_chemicals_and_related_products} (Accessed: March 2026).
+
+\bibitem{kim2026playbook}
+Y.Y.~Kim, ChemIP Platform Adoption Playbook (internal deployment plan), 2026. Available in project repository: \texttt{docs/API\_ADOPTION\_PLAYBOOK.md}.
+
+\bibitem{pubchem2023}
+S.~Kim, J.~Chen, T.~Cheng, et al., PubChem 2023 update, Nucleic Acids Research 51(D1) (2023) D1373--D1380.
+
+\bibitem{scifinder2024}
+Chemical Abstracts Service, SciFinder-n: Chemical Research Platform, 2024. \url{https://scifinder-n.cas.org} (Accessed: March 2026).
+
+\bibitem{reaxys2024}
+Elsevier, Reaxys: Chemistry Research Platform, 2024. \url{https://www.reaxys.com} (Accessed: March 2026).
+
+\bibitem{openfda2024}
+U.S. Food and Drug Administration, openFDA API Documentation, 2024. \url{https://open.fda.gov} (Accessed: March 2026).
+
+\bibitem{aho1975}
+A.V.~Aho, M.J.~Corasick, Efficient string matching: An aid to bibliographic search, Communications of the ACM 18(6) (1975) 333--340.
+
+\bibitem{sqlite2024}
+D.R.~Hipp, SQLite FTS5 Extension Documentation, 2024. \url{https://www.sqlite.org/fts5.html}.
+
+\bibitem{ollama2024}
+Ollama, Run Large Language Models Locally, 2024. \url{https://ollama.com}.
+
+\bibitem{ghs2023}
+United Nations Economic Commission for Europe, Globally Harmonized System of Classification and Labelling of Chemicals (GHS Rev.~10), 2023.
+
+\bibitem{fastapi2024}
+S.~Ramirez, FastAPI: Modern, Fast Web Framework for Building APIs with Python, \url{https://fastapi.tiangolo.com}, 2024.
+
+\bibitem{nextjs2025}
+Vercel, Next.js: The React Framework for the Web, \url{https://nextjs.org}, 2025.
+
+\bibitem{kosha2024}
+Korea Occupational Safety and Health Agency (KOSHA), MSDS Open API Service, 2024. \url{https://msds.kosha.or.kr/MSDSInfo/kcic/openapikosha.do} (Accessed: March 2026).
+
+\bibitem{datagokr2024}
+Korea Public Data Portal (data.go.kr), ``KOSHA Material Safety Data Sheet Inquiry Service,'' Service No.~15157612, 2024. \url{https://www.data.go.kr/data/15157612/openapi.do} (Accessed: March 2026).
+
+\end{thebibliography}
+
+\end{document}

@@ -115,6 +115,9 @@ class Settings:
         "./data/kosha_guide",
     )
 
+    # External access API key (required when accessed from outside localhost)
+    CHEMIP_API_KEY: str = os.getenv("CHEMIP_API_KEY", "")
+
     # CORS settings (comma-separated)
     CORS_ORIGINS: str = os.getenv("CORS_ORIGINS", "*")
 

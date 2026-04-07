@@ -29,10 +29,10 @@ export default function PriceResults({ items }: PriceResultsProps) {
               {item.unit ? ` / ${item.unit}` : ''}
             </span>
           </div>
-          {item.category && <p className="text-xs text-gray-400 mt-2">{item.category}</p>}
+          {item.category && <p className="text-xs text-gray-500 mt-2">{item.category}</p>}
           {(item.date || item.newsUrl) && (
             <div className="mt-2 flex items-center justify-between">
-              <span className="text-xs text-gray-400">{item.date || ''}</span>
+              <span className="text-xs text-gray-500">{item.date || ''}</span>
               <span className="inline-flex items-center gap-1 text-xs font-semibold text-amber-700">
                 View Source
                 <ExternalLink className="w-3.5 h-3.5" />

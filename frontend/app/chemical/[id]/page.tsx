@@ -1,24 +1,27 @@
 'use client';
 
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 
-import AIAssistantPanel from '@/components/AIAssistantPanel';
 import Navbar from '@/components/Navbar';
 import DetailSidebar from '@/components/DetailSidebar';
 import SectionViewer from '@/components/SectionViewer';
-import PatentViewer from '@/components/PatentViewer';
-import MarketNewsSection from '@/components/MarketNewsSection';
-import AIAnalysisSection from '@/components/AIAnalysisSection';
-import BilingualSafetyPanel from '@/components/BilingualSafetyPanel';
-import RegulationStatusPanel from '@/components/RegulationStatusPanel';
+
+// Dynamic imports for tab-based components (only loaded when tab is active)
+const PatentViewer = dynamic(() => import('@/components/PatentViewer'));
+const MarketNewsSection = dynamic(() => import('@/components/MarketNewsSection'));
+const AIAnalysisSection = dynamic(() => import('@/components/AIAnalysisSection'));
+const AIAssistantPanel = dynamic(() => import('@/components/AIAssistantPanel'));
+const BilingualSafetyPanel = dynamic(() => import('@/components/BilingualSafetyPanel'));
+const RegulationStatusPanel = dynamic(() => import('@/components/RegulationStatusPanel'));
+const DrugInfoPanel = dynamic(() => import('./components/DrugInfoPanel'));
+const GuideRecommendationsPanel = dynamic(() => import('./components/GuideRecommendationsPanel'));
+const KoreanRegulationPanel = dynamic(() => import('./components/KoreanRegulationPanel'));
 
 import ChemicalHeaderTabs from './components/ChemicalHeaderTabs';
 import EnglishSafetyCard from './components/EnglishSafetyCard';
-import DrugInfoPanel from './components/DrugInfoPanel';
-import GuideRecommendationsPanel from './components/GuideRecommendationsPanel';
-import KoreanRegulationPanel from './components/KoreanRegulationPanel';
 import MarketTabToolbar from './components/MarketTabToolbar';
 import { useChemicalDetail } from './useChemicalDetail';
 
@@ -61,7 +64,7 @@ export default function ChemicalDetail() {
             <div className="animate-spin rounded-full h-14 w-14 border-4 border-blue-600 border-t-transparent absolute inset-0"></div>
           </div>
           <p className="text-gray-700 text-lg font-medium">Loading MSDS data...</p>
-          <p className="text-gray-400 text-sm">Querying database (uncached sections may require additional KOSHA API fetch)</p>
+          <p className="text-gray-500 text-sm">Querying database (uncached sections may require additional KOSHA API fetch)</p>
         </div>
       </div>
     );

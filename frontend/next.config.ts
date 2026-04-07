@@ -18,7 +18,12 @@ function resolveBackendOrigin(raw: string): string {
 const backendOrigin = resolveBackendOrigin(rawBackendOrigin);
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "nedrug.mfds.go.kr" },
+      { protocol: "http", hostname: "nedrug.mfds.go.kr" },
+    ],
+  },
   async rewrites() {
     return [
       {

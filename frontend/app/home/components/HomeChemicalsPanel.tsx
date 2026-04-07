@@ -34,8 +34,8 @@ export default function HomeChemicalsPanel({
   if (results.length === 0) {
     return (
       <div className="text-center py-16">
-        <p className="text-gray-400">No chemical results found for &quot;{query}&quot;.</p>
-        <p className="text-sm text-gray-400 mt-2">Try cross-checking in the Drugs tab.</p>
+        <p className="text-gray-500">No chemical results found for &quot;{query}&quot;.</p>
+        <p className="text-sm text-gray-500 mt-2">Try cross-checking in the Drugs tab.</p>
       </div>
     );
   }

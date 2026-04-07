@@ -283,7 +283,7 @@ export default function MarketNewsSection({ keyword }: MarketNewsProps) {
               <span className={`text-xs font-semibold px-2 py-1 rounded ${item.source === 'Naver' ? 'text-green-700 bg-green-50' : 'text-blue-600 bg-blue-50'}`}>
                 {item.source === 'Naver' ? 'Naver' : (item.cntryNm || 'Global')}
               </span>
-              <span className="text-xs text-gray-400">{item.newsWrtDt}</span>
+              <span className="text-xs text-gray-500">{item.newsWrtDt}</span>
             </div>
             <h4 className="font-bold text-gray-800 mb-2 line-clamp-2">{item.newsTitl}</h4>
             <p className="text-sm text-gray-600 line-clamp-3 mb-3">{(item.cntntSumar || item.newsBdt)?.replace(/<[^>]*>?/gm, '')}</p>

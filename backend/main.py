@@ -29,14 +29,51 @@ app = FastAPI(title="ChemIP Platform API")
 _rate_limit_lock = Lock()
 _rate_limit_buckets: dict[str, deque[float]] = defaultdict(deque)
 
-# Configure CORS (use settings for production flexibility)
+# Configure CORS — restrict methods and headers
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins_list,
     allow_credentials=settings.cors_allow_credentials,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["x-api-key", "x-request-id", "content-type"],
 )
+
+# Audit logger (separate from request log — structured for compliance)
+_audit_logger = logging.getLogger("chemip.audit")
+_audit_handler = logging.FileHandler(
+    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logs", "audit.log"),
+)
+_audit_handler.setFormatter(logging.Formatter("%(message)s"))
+_audit_logger.addHandler(_audit_handler)
+_audit_logger.setLevel(logging.INFO)
+
+
+_LOCALHOST_PREFIXES = ("127.0.0.1", "::1", "localhost")
+
+# Public paths that never require API key auth
+_PUBLIC_PATHS = {"/", "/health"}
+
+
+def _get_client_ip(request: Request) -> str:
+    """Extract real client IP, respecting Cloudflare's CF-Connecting-IP header."""
+    cf_ip = request.headers.get("cf-connecting-ip")
+    if cf_ip:
+        return cf_ip
+    xff = request.headers.get("x-forwarded-for")
+    if xff:
+        return xff.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+
+def _is_localhost(request: Request) -> bool:
+    """Check if the TCP connection originates from localhost.
+
+    Next.js rewrite proxy connects from 127.0.0.1 but forwards
+    Cloudflare headers (cf-connecting-ip, x-forwarded-for).
+    We trust the TCP-level client IP, not the headers, for auth bypass.
+    """
+    host = request.client.host if request.client else ""
+    return any(host.startswith(p) for p in _LOCALHOST_PREFIXES) or host == "testclient"
 
 
 @app.middleware("http")
@@ -48,6 +85,56 @@ async def assign_request_id(request: Request, call_next):
     return response
 
 
+_ALLOWED_ORIGINS = {"https://chemip.yule.pics", "http://localhost:7000", "http://127.0.0.1:7000"}
+
+
+@app.middleware("http")
+async def apply_csrf_check(request: Request, call_next):
+    """Block cross-origin state-changing requests without valid Origin."""
+    if request.method in {"GET", "HEAD", "OPTIONS"}:
+        return await call_next(request)
+    if _is_localhost(request):
+        return await call_next(request)
+    origin = request.headers.get("origin", "")
+    if origin and origin not in _ALLOWED_ORIGINS:
+        return JSONResponse(
+            status_code=403,
+            content={"code": "CSRF_REJECTED", "message": "Cross-origin request blocked"},
+        )
+    return await call_next(request)
+
+
+@app.middleware("http")
+async def apply_api_key_auth(request: Request, call_next):
+    """Require API key for non-localhost requests to /api/* endpoints."""
+    if request.method == "OPTIONS":
+        return await call_next(request)
+
+    if request.url.path in _PUBLIC_PATHS:
+        return await call_next(request)
+
+    if _is_localhost(request):
+        return await call_next(request)
+
+    api_key = settings.CHEMIP_API_KEY
+    if not api_key:
+        # No key configured = auth disabled (dev mode)
+        return await call_next(request)
+
+    provided = request.headers.get("x-api-key") or request.query_params.get("api_key")
+    if provided != api_key:
+        client_host = request.client.host if request.client else "none"
+        logger.warning("AUTH_REJECTED path=%s client_host=%s is_local=%s cf_ip=%s",
+                       request.url.path, client_host, _is_localhost(request),
+                       request.headers.get("cf-connecting-ip", ""))
+        return JSONResponse(
+            status_code=401,
+            content={"code": "UNAUTHORIZED", "message": "Invalid or missing API key"},
+        )
+
+    return await call_next(request)
+
+
 @app.middleware("http")
 async def apply_security_headers(request: Request, call_next):
     response = await call_next(request)
@@ -55,7 +142,16 @@ async def apply_security_headers(request: Request, call_next):
     response.headers["X-Frame-Options"] = "DENY"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
-    response.headers["Content-Security-Policy"] = "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:* http://localhost:* https:;"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["X-Permitted-Cross-Domain-Policies"] = "none"
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; "
+        "img-src 'self' data: https:; "
+        "style-src 'self' 'unsafe-inline'; "
+        "script-src 'self'; "
+        "connect-src 'self' https://chemip.yule.pics; "
+        "frame-ancestors 'none';"
+    )
     return response
 
 
@@ -64,10 +160,10 @@ async def apply_rate_limit(request: Request, call_next):
     if not settings.RATE_LIMIT_ENABLED:
         return await call_next(request)
 
-    if request.url.path in {"/health", "/ready"}:
+    if request.url.path in {"/health"}:
         return await call_next(request)
 
-    key = request.client.host if request.client else "unknown"
+    key = _get_client_ip(request)
     now = time()
     window = max(1, settings.RATE_LIMIT_WINDOW_SECONDS)
     limit = max(1, settings.RATE_LIMIT_MAX_REQUESTS)
@@ -97,14 +193,30 @@ async def log_request_summary(request: Request, call_next):
     response = await call_next(request)
     elapsed_ms = round((time() - started) * 1000, 2)
     request_id = getattr(request.state, "request_id", "") or request.headers.get("x-request-id", "")
+    client_ip = _get_client_ip(request)
     logger.info(
-        "request_id=%s method=%s path=%s status=%s duration_ms=%s",
+        "request_id=%s method=%s path=%s status=%s duration_ms=%s ip=%s",
         request_id,
         request.method,
         request.url.path,
         response.status_code,
         elapsed_ms,
+        client_ip,
     )
+    # Audit log for API calls (structured JSON line)
+    if request.url.path.startswith("/api/"):
+        import json
+        _audit_logger.info(json.dumps({
+            "ts": datetime.now(timezone.utc).isoformat(),
+            "rid": request_id,
+            "ip": client_ip,
+            "method": request.method,
+            "path": request.url.path,
+            "query": str(request.url.query),
+            "status": response.status_code,
+            "ms": elapsed_ms,
+            "ua": request.headers.get("user-agent", "")[:100],
+        }, ensure_ascii=False))
     return response
 
 @app.exception_handler(Exception)
@@ -169,19 +281,21 @@ def health_check():
 
 
 @app.get("/ready")
-def readiness_check():
-    checks = {
-        "kotra_key_configured": bool(settings.KOTRA_SERVICE_KEY),
-        "kipris_key_configured": bool(settings.KIPRIS_API_KEY),
-        "drug_key_configured": bool(settings.DRUG_SERVICE_KEY),
-        "echa_available": True,  # No key needed
-        "comptox_key_configured": bool(settings.COMPTOX_API_KEY),
-        "cors_origins_configured": bool(settings.cors_origins_list),
-        "rate_limit_enabled": settings.RATE_LIMIT_ENABLED,
-    }
-    return {
-        "status": "ready",
-        "checks": checks,
-        "time": datetime.now(timezone.utc).isoformat(),
-    }
+def readiness_check(request: Request):
+    # Only expose detailed checks to localhost
+    if _is_localhost(request):
+        checks = {
+            "kotra_key_configured": bool(settings.KOTRA_SERVICE_KEY),
+            "kipris_key_configured": bool(settings.KIPRIS_API_KEY),
+            "drug_key_configured": bool(settings.DRUG_SERVICE_KEY),
+            "echa_available": True,
+            "comptox_key_configured": bool(settings.COMPTOX_API_KEY),
+            "rate_limit_enabled": settings.RATE_LIMIT_ENABLED,
+        }
+        return {
+            "status": "ready",
+            "checks": checks,
+            "time": datetime.now(timezone.utc).isoformat(),
+        }
+    return {"status": "ready", "time": datetime.now(timezone.utc).isoformat()}
 

@@ -1,0 +1,10 @@
+tunnel: chemip
+credentials-file: C:\Users\USER\.cloudflared\6c040336-0b77-4f9d-96f5-dc47fb2df32c.json
+
+ingress:
+  - hostname: chemip.yule.pics
+    service: http://localhost:7000
+    originRequest:
+      noTLSVerify: true
+      connectTimeout: 30s
+  - service: http_status:404

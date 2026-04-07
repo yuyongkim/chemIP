@@ -16,7 +16,7 @@ export default function HomeDrugsPanel({ loading, query, unified, total }: HomeD
     return (
       <div className="text-center py-16">
         <div className="inline-block w-8 h-8 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin" />
-        <p className="text-sm text-gray-400 mt-3">Searching MFDS + OpenFDA + PubMed...</p>
+        <p className="text-sm text-gray-500 mt-3">Searching MFDS + OpenFDA + PubMed...</p>
       </div>
     );
   }
@@ -24,7 +24,7 @@ export default function HomeDrugsPanel({ loading, query, unified, total }: HomeD
   if (!unified || total === 0) {
     return (
       <div className="text-center py-16">
-        <p className="text-gray-400">No drug results found for &quot;{query}&quot;.</p>
+        <p className="text-gray-500">No drug results found for &quot;{query}&quot;.</p>
         <Link href="/drugs" className="text-sm text-emerald-600 hover:underline mt-2 inline-block">
           Search again on the Drugs page
         </Link>
@@ -41,7 +41,7 @@ export default function HomeDrugsPanel({ loading, query, unified, total }: HomeD
       <div className="flex items-center justify-between mb-4">
         <p className="text-sm text-gray-500">
           <span className="font-semibold text-gray-900">{total}</span> drug results
-          <span className="text-xs text-gray-400 ml-2">(MFDS {mfdsItems.length} · FDA {fdaItems.length} · PubMed {pubmedArticles.length})</span>
+          <span className="text-xs text-gray-500 ml-2">(MFDS {mfdsItems.length} · FDA {fdaItems.length} · PubMed {pubmedArticles.length})</span>
         </p>
         <Link href="/drugs" className="text-sm text-emerald-600 hover:underline flex items-center gap-1">
           Go to Drugs page
@@ -87,7 +87,7 @@ export default function HomeDrugsPanel({ loading, query, unified, total }: HomeD
                     <Building2 className="w-4 h-4 text-blue-500" />
                     <h4 className="text-base font-bold text-gray-900">{brand || generic || 'Unknown'}</h4>
                   </div>
-                  {mfr && <p className="text-xs text-gray-400 mt-0.5">{mfr}</p>}
+                  {mfr && <p className="text-xs text-gray-500 mt-0.5">{mfr}</p>}
                   {indication && <p className="text-sm text-gray-600 mt-2 line-clamp-2">{stripHtml(indication)}</p>}
                 </div>
               );

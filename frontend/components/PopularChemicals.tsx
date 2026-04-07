@@ -47,7 +47,7 @@ export default function PopularChemicals({ onSearch }: PopularChemicalProps) {
     return (
         <div className="w-full max-w-3xl mx-auto mt-10">
             <div className="text-center mb-4">
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-widest">
+                <span className="text-xs font-medium text-gray-500 uppercase tracking-widest">
                     Frequently Searched Substances
                 </span>
             </div>
@@ -63,7 +63,7 @@ export default function PopularChemicals({ onSearch }: PopularChemicalProps) {
                             <span className={`p-1.5 rounded-lg ${item.bg} ${item.color}`}>
                                 <item.icon className="w-4 h-4" />
                             </span>
-                            <span className="text-[10px] font-mono text-gray-400 tracking-wide">
+                            <span className="text-[10px] font-mono text-gray-500 tracking-wide">
                                 {item.cas}
                             </span>
                         </div>
@@ -71,14 +71,14 @@ export default function PopularChemicals({ onSearch }: PopularChemicalProps) {
                         <h4 className="font-bold text-gray-900 text-sm group-hover:text-blue-600 transition-colors">
                             {item.name}
                         </h4>
-                        <p className="text-xs text-gray-400 mt-0.5">
+                        <p className="text-xs text-gray-500 mt-0.5">
                             {item.desc}
                         </p>
                     </button>
                 ))}
             </div>
 
-            <p className="mt-6 text-center text-xs text-gray-400">
+            <p className="mt-6 text-center text-xs text-gray-500">
                 You can also search by CAS number (e.g. <span className="font-mono text-blue-500">71-43-2</span>)
             </p>
         </div>

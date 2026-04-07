@@ -242,7 +242,7 @@ export default function PatentDetailModal({ isOpen, onClose, patent, searchQuery
                                     {patent.jurisdiction || 'Global'}
                                 </span>
                             )}
-                            <span className="text-xs font-mono text-gray-400">
+                            <span className="text-xs font-mono text-gray-500">
                                 {patent.patent_id || patent.applicationNumber}
                             </span>
                         </div>
@@ -252,7 +252,7 @@ export default function PatentDetailModal({ isOpen, onClose, patent, searchQuery
                     </div>
                     <button
                         onClick={onClose}
-                        className="p-2 rounded-full hover:bg-gray-200 text-gray-400 hover:text-gray-600 transition-colors"
+                        className="p-2 rounded-full hover:bg-gray-200 text-gray-500 hover:text-gray-600 transition-colors"
                     >
                         <X className="w-5 h-5" />
                     </button>
@@ -297,7 +297,7 @@ export default function PatentDetailModal({ isOpen, onClose, patent, searchQuery
                                     {highlightText(summaryText, highlightKeywords)}
                                 </div>
                             ) : (
-                                <span className="text-gray-400 italic">No detailed abstract available.</span>
+                                <span className="text-gray-500 italic">No detailed abstract available.</span>
                             )}
                         </div>
                         {detailError && (

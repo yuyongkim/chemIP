@@ -32,6 +32,7 @@ load_dotenv()
 API_KEY = os.getenv("KOSHA_SERVICE_KEY_DECODED", "")
 
 DAILY_LIMIT = 9500
+MAX_CONSECUTIVE_429 = 5  # Stop after 5 consecutive rate limits (quota exhausted)
 _shutdown = False
 
 
@@ -70,8 +71,12 @@ def ensure_table(conn):
     conn.commit()
 
 
+_consecutive_429 = 0
+
+
 def fetch_cas(cas_no, retries=3):
     """Fetch substance info for a single CAS number."""
+    global _consecutive_429, _shutdown
     for attempt in range(retries):
         try:
             r = requests.get(API_URL, params={
@@ -83,6 +88,7 @@ def fetch_cas(cas_no, retries=3):
             }, timeout=15)
 
             if r.status_code == 200:
+                _consecutive_429 = 0  # Reset on success
                 data = r.json()
                 code = data.get("header", {}).get("resultCode", "")
                 if code == "200":
@@ -94,10 +100,16 @@ def fetch_cas(cas_no, retries=3):
                 else:
                     return []
             elif r.status_code == 429:
-                logger.warning("Rate limited, waiting 60s...")
+                _consecutive_429 += 1
+                if _consecutive_429 >= MAX_CONSECUTIVE_429:
+                    logger.warning("Daily quota exhausted (%d consecutive 429s). Stopping.", _consecutive_429)
+                    _shutdown = True
+                    return None
+                logger.warning("Rate limited (%d/%d), waiting 60s...", _consecutive_429, MAX_CONSECUTIVE_429)
                 time.sleep(60)
                 continue
             else:
+                _consecutive_429 = 0
                 logger.debug("HTTP %d for CAS %s", r.status_code, cas_no)
                 time.sleep(2 * (attempt + 1))
         except requests.RequestException as e:

@@ -56,7 +56,7 @@ function FdaCard({ item }: { item: DrugFdaItem }) {
       {genericName && brandName && (
         <p className="text-sm text-gray-500">{genericName}</p>
       )}
-      {manufacturer && <p className="text-xs text-gray-400 mt-0.5">{manufacturer}</p>}
+      {manufacturer && <p className="text-xs text-gray-500 mt-0.5">{manufacturer}</p>}
       {indication && (
         <p className="text-sm text-gray-700 mt-2 line-clamp-3">{stripHtml(indication)}</p>
       )}
@@ -83,7 +83,7 @@ function PubmedCard({ article }: { article: DrugPubmedArticle }) {
             {article.source} &middot; {article.pubdate}
           </p>
           {article.authors.length > 0 && (
-            <p className="text-xs text-gray-400 mt-0.5 truncate">
+            <p className="text-xs text-gray-500 mt-0.5 truncate">
               {article.authors.slice(0, 3).join(', ')}{article.authors.length > 3 ? ' et al.' : ''}
             </p>
           )}
@@ -142,7 +142,7 @@ export default function DrugInfoPanel({ chemId, chemicalName }: DrugInfoPanelPro
         <div className="flex items-center gap-3">
           <Pill className="w-6 h-6 text-emerald-600" />
           <h2 className="text-xl font-bold text-gray-900">Drug Information</h2>
-          <span className="text-sm text-gray-400">— {chemicalName}</span>
+          <span className="text-sm text-gray-500">— {chemicalName}</span>
         </div>
         <button
           onClick={() => void fetchDrugs(true)}
@@ -226,7 +226,7 @@ function EmptyState({ source }: { source: string }) {
   return (
     <div className="flex flex-col items-center justify-center py-16">
       <FileText className="w-12 h-12 text-gray-300 mb-3" />
-      <p className="text-gray-400">No related drug results found from {source}.</p>
+      <p className="text-gray-500">No related drug results found from {source}.</p>
     </div>
   );
 }

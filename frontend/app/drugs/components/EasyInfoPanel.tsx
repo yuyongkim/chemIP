@@ -14,7 +14,7 @@ export default function EasyInfoPanel({ items, expanded, onToggle }: EasyInfoPan
   if (items.length === 0) {
     return (
       <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center">
-        <p className="text-gray-400">No results found.</p>
+        <p className="text-gray-500">No results found.</p>
       </div>
     );
   }
@@ -31,7 +31,7 @@ export default function EasyInfoPanel({ items, expanded, onToggle }: EasyInfoPan
                   alt={item.itemName}
                   width={64}
                   height={64}
-                  unoptimized
+                  loading="lazy"
                   className="w-16 h-16 rounded-xl object-cover border"
                 />
               ) : (
@@ -44,7 +44,7 @@ export default function EasyInfoPanel({ items, expanded, onToggle }: EasyInfoPan
                 <p className="text-sm text-gray-500">{item.entpName}</p>
               </div>
             </div>
-            {expanded === idx ? <ChevronUp className="w-5 h-5 text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
+            {expanded === idx ? <ChevronUp className="w-5 h-5 text-gray-500" /> : <ChevronDown className="w-5 h-5 text-gray-500" />}
           </div>
 
           {expanded === idx && (

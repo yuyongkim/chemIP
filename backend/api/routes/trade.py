@@ -13,7 +13,7 @@ naver_adapter = NaverAdapter()
 def get_market_news(
     q: str = Query(..., description="Search keyword"),
     country: str = Query("", description="Country filter"),
-    page: int = 1,
+    page: int = Query(1, ge=1),
     limit: int = Query(10, ge=1, le=50),
 ):
     result = adapter.search_market_news(keyword=q, country=country or "", page_no=page, num_of_rows=limit)

@@ -39,7 +39,7 @@ export default function ProductResults({ items }: ProductResultsProps) {
                   <MapPin className="w-3 h-3" />
                   {item.cntryNm || 'Global'}
                 </span>
-                <span className="text-xs text-gray-400">{item.newsWrtDt}</span>
+                <span className="text-xs text-gray-500">{item.newsWrtDt}</span>
                 <span className="inline-flex items-center gap-1 text-xs font-semibold text-blue-700">
                   View Source
                   <ExternalLink className="w-3.5 h-3.5" />

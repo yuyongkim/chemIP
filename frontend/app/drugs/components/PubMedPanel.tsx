@@ -18,7 +18,7 @@ export default function PubMedPanel({ panelLoading, result }: PubMedPanelProps) 
   if (!result || result.articles.length === 0) {
     return (
       <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center">
-        <p className="text-gray-400">No PubMed results found.</p>
+        <p className="text-gray-500">No PubMed results found.</p>
       </div>
     );
   }

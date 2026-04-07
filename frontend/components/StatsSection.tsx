@@ -39,7 +39,7 @@ export default function StatsSection() {
                         <div>
                             <p className="text-sm font-medium text-gray-500">{stat.label}</p>
                             <h3 className="text-2xl font-bold text-gray-900">{stat.value}</h3>
-                            <p className="text-xs text-gray-400 mt-0.5">{stat.desc}</p>
+                            <p className="text-xs text-gray-500 mt-0.5">{stat.desc}</p>
                         </div>
                     </div>
                 </div>

@@ -250,7 +250,7 @@ export default function PatentViewer({ query, chemId }: PatentViewerProps) {
                                     </p>
                                 )}
                                 <div className="flex justify-between items-center mt-2">
-                                    <p className="text-xs text-gray-400 truncate font-mono">Source: {patent.file_path}</p>
+                                    <p className="text-xs text-gray-500 truncate font-mono">Source: {patent.file_path}</p>
                                     <span className="text-xs font-medium text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
                                         View Details <Eye className="w-3 h-3" />
                                     </span>

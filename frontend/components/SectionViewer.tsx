@@ -93,7 +93,7 @@ export default function SectionViewer({ section }: SectionViewerProps) {
                                 );
                             })}
                         </div>
-                        <p className="text-xs text-gray-400 mt-2">Hover over a pictogram for details.</p>
+                        <p className="text-xs text-gray-500 mt-2">Hover over a pictogram for details.</p>
                     </div>
                 );
             }
@@ -153,7 +153,7 @@ export default function SectionViewer({ section }: SectionViewerProps) {
                         );
                     })
                 ) : (
-                    <div className="text-center py-8 text-gray-400 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                    <div className="text-center py-8 text-gray-500 bg-gray-50 rounded-xl border border-dashed border-gray-200">
                         No Data Available
                     </div>
                 )}

@@ -39,7 +39,7 @@ export default function PatentCard({ patent, idx, query }: PatentCardProps) {
           )}
           <h3 className="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">{highlightText(title, highlightKeywords)}</h3>
         </div>
-        <span className="text-xs font-mono text-gray-400 whitespace-nowrap ml-4">{patentId}</span>
+        <span className="text-xs font-mono text-gray-500 whitespace-nowrap ml-4">{patentId}</span>
       </div>
 
       {patent.matched_term && (

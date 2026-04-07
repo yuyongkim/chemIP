@@ -14,7 +14,7 @@ export default function PatentStateView({ loading, error, searched, query, hasRe
       <div className="text-center py-20">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
         <p className="text-gray-600">Searching KIPRIS patents...</p>
-        <p className="text-sm text-gray-400 mt-1">Querying patent databases across jurisdictions</p>
+        <p className="text-sm text-gray-500 mt-1">Querying patent databases across jurisdictions</p>
       </div>
     );
   }
@@ -37,7 +37,7 @@ export default function PatentStateView({ loading, error, searched, query, hasRe
         <p className="text-gray-500 max-w-md mx-auto mb-4">
           No patent documents found for &quot;{query}&quot;.
         </p>
-        <div className="text-sm text-gray-400 bg-white p-4 rounded-lg border border-gray-200 inline-block text-left">
+        <div className="text-sm text-gray-500 bg-white p-4 rounded-lg border border-gray-200 inline-block text-left">
           <p className="font-semibold mb-1">Troubleshooting:</p>
           <ul className="list-disc pl-5 space-y-1">
             <li>Please check the spelling of your search term.</li>

@@ -288,7 +288,7 @@ export default function AIAssistantPanel({ chemId, chemicalName }: AIAssistantPa
           {chemicalName && (
             <div className="px-4 py-2 bg-gray-50 border-b border-gray-100 text-xs text-gray-500 flex-shrink-0">
               Context: <span className="font-semibold text-gray-700">{chemicalName}</span>
-              {chemId && <span className="ml-1 text-gray-400">({chemId})</span>}
+              {chemId && <span className="ml-1 text-gray-500">({chemId})</span>}
             </div>
           )}
 

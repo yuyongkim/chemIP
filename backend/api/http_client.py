@@ -70,6 +70,32 @@ def get_http_session(
     return _session
 
 
+# SSRF protection: only allow requests to known external API hosts
+_ALLOWED_HOSTS = frozenset({
+    "msds.kosha.or.kr",
+    "apis.data.go.kr",
+    "plus.kipris.or.kr",
+    "open.fda.gov",
+    "api.fda.gov",
+    "eutils.ncbi.nlm.nih.gov",
+    "openapi.naver.com",
+    "echa.europa.eu",
+    "comptox.epa.gov",
+    "www.cdc.gov",
+    "localhost",
+    "127.0.0.1",
+})
+
+
+def _validate_url(url: str) -> None:
+    """Raise ValueError if URL host is not in the allow-list."""
+    from urllib.parse import urlparse
+    parsed = urlparse(url)
+    host = parsed.hostname or ""
+    if host not in _ALLOWED_HOSTS:
+        raise ValueError(f"SSRF blocked: requests to '{host}' are not allowed")
+
+
 def safe_get(
     url: str,
     *,
@@ -79,6 +105,7 @@ def safe_get(
     verify: bool = True,
 ) -> requests.Response:
     """Convenience wrapper around ``session.get()`` with default timeout."""
+    _validate_url(url)
     session = get_http_session()
     return session.get(
         url,

@@ -11,7 +11,7 @@ export default function ApprovalPanel({ items }: ApprovalPanelProps) {
   if (items.length === 0) {
     return (
       <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center">
-        <p className="text-gray-400">No results found.</p>
+        <p className="text-gray-500">No results found.</p>
       </div>
     );
   }
@@ -27,7 +27,7 @@ export default function ApprovalPanel({ items }: ApprovalPanelProps) {
                 alt={item.itemName}
                 width={80}
                 height={80}
-                unoptimized
+                loading="lazy"
                 className="w-20 h-20 rounded-xl object-cover border"
               />
             ) : (
@@ -44,7 +44,7 @@ export default function ApprovalPanel({ items }: ApprovalPanelProps) {
                 {item.validTerm && <span className="text-xs px-2 py-1 bg-green-50 rounded-full text-green-600">Validity: {item.validTerm}</span>}
                 {item.cancelName && <span className="text-xs px-2 py-1 bg-red-50 rounded-full text-red-600">{item.cancelName}</span>}
               </div>
-              {item.materialName && <p className="text-xs text-gray-400 mt-2 line-clamp-2">Ingredients: {item.materialName}</p>}
+              {item.materialName && <p className="text-xs text-gray-500 mt-2 line-clamp-2">Ingredients: {item.materialName}</p>}
             </div>
           </div>
         </div>

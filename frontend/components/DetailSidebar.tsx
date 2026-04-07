@@ -8,7 +8,7 @@ interface DetailSidebarProps {
 
 export default function DetailSidebar({ sections, activeSection, onSectionClick }: DetailSidebarProps) {
     return (
-        <div className="hidden lg:block col-span-1">
+        <aside className="hidden lg:block col-span-1" aria-label="Table of contents">
             <div className="sticky top-24 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 <div className="p-4 bg-gray-50 border-b border-gray-200">
                     <h3 className="font-semibold text-gray-900">Table of Contents</h3>
@@ -33,6 +33,6 @@ export default function DetailSidebar({ sections, activeSection, onSectionClick 
                     ))}
                 </nav>
             </div>
-        </div>
+        </aside>
     );
 }

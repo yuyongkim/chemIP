@@ -173,7 +173,7 @@ export default function AIAnalysisSection({
         <div className="flex flex-col items-center justify-center py-12">
           <Loader2 className="w-10 h-10 text-purple-600 animate-spin mb-4" />
           <p className="text-gray-500">Analyzing chemical evidence...</p>
-          <p className="text-xs text-gray-400 mt-2">This may take a few seconds.</p>
+          <p className="text-xs text-gray-500 mt-2">This may take a few seconds.</p>
         </div>
       )}
 

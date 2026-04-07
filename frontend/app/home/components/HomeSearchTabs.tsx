@@ -1,4 +1,5 @@
 import { FlaskConical, Pill } from 'lucide-react';
+import { useI18n } from '@/lib/i18n';
 
 import type { HomeTab } from '../types';
 
@@ -10,6 +11,7 @@ interface HomeSearchTabsProps {
 }
 
 export default function HomeSearchTabs({ activeTab, total, drugTotal, onChange }: HomeSearchTabsProps) {
+  const { t } = useI18n();
   return (
     <div className="flex flex-wrap gap-3 mb-8 pb-4 border-b border-gray-200">
       <button
@@ -21,7 +23,7 @@ export default function HomeSearchTabs({ activeTab, total, drugTotal, onChange }
         }`}
       >
         <FlaskConical className="w-4 h-4" />
-        Chemicals
+        {t('home.tab.chemicals')}
         <span className={`text-xs px-1.5 py-0.5 rounded-full ${activeTab === 'chemicals' ? 'bg-white/20' : 'bg-gray-100'}`}>{total}</span>
       </button>
 
@@ -34,7 +36,7 @@ export default function HomeSearchTabs({ activeTab, total, drugTotal, onChange }
         }`}
       >
         <Pill className="w-4 h-4" />
-        Drugs
+        {t('home.tab.drugs')}
         <span className={`text-xs px-1.5 py-0.5 rounded-full ${activeTab === 'drugs' ? 'bg-white/20' : 'bg-gray-100'}`}>{drugTotal}</span>
       </button>
     </div>
