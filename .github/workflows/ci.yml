@@ -16,8 +16,6 @@ jobs:
       - name: Install backend deps
         run: pip install -r requirements.txt
       - name: Run smoke tests
-        run: python -m pytest tests/test_api_smoke.py -v --tb=long 2>&1 || true
-      - name: Verify test result
         run: python -m pytest tests/test_api_smoke.py -q --tb=short
 
   frontend:
