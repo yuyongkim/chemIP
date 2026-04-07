@@ -11,7 +11,7 @@ interface HomeHeroProps {
 }
 
 export default function HomeHero({ initialQuery, onSearch }: HomeHeroProps) {
-  const { locale, t } = useI18n();
+  const { locale } = useI18n();
 
   return (
     <div className="relative overflow-hidden">

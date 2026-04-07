@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react';
 
 export type Locale = 'ko' | 'en';
 
@@ -178,15 +178,14 @@ const ko: Record<string, string> = {
 
 const dictionaries: Record<Locale, Record<string, string>> = { en, ko };
 
-export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('en');
+function getInitialLocale(): Locale {
+  if (typeof window === 'undefined') return 'en';
+  const saved = localStorage.getItem('chemip-locale');
+  return saved === 'ko' || saved === 'en' ? saved : 'en';
+}
 
-  useEffect(() => {
-    const saved = localStorage.getItem('chemip-locale') as Locale | null;
-    if (saved && (saved === 'ko' || saved === 'en')) {
-      setLocaleState(saved);
-    }
-  }, []);
+export function I18nProvider({ children }: { children: ReactNode }) {
+  const [locale, setLocaleState] = useState<Locale>(getInitialLocale);
 
   const setLocale = (l: Locale) => {
     setLocaleState(l);

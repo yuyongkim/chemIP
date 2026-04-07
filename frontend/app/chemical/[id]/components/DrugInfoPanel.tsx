@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Pill, ExternalLink, RefreshCw, BookOpen, Building2, FileText } from 'lucide-react';
 
 import { fetchJsonSafe } from '@/lib/http';
@@ -23,7 +24,7 @@ function MfdsCard({ item }: { item: DrugMfdsItem }) {
     <div className="border border-gray-200 rounded-xl p-5 bg-white hover:shadow-md transition-shadow">
       <div className="flex items-start gap-4">
         {item.ITEM_IMAGE && (
-          <img src={item.ITEM_IMAGE} alt={item.ITEM_NAME || ''} className="w-16 h-16 object-contain rounded-lg bg-gray-50 flex-shrink-0" />
+          <Image src={item.ITEM_IMAGE} alt={item.ITEM_NAME || ''} width={64} height={64} loading="lazy" className="w-16 h-16 object-contain rounded-lg bg-gray-50 flex-shrink-0" />
         )}
         <div className="flex-1 min-w-0">
           <h4 className="text-base font-bold text-gray-900 truncate">{item.ITEM_NAME || 'Unnamed'}</h4>
