@@ -40,9 +40,9 @@ app.add_middleware(
 
 # Audit logger (separate from request log — structured for compliance)
 _audit_logger = logging.getLogger("chemip.audit")
-_audit_handler = logging.FileHandler(
-    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logs", "audit.log"),
-)
+_audit_log_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logs")
+os.makedirs(_audit_log_dir, exist_ok=True)
+_audit_handler = logging.FileHandler(os.path.join(_audit_log_dir, "audit.log"))
 _audit_handler.setFormatter(logging.Formatter("%(message)s"))
 _audit_logger.addHandler(_audit_handler)
 _audit_logger.setLevel(logging.INFO)
