@@ -2,7 +2,7 @@
 
 ## ChemIP: An Open-Source Web Platform for Unified Chemical Safety Data Retrieval across Korean and International Regulatory Sources
 
-Yu Yong Kim
+Yuyong Kim
 
 University of Wisconsin-Madison, United States
 

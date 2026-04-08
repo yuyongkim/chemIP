@@ -1,6 +1,6 @@
 ---
 title: "ChemIP: 한국 및 국제 규제 출처를 통합한 오픈소스 화학물질 안전 데이터 조회 웹 플랫폼"
-author: 김유용 (Yu Yong Kim)
+author: 김유용 (Yuyong Kim)
 affiliation: University of Wisconsin-Madison, United States
 email: ykim288@wisc.edu
 orcid: 0009-0006-4842-666X

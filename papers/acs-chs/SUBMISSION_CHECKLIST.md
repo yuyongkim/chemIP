@@ -48,7 +48,7 @@
 - [ ] Preprint server status noted (if applicable)
 
 ## Author Information
-- [x] Corresponding author: Yu Yong Kim
+- [x] Corresponding author: Yuyong Kim
 - [x] Affiliation: University of Wisconsin-Madison
 - [x] Email: ykim288@wisc.edu
 - [x] ORCID: 0009-0006-4842-666X

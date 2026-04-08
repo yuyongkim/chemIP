@@ -20,7 +20,7 @@ Thank you for your consideration.
 
 Sincerely,
 
-Yu Yong Kim
+Yuyong Kim
 University of Wisconsin-Madison
 ykim288@wisc.edu
 ORCID: 0009-0006-4842-666X

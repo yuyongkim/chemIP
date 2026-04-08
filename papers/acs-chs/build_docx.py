@@ -242,7 +242,7 @@ def build_docx(md_path, out_path):
                 p2 = doc.add_paragraph()
                 p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
                 set_double_spacing(p2)
-                run = p2.add_run("Yu Yong Kim")
+                run = p2.add_run("Yuyong Kim")
                 run.font.name = "Times New Roman"
                 run.font.size = Pt(12)
 

@@ -1,6 +1,6 @@
 ---
 title: "ChemIP: An Open-Source Web Platform for Unified Chemical Safety Data Retrieval across Korean and International Regulatory Sources"
-author: Yu Yong Kim
+author: Yuyong Kim
 affiliation: University of Wisconsin-Madison, United States
 email: ykim288@wisc.edu
 orcid: 0009-0006-4842-666X
@@ -127,11 +127,11 @@ ChemIP provides an open-source, adapter-based integration platform that unifies 
 
 ## Associated Content
 
-**Supporting Information.** Platform installation instructions, API endpoint documentation, and additional screenshots are available in the project repository README (https://github.com/yuyongkim/chemIP).
+**Supporting Information.** Platform installation and configuration guide, complete API endpoint reference (80+ endpoints across 7 modules), database schema documentation, annotated user interface screenshots (Korean and English), and deployment mode specifications (PDF).
 
 ## Author Information
 
-**Corresponding Author:** Yu Yong Kim — University of Wisconsin-Madison, United States; orcid.org/0009-0006-4842-666X; Email: ykim288@wisc.edu
+**Corresponding Author:** Yuyong Kim — University of Wisconsin-Madison, United States; orcid.org/0009-0006-4842-666X; Email: ykim288@wisc.edu
 
 **Notes:** The author declares no competing financial interest.
 
