@@ -19,10 +19,18 @@ def main():
     md_text = MD_FILE.read_text(encoding="utf-8")
 
     # Replace image references with base64 data URIs
+    # Handle both root-level and screenshots/ subdirectory images
     for img_file in HERE.glob("*.png"):
         ref = f"({img_file.name})"
         uri = img_to_data_uri(img_file)
         md_text = md_text.replace(ref, f"({uri})")
+
+    screenshots_dir = HERE / "screenshots"
+    if screenshots_dir.exists():
+        for img_file in screenshots_dir.glob("*.png"):
+            ref = f"(screenshots/{img_file.name})"
+            uri = img_to_data_uri(img_file)
+            md_text = md_text.replace(ref, f"({uri})")
 
     html_body = markdown.markdown(md_text, extensions=["tables", "fenced_code"])
 

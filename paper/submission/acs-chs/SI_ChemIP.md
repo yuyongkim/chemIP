@@ -230,47 +230,49 @@ Dedicated USPTO patent index for faster US-specific patent queries.
 
 ## S4. User Interface Screenshots
 
-### Figure S1. Home page with integrated chemical and drug search
+The platform supports bilingual (Korean/English) operation. Representative screenshots from the live deployment (https://chemip.yule.pics) are shown below.
 
-![Home page](cap_main.png)
+### Figure S1. Home page — Korean interface
 
-The home page presents a unified search interface with KOSHA MSDS as the primary entry point. Statistics display 13,448 indexed KOSHA chemicals with full 16-section MSDS coverage. Quick-access cards provide popular chemical substances with GHS hazard categories.
+![Home page Korean](screenshots/home_ko.png)
 
-### Figure S2. Chemical detail page with MSDS sections
+The Korean home page displays "한국 MSDS 통합 안전 정보 플랫폼" (Korean MSDS Integrated Safety Information Platform) with KOSHA as the primary data source. Statistics show 13,448 KOSHA MSDS entries with full 16-section coverage and 350M+ linked patents.
 
-![Chemical detail](cap_chemical.png)
+### Figure S2. Home page — English interface
 
-The chemical detail page displays the full 16-section MSDS data retrieved from KOSHA, organized with a table-of-contents sidebar for navigation. The English safety summary (sourced from PubChem GHS data) appears at the top, followed by Korean MSDS sections including GHS pictograms, hazard statements, and handling/storage procedures.
+![Home page English](screenshots/home_en.png)
 
-### Figure S3. Chemical detail page — bilingual safety view and regulation status
+The same home page in English mode, demonstrating the bilingual toggle in the navigation bar. All UI labels, descriptions, and navigation items are translated.
 
-![Chemical detail alternate](cap_chemical2.png)
+### Figure S3. Chemical detail page (Benzene, CAS 71-43-2)
 
-An alternative view of the chemical detail page showing the bilingual safety panel (Korean KOSHA + English PubChem side-by-side) and Korean regulatory classification status from NCIS and KISCHEM.
+![Chemical detail](screenshots/chemical_ko.png)
 
-### Figure S4. Patent search results with chemical highlighting
+The chemical detail page for benzene showing: (left) table-of-contents sidebar for MSDS sections 1–16; (right) PubChem English safety data with GHS signal word, hazard statements (H225, H304, H315, H319, H340, H350, H372), and precautionary statements. Tabs provide access to bilingual safety view, patents, trade data, safety guides, drugs, Korean regulation, and AI analysis.
 
-![Patent search](cap_patents.png)
+### Figure S4. Patent search interface
 
-The patent viewer displays results from both the local global patent index (350M+ records from 6 jurisdictions) and KIPRIS real-time search. Chemical names and CAS numbers are highlighted in patent titles and abstracts.
+![Patent search](screenshots/patents_en.png)
+
+The patent search page providing access to KIPRIS (Korean patents) and the local global patent index (USPTO/EPO/WIPO/CN/JP/KR, 350M+ records).
 
 ### Figure S5. Drug cross-reference panel
 
-![Drug panel](cap_drugs.png)
+![Drug panel](screenshots/drugs_en.png)
 
-The unified drug search returns results from three sources in parallel: MFDS (Korean drug approvals and consumer medication information), OpenFDA (US drug labels), and PubMed (biomedical literature). Results are grouped by source with direct links to original records.
+The unified drug search interface combining MFDS (Korean drug approvals and consumer medication info), OpenFDA (US drug labels), and PubMed (biomedical literature) in a single query.
 
 ### Figure S6. Trade intelligence dashboard
 
-![Trade dashboard](cap_trade.png)
+![Trade dashboard](screenshots/trade_en.png)
 
-The trade data hub integrates KOTRA market news, entry strategies, price trends, and trade fraud cases. Filters support country, keyword, and date range selection with real-time result counts.
+The KOTRA trade data hub showing product database, market strategy, price information, and trade fraud tabs. The interface displays result counts, country coverage, and current filter criteria.
 
-### Figure S7. KOSHA safety guide recommendations
+### Figure S7. Operations guide page
 
-![Guide recommendations](cap_guide.png)
+![Guide page](screenshots/guide_ko.png)
 
-The safety guides tab recommends relevant KOSHA occupational safety guides for the queried chemical using multi-criteria matching (chemical name, CAS number, hazard category, and industry sector).
+The operations guide page providing Git workflow documentation, database sharing methods, backend operation commands, and team onboarding checklists for platform deployment.
 
 ---
 
