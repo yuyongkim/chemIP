@@ -58,13 +58,37 @@ export default function ChemicalDetail() {
     return (
       <div className="min-h-screen bg-gray-50">
         <Navbar />
-        <div className="flex flex-col items-center justify-center gap-4 pt-32">
-          <div className="relative">
-            <div className="animate-spin rounded-full h-14 w-14 border-4 border-gray-200"></div>
-            <div className="animate-spin rounded-full h-14 w-14 border-4 border-blue-600 border-t-transparent absolute inset-0"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="skeleton h-4 w-32 rounded mb-6" />
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <div className="hidden lg:block space-y-2">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="skeleton h-9 rounded-lg" />
+              ))}
+            </div>
+            <div className="col-span-1 lg:col-span-3 space-y-6">
+              <div className="bg-white p-8 rounded-2xl border border-gray-100">
+                <div className="skeleton h-7 w-64 rounded mb-4" />
+                <div className="flex gap-2">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <div key={i} className="skeleton h-8 w-20 rounded-lg" />
+                  ))}
+                </div>
+              </div>
+              <div className="bg-white p-6 rounded-2xl border border-gray-100 space-y-3">
+                <div className="skeleton h-5 w-48 rounded" />
+                <div className="skeleton h-4 w-full rounded" />
+                <div className="skeleton h-4 w-3/4 rounded" />
+                <div className="skeleton h-4 w-5/6 rounded" />
+              </div>
+              <div className="bg-white p-6 rounded-2xl border border-gray-100 space-y-3">
+                <div className="skeleton h-5 w-40 rounded" />
+                <div className="skeleton h-4 w-full rounded" />
+                <div className="skeleton h-4 w-2/3 rounded" />
+              </div>
+            </div>
           </div>
-          <p className="text-gray-700 text-lg font-medium">Loading MSDS data...</p>
-          <p className="text-gray-500 text-sm">Querying database (uncached sections may require additional KOSHA API fetch)</p>
+          <p className="text-center text-sm text-gray-400 mt-8">Loading MSDS data from KOSHA...</p>
         </div>
       </div>
     );

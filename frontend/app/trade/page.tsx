@@ -173,10 +173,10 @@ function TradePageClient() {
               <button
                 key={item.id}
                 onClick={() => onTabChange(item.id)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold border transition-all ${
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-150 ${
                   active
-                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-lg shadow-emerald-100'
-                    : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
+                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
+                    : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
                 }`}
               >
                 {item.icon}
@@ -195,29 +195,35 @@ function TradePageClient() {
           />
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
-            <div className="flex items-center gap-2 mb-1">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+          <div className="flex items-center gap-3 bg-white/70 backdrop-blur-sm rounded-xl border border-gray-100/80 px-4 py-3">
+            <div className="p-2 bg-emerald-50 rounded-lg">
               <BarChart3 className="w-4 h-4 text-emerald-600" />
-              <p className="text-xs text-gray-500">Total</p>
             </div>
-            <p className="text-lg font-bold text-gray-900">{visibleTotal}</p>
+            <div>
+              <p className="text-xs text-gray-400 font-medium">Total</p>
+              <p className="text-lg font-bold text-gray-900 font-mono tabular-nums">{visibleTotal}</p>
+            </div>
           </div>
-          <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
-            <div className="flex items-center gap-2 mb-1">
+          <div className="flex items-center gap-3 bg-white/70 backdrop-blur-sm rounded-xl border border-gray-100/80 px-4 py-3">
+            <div className="p-2 bg-cyan-50 rounded-lg">
               <MapPin className="w-4 h-4 text-cyan-600" />
-              <p className="text-xs text-gray-500">Countries</p>
             </div>
-            <p className="text-lg font-bold text-gray-900">{countryCount}</p>
+            <div>
+              <p className="text-xs text-gray-400 font-medium">Countries</p>
+              <p className="text-lg font-bold text-gray-900 font-mono tabular-nums">{countryCount}</p>
+            </div>
           </div>
-          <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
-            <div className="flex items-center gap-2 mb-1">
+          <div className="flex items-center gap-3 bg-white/70 backdrop-blur-sm rounded-xl border border-gray-100/80 px-4 py-3">
+            <div className="p-2 bg-amber-50 rounded-lg">
               <Sparkles className="w-4 h-4 text-amber-600" />
-              <p className="text-xs text-gray-500">{tab === 'strategy' ? 'Latest Update' : 'Query Criteria'}</p>
             </div>
-            <p className="text-sm font-semibold text-gray-900">
-              {tab === 'strategy' ? strategyLastUpdated : tab === 'products' ? `Keyword: ${lastQuery || keyword}` : country || 'All Countries'}
-            </p>
+            <div>
+              <p className="text-xs text-gray-400 font-medium">{tab === 'strategy' ? 'Latest update' : 'Query criteria'}</p>
+              <p className="text-sm font-semibold text-gray-900 truncate">
+                {tab === 'strategy' ? strategyLastUpdated : tab === 'products' ? `Keyword: ${lastQuery || keyword}` : country || 'All countries'}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -249,9 +255,17 @@ function TradePageClient() {
         )}
 
         {loading && (
-          <div className="text-center py-16">
-            <div className="inline-block w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
-            <p className="mt-3 text-gray-600">Loading data...</p>
+          <div className="space-y-4 py-4">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="bg-white rounded-xl border border-gray-100 p-5 space-y-3">
+                <div className="flex justify-between">
+                  <div className="skeleton h-4 w-48 rounded" />
+                  <div className="skeleton h-5 w-16 rounded" />
+                </div>
+                <div className="skeleton h-3 w-full rounded" />
+                <div className="skeleton h-3 w-2/3 rounded" />
+              </div>
+            ))}
           </div>
         )}
 

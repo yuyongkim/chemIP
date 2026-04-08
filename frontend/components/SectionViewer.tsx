@@ -113,10 +113,10 @@ export default function SectionViewer({ section }: SectionViewerProps) {
     return (
         <div
             id={`section-${section.section_seq}`}
-            className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden scroll-mt-24"
+            className="bg-white rounded-2xl border border-gray-100 overflow-hidden scroll-mt-24"
         >
-            <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex items-center gap-3">
-                <div className="p-2 bg-white rounded-lg border border-gray-200 shadow-sm">
+            <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
+                <div className="p-2 bg-blue-50 rounded-lg">
                     <Icon className="w-5 h-5 text-blue-600" />
                 </div>
                 <h2 className="text-lg font-bold text-gray-900">
@@ -153,8 +153,8 @@ export default function SectionViewer({ section }: SectionViewerProps) {
                         );
                     })
                 ) : (
-                    <div className="text-center py-8 text-gray-500 bg-gray-50 rounded-xl border border-dashed border-gray-200">
-                        No Data Available
+                    <div className="text-center py-8 text-gray-400 bg-gray-50/50 rounded-xl border border-dashed border-gray-200">
+                        No data available
                     </div>
                 )}
             </div>

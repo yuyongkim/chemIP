@@ -14,9 +14,15 @@ interface HomeDrugsPanelProps {
 export default function HomeDrugsPanel({ loading, query, unified, total }: HomeDrugsPanelProps) {
   if (loading) {
     return (
-      <div className="text-center py-16">
-        <div className="inline-block w-8 h-8 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin" />
-        <p className="text-sm text-gray-500 mt-3">Searching MFDS + OpenFDA + PubMed...</p>
+      <div className="space-y-4 py-4">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} className="bg-white rounded-2xl border border-gray-100 p-5 space-y-3">
+            <div className="skeleton h-4 w-48 rounded" />
+            <div className="skeleton h-3 w-32 rounded" />
+            <div className="skeleton h-3 w-full rounded" />
+          </div>
+        ))}
+        <p className="text-center text-xs text-gray-400 mt-2">Searching MFDS, OpenFDA, and PubMed...</p>
       </div>
     );
   }

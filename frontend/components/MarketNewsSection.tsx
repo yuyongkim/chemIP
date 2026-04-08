@@ -192,8 +192,21 @@ export default function MarketNewsSection({ keyword }: MarketNewsProps) {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <Loader2 className="animate-spin text-blue-500" />
+      <div className="space-y-4 py-4">
+        <div className="skeleton h-5 w-48 rounded mb-2" />
+        <div className="grid gap-4 md:grid-cols-2">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="bg-white border border-gray-100 rounded-xl p-4 space-y-2">
+              <div className="flex justify-between">
+                <div className="skeleton h-5 w-16 rounded" />
+                <div className="skeleton h-4 w-20 rounded" />
+              </div>
+              <div className="skeleton h-4 w-full rounded" />
+              <div className="skeleton h-4 w-3/4 rounded" />
+              <div className="skeleton h-3 w-full rounded" />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
@@ -276,9 +289,9 @@ export default function MarketNewsSection({ keyword }: MarketNewsProps) {
         </div>
       )}
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="stagger-in grid gap-4 md:grid-cols-2">
         {news.map((item, idx) => (
-          <div key={idx} className="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow">
+          <div key={idx} className="bg-white border border-gray-100 rounded-xl p-4 hover:border-gray-200 hover:shadow-[0_4px_12px_rgba(15,23,42,0.06)] transition-all duration-200">
             <div className="flex justify-between items-start mb-2">
               <span className={`text-xs font-semibold px-2 py-1 rounded ${item.source === 'Naver' ? 'text-green-700 bg-green-50' : 'text-blue-600 bg-blue-50'}`}>
                 {item.source === 'Naver' ? 'Naver' : (item.cntryNm || 'Global')}

@@ -255,22 +255,22 @@ export default function AIAssistantPanel({ chemId, chemicalName }: AIAssistantPa
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full shadow-2xl hover:shadow-purple-300/40 hover:scale-105 transition-all"
+          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 bg-gray-900 text-white rounded-full shadow-[0_8px_24px_rgba(15,23,42,0.25)] hover:shadow-[0_12px_32px_rgba(15,23,42,0.3)] hover:scale-105 active:scale-100 transition-all duration-200"
         >
           <Bot className="w-5 h-5" />
-          <span className="text-sm font-semibold">AI Assistant</span>
+          <span className="text-sm font-semibold">AI assistant</span>
           {llmReady === false && <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse" />}
         </button>
       )}
 
       {/* Panel */}
       {open && (
-        <div className="fixed bottom-6 right-6 z-50 w-[420px] max-h-[680px] flex flex-col bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+        <div className="fixed bottom-6 right-6 z-50 w-[420px] max-h-[680px] flex flex-col bg-white rounded-2xl shadow-[0_12px_40px_rgba(15,23,42,0.15)] border border-gray-200 overflow-hidden">
           {/* Header */}
-          <div className="flex items-center justify-between px-5 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white flex-shrink-0">
+          <div className="flex items-center justify-between px-5 py-3 bg-gray-900 text-white flex-shrink-0">
             <div className="flex items-center gap-2">
               <Bot className="w-5 h-5" />
-              <span className="font-bold text-sm">AI Assistant</span>
+              <span className="font-bold text-sm">AI assistant</span>
               {llmReady === true && <span className="w-2 h-2 rounded-full bg-green-400" title="LLM Online" />}
               {llmReady === false && <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse" title="LLM Offline" />}
             </div>
@@ -373,12 +373,12 @@ export default function AIAssistantPanel({ chemId, chemicalName }: AIAssistantPa
                 onKeyDown={handleKeyDown}
                 placeholder="Enter your question..."
                 disabled={busy}
-                className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-400 disabled:opacity-50 disabled:bg-gray-50"
+                className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-300 disabled:opacity-50 disabled:bg-gray-50 transition-all duration-150"
               />
               <button
                 onClick={() => void handleSend()}
                 disabled={busy || !input.trim()}
-                className="p-2.5 bg-purple-600 text-white rounded-xl hover:bg-purple-700 disabled:opacity-50 disabled:bg-gray-300 transition-colors"
+                className="p-2.5 bg-gray-900 text-white rounded-xl hover:bg-gray-800 disabled:opacity-30 transition-all duration-150"
               >
                 <Send className="w-4 h-4" />
               </button>

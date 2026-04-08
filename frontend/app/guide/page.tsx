@@ -11,29 +11,28 @@ export default function OperationsGuidePage() {
       <Navbar />
 
       {/* Hero */}
-      <div className="relative overflow-hidden border-b border-slate-800 bg-slate-950">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(139,92,246,0.25),transparent_45%),radial-gradient(circle_at_82%_12%,rgba(59,130,246,0.28),transparent_42%)]" />
-        <div className="absolute -top-24 -right-20 h-72 w-72 rounded-full bg-violet-400/20 blur-3xl" />
-        <div className="absolute -bottom-28 -left-16 h-72 w-72 rounded-full bg-blue-400/20 blur-3xl" />
+      <div id="main-content" className="relative overflow-hidden border-b border-gray-100">
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-gray-50/50" />
+        <div className="absolute top-[-100px] right-[-50px] w-[400px] h-[400px] bg-violet-100/20 rounded-full blur-3xl" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 relative">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-300/20 text-violet-100 text-xs font-semibold mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-50 border border-violet-100 text-violet-600 text-xs font-semibold mb-4">
             <BookOpen className="w-3.5 h-3.5" />
             {t('guide.badge')}
           </div>
-          <h1 className="text-4xl font-extrabold tracking-tight text-white mb-3">{t('guide.title')}</h1>
-          <p className="text-slate-200/90 max-w-2xl">
+          <h1 className="text-3xl font-extrabold tracking-[-0.025em] text-gray-900 mb-3">{t('guide.title')}</h1>
+          <p className="text-gray-500 max-w-2xl leading-relaxed">
             {t('guide.subtitle')}
           </p>
 
-          <div className="flex flex-wrap gap-3 mt-8">
+          <div className="flex flex-wrap gap-2 mt-6">
             {[
-              { icon: <GitBranch className="w-4 h-4" />, label: 'Git Workflow' },
-              { icon: <HardDrive className="w-4 h-4" />, label: 'Database' },
-              { icon: <Server className="w-4 h-4" />, label: 'Backend' },
-              { icon: <Users className="w-4 h-4" />, label: 'Onboarding' },
+              { icon: <GitBranch className="w-3.5 h-3.5" />, label: 'Git workflow' },
+              { icon: <HardDrive className="w-3.5 h-3.5" />, label: 'Database' },
+              { icon: <Server className="w-3.5 h-3.5" />, label: 'Backend' },
+              { icon: <Users className="w-3.5 h-3.5" />, label: 'Onboarding' },
             ].map((item) => (
-              <span key={item.label} className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white">
+              <span key={item.label} className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600">
                 {item.icon}
                 {item.label}
               </span>
@@ -52,7 +51,7 @@ export default function OperationsGuidePage() {
             {t('guide.git')}
           </h2>
           <div className="grid md:grid-cols-2 gap-5">
-            <div className="rounded-2xl border border-emerald-200 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-emerald-100 bg-white p-6">
               <h3 className="text-base font-bold text-emerald-800 mb-4 flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5" />
                 {t('guide.tracked')}
@@ -76,7 +75,7 @@ export default function OperationsGuidePage() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-red-200 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-red-100 bg-white p-6">
               <h3 className="text-base font-bold text-red-800 mb-4 flex items-center gap-2">
                 <XCircle className="w-5 h-5" />
                 {t('guide.excluded')}
@@ -118,7 +117,7 @@ export default function OperationsGuidePage() {
               { method: 'External Drive', pro: 'Fastest transfer', con: 'Physical delivery', icon: <HardDrive className="w-5 h-5" /> },
               { method: 'Local Rebuild', pro: 'Always up-to-date', con: 'Takes 24-48 hours', icon: <Terminal className="w-5 h-5" /> },
             ].map((item) => (
-              <div key={item.method} className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow">
+              <div key={item.method} className="rounded-2xl border border-gray-100 bg-white p-5 hover:border-gray-200 transition-all duration-200">
                 <div className="flex items-center gap-2 text-blue-600 mb-3">{item.icon}<span className="font-bold text-sm text-gray-900">{item.method}</span></div>
                 <p className="text-xs text-emerald-600 mb-1">+ {item.pro}</p>
                 <p className="text-xs text-red-500">- {item.con}</p>
@@ -143,13 +142,13 @@ aws s3 cp s3://your-bucket/msds-db/global_patent_index.db data/`}</pre>
             {t('guide.backend')}
           </h2>
           <div className="grid md:grid-cols-2 gap-5">
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-gray-100 bg-white p-6">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-semibold mb-4">{t('common.development')}</div>
               <pre className="text-sm text-gray-700 bg-gray-50 rounded-xl p-4 overflow-x-auto leading-relaxed">{`cd G:\\MSDS
 .\\.venv\\Scripts\\activate
 uvicorn backend.main:app --reload --port 7010`}</pre>
             </div>
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-gray-100 bg-white p-6">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold mb-4">{t('common.production')}</div>
               <pre className="text-sm text-gray-700 bg-gray-50 rounded-xl p-4 overflow-x-auto leading-relaxed">{`docker build -t chemip-backend .
 docker run -d -p 7010:7010 \\
@@ -165,7 +164,7 @@ docker run -d -p 7010:7010 \\
             <Users className="w-5 h-5 text-indigo-600" />
             {t('guide.onboarding')}
           </h2>
-          <div className="rounded-2xl border border-indigo-200 bg-white p-6 shadow-sm">
+          <div className="rounded-2xl border border-indigo-100 bg-white p-6">
             <div className="space-y-4">
               {[
                 { step: 1, title: 'Clone repository', cmd: 'git clone https://github.com/yuyongkim/chemIP.git && cd chemIP' },
@@ -195,7 +194,7 @@ docker run -d -p 7010:7010 \\
             {t('guide.checklist')}
           </h2>
           <div className="grid md:grid-cols-2 gap-5">
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-gray-100 bg-white p-6">
               <h3 className="font-bold text-gray-900 mb-3">{t('guide.beforePush')}</h3>
               <ul className="space-y-2">
                 {[
@@ -211,7 +210,7 @@ docker run -d -p 7010:7010 \\
                 ))}
               </ul>
             </div>
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-gray-100 bg-white p-6">
               <h3 className="font-bold text-gray-900 mb-3">{t('guide.newMember')}</h3>
               <ul className="space-y-2">
                 {[

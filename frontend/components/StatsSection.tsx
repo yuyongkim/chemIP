@@ -3,44 +3,42 @@ import { Database, Activity, ShieldCheck } from 'lucide-react';
 export default function StatsSection() {
     const stats = [
         {
-            label: "Total Chemicals",
-            value: "20,446",
-            desc: "Verified Substances",
-            icon: Database,
-            color: "text-blue-600",
-            bg: "bg-blue-50"
-        },
-        {
-            label: "Safety Data",
-            value: "100%",
-            desc: "KOSHA Compliant",
+            label: "KOSHA MSDS",
+            value: "13,448",
+            desc: "한국 공식 물질안전보건자료",
             icon: ShieldCheck,
-            color: "text-green-600",
-            bg: "bg-green-50"
+            color: "text-[#1e3a5f]",
+            bg: "bg-slate-50",
         },
         {
-            label: "Daily Updates",
-            value: "Live",
-            desc: "Real-time Sync",
+            label: "Safety sections",
+            value: "16",
+            desc: "GHS 국제 표준 전 섹션",
+            icon: Database,
+            color: "text-[#1e3a5f]",
+            bg: "bg-slate-50",
+        },
+        {
+            label: "Total indexed",
+            value: "117,744",
+            desc: "KOSHA + ECHA + KREACH + KISCHEM",
             icon: Activity,
-            color: "text-purple-600",
-            bg: "bg-purple-50"
+            color: "text-[#1e3a5f]",
+            bg: "bg-slate-50",
         },
     ];
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="stagger-in grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
             {stats.map((stat) => (
-                <div key={stat.label} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                    <div className="flex items-center gap-4">
-                        <div className={`p-3 rounded-xl ${stat.bg}`}>
-                            <stat.icon className={`w-6 h-6 ${stat.color}`} />
-                        </div>
-                        <div>
-                            <p className="text-sm font-medium text-gray-500">{stat.label}</p>
-                            <h3 className="text-2xl font-bold text-gray-900">{stat.value}</h3>
-                            <p className="text-xs text-gray-500 mt-0.5">{stat.desc}</p>
-                        </div>
+                <div key={stat.label} className="flex items-center gap-4 bg-white/70 backdrop-blur-sm px-5 py-4 rounded-xl border border-gray-100/80">
+                    <div className={`p-2.5 rounded-lg ${stat.bg}`}>
+                        <stat.icon className={`w-5 h-5 ${stat.color}`} />
+                    </div>
+                    <div className="min-w-0">
+                        <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">{stat.label}</p>
+                        <p className="text-lg font-bold text-gray-900 tracking-tight font-[var(--font-mono)]">{stat.value}</p>
+                        <p className="text-xs text-gray-500 truncate">{stat.desc}</p>
                     </div>
                 </div>
             ))}

@@ -15,31 +15,31 @@ export default function ChemicalCard({ chemical }: { chemical: Chemical }) {
     return (
         <Link
             href={`/chemical/${chem.chem_id}`}
-            className="group block bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100 hover:border-blue-100 relative overflow-hidden"
+            className="group block bg-white p-5 rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-[0_4px_12px_rgba(15,23,42,0.08)] active:scale-[0.99] transition-all duration-200 relative"
         >
-            <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                <ArrowRight className="w-5 h-5 text-blue-500" />
+            <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 transition-all duration-200">
+                <ArrowRight className="w-4 h-4 text-blue-500" />
             </div>
 
-            <div className="flex items-start gap-4">
-                <div className="p-2.5 bg-gray-50 rounded-lg group-hover:bg-blue-50 transition-colors">
-                    <FileText className="w-5 h-5 text-gray-500 group-hover:text-blue-500 transition-colors" />
+            <div className="flex items-start gap-3.5">
+                <div className="p-2 bg-gray-50 rounded-lg group-hover:bg-blue-50 transition-colors duration-200 flex-shrink-0">
+                    <FileText className="w-4.5 h-4.5 text-gray-400 group-hover:text-blue-500 transition-colors duration-200" />
                 </div>
-                <div>
-                    <h2 className="text-base font-medium text-gray-900 mb-0.5 group-hover:text-blue-600 transition-colors">
+                <div className="min-w-0">
+                    <h2 className="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-200 truncate pr-6">
                         {stripHtml(chem.name)}
                     </h2>
                     {chem.name_en && (
-                        <p className="text-sm text-gray-500 mb-1">{stripHtml(chem.name_en)}</p>
+                        <p className="text-xs text-gray-500 mt-0.5 truncate">{stripHtml(chem.name_en)}</p>
                     )}
-                    <div className="flex gap-2 mt-2">
+                    <div className="flex gap-1.5 mt-2.5">
                         {chem.cas_no && (
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                CAS: {chem.cas_no}
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-mono font-medium bg-gray-50 text-gray-600 tabular-nums">
+                                {chem.cas_no}
                             </span>
                         )}
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700">
-                            ID: {chem.chem_id}
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-mono font-medium bg-blue-50/70 text-blue-600 tabular-nums">
+                            {chem.chem_id}
                         </span>
                     </div>
                 </div>

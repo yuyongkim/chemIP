@@ -89,7 +89,7 @@ export default function SearchBar({ onSearch, initialValue = '', placeholder = "
                 </div>
                 <input
                     type="text"
-                    className="block w-full pl-13 pr-24 py-4 bg-white border border-gray-200/80 rounded-2xl leading-5 text-gray-900 placeholder-gray-400 focus:outline-none focus:placeholder-gray-300 focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 transition-all duration-200 shadow-sm hover:shadow-md hover:border-gray-300"
+                    className="block w-full pl-13 pr-24 py-4 bg-white border border-gray-200/80 rounded-2xl leading-5 text-gray-900 placeholder-gray-400 focus:outline-none focus:placeholder-gray-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-300 transition-all duration-200 shadow-[0_2px_8px_rgba(15,23,42,0.04)] hover:shadow-[0_4px_12px_rgba(15,23,42,0.06)] hover:border-gray-300"
                     placeholder={placeholder}
                     value={query}
                     onChange={(e) => {
@@ -112,7 +112,7 @@ export default function SearchBar({ onSearch, initialValue = '', placeholder = "
                     )}
                     <button
                         type="submit"
-                        className="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 active:scale-[0.97] transition-all duration-150 shadow-sm"
+                        className="px-4 py-2 rounded-xl bg-[#1e3a5f] text-white text-sm font-medium hover:bg-[#172554] active:scale-[0.97] transition-all duration-150 shadow-sm"
                     >
                         Search
                     </button>

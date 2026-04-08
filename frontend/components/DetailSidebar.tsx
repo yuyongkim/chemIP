@@ -9,9 +9,9 @@ interface DetailSidebarProps {
 export default function DetailSidebar({ sections, activeSection, onSectionClick }: DetailSidebarProps) {
     return (
         <aside className="hidden lg:block col-span-1" aria-label="Table of contents">
-            <div className="sticky top-24 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                <div className="p-4 bg-gray-50 border-b border-gray-200">
-                    <h3 className="font-semibold text-gray-900">Table of Contents</h3>
+            <div className="sticky top-24 bg-white rounded-xl border border-gray-100 overflow-hidden">
+                <div className="p-4 border-b border-gray-100">
+                    <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Contents</h3>
                 </div>
                 <nav className="max-h-[calc(100vh-200px)] overflow-y-auto p-2">
                     {sections.map((section) => (

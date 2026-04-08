@@ -185,8 +185,14 @@ export default function PatentViewer({ query, chemId }: PatentViewerProps) {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center py-12">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <div className="space-y-4 py-4">
+                {Array.from({ length: 3 }).map((_, i) => (
+                    <div key={i} className="bg-white p-6 rounded-xl border border-gray-100">
+                        <div className="skeleton h-5 w-3/4 rounded mb-3" />
+                        <div className="skeleton h-3 w-1/3 rounded mb-4" />
+                        <div className="skeleton h-20 w-full rounded-lg" />
+                    </div>
+                ))}
             </div>
         );
     }
@@ -204,11 +210,11 @@ export default function PatentViewer({ query, chemId }: PatentViewerProps) {
                 searchQuery={query}
             />
 
-            <div className="bg-purple-50 p-6 rounded-2xl border-2 border-purple-100">
-                <h3 className="text-lg font-bold text-purple-900 mb-4 flex items-center gap-2">
-                    <Book className="w-5 h-5" />
-                    Global Patents (Local DB)
-                    <span className="text-sm font-normal text-purple-600 ml-2">({globalPatents.length} found)</span>
+            <div className="bg-purple-50/50 p-6 rounded-2xl border border-purple-100">
+                <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <Book className="w-5 h-5 text-purple-600" />
+                    Global patents (local DB)
+                    <span className="text-sm font-normal text-gray-500 ml-2 font-mono tabular-nums">({globalPatents.length} found)</span>
                 </h3>
 
                 {globalPatents.length === 0 ? (
@@ -216,7 +222,7 @@ export default function PatentViewer({ query, chemId }: PatentViewerProps) {
                         <p className="text-purple-400">No global patents found for this chemical in local index.</p>
                     </div>
                 ) : (
-                    <div className="grid gap-4">
+                    <div className="stagger-in grid gap-4">
                         {globalPatents.map((patent, idx) => {
                             const highlightKeywords = buildHighlightKeywords(
                                 query,
@@ -226,7 +232,7 @@ export default function PatentViewer({ query, chemId }: PatentViewerProps) {
                             <button
                                 key={`${patent.patent_id || patent.title || 'global'}-${idx}`}
                                 onClick={() => handleOpenModal(patent)}
-                                className="text-left bg-white p-6 rounded-xl border border-purple-100 shadow-sm hover:shadow-md hover:scale-[1.01] transition-all group"
+                                className="text-left bg-white p-6 rounded-xl border border-purple-100/80 hover:border-purple-200 hover:shadow-[0_4px_12px_rgba(15,23,42,0.06)] active:scale-[0.995] transition-all duration-200 group"
                             >
                                 <div className="flex justify-between items-start mb-2">
                                     <div className="flex-1 pr-4">
@@ -239,7 +245,7 @@ export default function PatentViewer({ query, chemId }: PatentViewerProps) {
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-2 mb-3">
-                                    <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Matched Term</span>
+                                    <span className="text-xs font-medium text-gray-400">Matched term</span>
                                     <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-yellow-100 text-yellow-800 border border-yellow-200">
                                         {highlightText(patent.matched_term || '-', highlightKeywords)}
                                     </span>
@@ -273,7 +279,7 @@ export default function PatentViewer({ query, chemId }: PatentViewerProps) {
                         <p className="text-gray-500">No related patent information found.</p>
                     </div>
                 ) : (
-                    <div className="grid gap-4">
+                    <div className="stagger-in grid gap-4">
                         {patents.map((patent, idx) => {
                             const highlightKeywords = buildHighlightKeywords(
                                 query,
@@ -283,7 +289,7 @@ export default function PatentViewer({ query, chemId }: PatentViewerProps) {
                             <button
                                 key={`${patent.applicationNumber || patent.inventionTitle || 'kipris'}-${idx}`}
                                 onClick={() => handleOpenModal(patent)}
-                                className="text-left bg-white p-6 rounded-xl border border-gray-200 hover:shadow-md hover:scale-[1.01] transition-all w-full group"
+                                className="text-left bg-white p-6 rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-[0_4px_12px_rgba(15,23,42,0.06)] active:scale-[0.995] transition-all duration-200 w-full group"
                             >
                                 <div className="flex justify-between items-start mb-2">
                                     <h4 className="text-lg font-bold text-gray-900 flex-1 pr-4 group-hover:text-blue-600 transition-colors">
