@@ -261,44 +261,55 @@ class TerminologyDB(MappingStoreMixin):
         if not safe_query:
             return {"items": [], "total": 0}
         fts_query = f'"{safe_query}"* OR {safe_query}*'
-        
-        # Using FTS5 match
-        # sort by rank is implicit or explicit depending on version, 
-        # usually default order is by relevance in FTS5
+
+        # Two-pass query: KOSHA first (have full MSDS), then others.
+        # FTS5 content table may be out of sync, so use JOIN to real table
+        # for the source-priority ordering.
         sql = '''
-            SELECT rowid, name, cas_no, description, name_en 
-            FROM chemical_terms_fts 
-            WHERE chemical_terms_fts MATCH ? 
-            ORDER BY rank 
+            SELECT ct.id, ct.name, ct.cas_no, ct.description, ct.name_en, ct.source
+            FROM chemical_terms ct
+            INNER JOIN (
+                SELECT rowid, rank FROM chemical_terms_fts
+                WHERE chemical_terms_fts MATCH ?
+            ) fts ON ct.id = fts.rowid
+            ORDER BY
+                CASE WHEN ct.source = 'KOSHA' THEN 0 ELSE 1 END,
+                fts.rank
             LIMIT ? OFFSET ?
         '''
-        
+
         try:
             cursor.execute(sql, (fts_query, limit, offset))
         except sqlite3.OperationalError:
-            # Fallback for very weird queries or symbol-heavy ones
-             cursor.execute(sql, (f'"{safe_query}"', limit, offset))
+            cursor.execute(sql, (f'"{safe_query}"', limit, offset))
 
         rows = cursor.fetchall()
-        
+
         results = []
         for row in rows:
+            desc = row[3] or ""
+            source = row[5] if len(row) > 5 else None
             chem_id = None
-            if row[3] and row[3].startswith("KOSHA_ID:"):
-                chem_id = row[3].split(":")[1]
-                
+            if desc.startswith("KOSHA_ID:"):
+                chem_id = desc.split(":")[1]
+
+            # For non-KOSHA chemicals, use CAS as the detail page identifier
+            detail_id = chem_id or row[2] or None
+
             results.append({
                 "id": row[0],
                 "name": row[1],
                 "cas_no": row[2],
-                "chem_id": chem_id,
-                "name_en": row[4] if len(row) > 4 else None
+                "chem_id": detail_id,
+                "name_en": row[4] if len(row) > 4 else None,
+                "source": source,
+                "has_msds": source == "KOSHA",
             })
-            
-        # Get total count (approximation for speed)
+
+        # Get total count
         count_sql = '''
-            SELECT COUNT(*) 
-            FROM chemical_terms_fts 
+            SELECT COUNT(*)
+            FROM chemical_terms_fts
             WHERE chemical_terms_fts MATCH ?
         '''
         try:
@@ -306,7 +317,7 @@ class TerminologyDB(MappingStoreMixin):
             total_count = cursor.fetchone()[0]
         except sqlite3.OperationalError:
             total_count = len(results)
-        
+
         return {"items": results, "total": total_count}
 
     def get_msds_details_by_chem_id(self, chem_id):

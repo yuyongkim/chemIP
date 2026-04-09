@@ -166,6 +166,25 @@ class MappingStoreMixin:
             return None
 
         row = cursor.fetchone()
+
+        # Fallback: try CAS number lookup (for non-KOSHA chemicals)
+        if not row and chem_id:
+            try:
+                cursor.execute(
+                    '''
+                    SELECT cas_no, name_en, pubchem_cid, signal_word,
+                           ghs_classification, hazard_statements,
+                           precautionary_statements, pictograms, last_updated
+                    FROM msds_english
+                    WHERE cas_no = ?
+                    LIMIT 1
+                    ''',
+                    (chem_id,),
+                )
+                row = cursor.fetchone()
+            except sqlite3.OperationalError:
+                pass
+
         if not row:
             return None
 
