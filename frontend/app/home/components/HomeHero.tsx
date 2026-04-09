@@ -54,7 +54,7 @@ export default function HomeHero({ initialQuery, onSearch }: HomeHeroProps) {
               </>
             ) : (
               <>
-                Full 16-section KOSHA MSDS data with integrated
+                Full 16-section KOSHA MSDS data with integrated{' '}
                 <br className="hidden sm:block" />
                 patent, trade, drug, and regulatory intelligence.
               </>
