@@ -21,7 +21,7 @@ fi
 
 echo
 echo "===== MANAGED PORTS ====="
-for port in 7000 7010 8002 8010 9000; do
+for port in 7000 7011 8002 8010 9000; do
   echo "--- Port ${port} ---"
   if command -v lsof >/dev/null 2>&1; then
     lsof -nP -iTCP:"${port}" -sTCP:LISTEN || true

@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const defaultBackendOrigin = "http://127.0.0.1:7010";
+const defaultBackendOrigin = "http://127.0.0.1:7011";
 const rawBackendOrigin = process.env.BACKEND_ORIGIN ?? defaultBackendOrigin;
 
 function resolveBackendOrigin(raw: string): string {

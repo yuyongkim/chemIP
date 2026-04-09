@@ -16,7 +16,7 @@ if ! command -v pm2 >/dev/null 2>&1; then
 fi
 
 echo "[INFO] Starting managed apps from ecosystem.config.js ..."
-for port in 7000 7010; do
+for port in 7000 7011; do
   if command -v lsof >/dev/null 2>&1; then
     listeners="$(lsof -nP -iTCP:${port} -sTCP:LISTEN || true)"
     if [ -n "$listeners" ]; then

@@ -15,7 +15,7 @@ if errorlevel 1 (
 )
 
 echo [INFO] Starting managed apps from ecosystem.config.js ...
-for %%P in (7000 7010) do (
+for %%P in (7000 7011) do (
   for /f "delims=" %%L in ('netstat -ano ^| findstr /R /C:":%%P .*LISTENING"') do (
     echo [WARN] Existing listener detected on port %%P: %%L
   )

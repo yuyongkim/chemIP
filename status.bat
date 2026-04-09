@@ -23,7 +23,7 @@ if "%PM2_CMD%"=="" (
 
 echo.
 echo ===== MANAGED PORTS =====
-for %%P in (7000 7010 8002 8010 9000) do (
+for %%P in (7000 7011 8002 8010 9000) do (
   echo --- Port %%P ---
   netstat -ano | findstr :%%P
 )

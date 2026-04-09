@@ -20,12 +20,12 @@ module.exports = {
     {
       name: 'T3-ChemIP-Backend',
       script: 'python',
-      args: '-m uvicorn backend.main:app --host 127.0.0.1 --port 7010 --reload',
+      args: '-m uvicorn backend.main:app --host 127.0.0.1 --port 7011 --reload --no-proxy-headers',
       cwd: ROOT,
       watch: ['backend'],
       ignore_watch: ['frontend/node_modules', 'data', 'logs', '.venv', 'archive', 'backups', '_archive'],
       env: {
-        PORT: 7010,
+        PORT: 7011,
         LOG_DIR: './logs',
       },
       max_restarts: 3,
@@ -40,7 +40,7 @@ module.exports = {
       ignore_watch: ['node_modules', '.next', 'logs'],
       env: {
         PORT: 7000,
-        BACKEND_ORIGIN: 'http://127.0.0.1:7010',
+        BACKEND_ORIGIN: 'http://127.0.0.1:7011',
       },
       max_restarts: 3,
       min_uptime: '10s',
