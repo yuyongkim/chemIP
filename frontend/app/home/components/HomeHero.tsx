@@ -48,15 +48,15 @@ export default function HomeHero({ initialQuery, onSearch }: HomeHeroProps) {
           <p className="text-base sm:text-lg text-gray-500 mb-10 max-w-xl mx-auto leading-relaxed">
             {locale === 'ko' ? (
               <>
-                KOSHA 물질안전보건자료 16개 섹션 전문과
+                <span className="font-semibold text-gray-700">48,963종</span> KOSHA MSDS 16개 섹션 전문과
                 <br className="hidden sm:block" />
                 특허, 무역, 의약품, 규제 정보를 한 번에 조회합니다.
               </>
             ) : (
               <>
-                Full 16-section KOSHA MSDS data with integrated{' '}
+                <span className="font-semibold text-gray-700">48,963</span> full KOSHA MSDS records{' '}
                 <br className="hidden sm:block" />
-                patent, trade, drug, and regulatory intelligence.
+                with integrated patent, trade, drug, and regulatory intelligence.
               </>
             )}
           </p>
@@ -67,12 +67,12 @@ export default function HomeHero({ initialQuery, onSearch }: HomeHeroProps) {
           <div className="flex items-center justify-center gap-6 mt-10 text-xs text-gray-400 font-medium">
             <div className="flex items-center gap-1.5">
               <Shield className="w-3.5 h-3.5" />
-              <span>{locale === 'ko' ? 'KOSHA 13,448종 MSDS' : 'KOSHA 13,448 MSDS'}</span>
+              <span>{locale === 'ko' ? 'KOSHA MSDS 48,963종' : '48,963 KOSHA MSDS records'}</span>
             </div>
             <div className="w-1 h-1 rounded-full bg-gray-300" />
             <div className="flex items-center gap-1.5">
               <FlaskConical className="w-3.5 h-3.5" />
-              <span>{locale === 'ko' ? '16개 안전 섹션 전문' : '16 safety sections'}</span>
+              <span>{locale === 'ko' ? '전체 117,744 화학물질' : '117,744 chemicals indexed'}</span>
             </div>
             <div className="w-1 h-1 rounded-full bg-gray-300" />
             <div className="flex items-center gap-1.5">
