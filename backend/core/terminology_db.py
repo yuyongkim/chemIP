@@ -293,14 +293,12 @@ class TerminologyDB(MappingStoreMixin):
             if desc.startswith("KOSHA_ID:"):
                 chem_id = desc.split(":")[1]
 
-            # For non-KOSHA chemicals, use CAS as the detail page identifier
-            detail_id = chem_id or row[2] or None
-
+            # Only KOSHA chemicals have detail pages (full MSDS)
             results.append({
                 "id": row[0],
                 "name": row[1],
                 "cas_no": row[2],
-                "chem_id": detail_id,
+                "chem_id": chem_id,
                 "name_en": row[4] if len(row) > 4 else None,
                 "source": source,
                 "has_msds": source == "KOSHA",
