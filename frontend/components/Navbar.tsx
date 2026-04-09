@@ -15,7 +15,7 @@ export default function Navbar() {
     };
 
     const navLinkClass = (href: string) =>
-        `flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
+        `flex items-center gap-1.5 px-3 py-2.5 min-h-[44px] rounded-lg text-sm font-medium transition-all duration-150 ${
             isActive(href)
                 ? 'text-[#1e3a5f] bg-slate-100'
                 : 'text-gray-600 hover:text-[#1e3a5f] hover:bg-slate-50'
@@ -48,7 +48,7 @@ export default function Navbar() {
                             <Pill className="w-4 h-4" />
                             {t('nav.drugs')}
                         </Link>
-                        <Link href="/trade" className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
+                        <Link href="/trade" className={`flex items-center gap-1.5 px-3 py-2.5 min-h-[44px] rounded-lg text-sm font-medium transition-all duration-150 ${
                             isActive('/trade')
                                 ? 'text-emerald-600 bg-emerald-50/80'
                                 : 'text-gray-600 hover:text-emerald-600 hover:bg-emerald-50/80'
@@ -61,7 +61,7 @@ export default function Navbar() {
                             {t('nav.guides')}
                         </Link>
                         <div className="w-px h-6 bg-gray-200 mx-1" />
-                        <Link href="/docs" className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
+                        <Link href="/docs" className={`flex items-center gap-1.5 px-3 py-2.5 min-h-[44px] rounded-lg text-sm font-medium transition-all duration-150 ${
                             isActive('/docs')
                                 ? 'text-gray-700 bg-gray-100'
                                 : 'text-gray-500 hover:text-gray-600 hover:bg-gray-50'
@@ -74,7 +74,7 @@ export default function Navbar() {
                         <div className="w-px h-6 bg-gray-200 mx-1" />
                         <button
                             onClick={() => setLocale(locale === 'en' ? 'ko' : 'en')}
-                            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold border border-gray-200 hover:bg-gray-50 transition-all"
+                            className="flex items-center gap-1 px-2.5 py-2 min-h-[40px] rounded-lg text-xs font-bold border border-gray-200 hover:bg-gray-50 transition-all"
                             title={locale === 'en' ? 'Switch to Korean' : 'Switch to English'}
                         >
                             <Globe2 className="w-3.5 h-3.5 text-gray-500" />

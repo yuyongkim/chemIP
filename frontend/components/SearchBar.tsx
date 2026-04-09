@@ -112,7 +112,7 @@ export default function SearchBar({ onSearch, initialValue = '', placeholder = "
                     )}
                     <button
                         type="submit"
-                        className="px-4 py-2 rounded-xl bg-[#1e3a5f] text-white text-sm font-medium hover:bg-[#172554] active:scale-[0.97] transition-all duration-150 shadow-sm"
+                        className="px-5 py-2.5 min-h-[44px] rounded-xl bg-[#1e3a5f] text-white text-sm font-medium hover:bg-[#172554] active:scale-[0.97] transition-all duration-150 shadow-sm"
                     >
                         Search
                     </button>

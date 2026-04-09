@@ -29,17 +29,15 @@ export default function HomeHero({ initialQuery, onSearch }: HomeHeroProps) {
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#0f172a] tracking-[-0.025em] mb-5 leading-[1.08]">
             {locale === 'ko' ? (
               <>
-                한국 MSDS
-                <br />
-                <span className="text-[#1e3a5f]">
+                한국 MSDS{' '}
+                <span className="block text-[#1e3a5f]">
                   통합 안전 정보 플랫폼
                 </span>
               </>
             ) : (
               <>
-                Korean MSDS
-                <br />
-                <span className="text-[#1e3a5f]">
+                Korean MSDS{' '}
+                <span className="block text-[#1e3a5f]">
                   safety intelligence platform
                 </span>
               </>
