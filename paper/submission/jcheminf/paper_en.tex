@@ -1,0 +1,574 @@
+\documentclass[10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{natbib}
+\usepackage[margin=1in]{geometry}
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\title{ChemIP: An open-source platform integrating MSDS, patent, and trade intelligence for chemical safety decision-making}
+
+\author{Yu Yong Kim\textsuperscript{*} \\
+  \small University of Wisconsin--Madison, United States \\
+  \small \texttt{ykim288@wisc.edu}
+}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Chemical safety practitioners must routinely consult multiple disconnected government portals---each with its own interface, query syntax, and response format---to evaluate a single substance.
+This fragmented workflow increases investigation time and introduces risks of information omission.
+ChemIP is an open-source, self-hostable web platform that unifies nine Korean and international public data sources---covering MSDS safety data, patents, trade intelligence, pharmaceutical registries, chemical classification, and biomedical literature---into a single-query workflow with adapter-based API orchestration.
+The platform is built with FastAPI and Next.js, supports local deployment for privacy-sensitive environments, and includes an optional LLM-assisted summary with a deterministic rule-based fallback.
+This paper describes the architecture, adapter design, and integration strategy of ChemIP, and discusses its positioning relative to existing cheminformatics platforms and chemical databases.
+The source code, automated tests, and CI/CD pipeline are publicly available under the AGPL-3.0 license at \url{https://github.com/yuyongkim/chemIP}.
+
+\vspace{6pt}
+\noindent\textbf{Keywords:} chemical safety, MSDS, API orchestration, open-source, decision support, public data integration, cheminformatics
+\end{abstract}
+
+% ============================================================
+\section{Background}
+\label{sec:background}
+
+\subsection{The Chemical Information Fragmentation Problem}
+
+Chemical safety management is inherently multi-dimensional.
+When evaluating a substance---whether for workplace safety compliance, export regulation, or formulation development---practitioners must cross-reference at least four categories of information: (1)~hazard classifications from Material Safety Data Sheets (MSDS); (2)~patent status for freedom-to-operate analysis; (3)~trade regulations and market dynamics; and (4)~pharmaceutical regulatory status when chemicals overlap with drug formulations.
+
+In the Republic of Korea, these domains are managed by separate agencies: the Korea Occupational Safety and Health Agency (KOSHA) for MSDS data, the Korea Intellectual Property Rights Information Service (KIPRIS) for patents, the Korea Trade-Investment Promotion Agency (KOTRA) for trade intelligence, the Ministry of Food and Drug Safety (MFDS) for pharmaceutical approvals, the National Institute of Chemical Safety (KISCHEM) for exposure data, and the Korea Environment Corporation's National Chemical Information System (NCIS) for substance classification.
+Each agency maintains independent web portals with distinct query interfaces, authentication mechanisms, and response formats.
+
+A typical substance evaluation requires sequentially accessing each portal, re-entering search queries, and manually compiling results into a working document.
+This fragmented workflow introduces three systemic risks: \emph{information omission} due to variable practitioner expertise across domains, \emph{temporal overhead} from sequential portal access with redundant authentication, and \emph{cross-domain blindness} that prevents identifying connections between safety, patent, and market data.
+
+The core problem is not a lack of public data, but \textbf{workflow fragmentation}: the information exists across well-maintained government services, yet no open tool integrates them into a unified lookup process.
+
+\subsection{Existing Cheminformatics Platforms and Tools}
+
+Several platforms and tools address parts of the chemical information landscape.
+PubChem~\cite{pubchem_2023} is the largest open chemical database, hosting over 116 million compound records with computed properties, bioassay data, and literature links; however, it does not integrate MSDS operational data, patents, or trade intelligence.
+SciFinder-n~\cite{scifinder} provides patent-integrated molecular search with reaction data, but is a commercial product and does not cover Korean regulatory data.
+Reaxys~\cite{reaxys} offers a synthesis-focused chemical database with patent coverage, but is similarly restricted to institutional subscribers.
+
+In the open-source cheminformatics ecosystem, RDKit~\cite{rdkit} provides a comprehensive suite of chemical informatics and machine learning tools widely used for molecular descriptor computation, substructure searching, and QSAR modeling.
+Open Babel~\cite{openbabel} focuses on chemical file format interconversion and supports over 110 formats, serving as critical infrastructure for molecular data interoperability.
+The KNIME Analytics Platform~\cite{knime} provides a visual workflow system that integrates cheminformatics nodes (including RDKit and CDK nodes) for data analysis pipelines.
+The Chemistry Development Kit (CDK)~\cite{cdk} is a Java-based library for structural cheminformatics that underlies several web platforms and desktop tools.
+
+Chemical identifier resolution is another important piece of the integration puzzle.
+The Chemical Identifier Resolver (CIR)~\cite{cir_nci}, maintained by the NCI/CADD Group, converts between chemical names, CAS numbers, SMILES, InChI, and other identifiers via a web service.
+ChEBI~\cite{chebi} provides a curated ontology of biologically interesting chemical entities with hierarchical classification.
+ChemSpider~\cite{chemspider}, maintained by the Royal Society of Chemistry, aggregates data from over 270 sources and provides a free search API.
+UniChem~\cite{unichem} offers cross-referencing between chemical structure identifiers from multiple databases.
+
+In the regulatory and safety domain, the European Chemicals Agency (ECHA)~\cite{echa} maintains the REACH registration database, and the US EPA's CompTox Chemicals Dashboard~\cite{comptox} aggregates chemical data from numerous sources for hazard assessment.
+The NIOSH Pocket Guide~\cite{niosh} provides a concise compilation of occupational safety data for US-regulated chemicals.
+OpenFDA~\cite{openfda} covers US drug safety data via a public API.
+The Open PHACTS Discovery Platform~\cite{openphacts} demonstrated linked-data integration of pharmacological and chemical data from multiple public sources, though it is no longer actively maintained.
+
+Workflow integration tools have also emerged.
+Nextmove Software's tools~\cite{nextmove} and ChemAxon's platform~\cite{chemaxon} provide commercial workflow integration for chemical data.
+The Blue Obelisk movement~\cite{blueobelisk} and subsequent efforts have advocated for open data and open-source standards in cheminformatics, leading to improved interoperability among tools.
+
+Despite this rich ecosystem, existing tools predominantly focus on molecular-level operations (structure search, property prediction, format conversion) or domain-specific databases.
+None integrates MSDS operational data, patent landscapes, trade intelligence, and pharmaceutical registries into a unified multi-source query workflow.
+Table~\ref{tab:comparison} compares ChemIP with representative platforms across these dimensions.
+
+\begin{table}[H]
+\centering
+\caption{Feature comparison of chemical information platforms. A checkmark indicates the feature is available; ``partial'' indicates limited coverage; ``--'' indicates the feature is not available.}
+\label{tab:comparison}
+\small
+\begin{tabular}{@{}lccccccccc@{}}
+\toprule
+\textbf{Feature} & \rotatebox{70}{\textbf{ChemIP}} & \rotatebox{70}{\textbf{PubChem}} & \rotatebox{70}{\textbf{SciFinder}} & \rotatebox{70}{\textbf{Reaxys}} & \rotatebox{70}{\textbf{OPS}} & \rotatebox{70}{\textbf{OpenFDA}} & \rotatebox{70}{\textbf{CompTox}} & \rotatebox{70}{\textbf{KNIME}} & \rotatebox{70}{\textbf{KOSHA}} \\
+\midrule
+Open-source          & \checkmark & \checkmark & -- & -- & \checkmark & \checkmark & partial & \checkmark & -- \\
+MSDS integration     & \checkmark & -- & partial & -- & -- & -- & -- & -- & \checkmark \\
+Patent search        & \checkmark & -- & \checkmark & \checkmark & \checkmark & -- & -- & -- & -- \\
+Trade intelligence   & \checkmark & -- & -- & -- & -- & -- & -- & -- & -- \\
+Drug cross-ref       & \checkmark & partial & -- & -- & -- & \checkmark & -- & -- & -- \\
+Substance classif.   & \checkmark & partial & -- & -- & -- & -- & \checkmark & -- & -- \\
+Multi-API orchestr.  & \checkmark & -- & -- & -- & -- & -- & -- & partial & -- \\
+Self-hostable        & \checkmark & -- & -- & -- & -- & -- & -- & \checkmark & -- \\
+LLM integration      & \checkmark & -- & -- & -- & -- & -- & -- & partial & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Design Goals}
+
+ChemIP was designed around four guiding principles:
+
+\begin{enumerate}[nosep]
+  \item \textbf{Single-query access.} A practitioner should be able to enter a substance identifier once and receive consolidated results across all integrated data sources.
+  \item \textbf{Adapter isolation.} Each external data source should be encapsulated in an independent adapter module, so that API changes, outages, or additions do not affect other components.
+  \item \textbf{Graceful degradation.} The platform should remain functional when individual data sources or optional components (LLM, patent index) are unavailable.
+  \item \textbf{Self-hostable privacy.} Chemical inquiry patterns may reveal proprietary formulations or pending patent strategies; the platform should support fully local deployment.
+\end{enumerate}
+
+% ============================================================
+\section{Implementation}
+\label{sec:implementation}
+
+\subsection{System Architecture}
+
+ChemIP follows a three-tier architecture (Fig.~\ref{fig:architecture}): a Next.js~16 frontend with React~19, a FastAPI backend with 30+ REST endpoints organized into seven route modules, and a data layer comprising SQLite databases and nine external APIs.
+
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.92\textwidth}{\centering
+\textbf{ChemIP System Architecture}\\[6pt]
+\texttt{[Web Browser]} $\rightarrow$
+\texttt{[Next.js 16 / React 19 --- port 7000]}\\[4pt]
+$\downarrow$ \small{REST/JSON proxy}\\[4pt]
+\texttt{[FastAPI Backend --- port 7010]}\\
+\small{30+ endpoints $\cdot$ 5-layer middleware $\cdot$ 7 route modules}\\[4pt]
+$\swarrow$ \hspace{0.8cm} $\downarrow$ \hspace{0.8cm} $\searrow$\\[4pt]
+\parbox{2.8cm}{\centering\small\texttt{[External APIs]}\\KOSHA, KIPRIS,\\KOTRA (7), MFDS,\\OpenFDA, PubMed,\\Naver, KISCHEM,\\NCIS}
+\hspace{0.2cm}
+\parbox{2.8cm}{\centering\small\texttt{[SQLite DBs]}\\terminology.db\\(FTS5 index)\\patent\_index.db\\(optional)}
+\hspace{0.2cm}
+\parbox{2.8cm}{\centering\small\texttt{[Local LLM]}\\Ollama\\(optional)}
+}}
+\caption{Three-tier architecture. The frontend proxies API requests to the backend, which orchestrates nine external APIs, local databases, and an optional LLM. Components marked ``optional'' are not required for core functionality.}
+\label{fig:architecture}
+\end{figure}
+
+The frontend is a single-page application that communicates with the backend exclusively through REST/JSON calls, proxied through the Next.js server to avoid CORS issues.
+The backend is organized into seven route modules: \texttt{msds}, \texttt{patents}, \texttt{trade}, \texttt{drug}, \texttt{classification}, \texttt{ai}, and \texttt{admin}.
+A five-layer middleware stack handles CORS policy, request logging, rate limiting, error normalization, and response compression.
+
+\subsection{Adapter-Based Data Integration}
+\label{sec:adapters}
+
+Each external data source is wrapped in a dedicated adapter module (Table~\ref{tab:sources}) that handles authentication, request construction, response parsing (XML or JSON), and error normalization.
+This adapter pattern~\cite{gamma_design_patterns} decouples the core application logic from the specifics of each external API, providing several advantages:
+
+\begin{itemize}[nosep]
+  \item \textbf{Independent evolution.} When an external API changes its schema or authentication method, only the corresponding adapter needs to be updated.
+  \item \textbf{Testability.} Each adapter can be unit-tested with mocked responses independently of the live service.
+  \item \textbf{Extensibility.} Adding a new data source requires implementing a single adapter module conforming to the shared interface, without modifying existing code.
+  \item \textbf{Failure isolation.} An adapter failure (timeout, parsing error) is caught and reported without affecting other data sources in the same query.
+\end{itemize}
+
+All adapters share a unified HTTP client with connection pooling (20 connections), exponential-backoff retry ($t_k = 0.5 \times 2^k$~s, max 3~retries), and automatic failover on transient errors (HTTP 502/503/504).
+
+\begin{table}[H]
+\centering
+\caption{Integrated data sources and adapter characteristics.}
+\label{tab:sources}
+\small
+\begin{tabular}{@{}llrl@{}}
+\toprule
+\textbf{Source} & \textbf{Format} & \textbf{LOC} & \textbf{Scope} \\
+\midrule
+KOSHA MSDS & XML & 98 & 16-section safety data (with fallback) \\
+KIPRIS Patents & XML & 209 & Korean patent search/detail \\
+KOTRA (7~APIs) & JSON/XML & 422 & Trade intelligence (7 endpoints) \\
+MFDS & JSON & 70 & Korean drug approvals \\
+OpenFDA & JSON & 30 & US drug labels \\
+PubMed & JSON & 66 & Biomedical literature \\
+Naver & JSON & 54 & Korean news search \\
+KISCHEM & XML & 82 & Exposure symptoms, first-aid \\
+NCIS & JSON & 78 & Substance classification, molecular data \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Adapter Fallback and Resilience}
+
+The KOSHA MSDS adapter implements a dual-endpoint fallback mechanism: when the primary API endpoint (\texttt{msds.kosha.or.kr}) is unreachable, requests are automatically rerouted to the \texttt{data.go.kr} proxy endpoint, ensuring continued access during service outages.
+This pattern was motivated by repeated KOSHA service interruptions observed during development.
+
+More broadly, the system implements a multi-level resilience strategy:
+\begin{enumerate}[nosep]
+  \item \textbf{Endpoint-level fallback}: Alternative endpoints for the same data source (KOSHA).
+  \item \textbf{Cache-level fallback}: If all endpoints for a source fail, previously retrieved data is served from the local SQLite cache.
+  \item \textbf{Component-level degradation}: Optional components (patent index, LLM) gracefully degrade to alternatives. The LLM fallback is a deterministic rule-based report builder that generates structured safety summaries from the same evidence bundle, with a confidence score $C = \min(0.95,\; 0.4 + 0.04 \times N_{\text{evidence}})$.
+  \item \textbf{Source-level isolation}: Failure of any single data source does not prevent results from other sources from being returned.
+\end{enumerate}
+
+\subsection{Terminology Database and Chemical Resolution}
+
+ChemIP maintains a local terminology database (\texttt{terminology.db}) using SQLite with FTS5 full-text search~\cite{sqlite_fts5}.
+This database maps chemical names (Korean and English), CAS registry numbers, and synonyms to canonical identifiers, enabling fuzzy name matching and autocomplete functionality.
+The FTS5 index uses a trigram tokenizer to handle partial matches and common misspellings encountered in Korean-language chemical name searches.
+
+Chemical identifier resolution follows a cascade: CAS number exact match, then English name exact match, then Korean name FTS5 search, then substring match.
+This local-first approach avoids external API calls for identifier resolution, reducing latency for repeated queries and enabling offline operation for previously cached substances.
+
+\subsection{Patent Search}
+
+ChemIP provides two patent search pathways:
+\begin{itemize}[nosep]
+  \item \textbf{Live KIPRIS API queries}: Real-time patent search via the Korean Intellectual Property Rights Information Service. Results include patent title, applicant, filing date, and status.
+  \item \textbf{Optional local patent index}: For deployments requiring batch analysis, ChemIP supports a pre-built patent index using Aho-Corasick multi-pattern matching~\cite{ahocorasick} over an FTS5-indexed SQLite database. This component is optional and not required for core platform functionality.
+\end{itemize}
+
+Patent results are classified by context analysis into three categories: exclusion (substance explicitly excluded from claims), usage (substance used in the invention), and mention (substance referenced without direct claim relevance).
+
+\subsection{Guide Recommendation Engine}
+
+A multi-criteria scoring engine recommends relevant KOSHA safety guides for a given substance.
+The scoring function uses weighted exact-match scoring:
+\begin{equation}
+S = 4|M_{\text{CAS}}| + 3|M_{\text{title}}| + 2|M_{\text{body}}|
+\end{equation}
+where $M_{\text{CAS}}$, $M_{\text{title}}$, and $M_{\text{body}}$ denote CAS number matches, title keyword matches, and body keyword matches, respectively.
+A deterministic 8-tuple ranking (CAS match count, title match count, body match count, coverage ratio, keyword density, freshness, identifier overlap, and document ID) ensures reproducible ordering.
+
+\subsection{LLM Integration with Fallback}
+
+ChemIP integrates a locally deployed large language model (via Ollama~\cite{ollama}) for evidence synthesis.
+The LLM receives a structured evidence bundle---comprising MSDS data, patent summaries, trade alerts, and regulatory classifications---and generates a natural-language safety analysis.
+When the LLM is unavailable, the rule-based fallback produces a structured report with section-by-section source attribution.
+This design ensures that the platform remains fully functional without any cloud-based AI service dependency.
+
+\subsection{Frontend Design}
+
+The frontend provides a tabbed interface for navigating between data domains (Figs.~\ref{fig:main}--\ref{fig:detail}).
+Search results from all data sources are presented in a unified view, with domain-specific tabs for detailed exploration.
+GHS pictograms are rendered directly from hazard codes extracted from MSDS data, following the GHS Rev.~10 classification system~\cite{ghs_rev10}.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{../screenshots_en/cap_main.png}
+  \caption{Home page with unified search.}
+  \label{fig:main}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{../screenshots_en/cap_chemical.png}
+  \caption{Chemical detail with MSDS and GHS data.}
+  \label{fig:detail}
+\end{subfigure}
+\\[8pt]
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{../screenshots_en/cap_patents.png}
+  \caption{Patent search interface.}
+  \label{fig:patents}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{../screenshots_en/cap_trade.png}
+  \caption{KOTRA trade intelligence dashboard.}
+  \label{fig:trade}
+\end{subfigure}
+\caption{ChemIP user interface. (a)~Unified search with autocomplete. (b)~Eight-tab chemical detail view. (c)~Patent search with optional local index backend. (d)~Trade analysis hub.}
+\label{fig:screenshots}
+\end{figure}
+
+\subsection{Testing and Continuous Integration}
+
+The platform includes 19 automated smoke tests covering all API endpoint categories.
+Tests use monkeypatch-based mocking to ensure no external API calls during testing, enabling reproducible test execution regardless of external service availability.
+A GitHub Actions CI/CD pipeline runs the test suite on every push to the main branch.
+Single-command startup scripts are provided for both development and production environments on Windows, Linux, and macOS.
+
+% ============================================================
+\section{Results and Discussion}
+\label{sec:results}
+
+\subsection{Integration Coverage}
+
+ChemIP consolidates nine data sources spanning six information domains (safety, patents, trade, pharmaceuticals, classification, and literature) into a single-query workflow.
+To our knowledge, no existing open-source platform provides this particular combination of data source integration.
+The adapter-based architecture currently encompasses approximately 1,109 lines of adapter code across nine modules, with the KOTRA adapter being the most complex (422 LOC across seven sub-endpoints).
+
+\subsection{Illustrative Usage Scenarios}
+
+The following scenarios illustrate how ChemIP consolidates multi-portal workflows into unified queries.
+These are representative usage examples, not formal evaluations.
+
+\textbf{Scenario 1: New raw material safety review.}
+A safety officer evaluates toluene (CAS:~108-88-3) as a candidate solvent.
+A single search retrieves the full 16-section MSDS (GHS pictograms GHS02, GHS07, GHS08; TWA:~50\,ppm), three matched KOSHA safety guides, KIPRIS patent results, and NCIS classification data---information that would otherwise require visiting at least four separate portals.
+
+\textbf{Scenario 2: Export regulatory assessment.}
+A trade analyst checks methanol (CAS:~67-56-1) export requirements for Vietnam.
+One query retrieves GHS classification, KOTRA entry strategy data, import restriction status, patent landscape, and trade fraud alerts, providing a consolidated regulatory view.
+
+\textbf{Scenario 3: Pharmaceutical cross-reference.}
+A researcher investigates salicylic acid (CAS:~69-72-7).
+The drug workflow aggregates 23 MFDS-approved products, OpenFDA labels with relevant warnings, and recent PubMed articles, alongside the MSDS irritant classification---consolidating sources that span Korean and US regulatory databases.
+
+\subsection{Deployment Configurations}
+
+ChemIP supports three deployment configurations to accommodate varying infrastructure requirements:
+\begin{itemize}[nosep]
+  \item \textbf{Minimal}: Core search and MSDS lookup using the terminology database and live API calls. No additional setup required beyond API keys.
+  \item \textbf{Standard}: Adds cached MSDS data, guide recommendations, drug cross-reference, and Korean regulatory lookups.
+  \item \textbf{Full}: Adds the optional local patent index and LLM-assisted analysis via Ollama.
+\end{itemize}
+
+This tiered deployment model allows practitioners to start with minimal infrastructure and progressively enable features as organizational needs dictate.
+
+\subsection{Comparison with Related Approaches}
+
+ChemIP differs from molecular-level cheminformatics tools such as RDKit~\cite{rdkit}, Open Babel~\cite{openbabel}, and CDK~\cite{cdk} in that it operates at the \emph{information integration} level rather than the \emph{molecular computation} level.
+These tools provide essential capabilities for structure manipulation, property prediction, and format conversion, but do not address the multi-source data retrieval problem that ChemIP targets.
+
+Compared to workflow platforms like KNIME~\cite{knime}, ChemIP provides a turnkey web application rather than a general-purpose workflow design environment.
+While KNIME's visual workflow system could in principle be configured to query multiple APIs, this would require custom node development for each Korean government API and would not provide the integrated web interface that ChemIP offers.
+
+The Open PHACTS Discovery Platform~\cite{openphacts} is the most conceptually similar prior effort, having demonstrated linked-data integration of pharmacological and chemical data.
+However, Open PHACTS focused on drug discovery data sources (UniProt, ChEMBL, DrugBank) and did not address MSDS data, trade intelligence, or Korean regulatory sources.
+Additionally, the Open PHACTS platform is no longer actively maintained, whereas ChemIP is under active development.
+
+Chemical databases such as ChEBI~\cite{chebi}, ChemSpider~\cite{chemspider}, and PubChem~\cite{pubchem_2023} provide rich chemical entity data and cross-references, but function as centralized databases rather than real-time multi-API orchestration platforms.
+ChemIP complements these resources by integrating domain-specific operational data (MSDS sections, trade restrictions, patent claims) that is not typically available in chemical databases.
+
+\subsection{Privacy and Self-Hosting}
+
+The self-hosted architecture ensures that chemical inquiry patterns---which may reveal proprietary formulations or pending patent strategies---remain within the deployment environment.
+This is a practical requirement in many industrial settings where substance evaluations involve trade-sensitive information.
+All data processing occurs locally; the only external network traffic consists of API calls to the integrated public data sources.
+The optional LLM component also runs locally via Ollama, avoiding cloud-based inference services.
+
+\subsection{Limitations and Future Work}
+
+Several limitations should be acknowledged:
+\begin{itemize}[nosep]
+  \item No formal user study has been conducted. Usability evaluation with domain practitioners is planned as future work.
+  \item Some workflows depend on external government APIs that may change specifications or experience outages, as observed with intermittent KOSHA service interruptions during development.
+  \item The optional patent index requires substantial storage and is not necessary for core platform functionality.
+  \item The LLM component (Qwen3:8b via Ollama) is a general-purpose model; domain-specific fine-tuning could improve the relevance of generated analyses.
+  \item Full deployment requires API keys from Korean government data portals (\texttt{data.go.kr}), though the platform operates in degraded mode without them.
+  \item The current data source coverage is focused on Korean regulatory agencies. Expansion to additional jurisdictions (EU REACH via ECHA, US EPA via CompTox) is a planned future direction.
+\end{itemize}
+
+Future work includes a formal usability study with chemical safety practitioners, expansion of adapter coverage to international regulatory databases (ECHA~\cite{echa}, CompTox~\cite{comptox}), exploration of domain-specific LLM fine-tuning for improved evidence synthesis, and integration of molecular structure search capabilities using existing cheminformatics libraries such as RDKit~\cite{rdkit}.
+
+% ============================================================
+\section{Conclusions}
+\label{sec:conclusions}
+
+ChemIP provides an open-source, adapter-based integration platform that unifies nine public data sources---spanning MSDS safety data, patents, trade intelligence, pharmaceutical registries, chemical classification, and biomedical literature---into a single-query workflow for chemical safety practitioners.
+The adapter-based architecture enables independent evolution, testability, and extensibility of data source integrations.
+The platform supports graceful degradation when individual components are unavailable, provides tiered deployment configurations, and runs entirely self-hosted to preserve inquiry privacy.
+While ChemIP does not replace molecular-level cheminformatics tools, it addresses a complementary need: consolidating the fragmented multi-portal workflow that characterizes routine chemical safety evaluation in practice.
+
+% ============================================================
+\section*{Availability and Requirements}
+
+\begin{itemize}[nosep]
+  \item \textbf{Project name:} ChemIP
+  \item \textbf{Project home page:} \url{https://github.com/yuyongkim/chemIP}
+  \item \textbf{Operating system(s):} Windows, Linux, macOS
+  \item \textbf{Programming language:} Python~3.13, TypeScript~5
+  \item \textbf{Other requirements:} Python~3.11+, Node.js~20+, 34 Python packages (FastAPI, httpx, SQLite, etc.), 9 npm packages (Next.js, React, etc.). Optional: Ollama for LLM support.
+  \item \textbf{License:} AGPL-3.0
+  \item \textbf{Any restrictions to use by non-academics:} None beyond the AGPL-3.0 license terms (copyleft requirement for derivative works distributed as a service).
+  \item \textbf{RRID:} (to be assigned upon acceptance)
+\end{itemize}
+
+% ============================================================
+\section*{Declaration of Competing Interests}
+
+The author declares no competing interests.
+
+\section*{Authors' Contributions}
+
+YYK conceived, designed, implemented, tested, and documented the platform, and wrote the manuscript.
+
+\section*{Acknowledgments}
+
+This work utilized public APIs provided by the Korea Occupational Safety and Health Agency (KOSHA), Korea Intellectual Property Rights Information Service (KIPRIS), Korea Trade-Investment Promotion Agency (KOTRA), Ministry of Food and Drug Safety (MFDS), National Institute of Chemical Safety (KISCHEM), and Korea Environment Corporation (NCIS) of the Republic of Korea.
+The author thanks the respective agencies for maintaining open data services that enable third-party integration.
+
+% ============================================================
+\begin{thebibliography}{99}
+
+\bibitem{pubchem_2023}
+Kim S, Chen J, Cheng T, et al.
+PubChem 2023 update.
+\emph{Nucleic Acids Research}. 2023;51(D1):D1373--D1380.
+doi:10.1093/nar/gkac956.
+
+\bibitem{scifinder}
+Chemical Abstracts Service.
+SciFinder-n: Chemical Research Platform.
+\url{https://scifinder-n.cas.org}. Accessed 2025.
+
+\bibitem{reaxys}
+Elsevier.
+Reaxys: Chemistry Research Platform.
+\url{https://www.reaxys.com}. Accessed 2025.
+
+\bibitem{rdkit}
+Landrum G.
+RDKit: Open-source cheminformatics.
+\url{https://www.rdkit.org}. Accessed 2025.
+
+\bibitem{openbabel}
+O'Boyle NM, Banck M, James CA, Morley C, Vandermeersch T, Hutchison GR.
+Open Babel: An open chemical toolbox.
+\emph{Journal of Cheminformatics}. 2011;3:33.
+doi:10.1186/1758-2946-3-33.
+
+\bibitem{knime}
+Berthold MR, Cebron N, Dill F, et al.
+KNIME: The Konstanz Information Miner.
+In: \emph{Studies in Classification, Data Analysis, and Knowledge Organization}. Springer; 2008. p.~319--326.
+doi:10.1007/978-3-540-78246-9\_38.
+
+\bibitem{cdk}
+Willighagen EL, Mayfield JW, Alvarsson J, et al.
+The Chemistry Development Kit (CDK) v2.0: atom typing, depiction, molecular formula, and substructure searching.
+\emph{Journal of Cheminformatics}. 2017;9:33.
+doi:10.1186/s13321-017-0220-4.
+
+\bibitem{cir_nci}
+NCI/CADD Group.
+Chemical Identifier Resolver.
+\url{https://cactus.nci.nih.gov/chemical/structure}. Accessed 2025.
+
+\bibitem{chebi}
+Hastings J, Owen G, Dekker A, et al.
+ChEBI in 2016: Improved services and an expanding collection of metabolites.
+\emph{Nucleic Acids Research}. 2016;44(D1):D1214--D1219.
+doi:10.1093/nar/gkv1031.
+
+\bibitem{chemspider}
+Pence HE, Williams A.
+ChemSpider: An online chemical information resource.
+\emph{Journal of Chemical Education}. 2010;87(11):1123--1124.
+doi:10.1021/ed100697w.
+
+\bibitem{unichem}
+Chambers J, Davies M, Gaulton A, et al.
+UniChem: a unified chemical structure cross-referencing and identifier tracking system.
+\emph{Journal of Cheminformatics}. 2013;5:3.
+doi:10.1186/1758-2946-5-3.
+
+\bibitem{echa}
+European Chemicals Agency (ECHA).
+ECHA REACH Registration Database.
+\url{https://echa.europa.eu}. Accessed 2025.
+
+\bibitem{comptox}
+Williams AJ, Grulke CM, Edwards J, et al.
+The CompTox Chemicals Dashboard: a community data resource for environmental chemistry.
+\emph{Journal of Cheminformatics}. 2017;9:61.
+doi:10.1186/s13321-017-0247-6.
+
+\bibitem{niosh}
+National Institute for Occupational Safety and Health (NIOSH).
+NIOSH Pocket Guide to Chemical Hazards.
+\url{https://www.cdc.gov/niosh/npg/}. Accessed 2025.
+
+\bibitem{openfda}
+U.S.\ Food and Drug Administration.
+openFDA API Documentation.
+\url{https://open.fda.gov}. Accessed 2025.
+
+\bibitem{openphacts}
+Williams AJ, Harland L, Groth P, et al.
+Open PHACTS: semantic interoperability for drug discovery.
+\emph{Drug Discovery Today}. 2012;17(21--22):1188--1198.
+doi:10.1016/j.drudis.2012.05.016.
+
+\bibitem{nextmove}
+Nextmove Software.
+Chemical text mining and data tools.
+\url{https://www.nextmovesoftware.com}. Accessed 2025.
+
+\bibitem{chemaxon}
+ChemAxon.
+Cheminformatics platforms and solutions.
+\url{https://chemaxon.com}. Accessed 2025.
+
+\bibitem{blueobelisk}
+Guha R, Howard MT, Hutchison GR, et al.
+The Blue Obelisk---Interoperability in Chemical Informatics.
+\emph{Journal of Chemical Information and Modeling}. 2006;46(3):991--998.
+doi:10.1021/ci050400b.
+
+\bibitem{occupational_safety_2023}
+Korea Occupational Safety and Health Agency (KOSHA).
+MSDS OpenAPI Service Technical Documentation. 2024.
+\url{https://msds.kosha.or.kr}.
+
+\bibitem{ahocorasick}
+Aho AV, Corasick MJ.
+Efficient string matching: An aid to bibliographic search.
+\emph{Communications of the ACM}. 1975;18(6):333--340.
+doi:10.1145/360825.360855.
+
+\bibitem{sqlite_fts5}
+Hipp DR.
+SQLite FTS5 Extension Documentation. 2024.
+\url{https://www.sqlite.org/fts5.html}.
+
+\bibitem{ollama}
+Ollama.
+Run Large Language Models Locally. 2024.
+\url{https://ollama.com}.
+
+\bibitem{ghs_rev10}
+United Nations Economic Commission for Europe.
+Globally Harmonized System of Classification and Labelling of Chemicals (GHS Rev.~10). 2023.
+
+\bibitem{fastapi}
+Ram\'{i}rez S.
+FastAPI: Modern, Fast Web Framework for Building APIs with Python.
+\url{https://fastapi.tiangolo.com}. 2024.
+
+\bibitem{nextjs}
+Vercel.
+Next.js: The React Framework for the Web.
+\url{https://nextjs.org}. 2025.
+
+\bibitem{gamma_design_patterns}
+Gamma E, Helm R, Johnson R, Vlissides J.
+\emph{Design Patterns: Elements of Reusable Object-Oriented Software}.
+Addison-Wesley; 1994.
+
+\bibitem{willett_similarity}
+Willett P.
+Similarity-based virtual screening using 2D fingerprints.
+\emph{Drug Discovery Today}. 2006;11(23--24):1046--1053.
+doi:10.1016/j.drudis.2006.10.005.
+
+\bibitem{weininger_smiles}
+Weininger D.
+SMILES, a chemical language and information system. 1. Introduction to methodology and encoding rules.
+\emph{Journal of Chemical Information and Computer Sciences}. 1988;28(1):31--36.
+doi:10.1021/ci00057a005.
+
+\bibitem{heller_inchi}
+Heller SR, McNaught A, Pletnev I, Stein S, Tchekhovskoi D.
+InChI, the IUPAC International Chemical Identifier.
+\emph{Journal of Cheminformatics}. 2015;7:23.
+doi:10.1186/s13321-015-0068-4.
+
+\end{thebibliography}
+
+\end{document}
