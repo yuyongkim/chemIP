@@ -28,6 +28,8 @@ module.exports = {
         PORT: 7011,
         LOG_DIR: './logs',
         LLM_MODEL: 'gemma3:4b',
+        LLM_MAX_TOKENS: '512',
+        LLM_TIMEOUT_SECONDS: '25',
       },
       max_restarts: 3,
       min_uptime: '10s',
