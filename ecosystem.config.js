@@ -27,6 +27,7 @@ module.exports = {
       env: {
         PORT: 7011,
         LOG_DIR: './logs',
+        LLM_MODEL: 'gemma3:4b',
       },
       max_restarts: 3,
       min_uptime: '10s',
