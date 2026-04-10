@@ -57,6 +57,12 @@ class AskRequest(BaseModel):
 @router.post("/analyze")
 async def analyze_chemical(request: AnalysisRequest):
     with TerminologyDB() as db:
+        # Check cache first (24h TTL)
+        cached = db.get_ai_cache(request.chemId)
+        if cached and not request.use_llm == False:
+            logger.info("AI cache hit for %s", request.chemId)
+            return {**cached, "cached": True}
+
         details = db.get_msds_details_by_chem_id(request.chemId) or []
         english = db.get_msds_english_by_chem_id(request.chemId) or {}
         meta = db.get_chemical_meta_by_chem_id(request.chemId) or {}
@@ -106,7 +112,7 @@ async def analyze_chemical(request: AnalysisRequest):
             model = ""
             llm_used = False
 
-        return {
+        result = {
             "analysis": analysis,
             "confidence": calculate_confidence(bundle),
             "sources": build_sources(bundle),
@@ -115,6 +121,12 @@ async def analyze_chemical(request: AnalysisRequest):
             "llm_used": llm_used,
             "model": model,
         }
+
+        # Cache the result for 24h
+        if llm_used:
+            db.set_ai_cache(request.chemId, result, model)
+
+        return result
 
 
 @router.get("/llm-status")
@@ -193,6 +205,12 @@ def ai_summarize(request: SummarizeRequest):
     if not chem_id:
         return {"error": "chemId is required"}
 
+    # Check cache
+    with TerminologyDB() as db:
+        cached = db.get_ai_cache(f"summary:{chem_id}")
+        if cached:
+            return {**cached, "cached": True}
+
     context, info = build_full_context(chem_id)
     name = info.get("name", chem_id)
     source_counts = info.get("sources", {})
@@ -210,7 +228,7 @@ def ai_summarize(request: SummarizeRequest):
 
     resp = llm_generate(prompt, system=system)
     if resp.available and resp.text:
-        return {
+        result = {
             "chem_id": chem_id,
             "chemical_name": name,
             "summary": resp.text.strip(),
@@ -218,6 +236,9 @@ def ai_summarize(request: SummarizeRequest):
             "llm_used": True,
             "model": resp.model,
         }
+        with TerminologyDB() as db:
+            db.set_ai_cache(f"summary:{chem_id}", result, resp.model)
+        return result
 
     # Fallback
     with TerminologyDB() as db:

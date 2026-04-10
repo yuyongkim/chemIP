@@ -20,6 +20,8 @@ const DrugInfoPanel = dynamic(() => import('./components/DrugInfoPanel'));
 const GuideRecommendationsPanel = dynamic(() => import('./components/GuideRecommendationsPanel'));
 const KoreanRegulationPanel = dynamic(() => import('./components/KoreanRegulationPanel'));
 
+import { useCallback } from 'react';
+
 import ChemicalHeaderTabs from './components/ChemicalHeaderTabs';
 import EnglishSafetyCard from './components/EnglishSafetyCard';
 import MarketTabToolbar from './components/MarketTabToolbar';
@@ -53,6 +55,25 @@ export default function ChemicalDetail() {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  const handleExportPdf = useCallback(async () => {
+    if (!data) return;
+    const { exportChemicalPdf } = await import('@/lib/pdf-report');
+    await exportChemicalPdf({
+      chemId: chemIdParam,
+      chemicalName,
+      sections: data.sections,
+      english_safety: data.english_safety,
+      meta: {
+        chem_id: data.chem_id,
+        name: data.name,
+        name_en: data.name_en,
+        cas_no: data.cas_no,
+        source: data.source,
+        is_kosha: data.is_kosha,
+      },
+    });
+  }, [data, chemIdParam, chemicalName]);
 
   if (loading) {
     return (
@@ -88,7 +109,7 @@ export default function ChemicalDetail() {
               </div>
             </div>
           </div>
-          <p className="text-center text-sm text-gray-400 mt-8">Loading MSDS data from KOSHA...</p>
+          <p className="text-center text-sm text-gray-400 mt-8">Loading chemical data...</p>
         </div>
       </div>
     );
@@ -111,12 +132,21 @@ export default function ChemicalDetail() {
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {activeTab === 'msds' && (
+          {activeTab === 'msds' && data.is_kosha !== false && (
             <DetailSidebar sections={data.sections} activeSection={activeSection} onSectionClick={scrollToSection} />
           )}
 
-          <div className={activeTab === 'msds' ? 'col-span-1 lg:col-span-3 space-y-8' : 'col-span-4 space-y-8'}>
-            <ChemicalHeaderTabs chemId={chemIdParam} chemicalName={chemicalName} activeTab={activeTab} onTabChange={setActiveTab} />
+          <div className={activeTab === 'msds' && data.is_kosha !== false ? 'col-span-1 lg:col-span-3 space-y-8' : 'col-span-4 space-y-8'}>
+            <ChemicalHeaderTabs
+              chemId={chemIdParam}
+              chemicalName={chemicalName}
+              activeTab={activeTab}
+              onTabChange={setActiveTab}
+              isKosha={data.is_kosha !== false}
+              casNo={data.cas_no}
+              source={data.source}
+              onExportPdf={handleExportPdf}
+            />
 
             {activeTab === 'msds' ? (
               <>

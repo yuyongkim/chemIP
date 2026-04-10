@@ -86,13 +86,27 @@ def autocomplete_chemicals(
         return result["items"]
 
 
+def _is_kosha_id(chem_id: str) -> bool:
+    """KOSHA IDs are 6-digit zero-padded numbers (e.g., '001008')."""
+    return bool(chem_id) and chem_id.isdigit() and len(chem_id) == 6
+
+
 @router.get("/{chem_id}")
 def get_chemical_details(chem_id: str):
     with TerminologyDB() as db:
-        details = db.get_msds_details_by_chem_id(chem_id)
+        is_kosha = _is_kosha_id(chem_id)
+
+        # For KOSHA chemicals, load MSDS sections (with API fetch fallback)
+        details = db.get_msds_details_by_chem_id(chem_id) if is_kosha else []
         english_safety = db.get_msds_english_by_chem_id(chem_id)
 
-        if not details:
+        # Look up chemical metadata
+        meta = db.get_chemical_meta_by_chem_id(chem_id) or {}
+        if not meta and not is_kosha:
+            # Non-KOSHA: try CAS-based lookup
+            meta = db.get_chemical_meta_by_cas(chem_id) or {}
+
+        if is_kosha and not details:
             logger.info("MSDS details for %s not found in DB. Fetching from API (parallel).", chem_id)
             try:
                 def _fetch_section(seq: int) -> tuple[int, dict]:
@@ -131,7 +145,16 @@ def get_chemical_details(chem_id: str):
                 }
             )
 
-        return {"chem_id": chem_id, "sections": parsed_sections, "english_safety": english_safety}
+        return {
+            "chem_id": chem_id,
+            "sections": parsed_sections,
+            "english_safety": english_safety,
+            "is_kosha": is_kosha,
+            "name": meta.get("name", ""),
+            "name_en": meta.get("name_en", ""),
+            "cas_no": meta.get("cas_no", ""),
+            "source": meta.get("source", ""),
+        }
 
 
 @router.get("/{chem_id}/drugs")

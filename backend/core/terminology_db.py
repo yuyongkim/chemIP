@@ -293,12 +293,14 @@ class TerminologyDB(MappingStoreMixin):
             if desc.startswith("KOSHA_ID:"):
                 chem_id = desc.split(":")[1]
 
-            # Only KOSHA chemicals have detail pages (full MSDS)
+            # KOSHA: use KOSHA ID, non-KOSHA: use CAS as detail page ID
+            detail_id = chem_id if chem_id else (row[2] if row[2] else None)
+
             results.append({
                 "id": row[0],
                 "name": row[1],
                 "cas_no": row[2],
-                "chem_id": chem_id,
+                "chem_id": detail_id,
                 "name_en": row[4] if len(row) > 4 else None,
                 "source": source,
                 "has_msds": source == "KOSHA",
@@ -375,6 +377,29 @@ class TerminologyDB(MappingStoreMixin):
             "cas_no": row[2] or "",
             "name_en": row[3] or "",
             "chem_id": chem_id,
+        }
+
+    def get_chemical_meta_by_cas(self, cas_no: str):
+        """Look up chemical metadata by CAS number (for non-KOSHA chemicals)."""
+        cursor = self.conn.cursor()
+        cursor.execute(
+            '''
+            SELECT id, name, cas_no, name_en, source
+            FROM chemical_terms
+            WHERE cas_no = ?
+            LIMIT 1
+            ''',
+            (cas_no,),
+        )
+        row = cursor.fetchone()
+        if not row:
+            return None
+        return {
+            "id": row[0],
+            "name": row[1] or "",
+            "cas_no": row[2] or "",
+            "name_en": row[3] or "",
+            "source": row[4] or "",
         }
 
     def add_chemical_from_source(self, name: str, cas_no: str | None,

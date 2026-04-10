@@ -200,3 +200,50 @@ class MappingStoreMixin:
             "pictograms": pjl(row[7]),
             "last_updated": row[8],
         }
+
+    # ------------------------------------------------------------------
+    # AI analysis cache
+    # ------------------------------------------------------------------
+
+    def _ensure_ai_cache_table(self):
+        self.conn.execute('''
+            CREATE TABLE IF NOT EXISTS ai_analysis_cache (
+                chem_id TEXT PRIMARY KEY,
+                response_json TEXT NOT NULL,
+                model TEXT,
+                created_at TEXT DEFAULT (datetime('now'))
+            )
+        ''')
+
+    def get_ai_cache(self, chem_id: str, max_age_hours: int = 24) -> dict | None:
+        self._ensure_ai_cache_table()
+        cursor = self.conn.cursor()
+        try:
+            cursor.execute(
+                '''
+                SELECT response_json FROM ai_analysis_cache
+                WHERE chem_id = ?
+                  AND datetime(created_at) > datetime('now', ?)
+                ''',
+                (chem_id, f'-{max_age_hours} hours'),
+            )
+            row = cursor.fetchone()
+            if row:
+                return json.loads(row[0])
+        except (sqlite3.OperationalError, json.JSONDecodeError):
+            pass
+        return None
+
+    def set_ai_cache(self, chem_id: str, response: dict, model: str = ""):
+        self._ensure_ai_cache_table()
+        try:
+            self.conn.execute(
+                '''
+                INSERT OR REPLACE INTO ai_analysis_cache (chem_id, response_json, model, created_at)
+                VALUES (?, ?, ?, datetime('now'))
+                ''',
+                (chem_id, json.dumps(response, ensure_ascii=False), model),
+            )
+            self.conn.commit()
+        except sqlite3.OperationalError:
+            logger.warning("Failed to cache AI analysis for %s", chem_id)

@@ -24,6 +24,11 @@ export interface ChemicalDetailData {
   chem_id: string;
   sections: Section[];
   english_safety?: EnglishSafety | null;
+  is_kosha?: boolean;
+  name?: string;
+  name_en?: string;
+  cas_no?: string;
+  source?: string;
 }
 
 export interface GuideRecommendation {

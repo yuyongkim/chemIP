@@ -17,7 +17,7 @@ export function useChemicalDetail({ chemIdParam }: UseChemicalDetailParams) {
   const [activeSection, setActiveSection] = useState<number>(1);
   const [marketKeyword, setMarketKeyword] = useState<string>('');
   const [pinnedMarketKeyword, setPinnedMarketKeyword] = useState<string>('');
-  const [activeTab, setActiveTab] = useState<ChemicalDetailTab>('msds');
+  const [activeTab, setActiveTab] = useState<ChemicalDetailTab | null>(null);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -25,6 +25,10 @@ export function useChemicalDetail({ chemIdParam }: UseChemicalDetailParams) {
         const result = await fetchJsonSafe<ChemicalDetailData>(`/api/chemicals/${chemIdParam}`);
         if (result.ok && result.data) {
           setData(result.data);
+          // Set initial tab based on data availability
+          if (!activeTab) {
+            setActiveTab(result.data.is_kosha === false ? 'bilingual' : 'msds');
+          }
         } else {
           setData(null);
           console.error('Failed to fetch details', result.errorText || `HTTP ${result.status}`);
@@ -88,15 +92,20 @@ export function useChemicalDetail({ chemIdParam }: UseChemicalDetailParams) {
 
   const chemicalName = useMemo(() => {
     if (!data) return 'Chemical';
-    const section1 = data.sections?.find((s) => s.section_seq === 1);
-    if (!section1) return 'Chemical';
 
-    for (const item of section1.content) {
-      if ('itemDetail' in item && item.itemDetail) {
-        // Strip HTML tags (e.g. <br/>) from chemical names
-        return item.itemDetail.replace(/<[^>]*>/g, ' ').replace(/\s{2,}/g, ' ').trim();
+    // Try MSDS section 1 first (KOSHA chemicals)
+    const section1 = data.sections?.find((s) => s.section_seq === 1);
+    if (section1) {
+      for (const item of section1.content) {
+        if ('itemDetail' in item && item.itemDetail) {
+          return item.itemDetail.replace(/<[^>]*>/g, ' ').replace(/\s{2,}/g, ' ').trim();
+        }
       }
     }
+
+    // Fallback: use name/name_en from API response (non-KOSHA)
+    if (data.name) return data.name;
+    if (data.name_en) return data.name_en;
 
     return 'Chemical';
   }, [data]);
@@ -131,7 +140,7 @@ export function useChemicalDetail({ chemIdParam }: UseChemicalDetailParams) {
     marketKeyword,
     setMarketKeyword,
     pinnedMarketKeyword,
-    activeTab,
+    activeTab: activeTab || 'msds',
     setActiveTab,
     chemicalName,
     savePinnedKeyword,
