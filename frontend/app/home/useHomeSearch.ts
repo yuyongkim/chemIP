@@ -33,7 +33,7 @@ export function useHomeSearch({ query, page }: UseHomeSearchParams) {
       setLoadingDrugs(true);
 
       const [chemicalsRes, drugsRes] = await Promise.allSettled([
-        fetchJson<ChemSearchResult>(`/api/chemicals?q=${encodeURIComponent(query)}&page=${page}&limit=12`),
+        fetchJson<ChemSearchResult>(`/api/chemicals?q=${encodeURIComponent(query)}&page=${page}&limit=24`),
         fetchJson<UnifiedDrugResult>(`/api/drugs/unified?q=${encodeURIComponent(query)}&limit=20`),
       ]);
 

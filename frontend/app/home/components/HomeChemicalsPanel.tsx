@@ -26,7 +26,7 @@ export default function HomeChemicalsPanel({
   if (loading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-4">
-        {Array.from({ length: 6 }).map((_, i) => (
+        {Array.from({ length: 12 }).map((_, i) => (
           <div key={i} className="bg-white p-5 rounded-xl border border-gray-100">
             <div className="flex items-start gap-3.5">
               <div className="skeleton w-9 h-9 rounded-lg flex-shrink-0" />
@@ -68,24 +68,59 @@ export default function HomeChemicalsPanel({
         ))}
       </div>
       {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-3 mt-8">
+        <div className="flex justify-center items-center gap-1.5 mt-8 flex-wrap">
           <button
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage <= 1}
-            className="px-3.5 py-2 rounded-lg border border-gray-200 text-gray-700 text-sm font-medium disabled:opacity-30 hover:bg-gray-50 hover:border-gray-300 active:scale-[0.98] transition-all duration-150 flex items-center gap-1"
+            className="px-3 py-2 min-h-[40px] rounded-lg border border-gray-200 text-gray-700 text-sm font-medium disabled:opacity-30 hover:bg-gray-50 hover:border-gray-300 active:scale-[0.98] transition-all duration-150 flex items-center gap-1"
+            aria-label="Previous page"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            Prev
+            <span className="hidden sm:inline">Prev</span>
           </button>
-          <span className="px-3 py-2 text-sm text-gray-400 font-mono tabular-nums">
-            {currentPage} / {totalPages}
-          </span>
+
+          {(() => {
+            const pages: (number | 'gap')[] = [];
+            const window = 1;
+            for (let i = 1; i <= totalPages; i++) {
+              if (
+                i === 1 ||
+                i === totalPages ||
+                (i >= currentPage - window && i <= currentPage + window)
+              ) {
+                pages.push(i);
+              } else if (pages[pages.length - 1] !== 'gap') {
+                pages.push('gap');
+              }
+            }
+            return pages.map((p, idx) =>
+              p === 'gap' ? (
+                <span key={`gap-${idx}`} className="px-1.5 text-gray-300 select-none">…</span>
+              ) : (
+                <button
+                  key={p}
+                  onClick={() => onPageChange(p)}
+                  aria-label={`Go to page ${p}`}
+                  aria-current={p === currentPage ? 'page' : undefined}
+                  className={`min-w-[40px] min-h-[40px] px-3 py-2 rounded-lg text-sm font-medium font-mono tabular-nums transition-all duration-150 ${
+                    p === currentPage
+                      ? 'bg-[#1e3a5f] text-white border border-[#1e3a5f]'
+                      : 'border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300'
+                  }`}
+                >
+                  {p}
+                </button>
+              ),
+            );
+          })()}
+
           <button
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage >= totalPages}
-            className="px-3.5 py-2 rounded-lg border border-gray-200 text-gray-700 text-sm font-medium disabled:opacity-30 hover:bg-gray-50 hover:border-gray-300 active:scale-[0.98] transition-all duration-150 flex items-center gap-1"
+            className="px-3 py-2 min-h-[40px] rounded-lg border border-gray-200 text-gray-700 text-sm font-medium disabled:opacity-30 hover:bg-gray-50 hover:border-gray-300 active:scale-[0.98] transition-all duration-150 flex items-center gap-1"
+            aria-label="Next page"
           >
-            Next
+            <span className="hidden sm:inline">Next</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>

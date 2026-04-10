@@ -27,7 +27,7 @@ function HomeContent() {
     page: initialPage,
   });
 
-  const totalPages = Math.ceil(total / 12);
+  const totalPages = Math.ceil(total / 24);
 
   const handleSearch = (query: string) => {
     if (!query.trim()) {
