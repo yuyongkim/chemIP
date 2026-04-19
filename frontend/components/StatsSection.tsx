@@ -1,30 +1,35 @@
+'use client';
+
 import { Database, Activity, ShieldCheck } from 'lucide-react';
+import { useI18n } from '@/lib/i18n';
 
 export default function StatsSection() {
+    const { locale } = useI18n();
+
     const stats = [
         {
-            label: "KOSHA MSDS",
-            value: "48,963",
-            desc: "한국 공식 MSDS 16섹션 전문",
+            label: 'KOSHA MSDS',
+            value: '48,963',
+            desc: locale === 'ko' ? '한국 공식 MSDS 16섹션 원문' : 'Official Korean MSDS across all 16 sections',
             icon: ShieldCheck,
-            color: "text-[#1e3a5f]",
-            bg: "bg-slate-50",
+            color: 'text-[#1e3a5f]',
+            bg: 'bg-slate-50',
         },
         {
-            label: "전체 화학물질",
-            value: "117,744",
-            desc: "KOSHA · ECHA · KREACH · KISCHEM",
+            label: locale === 'ko' ? '전체 화학물질' : 'Chemical index',
+            value: '117,744',
+            desc: 'KOSHA · ECHA · K-REACH · KISCHEM',
             icon: Database,
-            color: "text-[#1e3a5f]",
-            bg: "bg-slate-50",
+            color: 'text-[#1e3a5f]',
+            bg: 'bg-slate-50',
         },
         {
-            label: "MSDS 섹션 데이터",
-            value: "769,897",
-            desc: "GHS 분류 · 유해성 · 취급 · 응급조치",
+            label: locale === 'ko' ? 'MSDS 섹션 데이터' : 'Section coverage',
+            value: '769,897',
+            desc: locale === 'ko' ? 'GHS 분류 · 유해성 · 취급 · 응급조치' : 'GHS classes, hazards, handling, and emergency guidance',
             icon: Activity,
-            color: "text-[#1e3a5f]",
-            bg: "bg-slate-50",
+            color: 'text-[#1e3a5f]',
+            bg: 'bg-slate-50',
         },
     ];
 

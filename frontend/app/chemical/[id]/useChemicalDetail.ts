@@ -23,12 +23,10 @@ export function useChemicalDetail({ chemIdParam }: UseChemicalDetailParams) {
     const fetchDetails = async () => {
       try {
         const result = await fetchJsonSafe<ChemicalDetailData>(`/api/chemicals/${chemIdParam}`);
-        if (result.ok && result.data) {
-          setData(result.data);
-          // Set initial tab based on data availability
-          if (!activeTab) {
-            setActiveTab(result.data.is_kosha === false ? 'bilingual' : 'msds');
-          }
+        const fetched = result.data;
+        if (result.ok && fetched) {
+          setData(fetched);
+          setActiveTab((current) => current ?? (fetched.is_kosha === false ? 'bilingual' : 'msds'));
         } else {
           setData(null);
           console.error('Failed to fetch details', result.errorText || `HTTP ${result.status}`);

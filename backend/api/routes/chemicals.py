@@ -1,4 +1,5 @@
 import logging
+import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any
 
@@ -91,6 +92,10 @@ def _is_kosha_id(chem_id: str) -> bool:
     return bool(chem_id) and chem_id.isdigit() and len(chem_id) == 6
 
 
+def _looks_like_cas(value: str) -> bool:
+    return bool(re.fullmatch(r"\d{2,7}-\d{2}-\d", value or ""))
+
+
 @router.get("/{chem_id}")
 def get_chemical_details(chem_id: str):
     with TerminologyDB() as db:
@@ -101,12 +106,16 @@ def get_chemical_details(chem_id: str):
         english_safety = db.get_msds_english_by_chem_id(chem_id)
 
         # Look up chemical metadata
-        meta = db.get_chemical_meta_by_chem_id(chem_id) or {}
+        meta_reader = getattr(db, "get_chemical_meta_by_chem_id", None)
+        meta = meta_reader(chem_id) if callable(meta_reader) else {}
         if not meta and not is_kosha:
             # Non-KOSHA: try CAS-based lookup
-            meta = db.get_chemical_meta_by_cas(chem_id) or {}
+            cas_meta_reader = getattr(db, "get_chemical_meta_by_cas", None)
+            meta = cas_meta_reader(chem_id) if callable(cas_meta_reader) else {}
 
-        if is_kosha and not details:
+        should_fetch_kosha = (is_kosha or (not meta and not _looks_like_cas(chem_id))) and not details
+
+        if should_fetch_kosha:
             logger.info("MSDS details for %s not found in DB. Fetching from API (parallel).", chem_id)
             try:
                 def _fetch_section(seq: int) -> tuple[int, dict]:

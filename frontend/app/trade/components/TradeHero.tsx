@@ -11,7 +11,6 @@ interface TradeHeroProps {
   lastQuery: string;
   keyword: string;
   country: string;
-  onTabChange: (id: TabId) => void;
 }
 
 export default function TradeHero({
@@ -23,7 +22,6 @@ export default function TradeHero({
   lastQuery,
   keyword,
   country,
-  onTabChange,
 }: TradeHeroProps) {
   const activeTab = tabs.find((item) => item.id === tab) || tabs[0];
 
@@ -44,22 +42,10 @@ export default function TradeHero({
               A unified view of news, strategies, pricing, and fraud risk for market entry decision-making.
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-2">
-              {tabs.map((item) => (
-                <button
-                  key={`hero-${item.id}`}
-                  type="button"
-                  onClick={() => onTabChange(item.id)}
-                  className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-all duration-150 ${
-                    tab === item.id
-                      ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-                      : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50 hover:border-gray-300'
-                  }`}
-                >
-                  {item.icon}
-                  {item.label}
-                </button>
-              ))}
+            <div className="mt-6 rounded-2xl border border-emerald-100 bg-emerald-50/70 px-4 py-3">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-emerald-700">Current workspace</p>
+              <div className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-emerald-800">{activeTab.icon}{activeTab.label}</div>
+              <p className="mt-2 text-sm leading-6 text-emerald-900/75">{tabDescriptions[tab]}</p>
             </div>
           </section>
 

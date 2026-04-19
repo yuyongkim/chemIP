@@ -14,45 +14,38 @@ export default function HomeHero({ initialQuery, onSearch }: HomeHeroProps) {
   const { locale } = useI18n();
 
   return (
-    <div id="main-content" className="relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-gray-50/50" />
-      <div className="absolute top-[-200px] right-[-100px] w-[600px] h-[600px] bg-blue-100/25 rounded-full blur-3xl" />
-      <div className="absolute bottom-[-100px] left-[-50px] w-[400px] h-[400px] bg-slate-100/40 rounded-full blur-3xl" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative">
-        <div className="text-center max-w-3xl mx-auto">
+    <section id="main-content" className="border-b border-slate-200 bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_56%,#f8fafc_100%)]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+        <div className="max-w-4xl">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-[#1e3a5f] text-xs font-semibold mb-6 tracking-wide">
             <Shield className="w-3.5 h-3.5" />
-            {locale === 'ko' ? 'KOSHA 공식 MSDS 기반' : 'Powered by KOSHA official MSDS'}
+            {locale === 'ko' ? 'Powered by KOSHA official MSDS' : 'Powered by KOSHA official MSDS'}
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#0f172a] tracking-[-0.025em] mb-5 leading-[1.08]">
+          <h1 className="max-w-3xl text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#0f172a] tracking-[-0.03em] mb-5 leading-[1.02]">
             {locale === 'ko' ? (
               <>
-                한국 MSDS{' '}
-                <span className="block text-[#1e3a5f]">
-                  통합 안전 정보 플랫폼
-                </span>
+                한국 MSDS
+                <span className="block text-[#1e3a5f]">안전 인텔리전스 플랫폼</span>
               </>
             ) : (
               <>
-                Korean MSDS{' '}
-                <span className="block text-[#1e3a5f]">
-                  safety intelligence platform
-                </span>
+                Korean MSDS
+                <span className="block text-[#1e3a5f]">safety intelligence platform</span>
               </>
             )}
           </h1>
-          <p className="text-base sm:text-lg text-gray-500 mb-10 max-w-xl mx-auto leading-relaxed">
+
+          <p className="text-base sm:text-lg text-slate-600 mb-10 max-w-2xl leading-relaxed">
             {locale === 'ko' ? (
               <>
-                <span className="font-semibold text-gray-700">48,963종</span> KOSHA MSDS 16개 섹션 전문과
+                <span className="font-semibold text-slate-800">48,963건</span>의 KOSHA MSDS 원문과
                 <br className="hidden sm:block" />
-                특허, 무역, 의약품, 규제 정보를 한 번에 조회합니다.
+                특허, 무역, 의약품, 규제 맥락을 한 흐름으로 이어서 확인합니다.
               </>
             ) : (
               <>
-                <span className="font-semibold text-gray-700">48,963</span> full KOSHA MSDS records{' '}
+                <span className="font-semibold text-slate-800">48,963</span> full KOSHA MSDS records
                 <br className="hidden sm:block" />
                 with integrated patent, trade, drug, and regulatory intelligence.
               </>
@@ -62,24 +55,22 @@ export default function HomeHero({ initialQuery, onSearch }: HomeHeroProps) {
           <SearchBar onSearch={onSearch} initialValue={initialQuery} />
           <PopularChemicals onSearch={onSearch} />
 
-          <div className="flex items-center justify-center gap-6 mt-10 text-xs text-gray-400 font-medium">
-            <div className="flex items-center gap-1.5">
+          <div className="mt-10 flex flex-wrap items-center gap-3 text-xs font-medium text-slate-500">
+            <div className="inline-flex min-h-[40px] items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-2">
               <Shield className="w-3.5 h-3.5" />
-              <span>{locale === 'ko' ? 'KOSHA MSDS 48,963종' : '48,963 KOSHA MSDS records'}</span>
+              <span>{locale === 'ko' ? 'KOSHA MSDS 48,963건' : '48,963 KOSHA MSDS records'}</span>
             </div>
-            <div className="w-1 h-1 rounded-full bg-gray-300" />
-            <div className="flex items-center gap-1.5">
+            <div className="inline-flex min-h-[40px] items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-2">
               <FlaskConical className="w-3.5 h-3.5" />
-              <span>{locale === 'ko' ? '전체 117,744 화학물질' : '117,744 chemicals indexed'}</span>
+              <span>{locale === 'ko' ? '117,744개 화학물질 인덱스' : '117,744 chemicals indexed'}</span>
             </div>
-            <div className="w-1 h-1 rounded-full bg-gray-300" />
-            <div className="flex items-center gap-1.5">
+            <div className="inline-flex min-h-[40px] items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-2">
               <Globe2 className="w-3.5 h-3.5" />
-              <span>{locale === 'ko' ? '3.5억+ 특허 연동' : '350M+ patents linked'}</span>
+              <span>{locale === 'ko' ? '3.5억+ 특허 연계' : '350M+ patents linked'}</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

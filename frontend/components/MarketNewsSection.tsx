@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect } from 'react';
-import { Newspaper, ExternalLink, Loader2 } from 'lucide-react';
+import { Newspaper, ExternalLink } from 'lucide-react';
 
 interface MarketNews {
   newsTitl: string;

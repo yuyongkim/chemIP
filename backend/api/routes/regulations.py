@@ -3,6 +3,7 @@
 Aggregates data from overseas regulatory agencies (ECHA, EPA CompTox, etc.)
 """
 
+import json
 import logging
 
 from fastapi import APIRouter, Query
@@ -13,6 +14,8 @@ from backend.api.niosh_adapter import NioshAdapter
 from backend.api.kischem_adapter import KischemAdapter
 from backend.api.ncis_adapter import NcisAdapter
 from backend.api.routes.utils import handle_adapter_result
+from backend.core.chemical_aliases import extract_terms_for_regulatory_search
+from backend.core.terminology_db import TerminologyDB
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -22,6 +25,55 @@ _comptox = CompToxAdapter()
 _niosh = NioshAdapter()
 _kischem = KischemAdapter()
 _ncis = NcisAdapter()
+
+
+def _merge_unique_items(items: list[dict], key_fields: tuple[str, ...]) -> list[dict]:
+    merged: list[dict] = []
+    seen: set[str] = set()
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        key_parts = [str(item.get(field, "")).strip() for field in key_fields]
+        key = "|".join(part for part in key_parts if part)
+        if not key:
+            key = json.dumps(item, sort_keys=True, ensure_ascii=False)
+        if key in seen:
+            continue
+        seen.add(key)
+        merged.append(item)
+    return merged
+
+
+def _source_payload_from_result(result: dict, *, key_fields: tuple[str, ...], query_used: str = "", available: bool = True) -> dict:
+    status = result.get("status")
+    data = result.get("data", []) if status == "success" else []
+    if isinstance(data, dict):
+        data = [data]
+    payload = {
+        "query_used": query_used,
+        "available": available,
+        "data": _merge_unique_items(data if isinstance(data, list) else [], key_fields),
+        "total": int(result.get("total", 0) or 0),
+    }
+    if status == "disabled":
+        payload["available"] = False
+        payload["message"] = result.get("message", "API key not configured")
+    elif status and status != "success":
+        payload["error"] = result.get("message", "Unknown error")
+    return payload
+
+
+def _search_first_success(search_terms: list[str], search_fn) -> tuple[dict, str]:
+    first_error: dict | None = None
+    for term in search_terms:
+        if not term:
+            continue
+        result = search_fn(term)
+        if result.get("status") == "success" and result.get("total", 0) > 0:
+            return result, term
+        if first_error is None and result.get("status") != "success":
+            first_error = result
+    return first_error or {"status": "success", "data": [], "total": 0}, (search_terms[0] if search_terms else "")
 
 
 # ------------------------------------------------------------------
@@ -300,3 +352,105 @@ def search_all_regulations(
         }
 
     return results
+
+
+@router.get("/intelligence/{chem_id}")
+def regulatory_intelligence(chem_id: str, limit: int = Query(8, ge=1, le=20)):
+    with TerminologyDB() as db:
+        meta = db.get_chemical_meta_by_chem_id(chem_id) or db.get_chemical_meta_by_cas(chem_id)
+        if not meta:
+            return {
+                "chem_id": chem_id,
+                "chemical": None,
+                "aliases": [],
+                "search_terms": [],
+                "sources": {},
+            }
+
+        aliases = db.get_aliases_for_chemical(chem_id, limit=24)
+        alias_terms = [item["alias"] for item in aliases]
+        search_terms = extract_terms_for_regulatory_search(
+            name=meta.get("name"),
+            name_en=meta.get("name_en"),
+            cas_no=meta.get("cas_no"),
+            aliases=alias_terms,
+            limit=8,
+        )
+
+        cas_no = (meta.get("cas_no") or "").strip()
+
+        ncis_terms = [cas_no] if cas_no else []
+        if not ncis_terms:
+            ncis_terms = search_terms
+        ncis_result, ncis_query = _search_first_success(
+            ncis_terms,
+            lambda term: _ncis.search_by_cas(term) if term == cas_no and cas_no else _ncis.search_by_name(term),
+        )
+        ncis_payload = _source_payload_from_result(ncis_result, key_fields=("cas_no", "ke_no", "name_ko"), query_used=ncis_query)
+        if ncis_payload["data"]:
+            discovered_aliases: list[str] = []
+            for item in ncis_payload["data"]:
+                discovered_aliases.extend(
+                    value
+                    for value in [
+                        item.get("name_ko"),
+                        item.get("name_en"),
+                        item.get("synonyms_ko"),
+                        item.get("synonyms_en"),
+                    ]
+                    if value
+                )
+            if discovered_aliases:
+                db.add_external_aliases(
+                    chem_id=chem_id,
+                    aliases=discovered_aliases,
+                    alias_type="ncis_synonym",
+                    source="NCIS",
+                    confidence=0.82,
+                )
+                aliases = db.get_aliases_for_chemical(chem_id, limit=24)
+
+        kischem_terms = [cas_no] if cas_no else search_terms
+        kischem_result, kischem_query = _search_first_success(
+            kischem_terms,
+            lambda term: _kischem.get_by_cas(term) if term == cas_no and cas_no else _kischem.search(keyword=term, num_of_rows=limit),
+        )
+        kischem_payload = _source_payload_from_result(kischem_result, key_fields=("cas_no", "data_no", "name_ko"), query_used=kischem_query)
+
+        niosh_terms = [cas_no] if cas_no else []
+        niosh_terms.extend(term for term in search_terms if term != cas_no)
+        niosh_result, niosh_query = _search_first_success(niosh_terms, lambda term: _niosh.search(term, limit=limit))
+        niosh_payload = _source_payload_from_result(niosh_result, key_fields=("cas", "name"), query_used=niosh_query)
+
+        echa_result, echa_query = _search_first_success(search_terms, lambda term: _echa.search_substance(term, page=1, page_size=limit))
+        echa_payload = _source_payload_from_result(echa_result, key_fields=("rml_id", "cas_number", "name"), query_used=echa_query)
+
+        comptox_terms = [cas_no] if cas_no else []
+        comptox_terms.extend(term for term in search_terms if term != cas_no)
+        comptox_result, comptox_query = _search_first_success(comptox_terms, lambda term: _comptox.search_chemical(term))
+        comptox_payload = _source_payload_from_result(
+            comptox_result,
+            key_fields=("dtxsid", "casrn", "preferredName"),
+            query_used=comptox_query,
+            available=comptox_result.get("status") != "disabled",
+        )
+
+        return {
+            "chem_id": chem_id,
+            "chemical": {
+                "id": meta.get("id"),
+                "name": meta.get("name", ""),
+                "name_en": meta.get("name_en", ""),
+                "cas_no": cas_no,
+                "source": meta.get("source", ""),
+            },
+            "aliases": aliases,
+            "search_terms": search_terms,
+            "sources": {
+                "ncis": ncis_payload,
+                "kischem": kischem_payload,
+                "niosh": niosh_payload,
+                "echa": echa_payload,
+                "comptox": comptox_payload,
+            },
+        }

@@ -57,8 +57,8 @@ class AskRequest(BaseModel):
 @router.post("/analyze")
 async def analyze_chemical(request: AnalysisRequest):
     with TerminologyDB() as db:
-        # Check cache first (24h TTL)
-        cached = db.get_ai_cache(request.chemId)
+        cache_reader = getattr(db, "get_ai_cache", None)
+        cached = cache_reader(request.chemId) if callable(cache_reader) else None
         if cached and not request.use_llm == False:
             logger.info("AI cache hit for %s", request.chemId)
             return {**cached, "cached": True}
@@ -95,7 +95,7 @@ async def analyze_chemical(request: AnalysisRequest):
             bundle.guide_recommendations = recommend_guides(
                 store=guide_store, terms=terms, top_k=6,
             )
-            if bundle.guide_recommendations:
+            if bundle.guide_recommendations and hasattr(db, "upsert_guide_mappings"):
                 db.upsert_guide_mappings(request.chemId, bundle.guide_recommendations)
 
         patent_query = select_patent_query(request.chemicalName, meta)
@@ -123,7 +123,7 @@ async def analyze_chemical(request: AnalysisRequest):
         }
 
         # Cache the result for 24h
-        if llm_used:
+        if llm_used and hasattr(db, "set_ai_cache"):
             db.set_ai_cache(request.chemId, result, model)
 
         return result
@@ -207,7 +207,8 @@ def ai_summarize(request: SummarizeRequest):
 
     # Check cache
     with TerminologyDB() as db:
-        cached = db.get_ai_cache(f"summary:{chem_id}")
+        cache_reader = getattr(db, "get_ai_cache", None)
+        cached = cache_reader(f"summary:{chem_id}") if callable(cache_reader) else None
         if cached:
             return {**cached, "cached": True}
 
@@ -237,7 +238,8 @@ def ai_summarize(request: SummarizeRequest):
             "model": resp.model,
         }
         with TerminologyDB() as db:
-            db.set_ai_cache(f"summary:{chem_id}", result, resp.model)
+            if hasattr(db, "set_ai_cache"):
+                db.set_ai_cache(f"summary:{chem_id}", result, resp.model)
         return result
 
     # Fallback

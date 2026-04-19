@@ -35,7 +35,7 @@ export default function ChemicalHeaderTabs({ chemId, chemicalName, activeTab, on
     ['market', 'Trade & market'],
     ['guides', 'Safety guides'],
     ['drugs', 'Drugs'],
-    ['regulation', 'KR regulation'],
+    ['regulation', 'Regulatory intel'],
     ['ai', 'AI analysis'],
   ];
 

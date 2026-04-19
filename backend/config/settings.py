@@ -99,6 +99,8 @@ class Settings:
     HTTP_TIMEOUT_SECONDS = int(os.getenv("HTTP_TIMEOUT_SECONDS", "10"))
     HTTP_MAX_RETRIES = int(os.getenv("HTTP_MAX_RETRIES", "3"))
     HTTP_BACKOFF_FACTOR = float(os.getenv("HTTP_BACKOFF_FACTOR", "0.5"))
+    HTTP_CACHE_ENABLED = os.getenv("HTTP_CACHE_ENABLED", "true").lower() == "true"
+    HTTP_CACHE_TTL_SECONDS = int(os.getenv("HTTP_CACHE_TTL_SECONDS", "300"))
     RATE_LIMIT_ENABLED = os.getenv("RATE_LIMIT_ENABLED", "false").lower() == "true"
     RATE_LIMIT_WINDOW_SECONDS = int(os.getenv("RATE_LIMIT_WINDOW_SECONDS", "60"))
     RATE_LIMIT_MAX_REQUESTS = int(os.getenv("RATE_LIMIT_MAX_REQUESTS", "120"))

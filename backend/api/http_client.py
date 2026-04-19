@@ -12,10 +12,14 @@ calling ``requests.get()`` directly.  This ensures:
 from __future__ import annotations
 
 import logging
+from threading import Lock
+from time import time
 from typing import Any
+from urllib.parse import urlencode
 
 import requests
 from requests.adapters import HTTPAdapter
+from requests.structures import CaseInsensitiveDict
 from urllib3.util.retry import Retry
 
 from backend.config.settings import settings
@@ -23,6 +27,8 @@ from backend.config.settings import settings
 logger = logging.getLogger(__name__)
 
 _session: requests.Session | None = None
+_cache_lock = Lock()
+_response_cache: dict[str, tuple[float, int, bytes, dict[str, str], str, str | None]] = {}
 
 
 def get_http_session(
@@ -96,6 +102,38 @@ def _validate_url(url: str) -> None:
         raise ValueError(f"SSRF blocked: requests to '{host}' are not allowed")
 
 
+def _build_cache_key(url: str, params: dict[str, Any] | None) -> str:
+    if not params:
+        return url
+    flattened: list[tuple[str, str]] = []
+    for key in sorted(params):
+        value = params[key]
+        if isinstance(value, (list, tuple)):
+            for item in value:
+                flattened.append((str(key), str(item)))
+        else:
+            flattened.append((str(key), str(value)))
+    return f"{url}?{urlencode(flattened, doseq=True)}"
+
+
+def _clone_response(
+    *,
+    url: str,
+    status_code: int,
+    body: bytes,
+    headers: dict[str, str],
+    reason: str | None = None,
+) -> requests.Response:
+    response = requests.Response()
+    response.status_code = status_code
+    response._content = body
+    response.url = url
+    response.reason = reason
+    response.headers = CaseInsensitiveDict(headers)
+    response.encoding = response.apparent_encoding or "utf-8"
+    return response
+
+
 def safe_get(
     url: str,
     *,
@@ -103,14 +141,44 @@ def safe_get(
     headers: dict[str, str] | None = None,
     timeout: int | None = None,
     verify: bool = True,
+    use_cache: bool | None = None,
+    cache_ttl: int | None = None,
 ) -> requests.Response:
     """Convenience wrapper around ``session.get()`` with default timeout."""
     _validate_url(url)
+    cache_enabled = settings.HTTP_CACHE_ENABLED if use_cache is None else use_cache
+    ttl_seconds = max(1, cache_ttl or settings.HTTP_CACHE_TTL_SECONDS)
+    cache_key = _build_cache_key(url, params)
+
+    if cache_enabled:
+        with _cache_lock:
+            cached = _response_cache.get(cache_key)
+            if cached and cached[0] > time():
+                logger.info("HTTP cache hit url=%s", cache_key)
+                return _clone_response(
+                    url=cached[4],
+                    status_code=cached[1],
+                    body=cached[2],
+                    headers=cached[3],
+                    reason=cached[5],
+                )
+
     session = get_http_session()
-    return session.get(
+    response = session.get(
         url,
         params=params,
         headers=headers,
         timeout=timeout or settings.HTTP_TIMEOUT_SECONDS,
         verify=verify,
     )
+    if cache_enabled and response.ok:
+        with _cache_lock:
+            _response_cache[cache_key] = (
+                time() + ttl_seconds,
+                response.status_code,
+                bytes(response.content),
+                dict(response.headers),
+                response.url,
+                response.reason,
+            )
+    return response
