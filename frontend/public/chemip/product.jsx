@@ -739,14 +739,27 @@ function GuidesTab({ selected }) {
             const title = g.title_kr || g.title || g.guide_title || "—";
             const subtitle = g.title_en || g.summary || "";
             const score = g.score ?? g.similarity ?? g.confidence;
+            // Score buckets: ≥80 strong, 30–79 moderate, <30 weak/generic
+            const tier = typeof score !== "number" ? null
+              : score >= 80 ? { label: "STRONG", tone: "chip safe", color: "var(--safe)" }
+              : score >= 30 ? { label: "MODERATE", tone: "chip", color: "var(--fg-muted)" }
+              : { label: "GENERIC", tone: "chip", color: "var(--warn)" };
             return (
               <div key={`${code}-${i}`} className="guide-row">
                 <span className="code">{code}</span>
                 <div>
                   <b style={{ fontSize: 14 }}>{title}</b>
                   {subtitle && <div className="muted" style={{ fontSize: 12 }}>{subtitle}</div>}
+                  {tier?.label === "GENERIC" && (
+                    <div style={{ fontSize: 10, color: "var(--warn)", marginTop: 2, fontFamily: "var(--font-mono)", letterSpacing: ".06em" }}>
+                      ⚠ Low-confidence match — guide may not be specific to this substance.
+                    </div>
+                  )}
                 </div>
-                {typeof score === "number" && <span className="score mono">match {score.toFixed(2)}</span>}
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4 }}>
+                  {tier && <span className="chip" style={{ color: tier.color, borderColor: tier.color, fontSize: 9 }}>{tier.label}</span>}
+                  {typeof score === "number" && <span className="score mono">match {score.toFixed(0)}</span>}
+                </div>
               </div>
             );
           })}
@@ -884,12 +897,28 @@ function DrugsView() {
   const [q, setQ] = useState("acetaminophen");
   const [submitted, setSubmitted] = useState("acetaminophen");
   const { data, loading, error } = useDrugSearch(submitted);
-  const items = data?.items || data?.results || (Array.isArray(data) ? data : []);
+
+  // Backend shape: { query, mfds: {total, items}, openfda: {total, items}, pubmed: {count, articles} }
+  const mfds = data?.mfds?.items || [];
+  const openfda = data?.openfda?.items || [];
+  const pubmed = data?.pubmed?.articles || data?.pubmed?.items || [];
+  const totals = {
+    mfds: data?.mfds?.total ?? 0,
+    openfda: data?.openfda?.total ?? 0,
+    pubmed: data?.pubmed?.count ?? data?.pubmed?.total ?? 0,
+  };
+  const grand = totals.mfds + openfda.length + pubmed.length;
+
+  // Extract a brand name from the messy SPL field
+  const cleanProduct = (item) => {
+    const raw = (item.spl_product_data_elements?.[0]) || item.brand_name?.[0] || item.openfda?.brand_name?.[0] || "";
+    return String(raw).split(/\s+/).slice(0, 5).join(" ") || "OpenFDA label";
+  };
 
   return (
     <div>
       <h1>Drug Evidence · 의약품 근거</h1>
-      <div className="sub">MFDS approval · OpenFDA labels · PubMed literature (unified)</div>
+      <div className="sub">MFDS approval + OpenFDA labels + PubMed literature (unified) · {totals.mfds + totals.openfda + totals.pubmed} upstream hits</div>
       <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", gap: 8, alignItems: "center", border: "1px solid var(--border)", borderRadius: 10, padding: "4px 4px 4px 14px", background: "var(--bg-elevated)", margin: "16px 0", maxWidth: 600 }}>
         <Icon name="search" size={16} style={{ color: "var(--fg-subtle)" }} />
         <input
@@ -897,32 +926,91 @@ function DrugsView() {
           onChange={e => setQ(e.target.value)}
           onKeyDown={e => { if (e.key === "Enter") setSubmitted(q.trim()); }}
           style={{ border: 0, outline: 0, background: "transparent", fontSize: 14, padding: "10px 0" }}
-          placeholder="Drug name, ingredient, or brand"
+          placeholder="Drug name, ingredient, or brand — e.g. acetaminophen / 타이레놀"
         />
         <button className="btn sm primary" onClick={() => setSubmitted(q.trim())}>Search</button>
       </div>
-      <div className="muted mono" style={{ fontSize: 11, marginBottom: 10 }}>
-        {loading ? "loading…" : error ? `error: ${error}` : `${items.length} results`}
+      <div className="muted mono" style={{ fontSize: 11, marginBottom: 16 }}>
+        {loading ? "loading…" : error ? `error: ${error}` : `MFDS ${totals.mfds} · OpenFDA ${totals.openfda} (showing ${openfda.length}) · PubMed ${totals.pubmed} (showing ${pubmed.length})`}
       </div>
-      <table className="pat-table">
-        <thead><tr><th>Product / Ingredient</th><th>Source</th><th>Identifier</th><th>Note</th></tr></thead>
-        <tbody>
-          {items.length === 0 && !loading && (
-            <tr><td colSpan="4" style={{ textAlign: "center", color: "var(--fg-muted)", padding: 24 }}>No results.</td></tr>
+
+      {/* MFDS approvals */}
+      <div className="panel" style={{ marginBottom: 16 }}>
+        <h3><b>MFDS · 식약처 허가</b> <span className="muted">{totals.mfds} results</span></h3>
+        <div className="body" style={{ padding: 0 }}>
+          {mfds.length === 0 && (
+            <div style={{ padding: "14px 18px", color: "var(--fg-muted)", fontSize: 13 }}>
+              No MFDS hits for "{submitted}". Korean approvals are searchable by Korean ingredient names — try 타이레놀 or 아세트아미노펜.
+            </div>
           )}
-          {items.slice(0, 30).map((r, i) => (
-            <tr key={i}>
-              <td>
-                <b>{r.product_name || r.brand_name || r.itemName || r.name || r.title || "—"}</b>
-                <div className="muted" style={{ fontSize: 12 }}>{r.generic_name || r.ingredient || r.activeIngredient || r.ingr || ""}</div>
-              </td>
-              <td><Chip>{r.source || r.kind || "MFDS"}</Chip></td>
-              <td className="mono" style={{ fontSize: 12 }}>{r.id || r.itemSeq || r.application_number || r.permit_no || "—"}</td>
-              <td className="muted" style={{ fontSize: 12, maxWidth: 360 }}>{(r.summary || r.indication || r.efcyQesitm || "").slice(0, 140)}</td>
-            </tr>
+          {mfds.slice(0, 10).map((r, i) => (
+            <div key={i} style={{ padding: "12px 18px", borderTop: i === 0 ? 0 : "1px solid var(--border)", display: "grid", gridTemplateColumns: "1fr auto", gap: 16 }}>
+              <div>
+                <b>{r.itemName || r.product_name || r.name || "—"}</b>
+                <div className="muted" style={{ fontSize: 12 }}>{r.entpName || r.company || ""}</div>
+                {(r.efcyQesitm || r.indication) && <div className="muted" style={{ fontSize: 11, marginTop: 4 }}>{(r.efcyQesitm || r.indication).slice(0, 200)}</div>}
+              </div>
+              <Chip tone="chip safe"><span className="dot" />{r.itemSeq || r.permit_no || "MFDS"}</Chip>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
+
+      {/* OpenFDA labels */}
+      <div className="panel" style={{ marginBottom: 16 }}>
+        <h3><b>OpenFDA · US FDA labels</b> <span className="muted">{totals.openfda} results · brand → generic → substance fallback</span></h3>
+        <div className="body" style={{ padding: 0 }}>
+          {openfda.length === 0 && !loading && (
+            <div style={{ padding: "14px 18px", color: "var(--fg-muted)", fontSize: 13 }}>No OpenFDA labels for "{submitted}".</div>
+          )}
+          {openfda.slice(0, 10).map((r, i) => (
+            <div key={i} style={{ padding: "12px 18px", borderTop: i === 0 ? 0 : "1px solid var(--border)" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 16, alignItems: "baseline" }}>
+                <b>{cleanProduct(r)}</b>
+                <Chip>OpenFDA</Chip>
+              </div>
+              {r.active_ingredient?.[0] && (
+                <div className="muted" style={{ fontSize: 11, marginTop: 4 }}>
+                  <span className="upper" style={{ marginRight: 6 }}>ING</span>
+                  {String(r.active_ingredient[0]).slice(0, 120)}
+                </div>
+              )}
+              {r.purpose?.[0] && (
+                <div className="muted" style={{ fontSize: 11, marginTop: 2 }}>
+                  <span className="upper" style={{ marginRight: 6 }}>USE</span>
+                  {String(r.purpose[0]).slice(0, 120)}
+                </div>
+              )}
+              {r.warnings?.[0] && (
+                <div style={{ fontSize: 11, color: "var(--hazard)", marginTop: 2 }}>
+                  <span className="upper" style={{ marginRight: 6 }}>WARN</span>
+                  {String(r.warnings[0]).slice(0, 160)}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* PubMed citations */}
+      <div className="panel">
+        <h3><b>PubMed · 의학문헌</b> <span className="muted">{totals.pubmed} indexed citations · showing latest {pubmed.length}</span></h3>
+        <div className="body" style={{ padding: 0 }}>
+          {pubmed.length === 0 && !loading && (
+            <div style={{ padding: "14px 18px", color: "var(--fg-muted)", fontSize: 13 }}>No PubMed articles.</div>
+          )}
+          {pubmed.slice(0, 10).map((r, i) => (
+            <div key={r.pmid || i} style={{ padding: "12px 18px", borderTop: i === 0 ? 0 : "1px solid var(--border)", display: "grid", gridTemplateColumns: "70px 1fr auto", gap: 12, alignItems: "baseline" }}>
+              <a className="mono" style={{ fontSize: 11, color: "var(--accent-ink)" }} href={`https://pubmed.ncbi.nlm.nih.gov/${r.pmid}/`} target="_blank" rel="noopener">PMID {r.pmid}</a>
+              <div>
+                <b style={{ fontSize: 13 }}>{r.title || "—"}</b>
+                <div className="muted" style={{ fontSize: 11, marginTop: 2 }}>{r.source || ""}{r.authors ? ` · ${(Array.isArray(r.authors) ? r.authors.slice(0, 3).join(", ") : r.authors)}` : ""}</div>
+              </div>
+              <span className="mono muted" style={{ fontSize: 11 }}>{r.pubdate || ""}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
