@@ -30,6 +30,14 @@ const nextConfig: NextConfig = {
         source: '/api/:path*',
         destination: `${backendOrigin}/api/:path*`,
       },
+      {
+        source: '/chemip',
+        destination: '/chemip/index.html',
+      },
+      {
+        source: '/chemip/',
+        destination: '/chemip/index.html',
+      },
     ];
   },
 };

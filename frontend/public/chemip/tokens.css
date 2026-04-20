@@ -1,0 +1,85 @@
+/* ChemIP design tokens. Values controlled by Tweaks panel via [data-*] attrs on :root. */
+
+:root {
+  /* Type scale */
+  --font-display: "Inter Tight", "Pretendard Variable", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Pretendard Variable", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --font-serif: "Instrument Serif", "Pretendard Variable", serif;
+
+  /* Palette — neutrals (cool off-white base) */
+  --bg: oklch(0.992 0.004 240);
+  --bg-sunken: oklch(0.972 0.005 240);
+  --bg-elevated: oklch(1 0 0);
+  --bg-inverse: oklch(0.16 0.012 250);
+  --fg: oklch(0.18 0.012 250);
+  --fg-muted: oklch(0.46 0.012 250);
+  --fg-subtle: oklch(0.62 0.010 250);
+  --fg-inverse: oklch(0.98 0.004 240);
+  --border: oklch(0.91 0.006 250);
+  --border-strong: oklch(0.82 0.008 250);
+  --grid: oklch(0.94 0.005 250);
+
+  /* Accents */
+  --accent: oklch(0.52 0.18 250);          /* signal blue */
+  --accent-soft: oklch(0.94 0.04 250);
+  --accent-ink: oklch(0.32 0.14 250);
+  --safe: oklch(0.62 0.15 145);            /* lab green */
+  --safe-soft: oklch(0.94 0.06 145);
+  --hazard: oklch(0.62 0.20 30);           /* hazard orange */
+  --hazard-soft: oklch(0.95 0.05 30);
+  --warn: oklch(0.75 0.15 85);             /* amber */
+  --info: oklch(0.58 0.12 220);
+
+  /* Radii & elevation */
+  --r-0: 0px;
+  --r-1: 2px;
+  --r-2: 4px;
+  --r-3: 8px;
+  --r-4: 14px;
+  --shadow-1: 0 1px 0 oklch(0.90 0.008 250 / .6), 0 1px 2px oklch(0.18 0.01 250 / .04);
+  --shadow-2: 0 1px 0 oklch(0.90 0.008 250 / .6), 0 8px 24px -8px oklch(0.18 0.01 250 / .10);
+
+  /* Density */
+  --unit: 4px;
+  --density: 1;   /* scales paddings/row heights */
+
+  /* Layout */
+  --max-w: 1440px;
+  --rail: 64px;
+}
+
+/* Dark tweak */
+:root[data-theme="dark"] {
+  --bg: oklch(0.14 0.012 250);
+  --bg-sunken: oklch(0.11 0.012 250);
+  --bg-elevated: oklch(0.18 0.012 250);
+  --bg-inverse: oklch(0.98 0.004 240);
+  --fg: oklch(0.96 0.004 240);
+  --fg-muted: oklch(0.72 0.010 250);
+  --fg-subtle: oklch(0.56 0.010 250);
+  --fg-inverse: oklch(0.14 0.012 250);
+  --border: oklch(0.26 0.012 250);
+  --border-strong: oklch(0.38 0.012 250);
+  --grid: oklch(0.22 0.012 250);
+  --accent-soft: oklch(0.28 0.08 250);
+  --safe-soft: oklch(0.26 0.06 145);
+  --hazard-soft: oklch(0.28 0.08 30);
+  --shadow-1: 0 1px 0 oklch(0 0 0 / .4);
+  --shadow-2: 0 8px 24px -8px oklch(0 0 0 / .5);
+}
+
+/* Accent hue tweak — mono/indigo/teal/copper */
+:root[data-accent="indigo"] { --accent: oklch(0.52 0.18 275); --accent-ink: oklch(0.32 0.14 275); --accent-soft: oklch(0.94 0.04 275); }
+:root[data-accent="teal"]   { --accent: oklch(0.58 0.14 195); --accent-ink: oklch(0.34 0.10 195); --accent-soft: oklch(0.94 0.04 195); }
+:root[data-accent="copper"] { --accent: oklch(0.60 0.14 48);  --accent-ink: oklch(0.36 0.12 48);  --accent-soft: oklch(0.95 0.04 48);  }
+:root[data-accent="mono"]   { --accent: oklch(0.28 0.01 250); --accent-ink: oklch(0.18 0.01 250); --accent-soft: oklch(0.92 0.003 250); }
+
+/* Type tweaks */
+:root[data-type="serif"]   { --font-display: "Instrument Serif", "Pretendard Variable", serif; }
+:root[data-type="mono"]    { --font-display: "IBM Plex Mono", "Pretendard Variable", monospace; }
+:root[data-type="korean"]  { --font-display: "Pretendard Variable", system-ui, sans-serif; --font-body: "Pretendard Variable", system-ui, sans-serif; }
+
+/* Density tweaks */
+:root[data-density="comfy"]   { --density: 1.25; }
+:root[data-density="compact"] { --density: 0.85; }
