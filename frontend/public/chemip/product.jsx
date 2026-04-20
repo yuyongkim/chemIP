@@ -16,19 +16,34 @@ function Product() {
   const [view, setView] = useState(() => localStorage.getItem("chemip-view") || "chemical");
   const [tab, setTab] = useState("msds");
   const [selected, setSelected] = useSelectedChemical();
+  // Top-bar query state — shared between ProductCmd and SearchView
+  const [pendingQuery, setPendingQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => { localStorage.setItem("chemip-view", view); }, [view]);
   // First-load default: seed acetone so Chemical/Patents/AI/Guides aren't blank
   useEffect(() => { if (!selected) setSelected(DEFAULT_CHEMICAL); }, []);
 
   const openChemical = (chem) => { setSelected(chem); setView("chemical"); };
+  const submitTopSearch = (q) => {
+    const trimmed = (q || "").trim();
+    if (!trimmed) return;
+    setSearchQuery(trimmed);
+    setView("search");
+  };
 
   return (
     <div className="product">
       <ProductRail view={view} setView={setView} />
       <div className="work">
-        <ProductCmd view={view} selected={selected} />
+        <ProductCmd
+          view={view}
+          selected={selected}
+          query={pendingQuery}
+          setQuery={setPendingQuery}
+          onSubmit={() => submitTopSearch(pendingQuery)}
+        />
         <div className="frame">
-          {view === "search" && <SearchView onOpen={openChemical} />}
+          {view === "search" && <SearchView onOpen={openChemical} initialQuery={searchQuery} />}
           {view === "chemical" && <ChemicalView tab={tab} setTab={setTab} selected={selected} />}
           {view === "patents" && <PatentsView selected={selected} />}
           {view === "trade" && <TradeView />}
@@ -62,7 +77,7 @@ function ProductRail({ view, setView }) {
   );
 }
 
-function ProductCmd({ view, selected }) {
+function ProductCmd({ view, selected, query, setQuery, onSubmit }) {
   const chemCrumbs = selected
     ? ["Chemicals", selected.cas_no || selected.chem_id, `${selected.name_en || selected.name}${selected.name && selected.name_en ? ` · ${selected.name}` : ""}`]
     : ["Chemicals", "—", "Search a chemical"];
@@ -88,19 +103,31 @@ function ProductCmd({ view, selected }) {
       <div className="right">
         <div className="search">
           <Icon name="search" size={14} style={{ color: "var(--fg-subtle)" }} />
-          <input placeholder="Search chemicals · patents · countries · drugs  —  name, CAS, HS code" />
+          <input
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            onKeyDown={e => { if (e.key === "Enter") onSubmit(); }}
+            placeholder="Search chemicals · patents · countries · drugs  —  name, CAS, HS code"
+          />
           <span className="kbd">⌘ K</span>
         </div>
-        <button className="btn sm"><Icon name="plus" size={12} /> New query</button>
+        <button className="btn sm" onClick={onSubmit}><Icon name="search" size={12} /> Search</button>
       </div>
     </div>
   );
 }
 
 /* ── Search view ──────────────────────── */
-function SearchView({ onOpen }) {
-  const [q, setQ] = useState("");
-  const [submitted, setSubmitted] = useState("");
+function SearchView({ onOpen, initialQuery }) {
+  const [q, setQ] = useState(initialQuery || "");
+  const [submitted, setSubmitted] = useState(initialQuery || "");
+  // When the parent pushes a new query (top-bar Enter), pick it up
+  useEffect(() => {
+    if (initialQuery && initialQuery !== submitted) {
+      setQ(initialQuery);
+      setSubmitted(initialQuery);
+    }
+  }, [initialQuery]);
   const { data, loading, error } = useChemicalSearch(submitted);
   const items = data?.items || [];
   const submit = () => setSubmitted(q.trim());
