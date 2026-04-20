@@ -46,7 +46,7 @@ function Product() {
           {view === "search" && <SearchView onOpen={openChemical} initialQuery={searchQuery} />}
           {view === "chemical" && <ChemicalView tab={tab} setTab={setTab} selected={selected} />}
           {view === "patents" && <PatentsView selected={selected} />}
-          {view === "trade" && <TradeView />}
+          {view === "trade" && <TradeView selected={selected} />}
           {view === "drugs" && <DrugsView />}
           {view === "guides" && <GuidesView selected={selected} />}
         </div>
@@ -314,7 +314,7 @@ function ChemicalView({ tab, setTab, selected }) {
       </div>
       {tab === "msds" && <MSDSTab selected={selected} sections={sections} loading={detail.loading} error={detail.error} />}
       {tab === "patents" && <PatentsTab selected={selected} />}
-      {tab === "market" && <MarketTab />}
+      {tab === "market" && <MarketTab selected={selected} />}
       {tab === "guides" && <GuidesTab selected={selected} />}
       {tab === "ai" && <AITab selected={selected} />}
     </div>
@@ -596,84 +596,118 @@ function PatentsTab({ selected }) {
   );
 }
 
-function MarketTab() {
+function MarketTab({ selected }) {
+  // Use both English and Korean names for best Naver news coverage
+  const enKey = selected?.name_en || selected?.name || "";
+  const krKey = selected?.name || enKey;
+  const kotra = useTradeNews(enKey);
+  const naver = useNaverTradeNews(krKey);
+
+  const kotraItems = kotra.data?.data || kotra.data?.items || [];
+  const naverItems = naver.data?.data || naver.data?.items || [];
+
+  // Highlight terms — same logic as PatentsTab
+  const hlTerms = React.useMemo(() => {
+    const seen = new Set();
+    const out = [];
+    [enKey, krKey, selected?.cas_no].forEach(t => {
+      if (!t) return;
+      const trimmed = String(t).trim();
+      if (trimmed.length < 2) return;
+      const matches = trimmed.match(/[^\s()]+/g) || [];
+      [trimmed, ...matches].forEach(m => {
+        const key = m.toLowerCase();
+        if (m.length > 1 && !seen.has(key)) { seen.add(key); out.push(m); }
+      });
+    });
+    return out;
+  }, [enKey, krKey, selected?.cas_no]);
+
   return (
     <div className="layout-2col">
       <div>
-        <div className="tradeboard">
-          <div>
-            <div className="muted" style={{ fontSize: 11, letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 8 }}>KOTRA feed · 국가별 동향</div>
-            <table className="tbl" style={{ marginTop: 6 }}>
-              <thead><tr><th>Country</th><th>HS</th><th>Flow</th><th>Value</th><th>Note</th></tr></thead>
-              <tbody>
-                {TRADE_ROWS.map(r => (
-                  <tr key={r.country}>
-                    <td><b>{r.country}</b><div className="muted" style={{ fontSize: 11 }}>{r.kr}</div></td>
-                    <td className="mono">{r.hs}</td>
-                    <td className="mono" style={{ color: r.flow.startsWith("+") ? "var(--safe)" : "var(--hazard)" }}>{r.flow}</td>
-                    <td className="mono tnum">{r.value}</td>
-                    <td className="muted" style={{ fontSize: 12, maxWidth: 280 }}>{r.note}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div>
-            <div className="muted" style={{ fontSize: 11, letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 8 }}>Price signal · $/kg</div>
-            <div style={{ display: "grid", gap: 10, marginTop: 10 }}>
-              {[
-                { name: "Vietnam spot", v: [1.02, 1.08, 1.10, 1.12, 1.15, 1.18, 1.22, 1.24, 1.26, 1.28], val: "$1.28" },
-                { name: "China FOB", v: [0.88, 0.92, 0.90, 0.87, 0.85, 0.84, 0.83, 0.82, 0.80, 0.78], val: "$0.78" },
-                { name: "US bulk", v: [1.35, 1.36, 1.35, 1.37, 1.39, 1.38, 1.40, 1.41, 1.42, 1.43], val: "$1.43" },
-                { name: "EU contract", v: [1.18, 1.19, 1.21, 1.22, 1.24, 1.25, 1.27, 1.28, 1.29, 1.30], val: "$1.30" },
-              ].map(p => (
-                <div key={p.name} style={{ display: "grid", gridTemplateColumns: "120px 1fr 60px", alignItems: "center", gap: 10, padding: "8px 0", borderTop: "1px solid var(--border)" }}>
-                  <span style={{ fontSize: 12 }}>{p.name}</span>
-                  <Sparkline data={p.v} width={160} height={24} stroke="var(--accent)" />
-                  <span className="mono tnum" style={{ fontSize: 12, textAlign: "right" }}>{p.val}</span>
+        <div className="panel">
+          <h3>
+            <b>KOTRA news · 무역 뉴스</b>
+            <span className="muted">
+              /api/trade/news?q={enKey} ·
+              {kotra.loading ? " loading…" : kotra.error ? ` error: ${kotra.error}` : ` ${kotraItems.length} items`}
+            </span>
+          </h3>
+          <div className="body" style={{ padding: 0 }}>
+            {kotraItems.length === 0 && !kotra.loading && (
+              <div style={{ padding: "16px 18px", color: "var(--fg-muted)", fontSize: 13 }}>
+                No KOTRA news for "{enKey}". KOTRA upstream is sparse for chemical-name queries — Naver fallback below covers Korean coverage.
+              </div>
+            )}
+            {kotraItems.slice(0, 8).map((n, i) => {
+              const title = n.newsTitl || n.title || n.titleNm || "—";
+              const date = (n.newsWrtDt || n.regDate || "").slice(0, 16);
+              const summary = (n.cntntSumar || n.newsBdt || n.summary || "").slice(0, 200);
+              const url = n.newsUrl || n.kotraNewsUrl || "#";
+              return (
+                <div key={i} style={{ display: "grid", gridTemplateColumns: "72px 1fr auto", gap: 16, padding: "14px 18px", borderTop: i === 0 ? 0 : "1px solid var(--border)", alignItems: "center" }}>
+                  <Chip tone="chip accent">KOTRA</Chip>
+                  <div>
+                    <b style={{ fontSize: 13 }}><Highlight text={title} terms={hlTerms} /></b>
+                    {summary && <div className="muted" style={{ fontSize: 11, marginTop: 2 }}><Highlight text={summary} terms={hlTerms} /></div>}
+                  </div>
+                  <div className="mono muted" style={{ fontSize: 11 }}>{date}</div>
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </div>
 
         <div className="panel" style={{ marginTop: 16 }}>
-          <h3><b>Market news · 시장 뉴스</b> <span className="muted">KOTRA + Naver fallback</span></h3>
+          <h3>
+            <b>Naver news · 네이버 뉴스</b>
+            <span className="muted">
+              /api/trade/naver-news?q={krKey} ·
+              {naver.loading ? " loading…" : naver.error ? ` error: ${naver.error}` : ` ${naverItems.length} items`}
+            </span>
+          </h3>
           <div className="body" style={{ padding: 0 }}>
-            {[
-              { kind: "KOTRA", t: "Vietnam raises local-content threshold for imported solvents", d: "2026-04-12", src: "Ho Chi Minh office" },
-              { kind: "KOTRA", t: "India updates REACH-equivalent registration for ketone family", d: "2026-04-09", src: "New Delhi office" },
-              { kind: "NAVER", t: "중국 아세톤 수출 가격, 2분기 연속 하락세 지속", d: "2026-04-05", src: "연합인포맥스" },
-              { kind: "KOTRA", t: "Indonesia April 2026 VAT rules: solvent category specifics", d: "2026-04-01", src: "Jakarta office" },
-            ].map((n, i) => (
-              <div key={i} style={{ display: "grid", gridTemplateColumns: "72px 1fr auto", gap: 16, padding: "14px 18px", borderTop: i === 0 ? 0 : "1px solid var(--border)", alignItems: "center" }}>
-                <Chip tone={n.kind === "KOTRA" ? "chip accent" : "chip"}>{n.kind}</Chip>
-                <div><b style={{ fontSize: 13 }}>{n.t}</b><div className="muted" style={{ fontSize: 11 }}>{n.src}</div></div>
-                <div className="mono muted" style={{ fontSize: 11 }}>{n.d}</div>
-              </div>
-            ))}
+            {naverItems.length === 0 && !naver.loading && (
+              <div style={{ padding: "16px 18px", color: "var(--fg-muted)", fontSize: 13 }}>No Naver news for "{krKey}".</div>
+            )}
+            {naverItems.slice(0, 10).map((n, i) => {
+              const title = n.newsTitl || n.title || "—";
+              const date = (n.newsWrtDt || "").slice(0, 16);
+              const summary = (n.cntntSumar || n.newsBdt || "").replace(/<[^>]+>/g, "").slice(0, 200);
+              const cntry = n.cntryNm || "";
+              return (
+                <div key={i} style={{ display: "grid", gridTemplateColumns: "72px 1fr auto", gap: 16, padding: "14px 18px", borderTop: i === 0 ? 0 : "1px solid var(--border)", alignItems: "start" }}>
+                  <Chip>NAVER {cntry && `· ${cntry}`}</Chip>
+                  <div>
+                    <b style={{ fontSize: 13 }}><Highlight text={title} terms={hlTerms} /></b>
+                    {summary && <div className="muted" style={{ fontSize: 11, marginTop: 2 }}><Highlight text={summary} terms={hlTerms} /></div>}
+                  </div>
+                  <div className="mono muted" style={{ fontSize: 11 }}>{date}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
 
       <aside>
         <div className="panel">
-          <h3><b>Top importers · 수입국</b></h3>
+          <h3><b>Source</b> <span className="muted">{selected?.name_en || selected?.name}</span></h3>
           <div className="body">
-            {TRADE_ROWS.slice(0, 4).map(r => (
-              <div key={r.country} className="series-row">
-                <span style={{ fontSize: 13 }}>{r.country}</span>
-                <span className="mono tnum">{r.value}</span>
-              </div>
-            ))}
+            <div className="row"><div className="k">EN</div><div className="v">{selected?.name_en || "—"}</div></div>
+            <div className="row"><div className="k">KR</div><div className="v">{selected?.name || "—"}</div></div>
+            <div className="row"><div className="k">CAS</div><div className="v mono">{selected?.cas_no || "—"}</div></div>
+            <div className="row"><div className="k">CHEM_ID</div><div className="v mono">{selected?.chem_id || "—"}</div></div>
           </div>
         </div>
         <div className="panel" style={{ marginTop: 16 }}>
-          <h3><b>Fraud risk signals</b></h3>
+          <h3><b>Endpoints used</b></h3>
           <div className="body">
-            <div className="row"><div className="k">VN-HCM</div><div className="v" style={{ color: "var(--hazard)" }}>⚠ Invoice mismatch pattern (n=3)</div></div>
-            <div className="row"><div className="k">IN-DEL</div><div className="v" style={{ color: "var(--warn)" }}>◇ Late payment cluster</div></div>
-            <div className="row"><div className="k">CN-SH</div><div className="v" style={{ color: "var(--safe)" }}>✓ Nominal</div></div>
+            <div className="row"><div className="k">KOTRA</div><div className="v mono" style={{ fontSize: 11 }}>/trade/news?q={enKey}</div></div>
+            <div className="row"><div className="k">NAVER</div><div className="v mono" style={{ fontSize: 11 }}>/trade/naver-news?q={krKey}</div></div>
+            <div className="row"><div className="k">PRICES</div><div className="v muted" style={{ fontSize: 11 }}>/trade/prices — currently empty for chem queries</div></div>
+            <div className="row"><div className="k">FRAUD</div><div className="v muted" style={{ fontSize: 11 }}>/trade/fraud — country-scoped, not chem</div></div>
           </div>
         </div>
       </aside>
@@ -834,12 +868,15 @@ function PatentsView({ selected }) {
     </div>
   );
 }
-function TradeView() {
+function TradeView({ selected }) {
+  if (!selected) {
+    return <EmptyView icon="globe" title="Trade Intelligence" hint="Pick a chemical first to see KOTRA + Naver news for it." />;
+  }
   return (
     <div>
       <h1>Trade Intelligence · 무역 인텔리전스</h1>
-      <div className="sub">KOTRA feeds with Naver/news fallback (mock data — backend wire-up next)</div>
-      <MarketTab />
+      <div className="sub">KOTRA feeds with Naver fallback for <span className="mono">{selected.name_en || selected.name}</span></div>
+      <MarketTab selected={selected} />
     </div>
   );
 }

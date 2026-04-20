@@ -81,7 +81,14 @@ function useDrugSearch(q) {
 /* ── Trade ──────────────────────────────────────── */
 function useTradeNews(keyword) {
   return useApi(
-    () => apiGet(`/trade/news?keyword=${encodeURIComponent(keyword || "화학")}&page=1&perPage=10`).catch(() => ({ items: [] })),
+    () => apiGet(`/trade/news?q=${encodeURIComponent(keyword || "화학")}&limit=10`).catch(() => ({ data: [] })),
+    [keyword]
+  );
+}
+
+function useNaverTradeNews(keyword) {
+  return useApi(
+    () => apiGet(`/trade/naver-news?q=${encodeURIComponent(keyword || "화학")}&limit=10`).catch(() => ({ data: [] })),
     [keyword]
   );
 }
@@ -131,6 +138,6 @@ Object.assign(window, {
   apiGet, apiPost, useApi,
   useChemicalSearch, useChemicalDetail, usePatents,
   useGuideRecommendations, useGuideStatus,
-  useDrugSearch, useTradeNews, useAIAnalysis,
+  useDrugSearch, useTradeNews, useNaverTradeNews, useAIAnalysis,
   parseSectionRows, sectionStatus, useSelectedChemical,
 });
