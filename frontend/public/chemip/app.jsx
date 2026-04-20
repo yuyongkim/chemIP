@@ -21,7 +21,7 @@ function App() {
     <div className="shell" data-screen-label="ChemIP App">
       <Topbar view={view} setView={setView} tweaksOpen={tweaksOpen} setTweaksOpen={setTweaksOpen} />
       <main>
-        {view === "landing" && <Landing />}
+        {view === "landing" && <Landing setView={setView} />}
         {view === "product" && <Product />}
         {view === "mobile" && <MobileBoard />}
       </main>
@@ -52,8 +52,8 @@ function Topbar({ view, setView, tweaksOpen, setTweaksOpen }) {
         </div>
       </div>
       <div className="right">
-        <button className="btn sm ghost" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}><Icon name="git" size={12} /> github</button>
-        <button className="btn sm"><Icon name="bolt" size={12} /> Deploy</button>
+        <a className="btn sm ghost" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }} href="https://github.com/yuyongkim/chemIP" target="_blank" rel="noopener"><Icon name="git" size={12} /> github</a>
+        <a className="btn sm" href="https://chemip.yule.pics" target="_blank" rel="noopener"><Icon name="bolt" size={12} /> Live</a>
         <button className={`tweaks-toggle ${tweaksOpen ? "on" : ""}`} onClick={() => setTweaksOpen(v => !v)}>
           <Icon name="settings" size={12} /> Tweaks
         </button>

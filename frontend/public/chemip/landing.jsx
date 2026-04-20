@@ -1,10 +1,10 @@
 // Landing page (marketing)
 
-function Landing() {
+function Landing({ setView }) {
   return (
     <>
       <Banner />
-      <Hero />
+      <Hero setView={setView} />
       <StatsStrip />
       <Sources />
       <Workflows />
@@ -13,7 +13,7 @@ function Landing() {
       <Users />
       <Roadmap />
       <Gaps />
-      <Footer />
+      <Footer setView={setView} />
     </>
   );
 }
@@ -29,7 +29,7 @@ function Banner() {
   );
 }
 
-function Hero() {
+function Hero({ setView }) {
   return (
     <section className="hero">
       <div className="hero-inner">
@@ -43,9 +43,9 @@ function Hero() {
             <b>ChemIP</b> 는 흩어져 있는 정부 데이터 포털 — KOSHA 안전보건자료, KIPRIS 특허, KOTRA 무역, MFDS 의약품, PubMed 문헌 — 을 단일 질의 워크플로우로 통합합니다. An open-source, self-hostable platform for chemical safety decision-making in privacy-sensitive environments.
           </p>
           <div className="hero-cta">
-            <button className="btn primary"><Icon name="bolt" size={14} /> Launch prototype</button>
-            <button className="btn"><Icon name="git" size={14} /> Clone repo <span className="kbd">yuyongkim/chemIP</span></button>
-            <button className="btn ghost">Read docs <Icon name="ext" size={13} /></button>
+            <button className="btn primary" onClick={() => setView && setView("product")}><Icon name="bolt" size={14} /> Launch prototype</button>
+            <a className="btn" href="https://github.com/yuyongkim/chemIP" target="_blank" rel="noopener"><Icon name="git" size={14} /> Clone repo <span className="kbd">yuyongkim/chemIP</span></a>
+            <a className="btn ghost" href="#quickstart">Read docs <Icon name="ext" size={13} /></a>
           </div>
           <div className="hero-meta">
             <div><b>48,000+</b>substances indexed</div>
@@ -148,7 +148,7 @@ function Sources() {
 
 function Workflows() {
   return (
-    <section className="section">
+    <section className="section" id="workflows">
       <div className="section-inner">
         <SectionHead no="02" eyebrow="TYPICAL WORKFLOWS" title={<>Four research paths.<br /><em>Same unified context.</em></>} kicker="Whichever door users enter — a chemical, a patent, a country, or a drug — the rest of the dossier follows them through the session." />
         <div className="workflows">
@@ -221,7 +221,7 @@ function Capabilities() {
 
 function QuickStart() {
   return (
-    <section className="section">
+    <section className="section" id="quickstart">
       <div className="section-inner">
         <SectionHead no="04" eyebrow="QUICK START · REVIEWER MODE" title={<>Running in five minutes.<br /><em>No patent DB or LLM required.</em></>} kicker="Local chemical search (48k+ substances), cached MSDS sections, guide recommendations, and the full frontend UI work with zero API keys." />
         <div className="quickstart">
@@ -286,7 +286,7 @@ function Users() {
 
 function Roadmap() {
   return (
-    <section className="section">
+    <section className="section" id="roadmap">
       <div className="section-inner">
         <SectionHead no="06" eyebrow="EVOLUTION DIRECTION" title={<>Three phases.<br /><em>Honest about what's next.</em></>} />
         <div className="roadmap">
@@ -331,7 +331,9 @@ function Gaps() {
   );
 }
 
-function Footer() {
+function Footer({ setView }) {
+  const goProduct = (e) => { e.preventDefault(); setView && setView("product"); };
+  const REPO = "https://github.com/yuyongkim/chemIP";
   return (
     <footer className="footer">
       <div className="footer-inner">
@@ -348,15 +350,24 @@ function Footer() {
         </div>
         <div>
           <h6>PRODUCT</h6>
-          <a>Prototype</a><a>Quick start</a><a>Workflows</a><a>Roadmap</a>
+          <a href="#prototype" onClick={goProduct}>Prototype →</a>
+          <a href="#quickstart">Quick start</a>
+          <a href="#workflows">Workflows</a>
+          <a href="#roadmap">Roadmap</a>
         </div>
         <div>
           <h6>DOCS</h6>
-          <a>README (KR)</a><a>Runbook</a><a>Release process</a><a>Data structure</a>
+          <a href={`${REPO}/blob/main/README.md`} target="_blank" rel="noopener">README (KR) ↗</a>
+          <a href={`${REPO}/blob/main/README.en.md`} target="_blank" rel="noopener">README (EN) ↗</a>
+          <a href={`${REPO}/blob/main/CONTRIBUTING.md`} target="_blank" rel="noopener">Contributing ↗</a>
+          <a href={`${REPO}/blob/main/DATA_STRUCTURE.md`} target="_blank" rel="noopener">Data structure ↗</a>
         </div>
         <div>
           <h6>COMMUNITY</h6>
-          <a>GitHub ↗</a><a>Contributing</a><a>License</a><a>Security</a>
+          <a href={REPO} target="_blank" rel="noopener">GitHub ↗</a>
+          <a href={`${REPO}/issues`} target="_blank" rel="noopener">Issues ↗</a>
+          <a href={`${REPO}/blob/main/LICENSE`} target="_blank" rel="noopener">License (AGPL-3.0) ↗</a>
+          <a href={`${REPO}/blob/main/CODE_OF_CONDUCT.md`} target="_blank" rel="noopener">Code of conduct ↗</a>
         </div>
       </div>
       <div className="footer-bottom">

@@ -565,3 +565,46 @@ mark.hl { background: oklch(0.92 0.14 95); color: var(--fg); padding: 0 2px; bor
 
 /* Dark helper */
 [data-theme="dark"] .terminal { background: oklch(0.08 0.01 250); border: 1px solid var(--border); }
+
+/* ──────────────────────────────────────────── */
+/* Responsive — collapse multi-column landing  */
+/* grids below 900px so phones/tablets fit     */
+/* ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  html, body { overflow-x: hidden; }
+  .hero-inner { grid-template-columns: 1fr; gap: 32px; padding: 40px 16px 32px; }
+  .hero-kicker { flex-wrap: wrap; }
+  .hero h1 { font-size: clamp(28px, 7vw, 44px); overflow-wrap: anywhere; word-break: keep-all; }
+  .hero p.lede { font-size: 15px; overflow-wrap: anywhere; word-break: keep-all; }
+  .hero-cta { flex-wrap: wrap; }
+  .hero-cta .btn { white-space: normal; height: auto; padding: 10px 14px; }
+  .hero-meta { gap: 16px; flex-wrap: wrap; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .stat:nth-child(2n) { border-right: 0; }
+  .source-cell { grid-column: span 12; }
+  .workflows, .quickstart, .caps, .gaps { grid-template-columns: 1fr; }
+  .workflow, .gap { border-right: 0 !important; }
+  .roadmap { grid-template-columns: 1fr; }
+  .phase { border-right: 0; border-bottom: 1px solid var(--border); }
+  .phase:last-child { border-bottom: 0; }
+  .users { grid-template-columns: repeat(2, 1fr); }
+  .user-cell:nth-child(2n) { border-right: 0; }
+  .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+  .layout-2col, .layout-3col { grid-template-columns: 1fr !important; }
+  .product { grid-template-columns: 1fr; }
+  .rail { display: none; }
+  .topbar { grid-template-columns: auto auto; gap: 8px; padding: 0 12px; }
+  .topbar > div:nth-child(2) { display: none; }   /* hide center view-switch on narrow */
+  .cmd { padding: 0 12px; gap: 8px; }
+  .cmd .search { width: auto; min-width: 200px; }
+  .frame { padding: 16px 12px 32px; }
+  .chem-hdr { grid-template-columns: 1fr; gap: 14px; }
+  .chem-hdr .stats-mini { gap: 12px; flex-wrap: wrap; }
+  .msds-grid { grid-template-columns: repeat(2, 1fr); }
+  .msds-item:nth-child(4n) { border-right: 1px solid var(--border); }
+  .msds-item:nth-child(2n) { border-right: 0; }
+  .mobile-board { grid-template-columns: 1fr; }
+  .section { padding: 40px 0; }
+  .section-head { grid-template-columns: 1fr; gap: 16px; }
+  .hero h1 { font-size: clamp(32px, 8vw, 52px); }
+}
