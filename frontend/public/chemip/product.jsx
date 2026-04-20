@@ -343,7 +343,10 @@ function ChemHeader({ selected, sections, loading, error }) {
         </div>
         <h1>{enName || krName} {enName && krName !== enName && <span className="muted" style={{ fontWeight: 400 }}>· {krName}</span>}</h1>
         <div className="muted" style={{ fontFamily: "var(--font-mono)", fontSize: 13 }}>
-          {sections?.length ? `${sections.length}/16 MSDS sections cached` : "MSDS not yet fetched"}
+          {loading ? "Loading MSDS…"
+            : sections?.length ? `${sections.length}/16 MSDS sections cached`
+            : selected?.has_msds ? "MSDS fetch pending"
+            : "No MSDS data for this substance · non-KOSHA source"}
         </div>
         <div style={{ display: "flex", gap: 6, marginTop: 12, flexWrap: "wrap" }}>
           {isFlammable && <Chip tone="chip hazard"><span className="dot" />FLAMMABLE · 인화성</Chip>}
@@ -370,8 +373,10 @@ function ChemHeader({ selected, sections, loading, error }) {
         </div>
         <div>
           <div className="m">Status</div>
-          <div className="v" style={{ fontSize: 16, color: error ? "var(--hazard)" : "var(--safe)" }}>{loading ? "…" : error ? "ERR" : "OK"}</div>
-          <div className="muted" style={{ fontSize: 11 }}>backend</div>
+          <div className="v" style={{ fontSize: 16, color: error ? "var(--hazard)" : (!sections?.length && !loading) ? "var(--warn)" : "var(--safe)" }}>
+            {loading ? "…" : error ? "ERR" : !sections?.length ? "NO MSDS" : "OK"}
+          </div>
+          <div className="muted" style={{ fontSize: 11 }}>{!sections?.length && !loading && !error ? "non-KOSHA" : "backend"}</div>
         </div>
       </div>
     </div>
