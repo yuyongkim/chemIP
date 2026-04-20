@@ -129,7 +129,38 @@ function SearchView({ onOpen, initialQuery }) {
     }
   }, [initialQuery]);
   const { data, loading, error } = useChemicalSearch(submitted);
-  const items = data?.items || [];
+  const rawItems = data?.items || [];
+  const [sourceFilter, setSourceFilter] = useState("all");
+
+  // Group + sort: KOSHA+has_msds first, then KOSHA, then ECHA, then everything else.
+  // Within each group preserve backend order (already relevance-ranked).
+  const sourceCounts = React.useMemo(() => {
+    const c = { all: rawItems.length, kosha: 0, echa: 0, other: 0 };
+    rawItems.forEach(it => {
+      const s = (it.source || "").toLowerCase();
+      if (s === "kosha") c.kosha += 1;
+      else if (s === "echa") c.echa += 1;
+      else c.other += 1;
+    });
+    return c;
+  }, [rawItems]);
+
+  const items = React.useMemo(() => {
+    const filtered = sourceFilter === "all" ? rawItems : rawItems.filter(it => {
+      const s = (it.source || "").toLowerCase();
+      if (sourceFilter === "other") return s !== "kosha" && s !== "echa";
+      return s === sourceFilter;
+    });
+    const rank = (it) => {
+      const s = (it.source || "").toLowerCase();
+      if (s === "kosha" && it.has_msds) return 0;
+      if (s === "kosha") return 1;
+      if (s === "echa") return 2;
+      return 3;
+    };
+    return [...filtered].sort((a, b) => rank(a) - rank(b));
+  }, [rawItems, sourceFilter]);
+
   const submit = () => setSubmitted(q.trim());
   const onKey = (e) => { if (e.key === "Enter") submit(); };
 
@@ -166,27 +197,67 @@ function SearchView({ onOpen, initialQuery }) {
               {loading && <span className="muted" style={{ fontSize: 12, marginLeft: 10 }}>loading…</span>}
             </h3>
             <span className="muted mono" style={{ fontSize: 11 }}>
-              {error ? `error: ${error}` : `${items.length} hits`}
+              {error ? `error: ${error}` : `${items.length} of ${rawItems.length} hits`}
             </span>
           </div>
+
+          {rawItems.length > 0 && (
+            <div style={{ display: "flex", gap: 6, marginBottom: 12, alignItems: "center" }}>
+              <span className="upper" style={{ color: "var(--fg-muted)", marginRight: 4 }}>SOURCE</span>
+              <div className="seg" style={{ height: 28 }}>
+                <button aria-pressed={sourceFilter === "all"} onClick={() => setSourceFilter("all")}>All · {sourceCounts.all}</button>
+                <button aria-pressed={sourceFilter === "kosha"} onClick={() => setSourceFilter("kosha")}>KOSHA · {sourceCounts.kosha}</button>
+                <button aria-pressed={sourceFilter === "echa"} onClick={() => setSourceFilter("echa")}>ECHA · {sourceCounts.echa}</button>
+                {sourceCounts.other > 0 && (
+                  <button aria-pressed={sourceFilter === "other"} onClick={() => setSourceFilter("other")}>Other · {sourceCounts.other}</button>
+                )}
+              </div>
+              <span className="muted mono" style={{ fontSize: 11, marginLeft: "auto" }}>
+                Sorted: KOSHA+MSDS → KOSHA → ECHA → Other
+              </span>
+            </div>
+          )}
+
           {items.length === 0 && !loading && !error && (
             <div className="card" style={{ padding: 24, textAlign: "center", color: "var(--fg-muted)" }}>No results.</div>
           )}
-          <table className="pat-table">
-            <thead><tr><th>Name</th><th>EN</th><th>CAS</th><th>chem_id</th><th>Source</th><th></th></tr></thead>
-            <tbody>
-              {items.map(it => (
-                <tr key={`${it.id}-${it.chem_id}`} style={{ cursor: "pointer" }} onClick={() => onOpen(it)}>
-                  <td><b>{it.name}</b></td>
-                  <td className="muted" style={{ fontSize: 12 }}>{it.name_en || "—"}</td>
-                  <td className="mono">{it.cas_no || "—"}</td>
-                  <td className="mono muted" style={{ fontSize: 11 }}>{it.chem_id}</td>
-                  <td>{it.has_msds ? <Chip tone="chip safe"><span className="dot" />{it.source}</Chip> : <Chip>{it.source}</Chip>}</td>
-                  <td><span className="muted" style={{ fontSize: 11 }}>open →</span></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {items.length > 0 && (() => {
+            // Visually group by source — insert section headers between groups
+            const rows = [];
+            let lastGroup = null;
+            items.forEach(it => {
+              const s = (it.source || "").toLowerCase();
+              const groupKey = s === "kosha" && it.has_msds ? "KOSHA · MSDS available" : (it.source || "Other");
+              if (groupKey !== lastGroup) {
+                rows.push({ kind: "header", key: `h-${groupKey}`, label: groupKey });
+                lastGroup = groupKey;
+              }
+              rows.push({ kind: "row", key: `${it.id}-${it.chem_id}`, it });
+            });
+            return (
+              <table className="pat-table">
+                <thead><tr><th>Name</th><th>EN</th><th>CAS</th><th>chem_id</th><th>Source</th><th></th></tr></thead>
+                <tbody>
+                  {rows.map(r => r.kind === "header" ? (
+                    <tr key={r.key}>
+                      <td colSpan="6" style={{ background: "var(--bg-sunken)", fontFamily: "var(--font-mono)", fontSize: 10, textTransform: "uppercase", letterSpacing: ".08em", color: "var(--fg-muted)", padding: "8px 14px" }}>
+                        § {r.label}
+                      </td>
+                    </tr>
+                  ) : (
+                    <tr key={r.key} style={{ cursor: "pointer" }} onClick={() => onOpen(r.it)}>
+                      <td><b>{r.it.name}</b></td>
+                      <td className="muted" style={{ fontSize: 12 }}>{r.it.name_en || "—"}</td>
+                      <td className="mono">{r.it.cas_no || "—"}</td>
+                      <td className="mono muted" style={{ fontSize: 11 }}>{r.it.chem_id}</td>
+                      <td>{r.it.has_msds ? <Chip tone="chip safe"><span className="dot" />{r.it.source}</Chip> : <Chip>{r.it.source}</Chip>}</td>
+                      <td><span className="muted" style={{ fontSize: 11 }}>open →</span></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            );
+          })()}
         </div>
       )}
 
