@@ -432,6 +432,8 @@ table.tbl tr:hover td { background: var(--bg-sunken); }
 .pat-table tr:last-child td { border-bottom: 0; }
 .pat-table tr:hover td { background: var(--bg-sunken); }
 .pat-table .pid { font-family: var(--font-mono); font-size: 12px; color: var(--accent-ink); }
+mark.hl { background: oklch(0.92 0.14 95); color: var(--fg); padding: 0 2px; border-radius: 2px; font-weight: 600; }
+[data-theme="dark"] mark.hl { background: oklch(0.55 0.14 95); color: oklch(0.10 0.01 250); }
 .pat-table .title-cell { max-width: 460px; }
 .pat-table .title-cell b { font-weight: 500; display: block; }
 .pat-table .title-cell .kr { color: var(--fg-muted); font-size: 12px; }

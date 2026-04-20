@@ -482,6 +482,24 @@ function PatentsTab({ selected }) {
   const { data, loading, error } = usePatents(q, 30);
   const results = data?.results || [];
 
+  // Highlight terms: search query + EN name + KR name (de-duped, length > 1)
+  const hlTerms = React.useMemo(() => {
+    const seen = new Set();
+    const out = [];
+    [q, selected?.name_en, selected?.name, selected?.cas_no].forEach(t => {
+      if (!t) return;
+      const trimmed = String(t).trim();
+      if (trimmed.length < 2) return;
+      // Strip trailing parenthetical (e.g. "아세톤 (Acetone)" → "아세톤" + "Acetone")
+      const matches = trimmed.match(/[^\s()]+/g) || [];
+      [trimmed, ...matches].forEach(m => {
+        const key = m.toLowerCase();
+        if (m.length > 1 && !seen.has(key)) { seen.add(key); out.push(m); }
+      });
+    });
+    return out;
+  }, [q, selected?.name_en, selected?.name, selected?.cas_no]);
+
   // Compute year histogram + top applicants from real data
   const { yearBars, topApplicants } = React.useMemo(() => {
     const years = {};
@@ -522,8 +540,12 @@ function PatentsTab({ selected }) {
               <tr key={p.applicationNumber}>
                 <td><span className="pid">{p.applicationNumber}</span></td>
                 <td className="title-cell">
-                  <b>{p.inventionTitle}</b>
-                  {p.abstract && <span className="kr" style={{ display: "block", marginTop: 4, lineHeight: 1.4 }}>{(p.abstract || "").slice(0, 140)}{p.abstract.length > 140 ? "…" : ""}</span>}
+                  <b><Highlight text={p.inventionTitle} terms={hlTerms} /></b>
+                  {p.abstract && (
+                    <span className="kr" style={{ display: "block", marginTop: 4, lineHeight: 1.4 }}>
+                      <Highlight text={(p.abstract || "").slice(0, 200) + (p.abstract.length > 200 ? "…" : "")} terms={hlTerms} />
+                    </span>
+                  )}
                 </td>
                 <td style={{ fontSize: 12 }}>{p.applicantName || "—"}</td>
                 <td className="mono">{(p.applicationDate || "").slice(0, 4) || "—"}</td>

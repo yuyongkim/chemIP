@@ -102,4 +102,27 @@ function Chip({ children, tone = "default" }) {
   return <span className={cls}>{children}</span>;
 }
 
-Object.assign(window, { Icon, Sparkline, Heatmap, SectionHead, Chip });
+/* Highlight all occurrences of any term inside text. Case-insensitive,
+ * substring match — works for English and Korean alike. */
+function Highlight({ text, terms }) {
+  if (!text) return null;
+  const list = (Array.isArray(terms) ? terms : [terms])
+    .filter(t => t && String(t).trim().length > 1)
+    .map(t => String(t).trim());
+  if (list.length === 0) return text;
+  // Longer terms first → avoid partial-overlap mis-matches
+  const escaped = list
+    .sort((a, b) => b.length - a.length)
+    .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const re = new RegExp(`(${escaped.join("|")})`, "gi");
+  const parts = String(text).split(re);
+  return parts.map((part, i) => {
+    // Test fresh because split-with-capture produces separators in odd indices
+    const isMatch = list.some(t => part.toLowerCase() === t.toLowerCase());
+    return isMatch
+      ? <mark key={i} className="hl">{part}</mark>
+      : <React.Fragment key={i}>{part}</React.Fragment>;
+  });
+}
+
+Object.assign(window, { Icon, Sparkline, Heatmap, SectionHead, Chip, Highlight });
