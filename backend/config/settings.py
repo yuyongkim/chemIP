@@ -14,6 +14,41 @@ def _resolve_path(env_value: str | None, fallback_relative_path: str) -> str:
     return os.path.normpath(os.path.join(PROJECT_ROOT, raw))
 
 
+def _int_env(name: str, default: int) -> int:
+    """Parse an int env var, falling back to ``default`` on missing/invalid.
+
+    A malformed numeric env var (e.g. ``HTTP_TIMEOUT_SECONDS=``) must never
+    raise at import time — that would crash startup and, under PM2's
+    max_restarts limit, take the backend permanently offline.
+    """
+    raw = os.getenv(name)
+    if raw is None or str(raw).strip() == "":
+        return default
+    try:
+        return int(str(raw).strip())
+    except (TypeError, ValueError):
+        import logging
+        logging.getLogger(__name__).warning(
+            "Invalid int for env %s=%r; using default %s", name, raw, default
+        )
+        return default
+
+
+def _float_env(name: str, default: float) -> float:
+    """Parse a float env var, falling back to ``default`` on missing/invalid."""
+    raw = os.getenv(name)
+    if raw is None or str(raw).strip() == "":
+        return default
+    try:
+        return float(str(raw).strip())
+    except (TypeError, ValueError):
+        import logging
+        logging.getLogger(__name__).warning(
+            "Invalid float for env %s=%r; using default %s", name, raw, default
+        )
+        return default
+
+
 class Settings:
     # API Keys
     KOSHA_SERVICE_KEY_ENCODED = os.getenv("KOSHA_SERVICE_KEY_ENCODED", "")
@@ -84,6 +119,10 @@ class Settings:
     NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID", "")
     NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET", "")
 
+    # PRTR / facility data
+    PRTR_ACCESS_KEY = os.getenv("PRTR_ACCESS_KEY", "") or os.getenv("PRTR_API", "")
+    HAZMAT_FACILITY_API_KEY = os.getenv("HAZMAT_FACILITY_API_KEY", "") or os.getenv("유해화학시설_API", "")
+
     # EPA CompTox (US toxicity/exposure data)
     COMPTOX_API_KEY = os.getenv("COMPTOX_API_KEY", "")
 
@@ -91,19 +130,19 @@ class Settings:
     LLM_ENABLED = os.getenv("LLM_ENABLED", "true").lower() == "true"
     LLM_BASE_URL = os.getenv("LLM_BASE_URL", "http://localhost:11434")
     LLM_MODEL = os.getenv("LLM_MODEL", "qwen3:8b")
-    LLM_TIMEOUT_SECONDS = int(os.getenv("LLM_TIMEOUT_SECONDS", "60"))
-    LLM_MAX_TOKENS = int(os.getenv("LLM_MAX_TOKENS", "1024"))
-    LLM_TEMPERATURE = float(os.getenv("LLM_TEMPERATURE", "0.3"))
+    LLM_TIMEOUT_SECONDS = _int_env("LLM_TIMEOUT_SECONDS", 60)
+    LLM_MAX_TOKENS = _int_env("LLM_MAX_TOKENS", 1024)
+    LLM_TEMPERATURE = _float_env("LLM_TEMPERATURE", 0.3)
 
     # Runtime defaults
-    HTTP_TIMEOUT_SECONDS = int(os.getenv("HTTP_TIMEOUT_SECONDS", "10"))
-    HTTP_MAX_RETRIES = int(os.getenv("HTTP_MAX_RETRIES", "3"))
-    HTTP_BACKOFF_FACTOR = float(os.getenv("HTTP_BACKOFF_FACTOR", "0.5"))
+    HTTP_TIMEOUT_SECONDS = _int_env("HTTP_TIMEOUT_SECONDS", 10)
+    HTTP_MAX_RETRIES = _int_env("HTTP_MAX_RETRIES", 3)
+    HTTP_BACKOFF_FACTOR = _float_env("HTTP_BACKOFF_FACTOR", 0.5)
     HTTP_CACHE_ENABLED = os.getenv("HTTP_CACHE_ENABLED", "true").lower() == "true"
-    HTTP_CACHE_TTL_SECONDS = int(os.getenv("HTTP_CACHE_TTL_SECONDS", "300"))
+    HTTP_CACHE_TTL_SECONDS = _int_env("HTTP_CACHE_TTL_SECONDS", 300)
     RATE_LIMIT_ENABLED = os.getenv("RATE_LIMIT_ENABLED", "false").lower() == "true"
-    RATE_LIMIT_WINDOW_SECONDS = int(os.getenv("RATE_LIMIT_WINDOW_SECONDS", "60"))
-    RATE_LIMIT_MAX_REQUESTS = int(os.getenv("RATE_LIMIT_MAX_REQUESTS", "120"))
+    RATE_LIMIT_WINDOW_SECONDS = _int_env("RATE_LIMIT_WINDOW_SECONDS", 60)
+    RATE_LIMIT_MAX_REQUESTS = _int_env("RATE_LIMIT_MAX_REQUESTS", 120)
 
     # Data paths
     TERMINOLOGY_DB_PATH = _resolve_path(os.getenv("TERMINOLOGY_DB_PATH"), "./data/terminology.db")

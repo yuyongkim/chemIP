@@ -17,6 +17,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Static assets served verbatim from /public (standalone prototype JSX,
+    // loaded in-browser via Babel — not part of the Next app module graph).
+    "public/**",
+    // Standalone Playwright/browser probe scripts run outside the build.
+    "e2e/**",
   ]),
 ]);
 

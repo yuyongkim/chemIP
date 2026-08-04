@@ -186,16 +186,26 @@ def test_kipris_detail_endpoint_maps_adapter_error(monkeypatch) -> None:
     assert "KIPRIS API error" in response.json()["detail"]
 
 
-def test_trade_error_is_mapped_to_502(monkeypatch) -> None:
+def test_trade_news_falls_back_to_naver_when_kotra_unavailable(monkeypatch) -> None:
+    # When KOTRA upstream fails, /api/trade/news degrades gracefully to Naver
+    # news rather than surfacing a 502 to the user.
     monkeypatch.setattr(
         trade.adapter,
         "search_market_news",
         lambda **_: {"status": "error", "message": "upstream unavailable", "data": [], "total": 0},
     )
+    monkeypatch.setattr(
+        trade.naver_adapter,
+        "search_news",
+        lambda **_: {"status": "success", "data": [{"title": "benzene market news"}], "total": 1},
+    )
 
     response = client.get("/api/trade/news", params={"q": "benzene"})
-    assert response.status_code == 502
-    assert response.json()["detail"] == "upstream unavailable"
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["fallback"] == "naver-news"
+    assert payload["upstream_error"] == "upstream unavailable"
+    assert payload["total"] == 1
 
 
 def test_drug_search_aggregates_approval_and_easy_info(monkeypatch) -> None:

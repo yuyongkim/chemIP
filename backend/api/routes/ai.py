@@ -55,7 +55,7 @@ class AskRequest(BaseModel):
 
 
 @router.post("/analyze")
-async def analyze_chemical(request: AnalysisRequest):
+def analyze_chemical(request: AnalysisRequest):
     with TerminologyDB() as db:
         cache_reader = getattr(db, "get_ai_cache", None)
         cached = cache_reader(request.chemId) if callable(cache_reader) else None

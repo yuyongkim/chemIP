@@ -21,7 +21,7 @@ logger.info(f"CWD: {os.getcwd()}")
 # Add project root to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from backend.api.routes import ai, chemicals, docs, drugs, guides, patents, regulations, trade
+from backend.api.routes import ai, chemicals, docs, drugs, guides, handlers, patents, regulations, trade
 from backend.config.settings import settings
 
 app = FastAPI(title="ChemIP Platform API")
@@ -39,13 +39,19 @@ app.add_middleware(
 )
 
 # Audit logger (separate from request log — structured for compliance)
+# Wrapped defensively: a filesystem hiccup while attaching the file handler
+# must never crash import/startup (which would trip PM2's restart limit and
+# take the backend permanently offline). Fall back to console logging instead.
 _audit_logger = logging.getLogger("chemip.audit")
-_audit_log_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logs")
-os.makedirs(_audit_log_dir, exist_ok=True)
-_audit_handler = logging.FileHandler(os.path.join(_audit_log_dir, "audit.log"))
-_audit_handler.setFormatter(logging.Formatter("%(message)s"))
-_audit_logger.addHandler(_audit_handler)
 _audit_logger.setLevel(logging.INFO)
+try:
+    _audit_log_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logs")
+    os.makedirs(_audit_log_dir, exist_ok=True)
+    _audit_handler = logging.FileHandler(os.path.join(_audit_log_dir, "audit.log"))
+    _audit_handler.setFormatter(logging.Formatter("%(message)s"))
+    _audit_logger.addHandler(_audit_handler)
+except Exception:  # pragma: no cover - defensive startup guard
+    logger.exception("Failed to initialise audit file logger; continuing without it")
 
 
 _LOCALHOST_PREFIXES = ("127.0.0.1", "::1", "localhost")
@@ -245,6 +251,7 @@ app.include_router(trade.router, prefix="/api/trade", tags=["Trade"])
 app.include_router(drugs.router, prefix="/api/drugs", tags=["Drugs"])
 app.include_router(guides.router, prefix="/api/guides", tags=["Guides"])
 app.include_router(regulations.router, prefix="/api/regulations", tags=["Regulations"])
+app.include_router(handlers.router, prefix="/api/handlers", tags=["Handlers"])
 app.include_router(ai.router, prefix="/api/ai", tags=["AI"])
 app.include_router(docs.router, prefix="/api/docs", tags=["Docs"])
 
