@@ -1,4 +1,4 @@
-from . import ai, chemicals, docs, drugs, guides, patents, trade
+from . import ai, chemicals, docs, drugs, guides, handlers, patents, trade
 
 __all__ = [
     "ai",
@@ -6,6 +6,7 @@ __all__ = [
     "docs",
     "drugs",
     "guides",
+    "handlers",
     "patents",
     "trade",
 ]
