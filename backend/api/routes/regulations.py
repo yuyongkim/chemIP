@@ -13,9 +13,14 @@ from backend.api.comptox_adapter import CompToxAdapter
 from backend.api.niosh_adapter import NioshAdapter
 from backend.api.kischem_adapter import KischemAdapter
 from backend.api.ncis_adapter import NcisAdapter
+from backend.api.handlers_adapter import HandlingSiteAdapter
+from backend.api.kotra_adapter import KotraAdapter
 from backend.api.routes.utils import handle_adapter_result
 from backend.core.chemical_aliases import extract_terms_for_regulatory_search
+from backend.core.intl_regulatory_store import get_by_cas as get_international_by_cas
 from backend.core.terminology_db import TerminologyDB
+from backend.core.trade_controls import build_trade_controls
+from backend.core.trade_controls.catalog import catalog as trade_catalog
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -25,6 +30,8 @@ _comptox = CompToxAdapter()
 _niosh = NioshAdapter()
 _kischem = KischemAdapter()
 _ncis = NcisAdapter()
+_handlers = HandlingSiteAdapter()
+_kotra = KotraAdapter()
 
 
 def _merge_unique_items(items: list[dict], key_fields: tuple[str, ...]) -> list[dict]:
@@ -76,6 +83,13 @@ def _search_first_success(search_terms: list[str], search_fn) -> tuple[dict, str
     return first_error or {"status": "success", "data": [], "total": 0}, (search_terms[0] if search_terms else "")
 
 
+def _load_chemical_context(chem_id: str) -> tuple[dict, list[dict]]:
+    with TerminologyDB() as db:
+        meta = db.get_chemical_meta_by_chem_id(chem_id) or db.get_chemical_meta_by_cas(chem_id)
+        aliases = db.get_aliases_for_chemical(chem_id, limit=24) if meta else []
+    return meta or {}, aliases
+
+
 # ------------------------------------------------------------------
 # ECHA endpoints
 # ------------------------------------------------------------------
@@ -123,6 +137,49 @@ def echa_clp_labelling(classification_id: str):
 def echa_clp_pictograms(classification_id: str):
     """Get GHS pictogram codes for a CLP classification entry."""
     result = _echa.get_clp_pictograms(classification_id)
+    return handle_adapter_result(result)
+
+
+@router.get("/international/{cas_no}")
+def international_listings(cas_no: str):
+    """국가별 물질 규제 목록 등재 내역(미국·EU·베트남·국제협약)을 CAS 로 조회한다."""
+    return get_international_by_cas(cas_no)
+
+
+def _kotra_import_restrictions(country_code: str, keyword: str) -> dict:
+    """수출 상대국의 KOTRA 수입규제 품목(/api/trade/import-regulations 와 같은 조회)."""
+    return _kotra.search_import_restriction_items(keyword=keyword, country_code=country_code, page_no=1, num_of_rows=10)
+
+
+@router.get("/trade-controls-catalog")
+def trade_controls_catalog():
+    """자료 규모 요약: 국내 법령 목록 수·법령 수, 상대국 목록 수, 인허가 건수."""
+    return trade_catalog()
+
+
+@router.get("/trade-controls/{cas_no}")
+def trade_controls(
+    cas_no: str,
+    direction: str = Query("import", pattern="^(import|export)$", description="import(한국으로 수입) | export(한국에서 수출)"),
+    country: str = Query("", max_length=8, description="상대국 코드(US, VN, EU, INTL 등). 비우면 한국 의무만"),
+):
+    """물질별 수출입 규제: 한국 수입·수출 의무, 통제 목록, HS 코드, 상대국 목록·KOTRA 수입규제."""
+    return build_trade_controls(cas_no, direction, country, kotra_fetch=_kotra_import_restrictions)
+
+
+@router.get("/kotra/reach")
+def kotra_reach_qna(
+    q: str = Query("", description="추가 검색어(물질명 등). 비우면 REACH 전반"),
+    page: int = Query(1, ge=1),
+    limit: int = Query(10, ge=1, le=50),
+):
+    """KOTRA 해외시장뉴스에서 REACH 관련 자료·상담 내용 검색.
+
+    사장님이 언급한 'KOTRA 사이트의 REACH Q&A' 를 ChemIP 안에서 검색한다.
+    결과는 KOTRA 원문(dream.kotra.or.kr) 링크를 포함한다.
+    """
+    term = f"REACH {q}".strip() if q.strip() else "REACH"
+    result = _kotra.search_market_news(keyword=term, page_no=page, num_of_rows=limit)
     return handle_adapter_result(result)
 
 
@@ -454,3 +511,43 @@ def regulatory_intelligence(chem_id: str, limit: int = Query(8, ge=1, le=20)):
                 "comptox": comptox_payload,
             },
         }
+
+
+@router.get("/handlers/{chem_id}")
+def handling_site_profile(
+    chem_id: str,
+    year: int = Query(2024, ge=2000, le=2100),
+    accident_years: int = Query(5, ge=1, le=10),
+    facility_limit: int = Query(10, ge=1, le=50),
+):
+    """Return Korean handling-site, PRTR summary, and accident signals."""
+    meta, aliases = _load_chemical_context(chem_id)
+    if not meta:
+        return {
+            "chem_id": chem_id,
+            "chemical": None,
+            "query": {"cas_no": chem_id, "terms": [chem_id], "year": year},
+            "sources": _handlers.build_profile(cas_no=chem_id, aliases=[chem_id], year=year, accident_years=accident_years, facility_limit=facility_limit)["sources"],
+        }
+
+    alias_terms = [item["alias"] for item in aliases if item.get("alias")]
+    profile = _handlers.build_profile(
+        cas_no=meta.get("cas_no", ""),
+        name=meta.get("name", ""),
+        name_en=meta.get("name_en", ""),
+        aliases=alias_terms,
+        year=year,
+        accident_years=accident_years,
+        facility_limit=facility_limit,
+    )
+    return {
+        "chem_id": chem_id,
+        "chemical": {
+            "id": meta.get("id"),
+            "name": meta.get("name", ""),
+            "name_en": meta.get("name_en", ""),
+            "cas_no": meta.get("cas_no", ""),
+            "source": meta.get("source", ""),
+        },
+        **profile,
+    }

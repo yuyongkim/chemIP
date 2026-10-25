@@ -274,9 +274,13 @@ class EchaAdapter:
             index_no = first(idx.get("indexNumber", []))
             smiles = idx.get("rmlSmiles", "") or first(idx.get("smiles", []))
 
-            # Regulatory processes
-            processes = item.get("regulatoryProcesses", [])
-            process_names = [p.get("name", "") for p in processes] if isinstance(processes, list) else []
+            # Regulatory processes — substanceIndex 안에 문자열 코드 배열로 들어있다
+            # (이전엔 item 최상위에서 dict 로 찾아 항상 비어 있었음, 2026-09-28 수정).
+            processes = idx.get("regulatoryProcesses", []) or []
+            if not isinstance(processes, list):
+                processes = []
+            process_codes = [str(p) for p in processes]
+            reach_status = EchaAdapter._reach_status(process_codes)
 
             out.append({
                 "rml_id": rml_id,
@@ -287,8 +291,27 @@ class EchaAdapter:
                 "molecular_formula": formula,
                 "index_number": index_no,
                 "smiles": smiles,
-                "tonnage_band": item.get("tonnageBand", ""),
-                "regulatory_processes": process_names,
+                "tonnage_band": idx.get("tonnageBand", "") or item.get("tonnageBand", ""),
+                "regulatory_processes": process_codes,
+                "reach_status": reach_status,
                 "source": "ECHA",
             })
         return out
+
+    # REACH 핵심 규제 리스트 코드 → 사람이 읽는 라벨
+    _REACH_LIST_LABELS = {
+        "SVHC_CANDIDATE_LIST": "SVHC 후보목록 (Candidate List)",
+        "ANX_14_AUTHORISATION_LIST": "인가대상 (REACH Annex XIV)",
+        "RESTRICTIONS_ANX_17": "제한물질 (REACH Annex XVII)",
+        "REG_REGISTERED": "REACH 등록",
+    }
+
+    @staticmethod
+    def _reach_status(codes: list[str]) -> list[dict[str, str]]:
+        """regulatoryProcesses 코드 목록에서 REACH 4대 상태만 뽑아 라벨링."""
+        code_set = set(codes)
+        return [
+            {"code": c, "label": lbl}
+            for c, lbl in EchaAdapter._REACH_LIST_LABELS.items()
+            if c in code_set
+        ]

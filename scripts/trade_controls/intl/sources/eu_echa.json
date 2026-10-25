@@ -1,0 +1,56 @@
+{
+  "parser": "parse_echa",
+  "downloads": {
+    "api": "https://chem.echa.europa.eu/api-obligation-list/v1/{candidateList|authorisationList|restrictionList|popsList}"
+  },
+  "lists": {
+    "candidate": {
+      "file": "EU_REACH_SVHC_CANDIDATE.json",
+      "list_id": "EU_REACH_SVHC_CANDIDATE",
+      "jurisdiction": "EU",
+      "law": "REACH Regulation (EC) No 1907/2006",
+      "title": "EU REACH 고우려물질(SVHC) 후보물질 목록 — Candidate List of substances of very high concern for Authorisation",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "EU 수입자(또는 한국 제조사가 지정한 EU 유일대리인)가 의무 주체. 물질·혼합물: SDS 제공(REACH 제31조). 완제품에 0.1% w/w 초과 함유: 공급망 정보 전달·소비자 요청 시 45일 내 회신(제33조), 연간 1톤 초과 시 ECHA 신고(제7조(2)), 폐기물기본지침 제9조(1)(i)에 따른 SCIP 데이터베이스 통보. 한국 수출자는 함량 정보·SDS를 EU 수입자에게 제공해야 한다.",
+      "legal_basis": "Regulation (EC) No 1907/2006 (REACH) Art. 7(2), 31, 33, 57, 59; Directive 2008/98/EC Art. 9(1)(i)",
+      "source_url": "https://chem.echa.europa.eu/obligation-lists/candidateList",
+      "license": "ECHA legal notice: 웹사이트 정보는 출처(ECHA) 표시 조건으로 비상업·상업 재사용 허용(https://echa.europa.eu/legal-notice). 법적 효력 있는 원문은 EU 관보."
+    },
+    "authorisation": {
+      "file": "EU_REACH_ANNEX_XIV.json",
+      "list_id": "EU_REACH_ANNEX_XIV",
+      "jurisdiction": "EU",
+      "law": "REACH Regulation (EC) No 1907/2006",
+      "title": "EU REACH 부속서 XIV 허가대상물질 — Authorisation List",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "일몰일(sunset date) 이후 EU 내 시장 출시·사용은 용도별 허가가 있어야 한다(REACH 제56조). 물질·혼합물로 수출하면 EU 수입자·하위사용자의 허가(또는 공급자 허가 범위 내 사용) 확인 필요. 완제품 속 함유는 허가 대상이 아니나 Candidate List 의무(제33조)와 부속서 XVII 제한은 적용.",
+      "legal_basis": "Regulation (EC) No 1907/2006 (REACH) Art. 56, 58, 60–62, Annex XIV",
+      "source_url": "https://chem.echa.europa.eu/obligation-lists/authorisationList",
+      "license": "ECHA legal notice(출처 표시 재사용). 법적 효력 원문은 EU 관보 REACH 부속서 XIV."
+    },
+    "restriction": {
+      "file": "EU_REACH_ANNEX_XVII.json",
+      "list_id": "EU_REACH_ANNEX_XVII",
+      "jurisdiction": "EU",
+      "law": "REACH Regulation (EC) No 1907/2006",
+      "title": "EU REACH 부속서 XVII 제한물질 — Restriction List",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "해당 항목(entry)의 제한 조건(농도·용도·제품군)에 맞지 않는 물질·혼합물·완제품은 EU 시장 출시·사용 불가(REACH 제67조). 수입자가 시장 출시자로 책임. 한국 수출자는 항목별 조건 충족(시험성적·함량 증빙)을 EU 수입자에게 제공. 그룹 항목(예: CMR 부록, PAH, 프탈레이트)은 구성 물질로 등재됨.",
+      "legal_basis": "Regulation (EC) No 1907/2006 (REACH) Art. 67–68, Annex XVII (entries 1–83 및 Appendices 1–12)",
+      "source_url": "https://chem.echa.europa.eu/obligation-lists/restrictionList",
+      "license": "ECHA legal notice(출처 표시 재사용). 제한 조건 원문은 EU 관보 REACH 부속서 XVII."
+    },
+    "pops": {
+      "file": "EU_POPS_2019_1021.json",
+      "list_id": "EU_POPS_2019_1021",
+      "jurisdiction": "EU",
+      "law": "POPs Regulation (EU) 2019/1021",
+      "title": "EU 잔류성유기오염물질(POPs) 규정 부속서 등재물질 — Regulation (EU) 2019/1021",
+      "directions": ["import", "export"],
+      "obligation_for_kr_exporter": "부속서 I 물질: 물질 자체·혼합물·완제품 모두 제조·시장 출시·사용 금지(제3조; 비의도적 미량오염 UTC 한도와 특정 면제는 부속서 I 조건). 부속서 II: 제한 조건 내에서만 허용. EU 수입 통관 시 POPs 함유 여부 확인 필요. 부속서 IV·V 는 폐기물 관리 기준.",
+      "legal_basis": "Regulation (EU) 2019/1021 Art. 3, 4, 7, Annexes I–V",
+      "source_url": "https://chem.echa.europa.eu/obligation-lists/popsList",
+      "license": "ECHA legal notice(출처 표시 재사용). 법적 효력 원문은 EU 관보 Regulation (EU) 2019/1021."
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "parser": "parse_cn_toxic",
+  "downloads": {
+    "announcement": {
+      "url": "https://www.mee.gov.cn/xxgk2018/xxgk/xxgk01/202310/t20231019_1043580.html",
+      "file": "cn/mee_2023_32.html"
+    },
+    "list_2023": {
+      "url": "https://www.mee.gov.cn/xxgk2018/xxgk/xxgk01/202310/W020231019674253866600.pdf",
+      "file": "cn/mee2023_W020231019674253866600.pdf"
+    }
+  },
+  "lists": {
+    "toxic_restricted": {
+      "file": "CN_SEVERELY_RESTRICTED_TOXIC.json",
+      "list_id": "CN_SEVERELY_RESTRICTED_TOXIC",
+      "jurisdiction": "CN",
+      "law": "化学品首次进口及有毒化学品进出口环境管理规定",
+      "title": "중국 严格限制的有毒化学品名录(2023年) — 엄격제한 유독화학품 수출입 목록",
+      "directions": ["import", "export"],
+      "obligation_for_kr_exporter": "중국 수입자(또는 수출자)는 건별로 생태환경부에 有毒化学品进(出)口环境管理放行通知单 을 신청·발급받아 해관 통관에 제시해야 한다(공고 2023年第32号 및 부속 办理说明). 허용 용도(允许用途) 외 수입은 불가. 한국 수출자는 용도 증빙·수량 정보를 중국 수입자에게 제공.",
+      "legal_basis": "生态环境部·商务部·海关总署 公告2023年第32号; 化学品首次进口及有毒化学品进出口环境管理规定(环管〔1994〕140号); 斯德哥尔摩公约·鹿特丹公约·水俣公约",
+      "source_url": "https://www.mee.gov.cn/xxgk2018/xxgk/xxgk01/202310/t20231019_1043580.html",
+      "license": "중국 정부 공고 부속 목록. 중국 저작권법 제5조: 국가기관 결정·명령 등 공문서는 저작권 보호 대상이 아님."
+    }
+  }
+}

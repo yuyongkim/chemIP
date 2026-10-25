@@ -1,12 +1,24 @@
 from fastapi import APIRouter, Query
 
 from backend.api.kotra_adapter import KotraAdapter
-from backend.api.naver_adapter import NaverAdapter
+from backend.api.naver_adapter import NaverAdapter, NAVER_SOURCE, NAVER_SOURCE_LABEL
 from backend.api.routes.utils import handle_adapter_result as _handle_result
 
 router = APIRouter()
 adapter = KotraAdapter()
 naver_adapter = NaverAdapter()
+
+
+def naver_block(result: dict) -> dict:
+    """NAVER results as a self-contained, labelled block (never mixed with KOTRA)."""
+    return {
+        "source": NAVER_SOURCE,
+        "source_label": NAVER_SOURCE_LABEL,
+        "status": result.get("status"),
+        "items": result.get("data", []) if result.get("status") == "success" else [],
+        "total": result.get("total", 0) if result.get("status") == "success" else 0,
+        "message": result.get("message"),
+    }
 
 
 @router.get("/news")
@@ -17,7 +29,21 @@ def get_market_news(
     limit: int = Query(10, ge=1, le=50),
 ):
     result = adapter.search_market_news(keyword=q, country=country or "", page_no=page, num_of_rows=limit)
-    return _handle_result(result)
+    if result.get("status") == "success":
+        return _handle_result(result)
+
+    # KOTRA upstream unavailable: answer with an empty KOTRA list plus a separate
+    # NAVER block. NAVER items are never merged into ``data`` (검색 API 약관 2.1~2.4).
+    start = ((page - 1) * limit) + 1
+    naver = naver_adapter.search_news(keyword=q, start=start, display=limit, sort="date")
+    return {
+        "status": "success",
+        "data": [],
+        "total": 0,
+        "fallback": "naver-news",
+        "upstream_error": result.get("message"),
+        "naver": naver_block(naver),
+    }
 
 
 @router.get("/overseas-market-news")

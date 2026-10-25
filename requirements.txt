@@ -31,3 +31,8 @@ pytest-asyncio==0.24.0
 # Development utilities
 aiofiles==24.1.0
 python-docx==1.1.2
+
+# 엑셀 읽기(handlers_adapter: PRTR 요약 xlsx, 사업장 xls). 지연 import 라 빠져 있던 것을 2026-10-25 보충
+pandas>=2.0,<4
+openpyxl>=3.1,<4
+xlrd>=2.0,<3

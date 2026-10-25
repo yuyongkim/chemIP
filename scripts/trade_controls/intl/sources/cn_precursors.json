@@ -1,0 +1,113 @@
+{
+  "parser": "parse_cn_precursors",
+  "_note": "Base list = 《易制毒化学品管理条例》附表 (2018 修订本, parsed from the regulation text). Additions are transcribed below from each official announcement; the parser checks that every name and every printed CAS appears in that announcement's raw text, and that every item appears in MOFCOM's 2026 dual-use import/export licence catalogue. CAS not printed in a CN text comes only from an exact 品名/别名 match in 危险化学品目录(2015) (official CN) or from the INCB Red List via incb_alias.",
+  "downloads": {
+    "regulation_2018": {
+      "url": "https://xjbtnss.gov.cn/ztzl/zfgs/bm/swj/swjsqxzjcgs/swjjcyj/202602/W020260202603820234617.doc",
+      "file": "cn/precursors/xjbt_2026.doc",
+      "_note": "Full text of 易制毒化学品管理条例(2018修订, 国务院令第703号) incl. 附表, published on a .gov.cn site (新疆生产建设兵团); gov.cn/flk original pages are not machine-reachable."
+    },
+    "ann_2021": {
+      "url": "https://cepe.nuaa.edu.cn/_upload/article/files/30/b8/4f011fd3405d82a8fe88deec4966/23abef7a-a1b9-484d-b46d-66afa9a9671f.pdf",
+      "official_url": "https://www.mps.gov.cn/n2255079/n6865805/n7355741/n7912606/c8129721/content.html",
+      "file": "cn/precursors/mps_2021_print_nuaa.pdf",
+      "_note": "Browser print of the MPS page (URL in footer); mps.gov.cn itself sits behind a JavaScript challenge."
+    },
+    "ann_2024": {
+      "url": "https://www.xuancheng.gov.cn/OpennessContent/download/3413164.html",
+      "file": "cn/precursors/xc_3413164.bin",
+      "_note": "宣城市人民政府 reproduction of the 2024-08-02 six-ministry announcement."
+    },
+    "ann_2025": {
+      "url": "https://www.nmpa.gov.cn/directory/web/nmpa/images/1750820047550069258.doc",
+      "file": "cn/precursors/nmpa_2025.doc"
+    },
+    "mofcom_2026": {
+      "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_c03d1e511b2b486e829d68e8f1422aff.html",
+      "file": "cn/mofcom/mofcom_dualuse_2026.pdf",
+      "page_file": "cn/mofcom/mofcom_dualuse_2026.html",
+      "_note": "2026年度《两用物项和技术进出口许可证管理目录》; the PDF link on the page is resolved at download time."
+    },
+    "hazchem_catalog": {
+      "url": "https://wap.miit.gov.cn/cms_files/filemanager/1226211233/attach/202311/7795338d45794e3ba3a5adbde8b1a576.doc",
+      "file": "cn/miit_whp_2015.doc"
+    }
+  },
+  "base_expected": {"第一类": 12, "第二类": 5, "第三类": 6},
+  "base_members": {
+    "_note": "附表 第一类 12 is one item listing several 麻黄素类 substances; each named one is matched separately.",
+    "第一类 12": ["麻黄素", "伪麻黄素", "消旋麻黄素", "去甲麻黄素", "甲基麻黄素", "麻黄浸膏", "麻黄浸膏粉"]
+  },
+  "base_synonyms": {
+    "_note": "Synonyms printed in the 2026 商务部 dual-use licence catalogue for 附表 names (used only for exact name matching).",
+    "甲基乙基酮": ["丁酮"],
+    "醋酸酐": ["乙酸酐"],
+    "三氯甲烷": ["氯仿"],
+    "哌啶": ["六氢吡啶"],
+    "盐酸": ["氯化氢"],
+    "1-苯基-2-丙酮": ["苯丙酮"],
+    "邻氨基苯甲酸": ["氨茴酸"]
+  },
+  "additions": [
+    {"ann": "mofcom_2026", "year": "2008", "category": "第一类", "name": "羟亚胺", "synonyms": [], "cas": "", "category_basis": "2008 증보 공고 원문 미확보 — 분류는 후속 통합 목록(제1류 19종) 기준"},
+    {"ann": "mofcom_2026", "year": "2012", "category": "第一类", "name": "邻氯苯基环戊酮", "synonyms": [], "cas": "", "category_basis": "2012 증보 공고 원문 미확보 — 분류는 후속 통합 목록 기준"},
+    {"ann": "mofcom_2026", "year": "2014", "category": "第一类", "name": "1-苯基-2-溴-1-丙酮", "synonyms": ["溴代苯丙酮", "2-溴代苯丙酮", "α-溴代苯丙酮"], "cas": "", "category_basis": "2014 증보 공고 원문 미확보 — 분류는 후속 통합 목록 기준"},
+    {"ann": "mofcom_2026", "year": "2014", "category": "第一类", "name": "3-氧-2-苯基丁腈", "synonyms": ["α-氰基苯丙酮", "α-苯乙酰基乙腈", "2-苯乙酰基乙腈"], "cas": "", "category_basis": "2014 증보 공고 원문 미확보 — 분류는 후속 통합 목록 기준"},
+    {"ann": "mofcom_2026", "year": "2017", "category": "第一类", "name": "N-苯乙基-4-哌啶酮", "synonyms": [], "cas": "", "category_basis": "国办函〔2017〕120号(원문 미확보) — 제1류"},
+    {"ann": "mofcom_2026", "year": "2017", "category": "第一类", "name": "4-苯胺基-N-苯乙基哌啶", "synonyms": [], "cas": "", "category_basis": "国办函〔2017〕120号(원문 미확보) — 제1류"},
+    {"ann": "mofcom_2026", "year": "2017", "category": "第一类", "name": "N-甲基-1-苯基-1-氯-2-丙胺", "synonyms": ["氯代麻黄碱"], "cas": "", "category_basis": "国办函〔2017〕120号(원문 미확보) — 제1류; 상무부 목록 품명은 '氯代麻黄碱'", "check_name": "氯代麻黄碱"},
+    {"ann": "mofcom_2026", "year": "2017", "category": "第二类", "name": "溴素", "synonyms": ["溴"], "cas": "", "category_basis": "国办函〔2017〕120号(원문 미확보) — 제2류"},
+    {"ann": "mofcom_2026", "year": "2017", "category": "第二类", "name": "1-苯基-1-丙酮", "synonyms": [], "cas": "", "category_basis": "国办函〔2017〕120号(원문 미확보) — 제2류"},
+    {"ann": "ann_2021", "year": "2021", "category": "第二类", "name": "3-氧-2-苯基丁酸甲酯", "synonyms": ["α-乙酰基苯乙酸甲酯", "α-苯乙酰乙酸甲酯", "MAPA"], "cas": "16648-44-5"},
+    {"ann": "ann_2021", "year": "2021", "category": "第二类", "name": "3-氧-2-苯基丁酰胺", "synonyms": ["α-乙酰基苯乙酰胺", "α-乙酰乙酰苯胺", "APAA"], "cas": "4433-77-6"},
+    {"ann": "ann_2021", "year": "2021", "category": "第二类", "name": "2-甲基-3-[3,4-(亚甲二氧基)苯基]缩水甘油酸", "synonyms": ["3,4-亚甲基二氧苯基-2-丙酮缩水甘油酸"], "cas": "2167189-50-4"},
+    {"ann": "ann_2021", "year": "2021", "category": "第二类", "name": "2-甲基-3-[3,4-(亚甲二氧基)苯基]缩水甘油酸甲酯", "synonyms": ["3,4-亚甲基二氧苯基-2-丙酮缩水甘油酯"], "cas": "13605-48-6"},
+    {"ann": "ann_2021", "year": "2021", "category": "第三类", "name": "苯乙腈", "synonyms": [], "cas": "140-29-4"},
+    {"ann": "ann_2021", "year": "2021", "category": "第三类", "name": "γ-丁内酯", "synonyms": [], "cas": "96-48-0"},
+    {"ann": "ann_2024", "year": "2024", "category": "第二类", "name": "4-(N-苯基氨基)哌啶", "synonyms": ["4-AP"], "cas": "23056-29-3"},
+    {"ann": "ann_2024", "year": "2024", "category": "第二类", "name": "1-叔丁氧羰基-4-(N-苯基氨基)哌啶", "synonyms": ["1-boc-4-AP"], "cas": "125541-22-2"},
+    {"ann": "ann_2024", "year": "2024", "category": "第二类", "name": "N-苯基-N-(4-哌啶基)丙酰胺", "synonyms": ["Norfentanyl", "去苯乙基芬太尼"], "cas": "1609-66-1"},
+    {"ann": "ann_2024", "year": "2024", "category": "第二类", "name": "大麻二酚", "synonyms": ["Cannabidiol", "CBD"], "cas": "13956-29-1"},
+    {"ann": "ann_2024", "year": "2024", "category": "第二类", "name": "2-甲基-3-苯基缩水甘油酸及其酯类", "synonyms": ["BMK glycidic acid"], "cas": "25547-51-7", "family_note": "CAS 는 2-甲基-3-苯基缩水甘油酸(산)만. 酯类(각종 알코올 에스테르)는 CAS 없이 계열로 관리", "check_name": "2-甲基-3-苯基缩水甘油酸及其酯类"},
+    {"ann": "ann_2024", "year": "2024", "category": "第二类", "name": "3-氧-2-苯基丁酸及其酯类", "synonyms": ["3-oxo-2-phenylbutanoic acid"], "cas": "4433-88-9", "family_note": "CAS 는 3-氧-2-苯基丁酸(산)만. 甲酯(16648-44-5)은 2021 품목으로 원래대로 관리", "check_name": "3-氧-2-苯基丁酸及其酯类"},
+    {"ann": "ann_2024", "year": "2024", "category": "第二类", "name": "2-甲基-3-[3,4-(亚甲二氧基)苯基]缩水甘油酸酯类", "synonyms": ["PMK glycidic acid esters"], "cas": "", "family_note": "각종 알코올 에스테르 계열(CAS 없음). 甲酯(13605-48-6)은 2021 품목으로 관리"},
+    {"ann": "ann_2025", "year": "2025", "category": "第二类", "name": "4-哌啶酮", "synonyms": ["4-piperidone"], "cas": "41661-47-6"},
+    {"ann": "ann_2025", "year": "2025", "category": "第二类", "name": "1-叔丁氧羰基-4-哌啶酮", "synonyms": ["1-boc-4-piperidone"], "cas": "79099-07-3"}
+  ],
+  "expected_total": {"第一类": 19, "第二类": 20, "第三类": 8},
+  "incb_source": "backend/data/trade_controls/drug_precursors.json",
+  "incb_alias": {
+    "_basis": "Chinese name (附表 / 商务部目录) -> INCB Red List English name. Synonyms quoted are those printed in the 2026 商务部 dual-use licence catalogue.",
+    "1-苯基-2-丙酮": ["1-Phenyl-2-propanone", "商务部目录 '1－苯基－2－丙酮（苯丙酮）' = P-2-P"],
+    "3,4-亚甲基二氧苯基-2-丙酮": ["3,4-Methylenedioxyphenyl-2-propanone", "same name (3,4-MDP-2-P)"],
+    "胡椒醛": ["Piperonal", "商务部目录 '胡椒醛（洋茉莉醛、3，4－亚甲二氧基苯甲醛、天芥菜精）'"],
+    "黄樟素": ["Safrole", "商务部目录 '黄樟素（4－烯丙基－1，2－亚甲二氧基苯）'"],
+    "异黄樟素": ["Isosafrole", "商务部目录 '异黄樟素（4－丙烯基－1，2－亚甲二氧基苯）'"],
+    "N-乙酰邻氨基苯酸": ["N-Acetylanthranilic acid", "商务部目录 'N－乙酰邻氨基苯酸（N-乙酰邻氨基苯甲酸、2-乙酰氨基苯甲酸）'"],
+    "邻氨基苯甲酸": ["Anthranilic acid", "商务部目录 '邻氨基苯甲酸（氨茴酸）' = 2-aminobenzoic acid"],
+    "麦角酸": ["Lysergic acid", "same substance"],
+    "麦角胺": ["Ergotamine", "same substance"],
+    "麦角新碱": ["Ergometrine", "same substance (ergonovine)"],
+    "麻黄素": ["Ephedrine", "商务部目录 '麻黄碱（麻黄素，盐酸麻黄碱）'"],
+    "伪麻黄素": ["Pseudoephedrine", "商务部目录 '伪麻黄碱（伪麻黄素，盐酸伪麻黄碱）'"],
+    "去甲麻黄素": ["Norephedrine", "商务部目录 '去甲麻黄碱及其盐'"],
+    "苯乙酸": ["Phenylacetic acid", "same substance"],
+    "3-氧-2-苯基丁腈": ["alpha-Phenylacetoacetonitrile (APAAN)", "商务部目录 synonym 'α-苯乙酰基乙腈' = alpha-phenylacetoacetonitrile"],
+    "N-苯乙基-4-哌啶酮": ["N-Phenethyl-4-piperidone (NPP)", "same name"],
+    "4-苯胺基-N-苯乙基哌啶": ["4-Anilino-N-phenethylpiperidine (ANPP)", "same name"]
+  },
+  "lists": {
+    "precursors": {
+      "file": "CN_PRECURSOR_CHEMICALS.json",
+      "list_id": "CN_PRECURSOR_CHEMICALS",
+      "jurisdiction": "CN",
+      "law": "易制毒化学品管理条例",
+      "title": "중국 이제독화학품(易制毒化学品的分类和品种目录) 제1·2·3류 — 마약류 원료물질",
+      "directions": ["import", "export"],
+      "obligation_for_kr_exporter": "중국 수입 시: 수입업체가 상무부(또는 위임 성급 상무부문) 易制毒化学品 수입허가증을 받아야 통관(条例 第二十六条·第三十条; 2026 两用物项和技术进口许可证管理目录 Ⅰ-二). 신청에 수출입 계약서·易制毒 생산/경영/구매 허가 또는 신고증명 필요. 국제핵사(국제 사전수출통보 PEN) 대상(第二十九条) — 한국 측 원료물질 수출 승인·PEN 회신 기간이 허가 기간에 더해짐. 麻黄素 등 중점 감시 품목은 지정 기업만 수출입(第二十八条). 제1류 약품류는 국가약품감독관리국 동의·수입약품통관단 추가(第二十七条·第三十条). 중국 내 운송은 1·2류 공안 운송허가, 3류 운송 전 신고(第二十条).",
+      "legal_basis": "易制毒化学品管理条例(国务院令第445号, 2018 修订) 第二条·第二十条·第二十六~三十条·附表; 이후 증보 공고(2008·2012·2014·2017·2021·2024·2025); 易制毒化学品进出口管理规定; 商务部·海关总署 2026年度《两用物项和技术进出口许可证管理目录》Ⅰ-二",
+      "source_url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_c03d1e511b2b486e829d68e8f1422aff.html",
+      "license": "중국 정부 공고·행정법규. 중국 저작권법 제5조: 법률·법규·국가기관 결정·명령 등 공문서는 저작권 보호 대상이 아님."
+    }
+  }
+}

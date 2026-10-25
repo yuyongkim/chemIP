@@ -1,0 +1,75 @@
+{
+  "parser": "parse_jp_cscl",
+  "downloads": {
+    "meti_class1": {
+      "title": "第一種特定化学物質一覧",
+      "url": "https://www.meti.go.jp/policy/chemical_management/kasinhou/about/class1specified_chemicals_list_latest.pdf",
+      "page": "https://www.meti.go.jp/policy/chemical_management/kasinhou/about/class1specified_index.html",
+      "file": "jp/class1_list.pdf"
+    },
+    "meti_class2": {
+      "title": "第二種特定化学物質一覧",
+      "url": "https://www.meti.go.jp/policy/chemical_management/kasinhou/files/specified/class2specified_chemicals_list.pdf",
+      "page": "https://www.meti.go.jp/policy/chemical_management/kasinhou/about/substance_list.html",
+      "file": "jp/class2_list.pdf"
+    },
+    "meti_monitoring": {
+      "title": "監視化学物質一覧",
+      "url": "https://www.meti.go.jp/policy/chemical_management/kasinhou/files/ippantou/monitoring_chemicals_list.pdf",
+      "page": "https://www.meti.go.jp/policy/chemical_management/kasinhou/about/substance_list.html",
+      "file": "jp/monitoring_list.pdf"
+    },
+    "jcheck": {
+      "url": "https://www.nite.go.jp/chem/jcheck/list6.action?category=211&request_locale=ja",
+      "note": "categories 211 第一種特定 / 212 第二種特定 / 220 監視; raw HTML in jp/jcheck/<category>/"
+    },
+    "law_text": {
+      "url": "https://laws.e-gov.go.jp/api/1/lawdata/348AC0000000117",
+      "note": "e-Gov 法令API: 化審法 本文 (조문 번호 확인용, 파서는 읽지 않음)"
+    }
+  },
+  "lists": {
+    "class1": {
+      "file": "JP_CSCL_CLASS1.json",
+      "list_id": "JP_CSCL_CLASS1",
+      "jurisdiction": "JP",
+      "law": "化学物質の審査及び製造等の規制に関する法律(化審法)",
+      "title": "일본 화심법 제1종 특정화학물질 (第一種特定化学物質)",
+      "directions": ["import", "export"],
+      "obligation_for_kr_exporter": "일본 수입 사실상 금지: 수입하려면 경제산업대신 허가 필요(법 제22조①, 시험연구용 제외)이며 수요 충족에 필요하다고 인정될 때만 허가(제23조①). 정령으로 정한 제품에 제1종 특정화학물질이 사용된 경우 그 제품의 수입 자체가 금지(제24조①, 施行令 第7条). 한국 수출자는 해당 물질·함유 제품을 일본으로 수출할 수 없다고 보고, 불순물 함유도 METI 「不純物として第一種特定化学物質を含有する化学物質の取扱い」 기준 확인 필요.",
+      "legal_basis": "化学物質の審査及び製造等の規制に関する法律(昭和48年法律第117号) 第2条第2項·第17条·第22条·第23条·第24条; 同法施行令(昭和49年政令第202号) 第1条·第7条",
+      "source_url": "https://www.meti.go.jp/policy/chemical_management/kasinhou/about/class1specified_index.html",
+      "license": "목록 자체는 정령(施行令 第1条) 내용: 일본 저작권법 제13조(법령·고시는 저작권 목적이 아님). METI 웹페이지·PDF 는 METI 이용규약 적용. CAS 대응은 NITE J-CHECK(후생노동성·경제산업성·환경성·NITE) — J-CHECK 면책: 「公示整理番号(MITI番号)とCAS登録番号(CAS RN)の関連は、最終的に確認されたものではありません」.",
+      "expected_count": 44,
+      "notes": ["CAS 는 J-CHECK 의 정령 항목별 수록 물질(예시)이며, 염·이성체·관련물질 등 항목 전체를 망라하지 않는다. 정령 명칭은 family_entries 에도 남겼다.",
+                "제41~44호(LC-PFCA 및 그 염, 장쇄 PFCA 관련물질, 클로르피리포스, 중쇄 염소화파라핀)는 METI 목록상 지정일 令和8年11月22日(2026-11-22)."]
+    },
+    "class2": {
+      "file": "JP_CSCL_CLASS2.json",
+      "list_id": "JP_CSCL_CLASS2",
+      "jurisdiction": "JP",
+      "law": "化学物質の審査及び製造等の規制に関する法律(化審法)",
+      "title": "일본 화심법 제2종 특정화학물질 (第二種特定化学物質)",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "일본 수입자는 물질별로 매년도 수입예정수량을 경제산업대신에게 신고(법 제35조①, 시험연구용 제외)하고, 변경 시 신고(제35조②)하며 신고한 예정수량을 초과해 수입할 수 없음(제35조③). 정령 지정 제품에 사용된 경우 그 제품의 수입예정수량도 신고 대상. 양도·제공 시 용기·포장·송장에 고시된 표시 의무(제37조②) — 한국 수출자는 일본 수입자의 수량 신고·표시에 필요한 정보를 제공.",
+      "legal_basis": "化学物質の審査及び製造等の規制に関する法律(昭和48年法律第117号) 第2条第3項·第35条·第36条·第37条; 同法施行令(昭和49年政令第202号) 第2条",
+      "source_url": "https://www.meti.go.jp/policy/chemical_management/kasinhou/about/substance_list.html",
+      "license": "목록 자체는 정령(施行令 第2条) 내용: 일본 저작권법 제13조. METI PDF 는 METI 이용규약 적용. CAS 대응은 NITE J-CHECK — 「MITI番号とCAS RNの関連は、最終的に確認されたものではありません」.",
+      "expected_count": 24
+    },
+    "monitoring": {
+      "file": "JP_CSCL_MONITORING.json",
+      "list_id": "JP_CSCL_MONITORING",
+      "jurisdiction": "JP",
+      "law": "化学物質の審査及び製造等の規制に関する法律(化審法)",
+      "title": "일본 화심법 감시화학물질 (監視化学物質)",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "일본 수입자는 감시화학물질별로 매년도 전년도 수입수량 등을 경제산업대신에게 신고(법 제13조①, 시험연구용 제외). 한국 수출자는 일본 수입자의 실적 신고에 필요한 물질 정보·수량을 제공.",
+      "legal_basis": "化学物質の審査及び製造等の規制に関する法律(昭和48年法律第117号) 第2条第4項·第13条",
+      "source_url": "https://www.meti.go.jp/policy/chemical_management/kasinhou/about/substance_list.html",
+      "license": "관보 공시 명칭 목록(METI 監視化学物質一覧 PDF, METI 이용규약 적용). CAS 대응은 NITE J-CHECK — 「MITI番号とCAS RNの関連は、最終的に確認されたものではありません」.",
+      "expected_count": 38,
+      "notes": ["METI 목록의 通し番号는 5·17·19 결번(지정 취소 등)이 있어 38건이다."]
+    }
+  }
+}

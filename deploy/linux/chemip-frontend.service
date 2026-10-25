@@ -1,0 +1,32 @@
+# ChemIP 프론트엔드 — Next.js(next start), 127.0.0.1:7000 에서만 듣는다. /api/* 는 127.0.0.1:7011 로 넘긴다.
+# /api 넘김 주소는 빌드 시점(npm run build)의 BACKEND_ORIGIN 으로 굳는다 — install_app.sh 가 같은 값으로 빌드한다.
+
+[Unit]
+Description=ChemIP frontend (next start on 127.0.0.1:7000)
+After=network-online.target chemip-backend.service
+Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=20
+
+[Service]
+Type=simple
+User=chemip
+Group=chemip
+WorkingDirectory=/srv/chemip/app/frontend
+Environment=NODE_ENV=production
+Environment=PORT=7000
+Environment=BACKEND_ORIGIN=http://127.0.0.1:7011
+Environment=NEXT_TELEMETRY_DISABLED=1
+ExecStart=/usr/bin/node ./node_modules/next/dist/bin/next start -H 127.0.0.1 -p 7000
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=20
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/chemip/app/frontend/.next
+
+[Install]
+WantedBy=multi-user.target

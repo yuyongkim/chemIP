@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any
 
 from fastapi import APIRouter, Query
+from fastapi.responses import JSONResponse
 import xml.etree.ElementTree as ET
 
 from backend.core.terminology_db import TerminologyDB
@@ -135,6 +136,9 @@ def get_chemical_details(chem_id: str):
                                 seq, chem_id, response.get("message", "unknown error"),
                             )
                             continue
+                        if not is_kosha and not parse_msds_xml(response.get("data", "")):
+                            # KOSHA 번호 형식이 아닌 식별자(오타·"null" 등)의 빈 응답은 DB 에 남기지 않는다.
+                            continue
                         title = SECTION_TITLES.get(seq, f"Section {seq}")
                         db.upsert_msds_detail(chem_id, seq, title, response.get("data", ""))
 
@@ -153,6 +157,11 @@ def get_chemical_details(chem_id: str):
                     "content": parsed_content,
                 }
             )
+
+        meta = meta or {}
+        if not meta and not any(sec["content"] for sec in parsed_sections) and not english_safety:
+            # 목록에도 없고 MSDS 도 못 받은 식별자: 500(AttributeError) 대신 404 로 알린다.
+            return JSONResponse(status_code=404, content={"code": "NOT_FOUND", "message": "물질을 찾을 수 없습니다.", "chem_id": chem_id})
 
         return {
             "chem_id": chem_id,

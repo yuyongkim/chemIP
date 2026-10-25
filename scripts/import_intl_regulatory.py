@@ -13,6 +13,9 @@ import re
 import sqlite3
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from epa_lol_detail import format_detail  # noqa: E402
+
 DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'terminology.db')
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 
@@ -82,12 +85,8 @@ def import_epa_list(conn):
     # 0: Name, 1: CAS Number, 3: CAA 112(r)(7) TQ, 4: CERCLA HS RQ,
     # 5: CWA 311 HS TQ, 6: EPCRA 302 EHS TPQ, 7: EPCRA 304 EHS RQ, 8: EPCRA 313 TRI
     regulation_cols = {
-        3: ('CAA_112R', 'Threshold Quantity'),
-        4: ('CERCLA', 'Reportable Quantity'),
-        5: ('CWA_311', 'Threshold Quantity'),
-        6: ('EPCRA_302', 'Threshold Planning Quantity'),
-        7: ('EPCRA_304', 'Reportable Quantity'),
-        8: ('EPCRA_313', 'TRI'),
+        3: 'CAA_112R', 4: 'CERCLA', 5: 'CWA_311',
+        6: 'EPCRA_302', 7: 'EPCRA_304', 8: 'EPCRA_313',
     }
 
     rows_to_insert = []
@@ -108,12 +107,12 @@ def import_epa_list(conn):
             # Some entries have category codes like "N171" instead of CAS
             cas = None
 
-        for col_idx, (reg_name, detail_prefix) in regulation_cols.items():
+        for col_idx, reg_name in regulation_cols.items():
             val = row[col_idx] if col_idx < len(row) else None
             if val is not None and str(val).strip() not in ('', 'None'):
                 detail_str = str(val).strip()
                 if detail_str:
-                    detail = f"{detail_prefix}: {detail_str}" if detail_prefix != 'TRI' else detail_str
+                    detail = format_detail(reg_name, detail_str)  # 단위(lb)·각주 해석
                     rows_to_insert.append((cas, reg_name, detail, 'EPA', str(name).strip()))
                     row_count += 1
 

@@ -2,14 +2,22 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8" />
+<!-- /chemip 와 /chemip/ 어느 주소로 열어도 상대 경로(tokens.css 등)가 /chemip/ 아래에서 읽히게 한다 -->
+<base href="/chemip/" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>ChemIP — 화학 안전·지식재산 통합 데이터 플랫폼</title>
+<title>ChemIP — 중소기업 화학물질 규제·MSDS 무료 안내</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard/dist/web/variable/pretendardvariable.min.css">
-<link rel="stylesheet" href="tokens.css" />
-<link rel="stylesheet" href="app.css" />
+<link rel="stylesheet" href="tokens.css?v=20261025r" />
+<link rel="stylesheet" href="app.css?v=20261025ko1" />
+<link rel="stylesheet" href="trade_controls.css?v=20261025t" />
+<link rel="stylesheet" href="paper.css?v=20260719" />
+<link rel="stylesheet" href="feedback.css?v=20261025c" />
+<link rel="stylesheet" href="about.css?v=20261025ko1" />
+<link rel="stylesheet" href="checklist_print.css?v=20261025b" />
+<link rel="stylesheet" href="landing.css?v=20261025ko3" />
 </head>
 <body>
 <div id="app-root"></div>
@@ -17,14 +25,85 @@
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-
-<script type="text/babel" src="data.jsx"></script>
-<script type="text/babel" src="primitives.jsx"></script>
-<script type="text/babel" src="api.jsx"></script>
-<script type="text/babel" src="landing.jsx"></script>
-<script type="text/babel" src="product.jsx"></script>
-<script type="text/babel" src="mobile.jsx"></script>
-<script type="text/babel" src="tweaks.jsx"></script>
-<script type="text/babel" src="app.jsx"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-array@3.2.4/dist/d3-array.min.js" integrity="sha384-VpKMdU+TlpggHFip46tJ/xkFUs8NFBwLqUMo3+3uiu411lU6eUQYsHVU+JFpA5ja" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-geo@3.1.0/dist/d3-geo.min.js" integrity="sha384-4qk6ygXWBnqF5p3gQFIT+65O4jUmOq8k2EDKY5qRBhWzv+m5tc1EKUWP96o4FbA6" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
+<script type="text/babel" src="data.jsx?v=20261025c1"></script>
+<script type="text/babel" src="primitives.jsx?v=20260928h"></script>
+<script type="text/babel" src="app_labels.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="landing_labels.jsx?v=20261025ko2"></script>
+<script type="text/babel" src="product_labels.jsx?v=20261025c1"></script>
+<script type="text/babel" src="panel_title.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="section_heading.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="api.jsx?v=20261025u"></script>
+<script type="text/babel" src="product.jsx?v=20261025ko2"></script>
+<script type="text/babel" src="product_search.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="product_detail.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="naver_results.jsx?v=20261025c1"></script>
+<script type="text/babel" src="kipris_link_only.jsx?v=20261025c1"></script>
+<script type="text/babel" src="product_tabs.jsx?v=20261025c1"></script>
+<script type="text/babel" src="product_handlers.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="intl_regions.jsx?v=20261025a"></script>
+<script type="text/babel" src="product_thresholds.jsx?v=20261017c"></script>
+<script type="text/babel" src="product_provisions.jsx?v=20261017b"></script>
+<script type="text/babel" src="product_intl.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="product_incidents.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="product_enforcement.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="ui_common.jsx?v=20261025t"></script>
+<script type="text/babel" src="trade_controls_labels.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="trade_controls_helpers.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="trade_controls_sections/rule_card.jsx?v=20261025r"></script>
+<script type="text/babel" src="trade_controls_sections/kr_law.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="trade_controls_sections/kr_permits.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="trade_controls_permit_context_labels.jsx?v=20261025s"></script>
+<script type="text/babel" src="trade_controls_permit_context_helpers.jsx?v=20261025r"></script>
+<script type="text/babel" src="trade_controls_sections/kr_permit_duration_hint.jsx?v=20261025s"></script>
+<script type="text/babel" src="trade_controls_sections/kr_permit_context_entry.jsx?v=20261025r"></script>
+<script type="text/babel" src="trade_controls_sections/kr_permit_context_emissions.jsx?v=20261025r"></script>
+<script type="text/babel" src="trade_controls_sections/kr_permit_context.jsx?v=20261025s"></script>
+<script type="text/babel" src="trade_controls_sections/kr_obligations.jsx?v=20261025r"></script>
+<script type="text/babel" src="trade_controls_sections/controlled_lists.jsx?v=20261025r"></script>
+<script type="text/babel" src="trade_controls_sections/hs_codes.jsx?v=20261025r"></script>
+<script type="text/babel" src="trade_controls_sections/intl_lists.jsx?v=20261025a"></script>
+<script type="text/babel" src="trade_controls_sections/destination.jsx?v=20261025r"></script>
+<script type="text/babel" src="trade_controls_sections/controls_bar.jsx?v=20261024c"></script>
+<script type="text/babel" src="trade_controls_sections/sources_footer.jsx?v=20261025r"></script>
+<script type="text/babel" src="trade_controls_checklist_labels.jsx?v=20261025a"></script>
+<script type="text/babel" src="trade_controls_checklist_helpers.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="trade_controls_sections/checklist_export.jsx?v=20261025b"></script>
+<script type="text/babel" src="trade_controls_sections/summary.jsx?v=20261025r"></script>
+<script type="text/babel" src="product_trade_controls.jsx?v=20261025r"></script>
+<script type="text/babel" src="product_views.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="mobile.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="tweaks.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="research.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="benchmark.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="feedback_labels.jsx?v=20261025b"></script>
+<script type="text/babel" src="feedback_helpers.jsx?v=20261025b"></script>
+<script type="text/babel" src="feedback_list.jsx?v=20261025a"></script>
+<script type="text/babel" src="feedback_detail.jsx?v=20261025a"></script>
+<script type="text/babel" src="feedback_form.jsx?v=20261025b"></script>
+<script type="text/babel" src="feedback_admin_session.jsx?v=20261025a"></script>
+<script type="text/babel" src="feedback_admin_footer.jsx?v=20261025a"></script>
+<script type="text/babel" src="feedback_admin_login.jsx?v=20261025a"></script>
+<script type="text/babel" src="feedback_admin_item.jsx?v=20261025a"></script>
+<script type="text/babel" src="feedback_admin_list.jsx?v=20261025a"></script>
+<script type="text/babel" src="feedback_board.jsx?v=20261025b"></script>
+<script type="text/babel" src="feedback_report_link.jsx?v=20261025a"></script>
+<script type="text/babel" src="about_labels.jsx?v=20261025a"></script>
+<script type="text/babel" src="sources_data.jsx?v=20261025c1"></script>
+<script type="text/babel" src="usage_notice.jsx?v=20261025a"></script>
+<script type="text/babel" src="landing_sme.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="landing_hero.jsx?v=20261025ko2"></script>
+<script type="text/babel" src="landing_outputs.jsx?v=20261025ko2"></script>
+<script type="text/babel" src="landing_steps.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="landing_disclaimer.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="landing_footer.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="landing.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="dev_labels.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="dev_overview.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="dev_hub.jsx?v=20261025ko1"></script>
+<script type="text/babel" src="sources_view.jsx?v=20261025a"></script>
+<script type="text/babel" src="app.jsx?v=20261025ko1"></script>
 </body>
 </html>

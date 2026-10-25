@@ -125,4 +125,60 @@ function Highlight({ text, terms }) {
   });
 }
 
-Object.assign(window, { Icon, Sparkline, Heatmap, SectionHead, Chip, Highlight });
+/* Glossary abbreviation — renders the term followed by a hoverable superscript
+ * marker whose tooltip explains the acronym. Falls back to plain text when the
+ * code is not in GLOSSARY. Lookup is case-insensitive. */
+function Abbr({ code, children }) {
+  const raw = code != null ? code : children;
+  const key = String(raw || "").toUpperCase().trim();
+  const g = (typeof GLOSSARY !== "undefined") ? GLOSSARY[key] : null;
+  const label = children != null ? children : raw;
+  const ref = useRef(null);
+  const [pos, setPos] = useState(null);
+  if (!g) return <React.Fragment>{label}</React.Fragment>;
+
+  // Fixed positioning (viewport-relative) so the tooltip escapes any
+  // overflow:hidden ancestor (.panel, .pat-table …) instead of being clipped.
+  const show = () => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const x = Math.max(140, Math.min(vw - 140, r.left + r.width / 2));
+    const below = r.bottom + 130 < vh;
+    setPos({ x, y: below ? r.bottom + 8 : r.top - 8, below });
+  };
+  const hide = () => setPos(null);
+
+  return (
+    <span className="gloss">
+      {label}
+      <sup
+        ref={ref}
+        className="gloss-mark"
+        tabIndex={0}
+        role="note"
+        aria-label={`${g.name} — ${g.desc}`}
+        onMouseEnter={show}
+        onMouseLeave={hide}
+        onFocus={show}
+        onBlur={hide}
+      >
+        i
+        {pos && (
+          <span
+            className={`gloss-pop ${pos.below ? "below" : "above"}`}
+            role="tooltip"
+            style={{ position: "fixed", left: pos.x, top: pos.y }}
+          >
+            <b className="gloss-pop-title">{g.name}</b>
+            {g.kr && <span className="gloss-pop-kr">{g.kr}</span>}
+            <span className="gloss-pop-desc">{g.desc}</span>
+          </span>
+        )}
+      </sup>
+    </span>
+  );
+}
+
+Object.assign(window, { Icon, Sparkline, Heatmap, SectionHead, Chip, Highlight, Abbr });

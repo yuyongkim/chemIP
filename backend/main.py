@@ -21,8 +21,10 @@ logger.info(f"CWD: {os.getcwd()}")
 # Add project root to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from backend.api.routes import ai, chemicals, docs, drugs, guides, handlers, patents, regulations, trade
+from backend.api.routes import ai, chemicals, docs, drugs, feedback, guides, handlers, integrations, patents, regulations, trade, usage
 from backend.config.settings import settings
+from backend.core.client_ip import client_ip
+from backend.usage.middleware import count_usage
 
 app = FastAPI(title="ChemIP Platform API")
 
@@ -61,14 +63,8 @@ _PUBLIC_PATHS = {"/", "/health"}
 
 
 def _get_client_ip(request: Request) -> str:
-    """Extract real client IP, respecting Cloudflare's CF-Connecting-IP header."""
-    cf_ip = request.headers.get("cf-connecting-ip")
-    if cf_ip:
-        return cf_ip
-    xff = request.headers.get("x-forwarded-for")
-    if xff:
-        return xff.split(",")[0].strip()
-    return request.client.host if request.client else "unknown"
+    """Client address for rate limiting and logs — see backend/core/client_ip.py."""
+    return client_ip(request)
 
 
 def _is_localhost(request: Request) -> bool:
@@ -199,7 +195,7 @@ async def log_request_summary(request: Request, call_next):
     response = await call_next(request)
     elapsed_ms = round((time() - started) * 1000, 2)
     request_id = getattr(request.state, "request_id", "") or request.headers.get("x-request-id", "")
-    client_ip = _get_client_ip(request)
+    ip = _get_client_ip(request)
     logger.info(
         "request_id=%s method=%s path=%s status=%s duration_ms=%s ip=%s",
         request_id,
@@ -207,7 +203,7 @@ async def log_request_summary(request: Request, call_next):
         request.url.path,
         response.status_code,
         elapsed_ms,
-        client_ip,
+        ip,
     )
     # Audit log for API calls (structured JSON line)
     if request.url.path.startswith("/api/"):
@@ -215,7 +211,7 @@ async def log_request_summary(request: Request, call_next):
         _audit_logger.info(json.dumps({
             "ts": datetime.now(timezone.utc).isoformat(),
             "rid": request_id,
-            "ip": client_ip,
+            "ip": ip,
             "method": request.method,
             "path": request.url.path,
             "query": str(request.url.query),
@@ -252,8 +248,14 @@ app.include_router(drugs.router, prefix="/api/drugs", tags=["Drugs"])
 app.include_router(guides.router, prefix="/api/guides", tags=["Guides"])
 app.include_router(regulations.router, prefix="/api/regulations", tags=["Regulations"])
 app.include_router(handlers.router, prefix="/api/handlers", tags=["Handlers"])
+app.include_router(integrations.router, prefix="/api/integrations", tags=["Integrations"])
 app.include_router(ai.router, prefix="/api/ai", tags=["AI"])
 app.include_router(docs.router, prefix="/api/docs", tags=["Docs"])
+app.include_router(feedback.router, prefix="/api/feedback", tags=["Feedback"])
+app.include_router(usage.router, prefix="/api/usage", tags=["Usage"])
+
+# 익명 이용 집계(물질 조회·수출입 규제 조회 횟수만, 개인 정보 없음) — backend/usage/
+app.middleware("http")(count_usage)
 
 
 @app.get("/")

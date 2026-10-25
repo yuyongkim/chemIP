@@ -1,0 +1,74 @@
+{
+  "parser": "parse_tsca",
+  "downloads": {
+    "inventory": {
+      "url": "https://www.epa.gov/system/files/other-files/2026-05/csv-non-cbi-tsca-inventory.zip",
+      "page": "https://www.epa.gov/tsca-inventory/how-access-tsca-inventory",
+      "file": "epa/csv-non-cbi-tsca-inventory.zip"
+    },
+    "export_12b": {
+      "url": "https://www.epa.gov/system/files/documents/2024-07/tsca-section-12b-chemical-list-2024-06-26.xlsx",
+      "page": "https://www.epa.gov/tsca-import-export-requirements/chemicals-subject-tsca-section-12b-export-notification-requirements",
+      "version": "2024-06-26",
+      "file": "epa/tsca_12b_2024-06-26.xlsx"
+    }
+  },
+  "flag_meaning": {
+    "5E": "TSCA 5(e) 명령 대상",
+    "5F": "TSCA 5(f) 규칙 대상",
+    "12C": "TSCA 12(c) 미국 수출 금지",
+    "R": "TSCA 6 위해관리 규칙(제안·최종) 대상",
+    "S": "최종 중요신규용도규칙(SNUR) 대상",
+    "SP": "제안 SNUR 대상",
+    "T": "TSCA 4 최종 시험 규칙·명령 대상",
+    "TP": "TSCA 4 제안 시험 규칙·명령 대상"
+  },
+  "lists": {
+    "inventory": {
+      "file": "US_TSCA_INVENTORY.json",
+      "list_id": "US_TSCA_INVENTORY",
+      "jurisdiction": "US",
+      "law": "Toxic Substances Control Act (TSCA)",
+      "title": "미국 TSCA 기존화학물질 목록(Inventory, 비CBI) — ACTIVE/INACTIVE 상태",
+      "directions": [
+        "import"
+      ],
+      "obligation_for_kr_exporter": "미국 수입자는 통관 시 TSCA 적합 인증(positive certification, 40 CFR 707.20; 19 CFR 12.121) 제출. ACTIVE 물질은 그대로 수입 가능(단 S/SP=SNUR, R=§6 규칙, 5E/5F 플래그가 있으면 해당 조건 확인). INACTIVE 물질은 수입(재개)일로부터 90일 이내 NOA Form B 로 활성 전환 신고(40 CFR 710.30). Inventory 에 없으면 신규화학물질: 수입 90일 전 PMN 또는 면제(LVE 등) 필요(TSCA §5(a)(1), 40 CFR 720).",
+      "legal_basis": "TSCA §5(a)(1), §8(b), §13; 40 CFR 707.20, 710 subpart B, 720; 19 CFR 12.118–12.127",
+      "source_url": "https://www.epa.gov/tsca-inventory/how-access-tsca-inventory",
+      "license": "US EPA 작성 자료: 미국 연방정부 저작물로 저작권 없음(17 U.S.C. §105), 공공 영역.",
+      "absence_note": "공개 TSCA Inventory 에 없음: 미국에서 신규화학물질일 수 있다 — 수입 전 PMN(90일 전) 또는 면제 확인 필요. 단 CBI(기밀) 물질은 CAS 가 공개되지 않으므로 EPA bona fide 조회(40 CFR 720.25)로 최종 확인."
+    },
+    "export_12b": {
+      "file": "US_TSCA_12B_EXPORT_NOTIFICATION.json",
+      "list_id": "US_TSCA_12B_EXPORT_NOTIFICATION",
+      "jurisdiction": "US",
+      "law": "Toxic Substances Control Act (TSCA)",
+      "title": "미국 TSCA §12(b) 수출통보 대상 물질 — Chemicals subject to TSCA section 12(b)",
+      "directions": [
+        "export"
+      ],
+      "obligation_for_kr_exporter": "미국에서 수출(한국 등으로 수입)할 때 적용: 미국 수출자는 대상 물질을 수입국별로 해당 연도 첫 수출(규칙 대상이 된 뒤 첫 수출 포함) 시 수출일 또는 수출 의사 형성일 중 빠른 날부터 7일 이내 EPA 에 CDX 로 통보(40 CFR 707.65). EPA 가 수입국 정부(한국: 환경부)에 통보 사실을 전달. 한국 수입자 의무는 없으나, 이 물질은 미국 내 규제(§4·5·6·7) 대상임을 뜻한다.",
+      "legal_basis": "TSCA §12(b); 40 CFR 707 subpart D (707.60–707.75)",
+      "source_url": "https://www.epa.gov/tsca-import-export-requirements/chemicals-subject-tsca-section-12b-export-notification-requirements",
+      "license": "US EPA 작성 자료: 미국 연방정부 저작물(17 U.S.C. §105), 공공 영역.",
+      "known_source_errors": {
+        "253685-23-4": "EPA 12(b) 스프레드시트의 'Glyerides, C14-22, C16-22-unsatd., ethoxylated' CAS 가 체크디지트 불일치로 인쇄됨. 보정하지 않고 family_entries 로 둔다."
+      }
+    },
+    "section6": {
+      "file": "US_TSCA_SECTION6_RULES.json",
+      "list_id": "US_TSCA_SECTION6_RULES",
+      "jurisdiction": "US",
+      "law": "Toxic Substances Control Act (TSCA)",
+      "title": "미국 TSCA §6 위해관리 규칙 대상(PBT 5종·석면·염화메틸렌·TCE·PCE·PCB 등)",
+      "directions": [
+        "import"
+      ],
+      "obligation_for_kr_exporter": "TSCA §6 규칙은 제조뿐 아니라 수입·가공·유통·사용을 금지 또는 제한한다. 해당 규칙(40 CFR 751 등)의 금지 용도·농도 기준·완제품 포함 여부를 확인하고, 미국 수입자는 TSCA 적합 인증 시 이 규칙 준수를 확인해야 한다.",
+      "legal_basis": "TSCA §6(a), §6(h); 40 CFR 751 (subparts B–G 등), 40 CFR 749.68, 40 CFR 761(PCB)",
+      "source_url": "https://www.epa.gov/assessing-and-managing-chemicals-under-tsca/risk-management-existing-chemicals-under-tsca",
+      "license": "US EPA 작성 자료: 미국 연방정부 저작물(17 U.S.C. §105), 공공 영역."
+    }
+  }
+}

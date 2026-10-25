@@ -1,4 +1,4 @@
-// Tweaks panel
+// 표시 설정 패널(테마·강조색·글꼴 등). 문구는 app_labels.jsx
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "theme": "light",
@@ -13,17 +13,21 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "banner": true
 }/*EDITMODE-END*/;
 
+// 문구는 APP_LABELS.tweakPanel(app_labels.jsx). 여기는 값과 배치만 둔다.
+const TWEAK_TEXT = APP_LABELS.tweakPanel;
+const TWEAK_ON_OFF = [[true, TWEAK_TEXT.options.on], [false, TWEAK_TEXT.options.off]];
+const tweakOpts = (vals) => vals.map(v => [v, TWEAK_TEXT.options[v]]);
 const TWEAK_SCHEMA = [
-  { key: "theme", label: "Theme · 테마", options: [["light", "Light"], ["dark", "Dark"]] },
-  { key: "accent", label: "Accent hue · 강조색", options: [["blue", "Blue"], ["indigo", "Indigo"], ["teal", "Teal"], ["copper", "Copper"], ["mono", "Mono"]], cols: 5 },
-  { key: "type", label: "Typography · 타이포", options: [["default", "Sans"], ["serif", "Serif"], ["mono", "Mono"], ["korean", "Pretendard"]], cols: 4 },
-  { key: "density", label: "Density · 밀도", options: [["compact", "Compact"], ["default", "Default"], ["comfy", "Comfy"]], cols: 3 },
-  { key: "layout", label: "Layout · 레이아웃", options: [["2col", "Split"], ["3col", "3-col"], ["wide", "Wide"]], cols: 3 },
-  { key: "dataviz", label: "Dataviz · 차트", options: [["spark", "Sparkline"], ["heat", "Heatmap"], ["bar", "Bars"]], cols: 3 },
-  { key: "banner", label: "Announcement bar", options: [[true, "On"], [false, "Off"]], cols: 2 },
-  { key: "showGrid", label: "Hero grid rails", options: [[true, "On"], [false, "Off"]], cols: 2 },
-  { key: "mobileFrames", label: "Mobile device frames", options: [[true, "On"], [false, "Off"]], cols: 2 },
-];
+  { key: "theme", options: tweakOpts(["light", "dark"]) },
+  { key: "accent", options: tweakOpts(["blue", "indigo", "teal", "copper", "mono"]), cols: 5 },
+  { key: "type", options: [["default", TWEAK_TEXT.options.default], ["serif", TWEAK_TEXT.options.serif], ["mono", TWEAK_TEXT.options.monoType], ["korean", TWEAK_TEXT.options.korean]], cols: 4 },
+  { key: "density", options: tweakOpts(["compact", "default", "comfy"]), cols: 3 },
+  { key: "layout", options: tweakOpts(["2col", "3col", "wide"]), cols: 3 },
+  { key: "dataviz", options: tweakOpts(["spark", "heat", "bar"]), cols: 3 },
+  { key: "banner", options: TWEAK_ON_OFF, cols: 2 },
+  { key: "showGrid", options: TWEAK_ON_OFF, cols: 2 },
+  { key: "mobileFrames", options: TWEAK_ON_OFF, cols: 2 },
+].map(g => ({ ...g, label: TWEAK_TEXT.groups[g.key] }));
 
 function applyTweaks(t) {
   const r = document.documentElement;
@@ -54,14 +58,14 @@ function TweaksPanel({ tweaks, setTweak, onClose }) {
   return (
     <div className="tweaks-panel">
       <h3>
-        <b>Tweaks</b>
+        <b>{TWEAK_TEXT.title}</b>
         <button onClick={onClose} style={{ color: "var(--fg-muted)" }}><Icon name="close" size={14} /></button>
       </h3>
       {TWEAK_SCHEMA.map(g => (
         <div key={g.key} className="tweak-group">
           <div className="tweak-label">
             <span>{g.label}</span>
-            <span className="mono">{String(tweaks[g.key])}</span>
+            <span className="mono">{(g.options.find(([v]) => v === tweaks[g.key]) || [])[1] || String(tweaks[g.key])}</span>
           </div>
           <div className={`tweak-row ${g.cols ? `cols-${g.cols}` : ""}`}>
             {g.options.map(([val, lbl]) => (
@@ -86,7 +90,7 @@ function TweaksPanel({ tweaks, setTweak, onClose }) {
         </div>
       ))}
       <div style={{ padding: "12px 16px", fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--fg-subtle)", borderTop: "1px solid var(--border)" }}>
-        Persisted to localStorage · host-synced
+        {TWEAK_TEXT.footnote}
       </div>
     </div>
   );

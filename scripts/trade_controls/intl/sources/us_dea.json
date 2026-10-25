@@ -1,0 +1,69 @@
+{
+  "parser": "parse_us_dea",
+  "_note": "CAS: 21 CFR 1310.02 prints names and DEA chemical code numbers only. CAS comes from (1) the INCB Red List entries in backend/data/trade_controls/drug_precursors.json (cas_source 'INCB Red List' only) via the curated incb_alias map below, or (2) an exact, unique, case-insensitive match of the CFR primary name to a CA Index Name in EPA's TSCA Inventory (official US list printing CAS). Anything else stays in family_entries without CAS.",
+  "downloads": {
+    "cfr_1310_02": {
+      "url": "https://www.ecfr.gov/api/versioner/v1/full/{date}/title-21.xml?part=1310&section=1310.02",
+      "versions_url": "https://www.ecfr.gov/api/versioner/v1/versions/title-21.json?part=1310",
+      "page": "https://www.ecfr.gov/current/title-21/chapter-II/part-1310/section-1310.02",
+      "file": "us/ecfr_1310_02.xml"
+    },
+    "tsca_inventory": {
+      "url": "https://www.epa.gov/system/files/other-files/2026-05/csv-non-cbi-tsca-inventory.zip",
+      "file": "epa/csv-non-cbi-tsca-inventory.zip",
+      "member": "TSCAINV_072026.csv"
+    }
+  },
+  "incb_source": "backend/data/trade_controls/drug_precursors.json",
+  "incb_alias": {
+    "_basis": "CFR item -> INCB Red List name (same substance). Keys are 'List I (n)' / 'List II (n)' / 'List I (42)(i)'.",
+    "List I (1)": ["alpha-Phenylacetoacetonitrile (APAAN)", "same name"],
+    "List I (2)": ["Anthranilic acid", "same name"],
+    "List I (4)": ["Ephedrine", "same name"],
+    "List I (5)": ["Ergometrine", "ergonovine = ergometrine (DEA Orange Book list: 'ERGONOVINE or ERGOMETRINE & salts', code 8675)"],
+    "List I (6)": ["Ergotamine", "same name"],
+    "List I (7)": ["N-Acetylanthranilic acid", "same name"],
+    "List I (9)": ["Phenylacetic acid", "same name"],
+    "List I (10)": ["Norephedrine", "phenylpropanolamine = norephedrine; INCB chemical name (R*,S*)-alpha-(1-aminoethyl)benzenemethanol"],
+    "List I (11)": ["Piperidine", "same name"],
+    "List I (12)": ["Pseudoephedrine", "same name"],
+    "List I (13)": ["3,4-Methylenedioxyphenyl-2-propanone", "same name"],
+    "List I (17)": ["Isosafrole", "same name"],
+    "List I (18)": ["Safrole", "same name"],
+    "List I (19)": ["Piperonal", "same name"],
+    "List I (29)": ["N-Phenethyl-4-piperidone (NPP)", "same name"],
+    "List I (33)": ["N-Phenyl-4-piperidinamine (4-AP)", "same name"],
+    "List I (34)": ["3,4-MDP-2-P methyl glycidate", "same name (PMK glycidate)"],
+    "List I (35)": ["3,4-MDP-2-P methyl glycidic acid", "same name (PMK glycidic acid)"],
+    "List I (36)": ["alpha-Phenylacetoacetamide (APAA)", "same name"],
+    "List I (37)": ["Methyl alpha-phenylacetoacetate (MAPA)", "same name"],
+    "List I (38)": ["4-Piperidone", "same name"],
+    "List I (39)": ["tert-Butyl 4-(phenylamino)piperidine-1-carboxylate (1-boc-4-AP)", "same chemical name in CFR"],
+    "List I (40)": ["tert-Butyl 4-oxopiperidine-1-carboxylate (1-boc-4-piperidone)", "same chemical name in CFR"],
+    "List I (42)": ["P-2-P methyl glycidic acid", "same name (BMK glycidic acid)"],
+    "List I (42)(i)": ["P-2-P methyl glycidic acid, methyl ester", "same name"],
+    "List I (42)(ii)": ["P-2-P methyl glycidic acid, ethyl ester", "same name"],
+    "List II (1)": ["Acetic anhydride", "same name"],
+    "List II (2)": ["Acetone", "same name"],
+    "List II (4)": ["Ethyl ether", "same name"],
+    "List II (5)": ["Potassium permanganate", "same name"],
+    "List II (6)": ["Methyl ethyl ketone", "2-butanone = MEK (CFR text)"],
+    "List II (7)": ["Toluene", "same name"],
+    "List II (8)": ["Hydrochloric acid", "same name"],
+    "List II (9)": ["Sulphuric acid", "sulfuric = sulphuric (spelling)"]
+  },
+  "lists": {
+    "dea": {
+      "file": "US_DEA_LIST_I_II.json",
+      "list_id": "US_DEA_LIST_I_II",
+      "jurisdiction": "US",
+      "law": "Controlled Substances Act / 21 CFR Part 1310",
+      "title": "미국 DEA 규제 화학물질 List I·List II (21 CFR 1310.02 Listed chemicals)",
+      "directions": ["import", "export"],
+      "obligation_for_kr_exporter": "미국 수입 시: 미국 수입자가 DEA Form 486/486A 수입 신고를 세관 반출 15일 전까지 제출(21 CFR 1313.12; 1310.04(f) 기준량 이상 또는 기준량 미설정 물질). List I 물질 수입자는 DEA 등록 필요(21 CFR 1309.21, 최종 목적지는 등록된 장소). 정당한 의료·상업·과학 용도로만 수입 가능(21 CFR 1313.13). 한국 수출자는 수입자 정보·용도 확인과 국내 원료물질 수출 승인(해당 시) 준비.",
+      "legal_basis": "21 U.S.C. 802(34)-(35), 971; 21 CFR 1310.02 (Substances covered), 1310.04 (thresholds), 1309.21 (registration), 1313.12-1313.13 (import notification/declaration)",
+      "source_url": "https://www.ecfr.gov/current/title-21/chapter-II/part-1310/section-1310.02",
+      "license": "미국 연방 정부 저작물 — 저작권 없음(public domain, 17 U.S.C. 105). eCFR 은 공식 법령 편집본(법적 효력은 연방관보·CFR 연간판 기준)."
+    }
+  }
+}

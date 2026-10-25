@@ -1,0 +1,460 @@
+{
+  "jurisdiction": "KR",
+  "retrieved": "2026-10-24",
+  "laws": {
+    "CCA": {
+      "name": "화학물질관리법",
+      "version": "법률 제21531호, 시행 2026. 10. 8.",
+      "fetch_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=285367&efYd=20261008&chrClsCd=010202&ancYnChk=0",
+      "public_url": "https://www.law.go.kr/법령/화학물질관리법"
+    },
+    "CCA_DECREE": {
+      "name": "화학물질관리법 시행령",
+      "version": "대통령령 제36744호, 시행 2026. 10. 8.",
+      "fetch_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=290837&efYd=20261008&chrClsCd=010202&ancYnChk=0",
+      "public_url": "https://www.law.go.kr/법령/화학물질관리법시행령"
+    },
+    "CCA_RULE": {
+      "name": "화학물질관리법 시행규칙",
+      "version": "기후에너지환경부령 제1호, 시행 2025. 10. 1.",
+      "fetch_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=279031&efYd=20251001&chrClsCd=010202&ancYnChk=0",
+      "public_url": "https://www.law.go.kr/법령/화학물질관리법시행규칙"
+    },
+    "KREACH": {
+      "name": "화학물질의 등록 및 평가 등에 관한 법률",
+      "version": "법률 제21132호, 시행 2026. 5. 12.",
+      "fetch_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=279805&efYd=20260512&chrClsCd=010202&ancYnChk=0",
+      "public_url": "https://www.law.go.kr/법령/화학물질의등록및평가등에관한법률"
+    },
+    "KREACH_DECREE": {
+      "name": "화학물질의 등록 및 평가 등에 관한 법률 시행령",
+      "version": "시행 2026. 5. 12.",
+      "fetch_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=285827&efYd=20260512&chrClsCd=010202&ancYnChk=0",
+      "public_url": "https://www.law.go.kr/법령/화학물질의등록및평가등에관한법률시행령"
+    },
+    "KREACH_RULE": {
+      "name": "화학물질의 등록 및 평가 등에 관한 법률 시행규칙",
+      "version": "시행 2026. 5. 12.",
+      "fetch_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=286037&efYd=20260512&chrClsCd=010202&ancYnChk=0",
+      "public_url": "https://www.law.go.kr/법령/화학물질의등록및평가등에관한법률시행규칙"
+    },
+    "POPS": {
+      "name": "잔류성오염물질 관리법",
+      "version": "법률 제21065호, 시행 2025. 10. 1.",
+      "fetch_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=276787&efYd=20251001&chrClsCd=010202&ancYnChk=0",
+      "public_url": "https://www.law.go.kr/법령/잔류성오염물질관리법"
+    },
+    "POPS_RULE": {
+      "name": "잔류성오염물질 관리법 시행규칙",
+      "version": "시행 2025. 10. 1.",
+      "fetch_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=278983&efYd=20251001&chrClsCd=010202&ancYnChk=0",
+      "public_url": "https://www.law.go.kr/법령/잔류성오염물질관리법시행규칙"
+    },
+    "ODS": {
+      "name": "오존층 보호 등을 위한 특정물질의 관리에 관한 법률",
+      "version": "법률 제21438호, 시행 2026. 3. 10.",
+      "fetch_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=283977&efYd=20260310&chrClsCd=010202&ancYnChk=0",
+      "public_url": "https://www.law.go.kr/법령/오존층보호등을위한특정물질의관리에관한법률"
+    },
+    "ODS_RULE": {
+      "name": "오존층 보호 등을 위한 특정물질의 관리에 관한 법률 시행규칙",
+      "version": "산업통상부령 제1호, 시행 2025. 10. 1.",
+      "fetch_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=278757&efYd=20251001&chrClsCd=010202&ancYnChk=0",
+      "public_url": "https://www.law.go.kr/법령/오존층보호등을위한특정물질의관리에관한법률시행규칙"
+    },
+    "CUSTOMS": {
+      "name": "관세법",
+      "version": "시행 2026. 10. 2.",
+      "fetch_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=290673&efYd=20261002&chrClsCd=010202&ancYnChk=0",
+      "public_url": "https://www.law.go.kr/법령/관세법"
+    },
+    "CUSTOMS_NOTICE": {
+      "name": "관세법 제226조에 따른 세관장확인물품 및 확인방법 지정고시",
+      "version": "관세청고시 제2026-46호, 시행 2026. 7. 16.",
+      "fetch_url": "https://www.law.go.kr/LSW/admRulInfoR.do?admRulSeq=2100000282502",
+      "public_url": "https://www.law.go.kr/행정규칙/관세법제226조에따른세관장확인물품및확인방법지정고시",
+      "article_links": false
+    }
+  },
+  "customs_annexes": {
+    "_설명": "세관장확인고시 별표 2의2(수입)·1의2(수출) 개정전문 xlsx. 고시가 개정되면 flSeq 가 바뀌므로 law.go.kr 첨부파일 목록(admRulAttFlList.do)에서 새 번호로 갱신한다.",
+    "import_hsk": {
+      "title": "별표 2의2 HSK 10단위로 연계되는 물품의 수입요건 (2026-07-16)",
+      "url": "https://www.law.go.kr/LSW/flDownload.do?flSeq=167110605"
+    },
+    "export_hsk": {
+      "title": "별표 1의2 HSK 10단위로 연계되는 물품의 수출요건 (2026-07-16)",
+      "url": "https://www.law.go.kr/LSW/flDownload.do?flSeq=167110607"
+    },
+    "chemical_laws": ["화학물질관리법", "잔류성오염물질 관리법", "오존층 보호 등을 위한 특정물질의 관리에 관한 법률", "화학물질의 등록 및 평가 등에 관한 법률"]
+  },
+  "customs_framework": {
+    "summary": "통관 시 세관장이 수출입요건 구비를 확인하는 대상은 고시 별표 1(수출)·별표 2(수입)와 HSK 연계 별표 1의2·2의2로 정한다. 화학 관련으로는 수입 시 화학물질관리법(금지물질·제한물질·인체등유해성물질)과 오존층보호법(수입금지물질·수입쿼터 관리품목)만 세관장확인 대상이고, 수출 시에는 화학 관련 법령이 별표 1·1의2에 없다.",
+    "citations": [
+      {"law": "CUSTOMS", "article": "제226조", "verified_text": "수출입을 할 때 법령에서 정하는 바에 따라 허가ㆍ승인ㆍ표시 또는 그 밖의 조건을 갖출 필요가 있는 물품은 세관장에게 그 허가ㆍ승인ㆍ표시 또는 그 밖의 조건을 갖춘 것임을 증명하여야 한다."},
+      {"law": "CUSTOMS_NOTICE", "article": "제7조", "verified_text": "통관할 때 세관장이 확인하여야 할 수출입물품의 대상법령 및 물품의 구비요건과 물품별 수출입요건은 별표 1과 별표 2와 같다."}
+    ],
+    "annex_2_chemical_entries": "별표 2 가.(14) 「화학물질관리법」 해당 물품 (가) 금지물질 (나) 제한물질 (다) 인체등유해성물질 — 유역(지방)환경청장의 금지물질 수입(변경)허가증 / 제한물질 수입(변경)허가증 또는 제한물질 수입(변경)신고증 / 인체등유해성물질 수입(변경)신고증. 가.(11) 「오존층 보호 등을 위한 특정물질의 관리에 관한 법률」 해당 물품 중 수입금지물질, 국제협약에 의한 수입쿼터 관리품목 — 한국석유화학협회장의 수입확인서. (별표 2 PDF 원문을 읽고 옮김. 자동 대조는 별표 2의2 xlsx 로 한다)"
+  },
+  "rules": [
+    {
+      "rule_id": "kr_import_chemical_confirmation",
+      "when": {"any_substance": true},
+      "direction": "import",
+      "obligation": "수입 전 화학물질확인(성분이 기존·신규·인체등유해성·허가·제한·금지·사고대비물질 중 무엇인지 확인) 후 확인명세서 제출",
+      "who": "수입자(수입대행 위탁 시 위탁한 자)",
+      "when_required": "수입 전. 시험·연구·검사용 시약, 시범 생산용 등은 수입 후 30일 이내 제출 가능",
+      "agency": "한국환경공단",
+      "threshold": "수량 기준 없음",
+      "legal_basis": "화학물질관리법 제9조제1항, 같은 법 시행규칙 제2조제2항",
+      "citations": [
+        {"law": "CCA", "article": "제9조", "verified_text": "화학물질을 제조하거나 수입하려는 자(수입을 수입 대행자에게 위탁한 경우에는 그 위탁한 자를 말한다. 이하 같다)는 기후에너지환경부령으로 정하는 바에 따라 해당 화학물질이나 그 성분이 다음 각 호의 어느 하나에 해당하는지를 확인(이하 “화학물질확인”이라 한다)하고, 그 내용을 기후에너지환경부장관에게 제출하여야 한다."},
+        {"law": "CCA_RULE", "article": "제2조", "verified_text": "「한국환경공단법」에 따른 한국환경공단(이하 “한국환경공단”이라 한다)에 제출하여야 한다. 이 경우 시험용ㆍ연구용ㆍ검사용 시약이나 시범 생산용 등 시장출시에 직접적으로 관계되지 아니하는 화학물질의 경우에는 제조 또는 수입 후 30일 이내에 제출할 수 있"}
+      ],
+      "customs": {"confirmation": false, "basis": "세관장확인고시 별표 2 의 화학물질관리법 항목은 금지·제한·인체등유해성물질만 열거"},
+      "note": "모든 수입 화학물질(혼합물 성분 포함)에 적용. 제품 내 고체 형태로 유출되지 않는 경우 등 고시 기준 해당 시 면제(제9조제2항)."
+    },
+    {
+      "rule_id": "kr_import_human_env_hazard_notification",
+      "when": {"ncis_category": "인체등유해성물질"},
+      "direction": "import",
+      "obligation": "인체등유해성물질(인체급성·인체만성·생태유해성물질) 수입신고 — 수입신고증을 받은 뒤 수입",
+      "who": "수입자",
+      "when_required": "수입 전 신고. 종류·함량·용도·사업장 변경 또는 수입 예정물량 50% 이상 증가 시 30일 이내 변경신고",
+      "agency": "유역환경청·지방환경청(지방환경관서)",
+      "threshold": "연간 100kg 초과(100kg 이하·시험연구검사용 시약·교정용 표준가스·소비자 자가소비·금지/제한/허가물질로 허가·신고된 경우 면제). 혼합물은 NCIS 고시 함량 기준(예: 벤젠 인체만성유해성 0.1%) 이상",
+      "legal_basis": "화학물질관리법 제20조제2항·제3항, 같은 법 시행령 제10조, 시행규칙 제17조",
+      "citations": [
+        {"law": "CCA", "article": "제20조", "verified_text": "인체급성유해성물질, 인체만성유해성물질 또는 생태유해성물질(이하 “인체등유해성물질”이라 한다)을 수입하려는 자는 기후에너지환경부령으로 정하는 바에 따라 인체등유해성물질의 종류와 용도 등을 기후에너지환경부장관에게 신고하여야 한다."},
+        {"law": "CCA_DECREE", "article": "제10조", "verified_text": "3. 연간 100킬로그램 이하의 인체등유해성물질을 수입하려는 경우"},
+        {"law": "CCA_RULE", "article": "제17조", "verified_text": "법 제20조제2항에 따라 인체등유해성물질의 수입신고를 하려는 자는 별지 제23호서식의 수입신고서에 인체등유해성물질의 성분을 증명할 수 있는 서류를 첨부하여 지방환경관서의 장에게 제출하여야 한다."}
+      ],
+      "customs": {
+        "confirmation": true,
+        "basis": "세관장확인고시 별표 2 가.(14)(다) — 유역(지방)환경청장의 인체등유해성물질 수입(변경)신고증. 물품별 요건은 별표 2의2 HSK 품목에 한정",
+        "annex_check": {"annex": "import_hsk", "law": "화학물질관리법", "verified_text": "유역환경청장 또는 지방환경청장에게 신고를 한 후 수입할 수 있음"}
+      },
+      "note": "2025. 10. 1. 개정으로 '유독물질 수입신고'가 '인체등유해성물질 수입신고'로 바뀌었다."
+    },
+    {
+      "rule_id": "kr_import_prohibited_substance",
+      "when": {"ncis_category": "금지물질"},
+      "direction": "import",
+      "obligation": "금지물질 수입 금지. 국외 전량 수출 목적 수입 또는 시험·연구·검사용 시약은 사전 수입허가를 받은 경우에만 예외",
+      "who": "수입자",
+      "when_required": "수입 전 허가(허가 사항 변경 시 변경허가·변경신고)",
+      "agency": "유역환경청·지방환경청(지방환경관서)",
+      "threshold": "수량 기준 없음",
+      "legal_basis": "화학물질관리법 제18조제1항, 같은 법 시행규칙 제14조제1항",
+      "citations": [
+        {"law": "CCA", "article": "제18조", "verified_text": "누구든지 금지물질을 취급하여서는 아니 된다. 다만, 금지물질을 국외로 전량 수출하기 위하여 제조ㆍ수입하거나 금지물질에 해당하는 시험용ㆍ연구용ㆍ검사용 시약을 그 목적으로 제조ㆍ수입ㆍ판매하려는 자가 기후에너지환경부령으로 정하는 바에 따라 기후에너지환경부장관의 허가를 받은 경우는 그러하지 아니하다."},
+        {"law": "CCA", "article": "제2조", "verified_text": "“취급”이란 화학물질을 제조, 수입, 판매, 보관ㆍ저장, 운반 또는 사용하는 것을 말한다."},
+        {"law": "CCA_RULE", "article": "제14조", "verified_text": "법 제18조제1항 단서에 따른 금지물질의 제조ㆍ수입ㆍ판매 허가 또는 같은 조 제2항 단서에 따른 제한물질의 제조ㆍ수입 허가를 받으려는 자는 별지 제12호서식의 허가신청서에 다음 각 호의 서류를 첨부하여 지방환경관서의 장에게 제출해야 한다."}
+      ],
+      "customs": {
+        "confirmation": true,
+        "basis": "세관장확인고시 별표 2 가.(14)(가) — 유역(지방)환경청장의 금지물질 수입(변경)허가증",
+        "annex_check": {"annex": "import_hsk", "law": "화학물질관리법", "verified_text": "다음의 것은 수입할 수 없음. 다만, 화학물질관리법 제18조 단서에 따라 허가를 받은 경우에는 수입할 수 있음"}
+      },
+      "note": "금지물질 지정 근거는 화학물질의 등록 및 평가 등에 관한 법률 제27조."
+    },
+    {
+      "rule_id": "kr_import_restricted_substance_restricted_use",
+      "when": {"ncis_category": "제한물질"},
+      "direction": "import",
+      "obligation": "제한물질을 제한된 용도로 수입 금지. 국외 전량 수출 목적 수입은 사전 수입허가 시에만 예외",
+      "who": "수입자",
+      "when_required": "수입 전 허가",
+      "agency": "유역환경청·지방환경청(지방환경관서)",
+      "threshold": "수량 기준 없음(고시된 제한 용도·함량 기준 적용)",
+      "legal_basis": "화학물질관리법 제18조제2항, 같은 법 시행규칙 제14조제1항",
+      "citations": [
+        {"law": "CCA", "article": "제18조", "verified_text": "누구든지 제한물질을 사용이 제한된 용도로 취급하여서는 아니 된다. 다만, 제한물질을 국외로 전량 수출하기 위하여 제조ㆍ수입하려는 자가 기후에너지환경부령으로 정하는 바에 따라 기후에너지환경부장관의 허가를 받은 경우에는 그러하지 아니하다."},
+        {"law": "CCA_RULE", "article": "제14조", "verified_text": "같은 조 제2항 단서에 따른 제한물질의 제조ㆍ수입 허가를 받으려는 자는 별지 제12호서식의 허가신청서에 다음 각 호의 서류를 첨부하여 지방환경관서의 장에게 제출해야 한다."}
+      ],
+      "customs": {
+        "confirmation": true,
+        "basis": "세관장확인고시 별표 2 가.(14)(나) — 유역(지방)환경청장의 제한물질 수입(변경)허가증 또는 수입(변경)신고증",
+        "annex_check": {"annex": "import_hsk", "law": "화학물질관리법", "verified_text": "국외로 전량 수출하기 위해 금지된 용도로 수입하려는 경우에는 유역환경청장 또는 지방환경청장에게 수입허가를 받고 수입할 수"}
+      },
+      "note": "제한 용도는 물질별 고시 내용(NCIS '제한물질 세분류' contInfo/excpInfo)을 따른다."
+    },
+    {
+      "rule_id": "kr_import_restricted_substance_other_use",
+      "when": {"ncis_category": "제한물질"},
+      "direction": "import",
+      "obligation": "제한되지 않은 용도로 제한물질 수입 시 제한물질 취급(수입) 신고",
+      "who": "수입자",
+      "when_required": "수입 전 신고. 명칭·함유량·주요 용도·사업장 변경 또는 연간 예정량 50% 이상 증가 시 30일 이내 변경신고",
+      "agency": "유역환경청·지방환경청(지방환경관서)",
+      "threshold": "수량 기준 없음. 시험·연구·검사용 시약 등 대통령령으로 정하는 경우 면제",
+      "legal_basis": "화학물질관리법 제18조제5항, 같은 법 시행규칙 제14조의2",
+      "citations": [
+        {"law": "CCA", "article": "제18조", "verified_text": "제한물질을 제한되지 아니한 용도로 제조ㆍ수입ㆍ판매ㆍ보관ㆍ저장 또는 사용하려는 자는 기후에너지환경부령으로 정하는 바에 따라 기후에너지환경부장관에게 신고하여야 한다."},
+        {"law": "CCA_RULE", "article": "제14조의2", "verified_text": "법 제18조제5항 본문에 따라 제한물질의 제조ㆍ수입ㆍ판매ㆍ보관ㆍ저장 또는 사용 신고를 하려는 자는 별지 제15호의2서식의 신고서에 제한물질 용도의 상세 내용을 첨부하여 지방환경관서의 장에게 제출해야 한다."}
+      ],
+      "customs": {
+        "confirmation": true,
+        "basis": "세관장확인고시 별표 2 가.(14)(나) — 제한물질 수입(변경)신고증. 고시 제7조제2항제1호 카목에서 제한물질 중 시험·연구·검사용 시약은 세관장확인 예외",
+        "annex_check": {"annex": "import_hsk", "law": "화학물질관리법", "verified_text": "유역환경청장 또는 지방환경청장에게 신고를 한 후 수입할 수 있음"}
+      },
+      "note": "신고 면제 대상의 세부 목록(시행령)은 원문 미확인 — unverified 참조."
+    },
+    {
+      "rule_id": "kr_export_prohibited_restricted_approval",
+      "when": {"ncis_category": ["금지물질", "제한물질"]},
+      "direction": "export",
+      "obligation": "금지물질 또는 제한물질(제한된 용도) 수출승인 — 수출통보서를 수입국에 통보하고 수입국이 허용하면 승인서 발급",
+      "who": "수출자",
+      "when_required": "매년 수출국별로 최초 수출 전. 물질·함량·사업장 변경 또는 예정물량 50% 이상 증가 시 변경승인",
+      "agency": "유역환경청·지방환경청(지방환경관서)",
+      "threshold": "수량 기준 없음. 제한물질은 취급이 제한된 용도로 수출하는 경우에 한정",
+      "legal_basis": "화학물질관리법 제21조제1항, 같은 법 시행규칙 제18조",
+      "citations": [
+        {"law": "CCA", "article": "제21조", "verified_text": "제한물질(취급이 제한된 용도에 한정한다) 또는 금지물질을 수출하려는 자는 제2항제4호에 따른 수출통보서에 포함되어야 하는 정보에 관한 자료를 갖추어 기후에너지환경부령으로 정하는 바에 따라 매년 기후에너지환경부장관의 승인을 받아야 한다."},
+        {"law": "CCA_RULE", "article": "제18조", "verified_text": "법 제21조제1항 전단에 따라 제한물질 또는 금지물질의 수출승인을 받으려는 자는 매년 수출국별로 해당 물질을 최초로 수출하기 전에 별지 제27호서식의 수출승인신청서에 다음 각 호의 서류를 첨부하여 지방환경관서의 장에게 제출해야 한다."}
+      ],
+      "customs": {"confirmation": false, "basis": "세관장확인고시 별표 1·별표 1의2(수출)에 화학물질관리법 없음", "annex_absent": {"annex": "export_hsk", "law": "화학물질관리법"}},
+      "note": "첨부서류: 수출통보서, 물질안전보건자료, 수출자 책임보증서(시행규칙 제18조제1항)."
+    },
+    {
+      "rule_id": "kr_export_rotterdam_pic",
+      "when": {"any_of": [{"list": "ROTTERDAM_PIC"}, {"ncis_category": "로테르담협약물질"}]},
+      "direction": "export",
+      "obligation": "로테르담협약 부속서 Ⅲ 물질·당사국 수입금지/제한 물질 수출 시 고시된 수출자 준수사항 이행",
+      "who": "수출자",
+      "when_required": "수출 시",
+      "agency": "기후에너지환경부(산업통상부 협의 고시)",
+      "threshold": "수량 기준 없음",
+      "legal_basis": "화학물질관리법 제21조제2항·제3항",
+      "citations": [
+        {"law": "CCA", "article": "제21조", "verified_text": "제2항제1호 및 제3호에 따른 화학물질을 수출하려는 자는 제2항제2호의 준수사항을 지켜야 한다."},
+        {"law": "CCA", "article": "제21조", "verified_text": "3. 로테르담협약 부속서 Ⅲ에 규정된 화학물질"}
+      ],
+      "customs": {"confirmation": false, "basis": "세관장확인고시 별표 1·별표 1의2(수출)에 화학물질관리법 없음", "annex_absent": {"annex": "export_hsk", "law": "화학물질관리법"}},
+      "note": "PIC 물질이 금지·제한물질이기도 하면 kr_export_prohibited_restricted_approval 의 수출승인이 함께 적용된다. 준수사항 고시 본문은 미확인 — unverified 참조."
+    },
+    {
+      "rule_id": "kr_import_hazardous_business_license",
+      "when": {"ncis_category": ["인체등유해성물질", "사고대비물질"]},
+      "direction": "import",
+      "obligation": "(통관 이후 국내 취급) 수입한 유해화학물질을 판매·보관저장·운반·사용하는 영업을 하려면 사업장마다 유해화학물질 영업허가 또는 영업신고",
+      "who": "수입 후 판매·보관저장·운반·사용 영업자",
+      "when_required": "영업 개시 전(사업장마다)",
+      "agency": "기후에너지환경부(지방환경관서)",
+      "threshold": "허가/신고 구분은 시행규칙 기준(화학사고예방관리계획서 제출 대상 여부 등)",
+      "legal_basis": "화학물질관리법 제2조제7호, 제27조, 제28조",
+      "citations": [
+        {"law": "CCA", "article": "제2조", "verified_text": "“유해화학물질”이란 인체급성유해성물질, 인체만성유해성물질, 생태유해성물질 및 사고대비물질을 말한다."},
+        {"law": "CCA", "article": "제28조", "verified_text": "유해화학물질 영업을 하려는 자 중 제23조제1항에 따라 화학사고예방관리계획서를 제출하여야 하는 자 등 기후에너지환경부령으로 정하는 자는 기후에너지환경부령으로 정하는 바에 따라 사업장마다 사전에 다음 각 호의 서류를 포함한 허가신청서를 기후에너지환경부장관에게 제출하여야 한다."},
+        {"law": "CCA", "article": "제27조", "verified_text": "2. 유해화학물질 판매업: 유해화학물질을 상업적으로 판매하는 영업"}
+      ],
+      "customs": {"confirmation": false, "basis": "통관 요건 아님(국내 취급 단계)"},
+      "note": "제27조 영업 구분에 '수입업'은 없다. 수입만 하고 국내에서 판매·보관·사용하지 않으면 해당하지 않는다."
+    },
+    {
+      "rule_id": "kr_import_accident_prevention_plan",
+      "when": {"ncis_category": ["사고대비물질", "인체등유해성물질"]},
+      "direction": "import",
+      "obligation": "(통관 이후 국내 취급) 수입한 유해화학물질의 취급시설을 설치·운영하려면 사전에 화학사고예방관리계획서 작성·제출",
+      "who": "유해화학물질 취급시설 설치·운영자",
+      "when_required": "취급시설 설치·운영 전. 주요취급시설은 5년마다 재제출",
+      "agency": "기후에너지환경부(화학물질안전원 검토)",
+      "threshold": "취급 유해성·수량에 따른 제외 기준은 시행규칙",
+      "legal_basis": "화학물질관리법 제23조제1항·제4항",
+      "citations": [
+        {"law": "CCA", "article": "제23조", "verified_text": "유해화학물질 취급시설을 설치ㆍ운영하려는 자는 사전에 화학사고 발생으로 사업장 주변 지역의 사람이나 환경 등에 미치는 영향을 평가하고 그 피해를 최소화하기 위한 화학사고예방관리계획서(이하 “화학사고예방관리계획서”라 한다)를 작성하여 기후에너지환경부장관에게 제출하여야 한다."}
+      ],
+      "customs": {"confirmation": false, "basis": "통관 요건 아님(국내 취급 단계)"},
+      "note": "사고대비물질은 2025. 10. 1. 개정 후에도 수입 자체의 신고·허가 조문이 없다(제20조는 인체등유해성물질만). 수입 단계 의무는 화학물질확인(제9조)이며, 국내 취급 단계에서 이 계획서와 영업허가가 걸린다. '검토 기관'은 원문 미확인."
+    },
+    {
+      "rule_id": "kr_import_kreach_existing_registration",
+      "when": {"ncis_category": "기존화학물질"},
+      "direction": "import",
+      "obligation": "연간 1톤 이상 수입 시 수입 전 등록. 등록유예기간 중에는 등록 대신 수입 전 기존화학물질 제조·수입 신고",
+      "who": "수입자(또는 국외제조·생산자가 선임한 자)",
+      "when_required": "수입 전",
+      "agency": "등록: 화학물질안전원 / 유예기간 신고: 한국환경공단",
+      "threshold": "연간 1톤 이상. 등록유예: 1천톤 이상·CMR 2021-12-31(종료), 100~1천톤 2024-12-31(종료), 10~100톤 2027-12-31, 1~10톤 2030-12-31",
+      "legal_basis": "화학물질의 등록 및 평가 등에 관한 법률 제10조제1항~제3항, 같은 법 시행령 제10조, 시행규칙 제5조·제6조의2",
+      "citations": [
+        {"law": "KREACH", "article": "제10조", "verified_text": "연간 1톤 이상 신규화학물질 또는 연간 1톤 이상 기존화학물질을 제조ㆍ수입하려는 자(제4항제2호에 해당하는 자는 제외한다)는 제조 또는 수입 전에 기후에너지환경부장관에게 등록하여야 한다."},
+        {"law": "KREACH", "article": "제10조", "verified_text": "2. 연간 100톤 이상 1천톤 미만의 기존화학물질을 제조ㆍ수입하려는 경우: 2024년 12월 31일"},
+        {"law": "KREACH", "article": "제10조", "verified_text": "제2항에 따라 등록유예기간 동안 등록을 하지 아니하고 제조ㆍ수입하려는 자는 기후에너지환경부령으로 정하는 바에 따라 제조 또는 수입 전에 기후에너지환경부장관에게 다음 각 호의 사항을 신고하여야 하며"},
+        {"law": "KREACH_DECREE", "article": "제10조", "verified_text": "1. 연간 10톤 이상 100톤 미만의 기존화학물질을 제조ㆍ수입하려는 경우: 2027년 12월 31일"},
+        {"law": "KREACH_DECREE", "article": "제10조", "verified_text": "2. 연간 1톤 이상 10톤 미만의 기존화학물질을 제조ㆍ수입하려는 경우: 2030년 12월 31일"},
+        {"law": "KREACH_RULE", "article": "제5조", "verified_text": "등록신청서에 다음 각 호의 서류를 첨부하여 화학물질안전원장에게 제출해야 한다."},
+        {"law": "KREACH_RULE", "article": "제6조의2", "verified_text": "기존화학물질 제조ㆍ수입 신고서에 다음 각 호의 서류를 첨부하여 「한국환경공단법」에 따른 한국환경공단(이하 “공단”이라 한다)의 이사장에게 제출해야 한다."}
+      ],
+      "customs": {"confirmation": false, "basis": "세관장확인고시 별표 2·2의2 에 화학물질의 등록 및 평가 등에 관한 법률 없음", "annex_absent": {"annex": "import_hsk", "law": "화학물질의 등록 및 평가 등에 관한 법률"}},
+      "note": "신규화학물질(NCIS 미등재)은 1톤 미만이면 제10조제4항 신고, 1톤 이상이면 등록. 등록 면제(제11조) 해당 여부는 별도 확인."
+    },
+    {
+      "rule_id": "kr_import_kreach_cmr_existing",
+      "when": {"ncis_category": "암, 돌연변이성물질 등"},
+      "direction": "import",
+      "obligation": "고시된 CMR 기존화학물질을 연간 1톤 이상 수입하려면 수입 전 등록(등록유예 2021-12-31 종료)",
+      "who": "수입자(또는 국외제조·생산자가 선임한 자)",
+      "when_required": "수입 전",
+      "agency": "화학물질안전원",
+      "threshold": "연간 1톤 이상",
+      "legal_basis": "화학물질의 등록 및 평가 등에 관한 법률 제10조제1항·제2항제1호",
+      "citations": [
+        {"law": "KREACH", "article": "제10조", "verified_text": "1. 연간 1톤 이상으로 사람 또는 동물에게 암, 돌연변이, 생식능력 이상을 일으키거나 일으킬 우려가 있는 물질로 평가위원회의 심의를 거쳐 기후에너지환경부장관이 지정ㆍ고시한 기존화학물질 및 연간 1천톤 이상의 기존화학물질을 제조ㆍ수입하려는 경우: 2021년 12월 31일"}
+      ],
+      "customs": {"confirmation": false, "basis": "세관장확인고시 별표 2·2의2 에 화학물질의 등록 및 평가 등에 관한 법률 없음", "annex_absent": {"annex": "import_hsk", "law": "화학물질의 등록 및 평가 등에 관한 법률"}},
+      "note": "NCIS 분류 '암, 돌연변이성물질 등'(환경부고시 제2018-232호)을 이 지정·고시 목록으로 본다."
+    },
+    {
+      "rule_id": "kr_import_kreach_designated_existing",
+      "when": {"ncis_category": "등록대상기존화학물질"},
+      "direction": "import",
+      "obligation": "2015 지정 등록대상기존화학물질 — 종전 규정에 따른 등록 의무(NCIS 고시상 유예 '고시일로부터 3년' 경과)",
+      "who": "수입자",
+      "when_required": "수입 전(종전 규정)",
+      "agency": "화학물질안전원(현행 등록 접수 기관)",
+      "threshold": "종전 규정(2018. 3. 20. 개정 전 제10조) 기준 — 원문 미확인",
+      "legal_basis": "화학물질의 등록 및 평가 등에 관한 법률 부칙(법률 제15512호, 2018. 3. 20.) 제4조",
+      "citations": [
+        {"law": "KREACH", "article": "제4조", "addendum": "법률 제15512호", "verified_text": "이 법 시행 당시 종전의 제9조에 따라 등록대상기존화학물질로 지정ㆍ고시된 화학물질의 등록 및 등록 유예기간에 대해서는 제10조제1항부터 제3항까지의 개정규정에도 불구하고 종전의 규정에 따른다."}
+      ],
+      "customs": {"confirmation": false, "basis": "세관장확인고시 별표 2·2의2 에 화학물질의 등록 및 평가 등에 관한 법률 없음", "annex_absent": {"annex": "import_hsk", "law": "화학물질의 등록 및 평가 등에 관한 법률"}},
+      "note": "유예기간 정보는 NCIS 분류 데이터(ancmntYmd 2015-07-01, '고시일로부터 3년')에서 온다. 이 물질들은 기존화학물질이기도 하여 kr_import_kreach_existing_registration 도 함께 매칭된다."
+    },
+    {
+      "rule_id": "kr_import_priority_substance_in_products",
+      "when": {"ncis_category": "중점관리물질"},
+      "direction": "import",
+      "obligation": "중점관리물질이 들어있는 제품 수입 시 수입 전 제품 내 중점관리물질 신고(명칭·함량·유해성·노출·용도)",
+      "who": "제품 수입자",
+      "when_required": "제품 수입 전(중점관리물질별)",
+      "agency": "유역환경청·지방환경청(지방환경관서)",
+      "threshold": "제품 1개당 0.1 중량% 초과 그리고 물질별 총량 연간 1톤 초과(두 요건 모두)",
+      "legal_basis": "화학물질의 등록 및 평가 등에 관한 법률 제32조제1항, 같은 법 시행규칙 제41조",
+      "citations": [
+        {"law": "KREACH", "article": "제32조", "verified_text": "중점관리물질이 들어있는 제품을 생산하거나 수입하는 자는 다음 각 호의 요건에 모두 해당하는 경우에는"},
+        {"law": "KREACH", "article": "제32조", "verified_text": "1. 제품 1개당 개별 중점관리물질의 함유량이 0.1중량퍼센트를 초과할 것"},
+        {"law": "KREACH", "article": "제32조", "verified_text": "2. 제품 전체에 들어있는 중점관리물질의 물질별 총량이 연간 1톤을 초과할 것"},
+        {"law": "KREACH_RULE", "article": "제41조", "verified_text": "해당 제품을 생산ㆍ수입하기 전에 중점관리물질별로 별지 제28호서식의 제품에 함유된 중점관리물질 신고서에 다음 각 호의 서류를 첨부하여 지방환경관서의 장에게"}
+      ],
+      "customs": {"confirmation": false, "basis": "세관장확인고시 별표 2·2의2 에 화학물질의 등록 및 평가 등에 관한 법률 없음", "annex_absent": {"annex": "import_hsk", "law": "화학물질의 등록 및 평가 등에 관한 법률"}},
+      "note": "완제품(성형품) 수입에 대한 의무. 물질·혼합물 자체 수입은 등록(제10조) 규칙을 본다. 노출 차단 물질·이미 등록한 용도 등은 면제(제32조제2항)."
+    },
+    {
+      "rule_id": "kr_import_authorisation_substance",
+      "when": {"ncis_category": "허가물질"},
+      "direction": "import",
+      "obligation": "허가물질 수입 전 허가(국외 전량 수출 목적 등은 신고)",
+      "who": "수입자",
+      "when_required": "수입 전 허가, 한정기간 내 재허가",
+      "agency": "유역환경청·지방환경청(지방환경관서)",
+      "threshold": "수량 기준 없음(허가유예기간 중 예외)",
+      "legal_basis": "화학물질관리법 제19조제1항·제7항",
+      "citations": [
+        {"law": "CCA", "article": "제19조", "verified_text": "허가물질을 제조ㆍ수입ㆍ사용하려는 자는 다음 각 호의 자료를 제출하여 미리 기후에너지환경부장관의 허가를 받아야 한다."}
+      ],
+      "customs": {"confirmation": false, "basis": "세관장확인고시 별표 2 가.(14)에 허가물질 없음"},
+      "note": "현재 NCIS 데이터에 허가물질 분류가 없어 매칭 0건이 정상이다."
+    },
+    {
+      "rule_id": "kr_trade_pops_prohibition_restriction",
+      "when": {"any_of": [{"ncis_category": "잔류성오염물질"}, {"list": "STOCKHOLM_POP"}]},
+      "direction": "both",
+      "obligation": "취급금지 잔류성오염물질(스톡홀름 부속서 A)은 제조·수출입 금지(협약 허용 용도·시험연구검사용 시약 예외), 취급제한 잔류성오염물질(부속서 B·수은)은 허용 용도에서만 수출입. 용기·포장 표시 등 관리기준 준수",
+      "who": "수입자·수출자",
+      "when_required": "수출입 시",
+      "agency": "기후에너지환경부",
+      "threshold": "수량 기준 없음",
+      "legal_basis": "잔류성오염물질 관리법 제13조제1항~제4항",
+      "citations": [
+        {"law": "POPS", "article": "제13조", "verified_text": "취급금지 잔류성오염물질[스톡홀름협약 부속서 에이(A)에 규정된 잔류성유기오염물질을 말하며, 「화학물질관리법」 제2조제4호 및 제5호에 따른 제한물질ㆍ금지물질과 「농약관리법」에 따른 농약은 제외한다. 이하 “취급금지 잔류성오염물질”이라 한다]을 제조ㆍ수출입 또는 사용하여서는 아니 된다."},
+        {"law": "POPS", "article": "제13조", "verified_text": "취급제한 잔류성오염물질[스톡홀름협약 부속서 비(B)에 규정된 잔류성유기오염물질과 미나마타협약에 규정된 수은 및 수은화합물을 말하며"}
+      ],
+      "customs": {"confirmation": false, "basis": "세관장확인고시 별표 1·2 및 1의2·2의2 에 잔류성오염물질 관리법 없음", "annex_absent": {"annex": "import_hsk", "law": "잔류성오염물질 관리법"}},
+      "note": "화학물질관리법상 제한·금지물질과 농약은 이 조의 적용에서 빠지고 해당 법을 따른다. NCIS 분류는 부속서 A/B 를 구분하지 않으며 intl_regulatory STOCKHOLM_POP 의 detail(Annex A/B)로 구분한다."
+    },
+    {
+      "rule_id": "kr_export_pops_approval",
+      "when": {"any_of": [{"ncis_category": "잔류성오염물질"}, {"list": "STOCKHOLM_POP"}]},
+      "direction": "export",
+      "obligation": "예외적 취급허용(부속서 A 허용 용도)·취급제한(부속서 B 용도, 수은) 잔류성오염물질 수출승인 — 수출통보서 수입국 발송 후 수입국 허용 시 승인서",
+      "who": "수출자",
+      "when_required": "수출할 때마다, 수입국별로 수출 90일 전까지 신청",
+      "agency": "유역환경청·지방환경청(지방환경관서)",
+      "threshold": "수량 기준 없음",
+      "legal_basis": "잔류성오염물질 관리법 제13조제5항, 같은 법 시행규칙 제6조",
+      "citations": [
+        {"law": "POPS", "article": "제13조", "verified_text": "다음 각 호의 어느 하나에 해당하는 자는 수출을 하려는 때마다 주요 용도, 수입국 및 수출량 등의 사항이 포함된 승인신청서를 제출하여 기후에너지환경부령으로 정하는 바에 따라 기후에너지환경부장관의 승인을 받아야 한다."},
+        {"law": "POPS_RULE", "article": "제6조", "verified_text": "수입국별로 해당 물질을 수출하기 90일 전까지 별지 제2호서식의 수출승인 신청서에"}
+      ],
+      "customs": {"confirmation": false, "basis": "세관장확인고시 별표 1·별표 1의2(수출)에 잔류성오염물질 관리법 없음", "annex_absent": {"annex": "export_hsk", "law": "잔류성오염물질 관리법"}},
+      "note": "첨부: 수출자 책임보증서, 수출통보서, 물질안전보건자료(시행규칙 제6조제1항)."
+    },
+    {
+      "rule_id": "kr_import_ods_permit",
+      "when": {"list": "MONTREAL_ODS"},
+      "direction": "import",
+      "obligation": "특정물질(오존층파괴물질·HFCs) 수입허가 — 다음 연도 수입분을 매년 신청, 통관 시 한국석유화학협회장 수입확인서",
+      "who": "수입자",
+      "when_required": "다음 연도 수입분을 매년 11월 15일까지 신청. 변경 시 변경허가",
+      "agency": "산업통상부(통관 확인: 한국석유화학협회)",
+      "threshold": "수량 기준 없음(소비량 산정치 기준한도 내 허가)",
+      "legal_basis": "오존층 보호 등을 위한 특정물질의 관리에 관한 법률 제11조제1항, 같은 법 시행규칙 제7조",
+      "citations": [
+        {"law": "ODS", "article": "제11조", "verified_text": "특정물질을 수입하려는 자는 산업통상부령으로 정하는 바에 따라 산업통상부장관의 허가를 받아야 한다. 허가받은 사항을 변경하려는 경우에도 또한 같다."},
+        {"law": "ODS_RULE", "article": "제7조", "verified_text": "다음 연도 중에 수입할 특정물질의 수입의 허가를 받으려는 자는 매년 11월 15일까지 별지 제10호서식에 따른 특정물질 수입허가 신청서에"}
+      ],
+      "customs": {
+        "confirmation": true,
+        "basis": "세관장확인고시 별표 2 가.(11) — 수입금지물질·국제협약에 의한 수입쿼터 관리품목: 한국석유화학협회장의 수입확인서",
+        "annex_check": {"annex": "import_hsk", "law": "오존층 보호 등을 위한 특정물질의 관리에 관한 법률", "verified_text": "한국석유화학협회장의 확인을 받아 수입할 수 있음"}
+      },
+      "note": "법상 '특정물질'은 시행령으로 정한 물질이다. MONTREAL_ODS 목록은 근사치이며 시행령 별표와 대조하지 않았다 — unverified 참조."
+    },
+    {
+      "rule_id": "kr_import_ods_levy",
+      "when": {"list": "MONTREAL_ODS"},
+      "direction": "import",
+      "obligation": "특정물질 제조·수입 부담금 부과 대상",
+      "who": "수입업자",
+      "when_required": "부과 시(징수 방법은 법 제24조의5)",
+      "agency": "산업통상부",
+      "threshold": "산정기준은 법 제24조의4",
+      "legal_basis": "오존층 보호 등을 위한 특정물질의 관리에 관한 법률 제24조의2",
+      "citations": [
+        {"law": "ODS", "article": "제24조의2", "verified_text": "제조업자와 수입업자에게 특정물질 제조ㆍ수입 부담금(이하 “부담금”이라 한다)을 부과ㆍ징수할 수 있다."}
+      ],
+      "customs": {"confirmation": false, "basis": "통관 요건 아님(부담금)"},
+      "note": ""
+    },
+    {
+      "rule_id": "kr_export_ods_approval",
+      "when": {"list": "MONTREAL_ODS"},
+      "direction": "export",
+      "obligation": "특정물질 수출승인(수출국가가 적힌 수출계약서 또는 주문서 첨부)",
+      "who": "수출자",
+      "when_required": "수출 전. 수출국가·종류·수량 변경 시 변경승인",
+      "agency": "산업통상부",
+      "threshold": "수량 기준 없음",
+      "legal_basis": "오존층 보호 등을 위한 특정물질의 관리에 관한 법률 제11조의2, 같은 법 시행규칙 제7조의3",
+      "citations": [
+        {"law": "ODS", "article": "제11조의2", "verified_text": "특정물질을 수출하려는 자는 산업통상부령으로 정하는 바에 따라 산업통상부장관의 승인을 받아야 한다. 승인받은 사항을 변경하려는 경우에도 또한 같다."},
+        {"law": "ODS_RULE", "article": "제7조의3", "verified_text": "해당 특정물질에 대한 수출계약서 또는 주문서(수출국가를 포함하여야 한다)를 첨부하여 산업통상부장관에게 제출하여야 한다."}
+      ],
+      "customs": {"confirmation": false, "basis": "세관장확인고시 별표 1·별표 1의2(수출)에 오존층보호법 없음", "annex_absent": {"annex": "export_hsk", "law": "오존층 보호 등을 위한 특정물질의 관리에 관한 법률"}},
+      "note": ""
+    }
+  ],
+  "unverified": [
+    {"topic": "로테르담협약 수출자 준수사항 고시", "missing": "화학물질관리법 제21조제2항에 따른 고시(당사국 수입금지·제한 물질, 수출자 준수사항, 수출통보서 정보) 본문을 읽지 않았다. 준수사항의 구체 내용(통보 시점 등)은 규칙에 넣지 않았다."},
+    {"topic": "등록대상기존화학물질 종전 규정", "missing": "2018. 3. 20. 개정 전 화학물질의 등록 및 평가 등에 관한 법률 제9조·제10조(종전 등록 기준·유예기간) 원문 미확인. 유예 '고시일로부터 3년'은 NCIS 데이터 값이다."},
+    {"topic": "제한물질 신고 면제 대상", "missing": "화학물질관리법 제18조제5항 단서의 '대통령령으로 정하는 경우' 세부 조문(시행령) 미확인."},
+    {"topic": "잔류성오염물질 부속서 A/B 세부 물질·용도 고시", "missing": "잔류성오염물질 관리법 제13조제6항 고시 미확인. NCIS 분류만으로는 취급금지/취급제한 구분이 안 된다."},
+    {"topic": "오존층보호법 특정물질 범위", "missing": "같은 법 시행령 제2조(특정물질의 종류) 별표와 MONTREAL_ODS 목록을 대조하지 않았다. HFCs(제2종 특정물질)가 목록에 빠져 있을 수 있다."},
+    {"topic": "화학사고예방관리계획서 제외 기준·검토 기관", "missing": "화학물질관리법 제23조제1항 단서 각 호와 시행규칙 제19조 이하 미확인."},
+    {"topic": "산업안전보건법 제조등금지물질 수입승인", "missing": "세관장확인고시 별표 2 가.(29)(나)에 있으나 NCIS·intl_regulatory 에 대응 목록이 없어 규칙을 만들지 않았다."},
+    {"topic": "화학무기법 특정화학물질 수출입 허가", "missing": "화학무기·생물무기의 금지와 특정화학물질·생물작용제 등의 제조·수출입 규제 등에 관한 법률 — 대응 목록 없음, 조문 미확인."},
+    {"topic": "대외무역법 전략물자 수출허가", "missing": "이중용도 화학물질 수출허가 — 대응 목록 없음, 조문 미확인."}
+  ]
+}

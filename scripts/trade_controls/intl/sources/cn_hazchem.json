@@ -1,0 +1,32 @@
+{
+  "parser": "parse_cn_hazchem",
+  "downloads": {
+    "catalog_2015": {
+      "url": "https://wap.miit.gov.cn/cms_files/filemanager/1226211233/attach/202311/7795338d45794e3ba3a5adbde8b1a576.doc",
+      "page": "https://wap.miit.gov.cn/ssqqhxptyflhbqzdgz/fgzc/zywj/art/2023/art_0b9007c77d384fd2ac47da4e60231af9.html",
+      "file": "cn/miit_whp_2015.doc"
+    },
+    "additions_2026_3": {
+      "url": "https://www.mem.gov.cn/gk/zfxxgkpt/fdzdgknr/202604/t20260429_602103.shtml",
+      "file": "cn/mem_2026_3.html"
+    },
+    "adjust_2022_8": {
+      "url": "https://www.mem.gov.cn/gk/zfxxgkpt/fdzdgknr/202211/t20221107_426077.shtml",
+      "file": "cn/mem_2022_8.html"
+    }
+  },
+  "lists": {
+    "hazchem": {
+      "file": "CN_HAZCHEM_CATALOG.json",
+      "list_id": "CN_HAZCHEM_CATALOG",
+      "jurisdiction": "CN",
+      "law": "危险化学品安全管理条例",
+      "title": "중국 危险化学品目录(2015版) — 위험화학품 목록",
+      "directions": ["import", "export"],
+      "obligation_for_kr_exporter": "중국 수입 시 위험화학품에 해당: 수입업체는 危险化学品经营许可证 보유·危险化学品登记(수입기업 등록) 필요. 통관 시 해관 위험화학품 검사 — 중문 GHS 라벨·중문 SDS 첨부, 위험특성 분류 감정 보고서 제출(海关总署公告2020年第129号). 剧毒 표시 물질은 剧毒化学品 구매·운송 허가 추가.",
+      "legal_basis": "危险化学品安全管理条例(国务院令第591号, 2013 修订) 第3条·第29条·第33条·第66~67条; 危险化学品目录(2015版)(国家安全监管总局等10部门公告2015年第5号) 및 2022年第8号·2026年第3号 조정 공고; 海关总署公告2020年第129号",
+      "source_url": "https://wap.miit.gov.cn/ssqqhxptyflhbqzdgz/fgzc/zywj/art/2023/art_0b9007c77d384fd2ac47da4e60231af9.html",
+      "license": "중국 정부 공고(행정법규 부속 목록). 중국 저작권법 제5조: 법률·법규·국가기관 결의·결정·명령 등 공문서와 그 공식 번역문은 저작권 보호 대상이 아님."
+    }
+  }
+}

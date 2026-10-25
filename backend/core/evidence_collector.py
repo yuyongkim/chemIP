@@ -12,6 +12,7 @@ import xml.etree.ElementTree as ET
 
 from backend.api.global_patent_adapter import GlobalPatentAdapter
 from backend.api.patent_fetcher import PatentFetcher
+from backend.api import kipris_policy
 from backend.core.terminology_db import TerminologyDB
 
 logger = logging.getLogger(__name__)
@@ -68,7 +69,8 @@ def select_patent_query(request_name: str, meta: dict) -> str:
 def build_patent_highlights(chem_id: str, patent_query: str) -> list[dict]:
     highlights: list[dict] = []
 
-    if patent_query:
+    # KIPRIS_IN_AI=false: KIPRIS Plus results are not used as AI evidence (약관 제19조).
+    if patent_query and kipris_policy.ai_evidence_enabled():
         try:
             fetcher = PatentFetcher()
             kipris_results = fetcher.search_patents(patent_query) or []
@@ -84,7 +86,7 @@ def build_patent_highlights(chem_id: str, patent_query: str) -> list[dict]:
                     abstract = str(item.get("abstract", "") or "").replace("\n", " ").strip()
                     snippet_parts = [part for part in [applicant, status, abstract[:160]] if part]
                     highlights.append({
-                        "type": "kipris_patent",
+                        "type": kipris_policy.KIPRIS_EVIDENCE_TYPE,
                         "type_label": "KIPRIS",
                         "id": str(item.get("applicationNumber", "") or "").strip(),
                         "title": title,

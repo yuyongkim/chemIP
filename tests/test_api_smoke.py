@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 
-from backend.api.routes import ai, chemicals, drugs, guides, patents, trade
+from backend.api.routes import ai, chemicals, drugs, guides, handlers, patents, trade
 from backend.core import evidence_collector
 from backend.main import app
 
@@ -118,6 +118,38 @@ def test_chemicals_detail_fetches_all_sections_when_db_is_empty(monkeypatch) -> 
     assert payload["english_safety"]["name_en"] == "Benzene"
 
 
+def test_chemicals_detail_unknown_id_returns_404(monkeypatch) -> None:
+    """목록·MSDS 어디에도 없는 식별자는 500(AttributeError)이 아니라 404."""
+    class EmptyDB:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            return False
+
+        def get_msds_details_by_chem_id(self, _chem_id):
+            return []
+
+        def get_msds_english_by_chem_id(self, _chem_id):
+            return None
+
+        def get_chemical_meta_by_chem_id(self, _chem_id):
+            return None
+
+        def get_chemical_meta_by_cas(self, _cas):
+            return None
+
+        def upsert_msds_detail(self, *_args):
+            return None
+
+    monkeypatch.setattr(chemicals, "TerminologyDB", EmptyDB)
+    monkeypatch.setattr(chemicals.adapter, "get_msds_detail", lambda _chem_id, section_seq: {"status": "error", "message": "none"})
+
+    response = client.get("/api/chemicals/zz-not-a-chem")
+    assert response.status_code == 404
+    assert response.json()["code"] == "NOT_FOUND"
+
+
 def test_patent_search_alias_applies_pagination(monkeypatch) -> None:
     class FakePatentFetcher:
         def search_patents(self, _keyword):
@@ -197,7 +229,7 @@ def test_trade_news_falls_back_to_naver_when_kotra_unavailable(monkeypatch) -> N
     monkeypatch.setattr(
         trade.naver_adapter,
         "search_news",
-        lambda **_: {"status": "success", "data": [{"title": "benzene market news"}], "total": 1},
+        lambda **_: {"status": "success", "data": [{"title": "benzene market news", "source": "naver"}], "total": 1},
     )
 
     response = client.get("/api/trade/news", params={"q": "benzene"})
@@ -205,7 +237,10 @@ def test_trade_news_falls_back_to_naver_when_kotra_unavailable(monkeypatch) -> N
     payload = response.json()
     assert payload["fallback"] == "naver-news"
     assert payload["upstream_error"] == "upstream unavailable"
-    assert payload["total"] == 1
+    # NAVER items live in their own labelled block, never in the KOTRA list.
+    assert payload["data"] == [] and payload["total"] == 0
+    assert payload["naver"]["source_label"] == "네이버 검색결과"
+    assert payload["naver"]["total"] == 1
 
 
 def test_drug_search_aggregates_approval_and_easy_info(monkeypatch) -> None:
@@ -567,3 +602,60 @@ def test_ai_analyze_llm_fallback_when_unavailable(monkeypatch) -> None:
     payload = response.json()
     assert payload["llm_used"] is False
     assert "analysis" in payload
+
+
+def test_handlers_resolves_chem_id_and_passes_aliases(monkeypatch) -> None:
+    captured: dict[str, object] = {}
+
+    class FakeDB:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            return False
+
+        def get_chemical_meta_by_chem_id(self, chem_id):
+            assert chem_id == "71-43-2"
+            return {"name": "벤젠", "name_en": "Benzene", "cas_no": "71-43-2"}
+
+        def get_aliases_for_chemical(self, _chem_id, limit=24):
+            return [{"alias": "benzol"}]
+
+    class FakeAdapter:
+        def build_profile(self, **kwargs):
+            captured.update(kwargs)
+            return {"query": {"terms": kwargs["aliases"]}, "sources": {"prtr_facilities": {"total": 1, "data": []}}}
+
+    monkeypatch.setattr(handlers, "TerminologyDB", FakeDB)
+    monkeypatch.setattr(handlers, "adapter", FakeAdapter())
+
+    response = client.get("/api/handlers", params={"chem_id": "71-43-2", "facility_limit": 50})
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["chem_id"] == "71-43-2"
+    assert payload["chemical"]["cas_no"] == "71-43-2"
+    assert payload["sources"]["prtr_facilities"]["total"] == 1
+    # Meta from the terminology DB wins over the raw query params
+    assert captured["cas_no"] == "71-43-2"
+    assert captured["name"] == "벤젠"
+    assert captured["name_en"] == "Benzene"
+    assert captured["aliases"] == ["benzol"]
+    assert captured["facility_limit"] == 50
+
+
+def test_handlers_without_chem_id_uses_query_params(monkeypatch) -> None:
+    captured: dict[str, object] = {}
+
+    class FakeAdapter:
+        def build_profile(self, **kwargs):
+            captured.update(kwargs)
+            return {"query": {}, "sources": {}}
+
+    monkeypatch.setattr(handlers, "adapter", FakeAdapter())
+
+    response = client.get("/api/handlers", params={"cas": "67-64-1", "name": "아세톤", "name_en": "Acetone"})
+    assert response.status_code == 200
+    assert response.json()["chemical"] is None
+    assert captured["cas_no"] == "67-64-1"
+    assert captured["name"] == "아세톤"
+    assert captured["aliases"] == []

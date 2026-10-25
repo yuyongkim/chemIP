@@ -1,0 +1,67 @@
+{
+  "_note": "Download URLs and fixed list metadata. Parsers read documents from these URLs; legal text quoted in kr_obligation was read from the law.go.kr XML on 2026-10-24.",
+  "raw_dir": "S:\\chemip_trade_controls_raw",
+  "output_dir": "backend/data/trade_controls",
+  "law_go_kr": {
+    "oc_env": "LAW_GO_KR_OC",
+    "oc_default": "test",
+    "search_url": "https://www.law.go.kr/DRF/lawSearch.do?OC={oc}&target={target}&type=XML&query={query}",
+    "law_url": "https://www.law.go.kr/DRF/lawService.do?OC={oc}&target=law&MST={mst}&type=XML",
+    "admrul_url": "https://www.law.go.kr/DRF/lawService.do?OC={oc}&target=admrul&ID={id}&type=XML"
+  },
+  "downloads": {
+    "opcw_schedule_1": {"url": "https://www.opcw.org/chemical-weapons-convention/annexes/annex-chemicals/schedule-1", "file": "opcw/schedule_1.html"},
+    "opcw_schedule_2": {"url": "https://www.opcw.org/chemical-weapons-convention/annexes/annex-chemicals/schedule-2", "file": "opcw/schedule_2.html"},
+    "opcw_schedule_3": {"url": "https://www.opcw.org/chemical-weapons-convention/annexes/annex-chemicals/schedule-3", "file": "opcw/schedule_3.html"},
+    "ag_cw_precursors": {"url": "https://www.dfat.gov.au/publications/minisite/theaustraliagroupnet/site/en/documents/common-control-lists/Chemical-Weapons-Precursors-Control-List.pdf", "file": "australia_group/AG_CWP_live.pdf"},
+    "incb_red_list": {"url": "https://www.incb.org/documents/PRECURSORS/RED_LIST/RED_LIST_E.pdf", "file": "incb/RED_LIST_E.pdf"}
+  },
+  "kr_laws": {
+    "cwc_act": {"query": "화학무기ㆍ생물무기의 금지와 특정화학물질ㆍ생물작용제 등의 제조ㆍ수출입 규제 등에 관한 법률", "target": "law", "file": "kr_law/cwc_act.xml"},
+    "drug_decree": {"query": "마약류 관리에 관한 법률 시행령", "target": "law", "file": "kr_law/drug_decree.xml"},
+    "strategic_notice": {"query": "전략물자수출입고시", "target": "admrul", "file": "kr_law/strategic_notice.xml"}
+  },
+  "lists": {
+    "cwc_schedules": {
+      "list_id": "CWC_SCHEDULE",
+      "title": "Chemical Weapons Convention — Annex on Chemicals, Schedules 1/2/3 (화학무기금지협약 목록 / 특정화학물질 1·2·3종)",
+      "jurisdiction": "INTL",
+      "directions": ["import", "export"],
+      "authority": "OPCW / 산업통상부(구 산업통상자원부)",
+      "kr_obligation": {
+        "1종": "수출·수입 모두 산업통상부장관 허가(법 제11조①, 제12조①; 수출은 대외무역법 제19조의2 수출허가를 받은 경우 면제). 허가 후 인도·인수 40일 전 신고(제11조②, 제12조②; 색시톡신 5 mg 이하 진단·의료용은 예외, 시행령 제8조②). 수입은 연구·의료·제약·방호 목적 및 CWC 당사국으로부터만(시행령 제7조의2).",
+        "2종": "수출 전 산업통상부장관 수출허가(법 제11조①; 대외무역법 제19조의2 전략물자 수출허가를 받은 경우 면제). CWC 비당사국으로부터 수입 금지(법 제12조⑤). 수출입 실적 연간 신고(법 제13조③).",
+        "3종": "수출 전 산업통상부장관 수출허가(법 제11조①; 대외무역법 제19조의2 전략물자 수출허가를 받은 경우 면제). 수출입 실적 연간 신고(법 제13조③)."
+      },
+      "legal_basis": "화학무기금지협약 「화학물질에 관한 부속서」 목록 1·2·3; 화학무기ㆍ생물무기의 금지와 특정화학물질ㆍ생물작용제 등의 제조ㆍ수출입 규제 등에 관한 법률(생화학무기법) 제2조제5호·[별표] 특정화학물질, 제11조(수출규제), 제12조(수입규제), 제13조(신고)",
+      "source_url": "https://www.opcw.org/chemical-weapons-convention/annexes/annex-chemicals/annex-chemicals",
+      "kr_source_url": "https://www.law.go.kr/법령/화학무기ㆍ생물무기의금지와특정화학물질ㆍ생물작용제등의제조ㆍ수출입규제등에관한법률"
+    },
+    "australia_group": {
+      "list_id": "AUSTRALIA_GROUP_CW_PRECURSORS",
+      "title": "Australia Group Export Control List: Chemical Weapons Precursors (전략물자 이중용도품목 1C350)",
+      "jurisdiction": "INTL",
+      "directions": ["export"],
+      "authority": "Australia Group / 산업통상부(무역안보정책과)·전략물자관리원",
+      "kr_obligation": "수출 전 전략물자 수출허가(대외무역법 제19조의2, 전략물자수출입고시 별표 2 이중용도품목 1C350). 혼합물은 1C350 주1~주3의 농도 기준(10%/30%) 초과 시 통제, 소매 소비재는 비통제(주4). 1C350.4·.29(DF·QL)는 군용물자목록 참조.",
+      "legal_basis": "대외무역법 제19조·제19조의2; 전략물자수출입고시 [별표 2] 이중용도품목 1C350 (AG CW 전구체 목록 이행)",
+      "source_url": "https://www.dfat.gov.au/publications/minisite/theaustraliagroupnet/site/en/documents/common-control-lists/Chemical-Weapons-Precursors-Control-List.pdf",
+      "kr_source_url": "https://www.law.go.kr/행정규칙/전략물자수출입고시"
+    },
+    "drug_precursors": {
+      "list_id": "DRUG_PRECURSOR",
+      "title": "마약류 원료물질(마약류 관리에 관한 법률 시행령 별표 8) / INCB Red List — 1988 UN Convention Tables I & II",
+      "jurisdiction": "KR",
+      "directions": ["import", "export"],
+      "authority": "식품의약품안전처 / INCB",
+      "kr_obligation": {
+        "1군": "원료물질 수출입업 허가(법 제6조의2①, 시행령 제6조) + 수출입할 때마다 식품의약품안전처장 승인(법 제51조①, 시행령 제20조①; 약사법 등 다른 법률로 수출입 허가·승인 받는 경우 제외). 거래기록 작성·2년 보존(법 제51조②).",
+        "2군": "수출입 건별 승인 대상 아님. 제조·수출입·매매 거래기록 작성·2년 보존(법 제51조②; 별표 8 최대거래량·최고농도 이하 등 면제). 의심거래·도난 신고(법 제51조③).",
+        "INCB_only": "국내 별표 8에 없는 물질: 국내 원료물질 승인 대상 아님. 상대국 규제(1988 협약 Table I/II, 사전수출통보 PEN) 확인 필요."
+      },
+      "legal_basis": "마약류 관리에 관한 법률 제2조, 제6조의2, 제51조; 같은 법 시행령 제6조, 제19조, 제20조, [별표 8] 원료물질, 최대거래량 및 최고농도; 1988 UN Convention against Illicit Traffic in Narcotic Drugs and Psychotropic Substances, art. 12, Tables I and II",
+      "source_url": "https://www.incb.org/documents/PRECURSORS/RED_LIST/RED_LIST_E.pdf",
+      "kr_source_url": "https://www.law.go.kr/법령/마약류관리에관한법률시행령"
+    }
+  }
+}
