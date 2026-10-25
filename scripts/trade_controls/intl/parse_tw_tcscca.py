@@ -11,6 +11,7 @@ The open-data API key is the public key printed in the data.gov.tw dataset distr
 from __future__ import annotations
 
 import json
+import os
 import re
 from pathlib import Path
 
@@ -105,10 +106,17 @@ def amended(path: Path) -> str:
     return f"{int(m.group(1)) + 1911}-{m.group(2)}-{m.group(3)}" if m else ""
 
 
+TW_KEY_ENV = "TW_MOENV_API_KEY"
+
+
 def collect(spec: dict, raw_dir: Path, offline: bool) -> dict:
     d = spec["downloads"]
-    paths = {k: fetch(v["url"], raw_dir / v["file"], offline) for k, v in d.items()}
-    files = {k: file_info(p, d[k]["url"]) for k, p in paths.items()}
+    # 대만 환경부 개방데이터 api_key 는 저장소에 두지 않는다(환경변수 TW_MOENV_API_KEY). 기록에는 키를 뺀 주소를 남긴다.
+    key = os.getenv(TW_KEY_ENV, "")
+    if not offline and any("{api_key}" in v["url"] for v in d.values()) and not key:
+        raise RuntimeError(f"{TW_KEY_ENV} 가 없습니다. data.moenv.gov.tw 에서 받은 api_key 를 환경변수로 지정하십시오(--offline 은 키 불필요).")
+    paths = {k: fetch(v["url"].replace("{api_key}", key), raw_dir / v["file"], offline) for k, v in d.items()}
+    files = {k: file_info(p, d[k]["url"].replace("api_key={api_key}&", "")) for k, p in paths.items()}
     out = {}
 
     tox = _json(paths["toxic_list"])
