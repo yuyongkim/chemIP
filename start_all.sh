@@ -41,3 +41,13 @@ done
 echo "[OK] Apps started"
 echo "Dashboard: http://localhost:9000"
 "${pm2_cmd[@]}" status
+
+echo
+echo "===== RUNTIME HEALTH ====="
+if command -v python >/dev/null 2>&1; then
+  python scripts/check_runtime_health.py --wait-seconds 60
+elif command -v python3 >/dev/null 2>&1; then
+  python3 scripts/check_runtime_health.py --wait-seconds 60
+else
+  echo "[WARN] python/python3 not found. Skipping runtime health check."
+fi

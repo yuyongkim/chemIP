@@ -3,10 +3,11 @@
 ## Services
 
 - Frontend: `http://localhost:7000`
-- Backend: `http://127.0.0.1:7010`
+- Backend: `http://127.0.0.1:7011`
 - Health: `GET /health`
 - Ready: `GET /ready`
 - Guide status: `GET /api/guides/status`
+- Runtime health: `python scripts/check_runtime_health.py`
 
 ## Start / Stop
 
@@ -16,10 +17,11 @@
 ## Standard Incident Flow
 
 1. Check process state (`status` script or PM2 status).
-2. Check health/readiness endpoints.
-3. Check backend logs for upstream API failures.
-4. Reproduce with one endpoint first (`/api/trade/news` etc.).
-5. Apply rollback if latest change caused regression.
+2. Run `python scripts/check_runtime_health.py` and confirm both local/public checks pass.
+3. Check health/readiness endpoints.
+4. Check backend logs for upstream API failures.
+5. Reproduce with one endpoint first (`/api/trade/news` etc.).
+6. Apply rollback if latest change caused regression.
 
 ## Common Incidents
 
@@ -28,12 +30,14 @@
 - Verify port 7000 listener.
 - Re-run `start_all`.
 - If PM2 frontend is `errored`, inspect `pm2 logs T3-ChemIP-Frontend`.
+- If local `7000` passes but public domain fails, treat it as tunnel/origin drift and re-run runtime health after tunnel check.
 
 ### Backend 5xx spikes
 
 - Check `/ready` result.
 - Validate external API keys and upstream availability.
 - Verify no duplicate backend processes are bound to same port.
+- Confirm `scripts/check_runtime_health.py` shows both `public-api-chemicals` and `public-api-drugs` as `PASS`.
 - If guide-related endpoints fail, verify `KOSHA_GUIDE_DATA_DIR` and dataset files (`guides.json`, `normalized/guide_documents_text.json`).
 
 ### `Unexpected token 'I'` in frontend

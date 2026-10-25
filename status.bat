@@ -30,4 +30,17 @@ for %%P in (7000 7011 8002 8010 9000) do (
 
 echo.
 echo Dashboard URL: http://localhost:9000
+
+echo.
+echo ===== RUNTIME HEALTH =====
+where python >nul 2>nul
+if errorlevel 1 (
+  echo [WARN] python not found. Skipping runtime health check.
+  endlocal
+  exit /b 0
+)
+
+python scripts\check_runtime_health.py
+set "HEALTH_EXIT=%ERRORLEVEL%"
 endlocal
+exit /b %HEALTH_EXIT%
