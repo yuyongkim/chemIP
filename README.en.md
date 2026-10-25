@@ -1,236 +1,80 @@
-﻿# ChemIP Platform
+﻿# ChemIP — Chemical regulation, permit and trade-control lookup for SMEs
 
-An open-source, self-hostable web platform that integrates nine public data sources — MSDS, patents, trade intelligence, pharmaceuticals, chemical classification, and literature — into a single-query workflow for chemical safety decision-making.
+Enter one substance name or CAS number and ChemIP collects, on one screen, its MSDS, every Korean statutory list it is on,
+the permits and notifications those lists trigger, import/export obligations, destination-country regulations and HS codes,
+and exports the result as a checklist (print, PDF, CSV). It is built for small and medium-sized enterprises that have no
+in-house regulatory staff.
 
-**Repository:** [github.com/yuyongkim/chemIP](https://github.com/yuyongkim/chemIP) | **License:** AGPL-3.0 | **CI:** ![tests](https://img.shields.io/badge/tests-19%20passed-brightgreen)
+- Service: https://chemip.yule.pics/chemip/ (free, no sign-up)
+- License: AGPL-3.0
+- Feedback and data-error reports: the in-app request board, or GitHub issues
+- Not legal advice. Every item links to the statutory text it is based on; confirm with the original and the competent authority.
 
----
+> As of 2026-10-25. The previous README is kept at `docs/_legacy_README.en_2026-03-15.md`.
 
-## Quick Start (Reviewer / Demo Mode)
+## Coverage
 
-Get the core platform running in under 5 minutes — no patent database or LLM required.
+| Item | Content | Source |
+|---|---|---|
+| MSDS | 16 sections | KOSHA MSDS OpenAPI via data.go.kr |
+| Korean statutory lists | 52 lists under 23 laws (10,094 entries): chemical control, K-REACH, occupational safety, air, water, soil, waste, odour, PRTR, hazardous materials, high-pressure gas, serious accidents, consumer chemical products, cosmetics, pesticides, RoHS, children's products, dangerous goods by sea | Current statutes and notices on law.go.kr |
+| Permits and notifications | 56 items with conditions, authority and quoted statutory text | Same statutes |
+| Real permit context | Number of integrated-permit sites with an emission limit for the substance, limit distribution, permit processing time (median 46 days) | IEPS permit review reports, CleanSYS |
+| Import/export obligations | 19 rules, customs-confirmation flag | Korean chemical laws, Korea Customs notice |
+| Control lists | CWC Schedules 1–3, Australia Group (1C350), drug precursors | OPCW, Korean strategic-goods notice, INCB |
+| Destination-country lists | 51 lists: EU, US, CN, JP, CA, GB, CH, AU, TW, TR, SA, SG | Official lists (ECHA CHEM, EPA, MEE, METI, ECCC, HSE, …) |
+| HS codes | 104,087 CAS → HS6, Korean HSK10 candidates | EU ECICS, Korea Customs Service |
+
+Quantity conditions (e.g. "≥ 1 t/year") are shown as text, not evaluated.
+
+## Architecture
+
+```
+Browser → Cloudflare Tunnel → Next (127.0.0.1:7000; /chemip static UI + /api proxy) → FastAPI (127.0.0.1:7011)
+```
+
+| Path | Responsibility |
+|---|---|
+| `backend/core/trade_controls/` | Per-substance regulation / permit / trade assembly |
+| `backend/integrations/` | Sibling-project data (incidents, statute text, EPA enforcement, permit context) |
+| `backend/feedback/`, `backend/usage/` | Request board, anonymous usage counts (no IP or browser data stored) |
+| `scripts/trade_controls/` | Collectors for Korean, control, HS and destination-country lists |
+| `frontend/public/chemip/` | Live UI (no-build React); file roles in its `README.md` |
+| `deploy/linux/` | Cloud VM migration kit |
+| `scripts/search_bench/` | Patent full-text search benchmarks |
+
+Collected data (`backend/data/trade_controls/`, `data/*.db`) is not committed; rebuild it with the collectors.
+
+## Quick start (reviewer / demo)
 
 ```bash
-# 1. Clone and install
 git clone https://github.com/yuyongkim/chemIP.git && cd chemIP
-pip install -r requirements.txt
+python -m venv .venv && .venv/bin/pip install -r requirements.txt
 cd frontend && npm ci && cd ..
-
-# 2. Configure minimal API keys
-cp .env.example .env
-# Edit .env — only KOSHA_SERVICE_KEY_DECODED and KIPRIS_API_KEY are needed
-# for basic chemical search. Get free keys at https://www.data.go.kr
-
-# 3. Start
-python -m uvicorn backend.main:app --port 7010 &
-cd frontend && npm run dev -- --port 7000
-# Open http://localhost:7000
+cp .env.example .env        # fill KOSHA_SERVICE_KEY_DECODED (free at data.go.kr)
+.venv/bin/python -m uvicorn backend.main:app --host 127.0.0.1 --port 7011 &
+cd frontend && npm run dev   # http://localhost:7000/chemip/
 ```
 
-**What works without API keys:** Local chemical database search (48,000+ substances), cached MSDS sections, guide recommendations, and the full frontend UI.
+Without collected data the regulation tab shows "자료 준비 중" (data pending); build it with the commands in the Korean
+README, section "수집 자료 만들기". Patent indexes (140 GB) and the local LLM are optional; the app degrades gracefully.
 
-**What needs API keys:** Live MSDS section fetch (KOSHA), patent search (KIPRIS), trade data (KOTRA), drug info (MFDS). All keys are free from [data.go.kr](https://www.data.go.kr).
-
-**Optional components (not needed for review):**
-- Patent index database (large, separate build step)
-- Ollama LLM server (rule-based fallback works without it)
-
----
-
-## Overview
-
-### What It Does
-- Unifies fragmented government data portals into a single search workflow
-- Covers: MSDS safety, patents, trade intelligence, drugs, chemical classification, literature
-- Supports local deployment for privacy-sensitive industrial environments
-- Provides AI-assisted summaries with deterministic rule-based fallback
-
-### Target Users
-- Chemical/material R&D teams
-- Regulatory and safety compliance teams
-- Trade and market intelligence analysts
-- IP and technology commercialization teams
-
-## Current Capabilities (Code-Verified)
-
-### Backend
-- FastAPI service (`backend/main.py`) with:
-  - request ID middleware (`x-request-id`)
-  - security headers
-  - optional rate limit (`RATE_LIMIT_*`)
-  - request summary logging
-- Core routes:
-  - `/api/chemicals`
-    - local FTS search via `terminology.db`
-    - lazy KOSHA section fetch (1 to 16) on detail cache miss
-  - `/api/patents`
-    - KIPRIS keyword search and detail lookup
-    - local `/uspto/{chem_id}` and `/global/{chem_id}` index search
-  - `/api/trade`
-    - market news, entry strategy, price info, fraud cases
-    - additional endpoints (national info, import regulation, and more)
-  - `/api/drugs`
-    - MFDS approval/easy-info aggregation
-    - OpenFDA fallback chain (brand -> generic -> substance)
-    - PubMed article summary retrieval
-  - `/api/guides`
-    - local KOSHA guide dataset status/search/detail/recommendation
-  - `/api/ai/analyze`
-    - evidence-based analysis output with `sources` and `confidence`
-
-### Frontend
-- Next.js 16 + React 19 + TypeScript + Tailwind CSS 4
-- `/api/*` requests are rewritten to backend by `frontend/next.config.ts`
-- Composition-first pages:
-  - `frontend/app/page.tsx` (home search)
-  - `frontend/app/patents/page.tsx`
-  - `frontend/app/trade/page.tsx`
-  - `frontend/app/drugs/page.tsx`
-  - `frontend/app/chemical/[id]/page.tsx` (MSDS/patents/market/guides/AI tabs)
-
-### Data
-- Default database paths (`backend/config/settings.py`)
-  - `./data/terminology.db`
-  - `./data/uspto_index.db`
-  - `./data/global_patent_index.db`
-
-## Quick Start
-
-### 1) Install Dependencies
+## Verification
 
 ```bash
-pip install -r requirements.txt
-cd frontend
-npm install
+.venv/bin/python -m pytest tests -q    # 119 tests
 ```
 
-### 2) Configure Environment
+Browser QA (Playwright): 11 substances × 1440/390 px × light/dark, checking console errors, mojibake and overflow.
 
-Create `.env` from `.env.example`.
+## Data terms
 
-Required keys:
-- `KOSHA_SERVICE_KEY_DECODED`
-- `KIPRIS_API_KEY`
-- `KOTRA_API_KEY_DECODED`
-- `DRUG_API_KEY_DECODED`
-
-Optional keys:
-- `PUBMED_API_KEY`
-- `NAVER_CLIENT_ID`
-- `NAVER_CLIENT_SECRET`
-- `BACKEND_ORIGIN` (frontend rewrite target, default `http://127.0.0.1:7010`)
-- `KOSHA_GUIDE_DATA_DIR` (local dataset path for KOSHA guides)
-
-### 3) Run Services
-
-Backend:
-
-```bash
-uvicorn backend.main:app --reload --host 127.0.0.1 --port 7010
-```
-
-Frontend:
-
-```bash
-cd frontend
-npm run dev
-```
-
-Endpoints:
-- Frontend: `http://localhost:7000`
-- Backend: `http://localhost:7010`
-- API docs: `http://localhost:7010/docs`
-- Health: `http://localhost:7010/health`
-- Readiness: `http://localhost:7010/ready`
-
-## PM2 Startup
-
-```bash
-# Windows
-start_all.bat
-
-# Linux/macOS
-bash start_all.sh
-```
-
-- Falls back to `npx pm2` when global `pm2` is unavailable
-- Starts only Track 3 services (`Dashboard`, `ChemIP Backend`, `ChemIP Frontend`)
-
-## Typical Workflows
-
-### Chemical-First Research
-1. Search by name/CAS on home page.
-2. Open `/chemical/{id}`.
-3. Review MSDS sections, bilingual safety, and regulation panel.
-4. Check `KOSHA Guides` tab for related guideline recommendations.
-5. Use `AI` tab to review evidence-backed insights and sources.
-6. Expand to patents and market tabs in the same page.
-
-### Patent-First Research
-1. Search on `/patents`.
-2. Review KIPRIS results.
-3. In chemical detail, cross-check with local global/USPTO index results.
-
-### Trade Intelligence
-1. Use `/trade` with country and keyword filters.
-2. Consume KOTRA feeds first.
-3. Fall back to Naver/news-derived results when upstream data is sparse.
-
-### Drug Evidence Lookup
-1. Search on `/drugs`.
-2. Review MFDS approval/easy-info.
-3. Expand to OpenFDA labels and PubMed literature.
-
-## Mandatory Verification
-
-```bash
-# Windows
-submit_check.bat
-
-# Linux/macOS
-bash submit_check.sh
-```
-
-Executed by `scripts/verify_submission.py`:
-- `pytest`
-- `scripts/test_kipris_live.py`
-- `frontend npm run lint`
-- `frontend npm run build`
-
-## Known Gaps
-
-- AI endpoint is currently retrieval-assisted summarization; production-grade external LLM integration is still pending
-- Rate limiting is in-memory only (not distributed-ready)
-- Integration quality depends on upstream API quota/network conditions
-- Test scope is strong on smoke paths but can be expanded for large regression suites
-
-## Evolution Direction
-
-### Phase 1: Reliability
-- Connect AI endpoint to real LLM with explicit source citations
-- Introduce API caching (for example Redis) to reduce latency and quota pressure
-- Standardize error codes and operational dashboards
-
-### Phase 2: Data Quality
-- Improve synonym/alias normalization for chemical names
-- Automate global patent index refresh pipeline
-- Add quality scoring and source reliability metrics for market signals
-
-### Phase 3: Enterprise Readiness
-- Add role-based access and audit logs
-- Add batch analysis/report export (PDF/slides)
-- Formalize deployment blueprint (Docker/Kubernetes)
+See the in-app "자료 출처" page and `docs/public_release/compliance_v1.md`. In short: data.go.kr MSDS/NCIS are unrestricted
+with attribution; KOTRA news/import-regulation data is KOGL Type 4 (verbatim only); KIPRIS Plus requires written permission
+for third-party display (link-only until granted, `KIPRIS_PUBLIC_DISPLAY=false`); Naver results are shown separately and never
+stored or fed to AI; ECHA bulk reuse requires permission (alternatives under review).
 
 ## References
 
-- Korean main doc: `README.md`
-- Frontend runtime check (2026-03-01): `docs/FRONTEND_RUNTIME_CHECK_2026-03-01.md`
-- Mini PC + Cloudflare deployment checklist: `docs/MINIPC_CLOUDFLARE_DEPLOY_CHECKLIST.md`
-- Project introduction + screenshot guide (KR): `docs/CHEMIP_PROJECT_INTRO_AND_SCREENSHOT_GUIDE_2026-03-02.md`
-- Project introduction + screenshot guide (Word): `docs/CHEMIP_PROJECT_INTRO_AND_SCREENSHOT_GUIDE_2026-03-02.docx`
-- Contribution guide: `CONTRIBUTING.md`
-- Data layout: `DATA_STRUCTURE.md`
-- Operations: `docs/RUNBOOK.md`
-- Release process: `docs/RELEASE_PROCESS.md`
-- Product roadmap: `docs/PRODUCT_ROADMAP.md`
-- Execution board: `docs/ROADMAP_EXECUTION_BOARD.md`
+- `README.md` (Korean, primary)
+- `docs/RUNBOOK.md`, `PORT_REGISTRY.md`, `deploy/linux/README.md`, `docs/public_release/`
