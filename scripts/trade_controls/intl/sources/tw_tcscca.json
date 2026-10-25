@@ -1,0 +1,83 @@
+{
+  "parser": "parse_tw_tcscca",
+  "downloads": {
+    "toxic_list": {
+      "url": "https://data.moenv.gov.tw/api/v2/toxic_p_23?api_key={api_key}&limit=5000&format=JSON",
+      "file": "tw/moenv_toxic_p_23.json"
+    },
+    "toxic_prohibited": {
+      "url": "https://data.moenv.gov.tw/api/v2/toxic_p_02?api_key={api_key}&limit=5000&format=JSON",
+      "file": "tw/moenv_toxic_p_02.json"
+    },
+    "toxic_uses": {
+      "url": "https://data.moenv.gov.tw/api/v2/toxic_p_01?api_key={api_key}&limit=5000&format=JSON",
+      "file": "tw/moenv_toxic_p_01.json"
+    },
+    "concerned_list": {
+      "url": "https://data.moenv.gov.tw/api/v2/txmg_p_76?api_key={api_key}&limit=5000&format=JSON",
+      "file": "tw/moenv_txmg_p_76.json"
+    },
+    "cha_toxic_intro": {
+      "url": "https://www.cha.gov.tw/np-92-1.html",
+      "file": "tw/cha_np-92-1.html"
+    },
+    "cha_concerned_intro": {
+      "url": "https://www.cha.gov.tw/np-491-1.html",
+      "file": "tw/cha_np-491-1.html"
+    },
+    "pec_regulation": {
+      "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0060043",
+      "file": "tw/law_O0060043.html"
+    },
+    "pec_annex9": {
+      "url": "https://law.moj.gov.tw/LawClass/LawGetFile.ashx?FileId=0000304323&lan=C",
+      "file": "tw/law_O0060043_annex9_0000304323.pdf"
+    }
+  },
+  "lists": {
+    "toxic": {
+      "file": "TW_TCSCA_TOXIC.json",
+      "list_id": "TW_TCSCA_TOXIC",
+      "jurisdiction": "TW",
+      "law": "毒性及關注化學物質管理法",
+      "title": "대만 公告毒性化學物質(제1~4류) — 독성화학물질 목록·관리농도·분급운작량",
+      "directions": [
+        "import",
+        "export"
+      ],
+      "obligation_for_kr_exporter": "제1~3류 독성화학물질을 대만에 수입(輸入)하려면 대만 수입자가 직할시·현(시) 주관기관의 許可證을 받아야 하고(법 제13조 제1항), 대만에서 수출(輸出)할 때는 건별로 登記해야 한다(제13조 제3항). 제4류는 운작 전에 독성 자료를 신고해 核可文件을 받아야 한다(제8조 제4항). 관리농도 미만 혼합물은 대상이 아니고, 분급운작량 미만이면 核可로 갈음할 수 있다(제13조 제4항). 허가 없이 수입된 독성화학물질은 세관이 반송을 명한다(제14조). 禁止運作事項이 붙은 물질은 지정 용도 외 제조·수입·판매·사용이 금지된다(제8조 제2항).",
+      "legal_basis": "毒性及關注化學物質管理法 第8條, 第11條, 第13條, 第14條; 環境部 公告 列管毒性化學物質及其運作管理事項",
+      "source_url": "https://data.gov.tw/dataset/28173",
+      "license": "環境部 開放資料: 政府資料開放授權條款第1版(출처 표시 조건 무상 이용). 법령 본문은 저작권법 제9조에 따라 저작권 대상 아님."
+    },
+    "concerned": {
+      "file": "TW_TCSCA_CONCERNED.json",
+      "list_id": "TW_TCSCA_CONCERNED",
+      "jurisdiction": "TW",
+      "law": "毒性及關注化學物質管理法",
+      "title": "대만 公告關注化學物質 — 관주(우려)화학물질 목록·관리농도·분급운작량",
+      "directions": [
+        "import",
+        "export"
+      ],
+      "obligation_for_kr_exporter": "관주화학물질을 운작(제조·수입·수출·판매·사용 등)하려면 대만 운작인이 직할시·현(시) 주관기관의 核可를 받고 그 내용대로 운작해야 한다(법 제25조). 분급운작량 미만이면 일부 의무가 면제된다. 기록·정기 신고, 표시·SDS 비치 의무가 따른다(제26~27조).",
+      "legal_basis": "毒性及關注化學物質管理法 第24條, 第25條, 第26條, 第27條; 環境部 公告 列管關注化學物質及其運作管理事項",
+      "source_url": "https://data.moenv.gov.tw/",
+      "license": "環境部 開放資料: 政府資料開放授權條款第1版(출처 표시 조건 무상 이용)."
+    },
+    "pec": {
+      "file": "TW_TCSCA_PEC_STANDARD_REG.json",
+      "list_id": "TW_TCSCA_PEC_STANDARD_REG",
+      "jurisdiction": "TW",
+      "law": "毒性及關注化學物質管理法",
+      "title": "대만 지정 기존화학물질 표준등록 대상(登錄辦法 附表九, 第1期 106종)",
+      "directions": [
+        "import"
+      ],
+      "obligation_for_kr_exporter": "대만에서 附表九 물질을 연 1톤 이상 제조·수입하는 자는 기존화학물질 제1단계 등록 코드를 받은 뒤 지정 기한 안에 표준등록(附表三 자료)을 마쳐야 한다(附表九 비고). 한국 수출자는 대만 수입자 또는 대만 내 대리인을 통해 등록할 수 있다.",
+      "legal_basis": "毒性及關注化學物質管理法 第7條; 新化學物質及既有化學物質資料登錄辦法 附表九",
+      "source_url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=O0060043",
+      "license": "全國法規資料庫 법규명령 부표: 저작권법 제9조에 따라 저작권 대상 아님."
+    }
+  }
+}

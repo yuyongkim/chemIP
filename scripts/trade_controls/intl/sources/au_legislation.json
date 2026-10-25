@@ -1,0 +1,49 @@
+{
+  "parser": "parse_au_legislation",
+  "downloads": {
+    "customs_pi": {
+      "latest": "https://www.legislation.gov.au/F1996B03651/latest/text",
+      "latest_file": "au/customs_prohibited_imports_latest.html",
+      "file_pattern": "au/customs_prohibited_imports_{date}.html"
+    },
+    "ic_rules": {
+      "latest": "https://www.legislation.gov.au/F2019L01543/latest/text",
+      "latest_file": "au/ic_general_rules_latest.html",
+      "file_pattern": "au/ic_general_rules_{date}.html"
+    }
+  },
+  "lists": {
+    "organochlorine": {
+      "file": "AU_CUSTOMS_PI_SCH9_ORGANOCHLORINE.json",
+      "list_id": "AU_CUSTOMS_PI_SCH9_ORGANOCHLORINE",
+      "jurisdiction": "AU",
+      "law": "Customs (Prohibited Imports) Regulations 1956",
+      "title": "호주 수입금지규정 부속서 9 — 유기염소계 화학물질(수입 허가 대상)",
+      "directions": [
+        "import"
+      ],
+      "obligation_for_kr_exporter": "부속서 9 의 유기염소계 화학물질(알드린·DDT·클로르단·린단 등)은 농업·수의약품 담당 장관이나 그가 지정한 공무원의 서면 허가 없이는 호주로 수입할 수 없다(regulation 5I). 한국 수출자는 호주 수입자가 허가를 받았는지 선적 전에 확인.",
+      "legal_basis": "Customs Act 1901 s 50; Customs (Prohibited Imports) Regulations 1956 reg 5I, Schedule 9",
+      "source_url": "https://www.legislation.gov.au/F1996B03651/latest/text",
+      "license": "Federal Register of Legislation 수록 법령: 호주 연방(Commonwealth) 저작물, CC BY 4.0 라이선스(출처 표시).",
+      "known_source_errors": {
+        "8000-35-2": "Schedule 9 item 13 toxaphene (camphechlor) 의 CAS 가 법령 원문에 8000-35-2 로 인쇄됨(체크디지트 불일치). 값을 고치지 않고 family_entries 로 둔다."
+      }
+    },
+    "intl_agreements": {
+      "file": "AU_IC_RULES_INTL_AGREEMENTS.json",
+      "list_id": "AU_IC_RULES_INTL_AGREEMENTS",
+      "jurisdiction": "AU",
+      "law": "Industrial Chemicals Act 2019",
+      "title": "호주 산업화학물질 일반규칙 제6장 — 로테르담·미나마타협약 대상 도입·수출 사전승인 물질",
+      "directions": [
+        "import",
+        "export"
+      ],
+      "obligation_for_kr_exporter": "s 71(2) 에 열거된 로테르담협약 대상 산업화학물질(PBDE·HBCDD·PFOS·PFOA·PBB·SCCP·사메틸납·트리부틸주석 화합물)과 사에틸납(s 72)은 호주 도입(수입) 전에 AICIS 사무국장의 서면 승인이 필요하다(연구·분석용 연 100 kg 이하 제외). 수은(95 % 이상)은 미나마타협약 비당사국에서 수입할 때만 승인 대상(s 75A) — 한국은 당사국. 호주에서 수출할 때는 s 73(2) 물질과 수은(s 75B) 모두 사전승인.",
+      "legal_basis": "Industrial Chemicals Act 2019 s 163(1)(b); Industrial Chemicals (General) Rules 2019 ss 70A–75E",
+      "source_url": "https://www.legislation.gov.au/F2019L01543/latest/text",
+      "license": "Federal Register of Legislation 수록 법령: 호주 연방(Commonwealth) 저작물, CC BY 4.0 라이선스(출처 표시)."
+    }
+  }
+}

@@ -33,6 +33,10 @@ S:\chemip_trade_controls_venv\Scripts\python.exe -I scripts\trade_controls\colle
 | `parse_jp_cscl.py` | 일본 化審法 第一種·第二種特定化学物質, 監視化学物質 (METI 목록 + NITE J-CHECK CAS) |
 | `jp_meti_pdf.py` / `jp_jcheck.py` | `parse_jp_cscl.py` 보조: METI 목록 PDF 읽기 / J-CHECK 조회 |
 | `parse_jp_poison.py` | 일본 毒物及び劇物取締法 毒物·劇物 (NIHS 毒劇物 검색용 파일; CAS 는 예시) |
+| `parse_au_aiic.py` | 호주 AICIS 산업화학물질 목록(AIIC) 내려받기 .xlsx(검색 페이지의 다운로드 링크를 매번 읽음). 등재 여부(`absence_note`)·등재 조건 |
+| `parse_au_legislation.py` | 호주 연방법령(legislation.gov.au 최신 통합본 HTML): 수입금지규정 1956 부속서 9 유기염소계, 산업화학물질 일반규칙 2019 제6장(로테르담 대상 도입·수출 승인, 수은) |
+| `parse_tw_tcscca.py` | 대만 毒性及關注化學物質管理法: 環境部 개방데이터 毒性化學物質(toxic_p_23, 禁止運作事項·許可用途 결합)·關注化學物質(txmg_p_76), 登錄辦法 附表九 기존화학물질 표준등록 106종 |
+| `parse_sg_nea.py` | 싱가포르 NEA PCD(HS) 제품코드 목록(EPMA 통제 유해물질, HS·제품코드·CAS) PDF |
 
 ## 출력 형식
 
@@ -44,3 +48,25 @@ S:\chemip_trade_controls_venv\Scripts\python.exe -I scripts\trade_controls\colle
 
 `directions` 는 그 나라 기준이다. `import` = 물품이 그 나라에 들어갈 때(한국 수출 시 확인), `export` = 그 나라에서
 나갈 때(한국 수입 시 상대국 수출자 의무). CAS 가 없는 그룹 항목은 `family_entries`(cas "") 로 둔다.
+
+## 아시아·태평양 — 수집하지 않은 목록(2026-10-25 확인)
+
+공식 출처에서 CAS 가 붙은 목록을 내려받을 수 없거나, 이미 다른 데이터에 있는 것. CAS 를 추정하거나 손으로 옮기지 않았다.
+
+| 나라 | 목록 | 사유 | 확인한 URL |
+|---|---|---|---|
+| AU | Poisons Standard(SUSMP) 부록·Schedule 10 | 물질명만 있고 CAS 가 없다 | https://www.legislation.gov.au (Poisons Standard) |
+| AU | 수입금지규정 부속서 11(CWC), 오존·합성온실가스(OPSGGM Act) | CWC 는 `controlled_lists`, 몬트리올은 `intl_regulatory` 에 이미 있음 | https://www.legislation.gov.au/F1996B03651/latest/text |
+| AU | AICIS 'international agreements' 안내 페이지 | www.industrialchemicals.gov.au 접속 시간 초과 — 법령 본문(일반규칙 제6장)으로 대신 수집 | https://www.industrialchemicals.gov.au/ |
+| TW | 既有化學物質清單(TCSI) 전체 | 化學物質登錄平台 로그인 검색만 제공, 일괄 내려받기 없음 | https://data.gov.tw (MOENV 데이터셋 목록 확인) |
+| TW | 勞動部 優先管理化學品·管制性化學品 | 부표가 유해성 분류·물질명만 있고 CAS 없음 | https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=N0060064 , pcode=N0060068 |
+| TH | 유해물질법(พ.ร.บ.วัตถุอันตราย พ.ศ. 2535) บัญชีรายชื่อวัตถุอันตราย(DIW 등) | DIW 사이트 Incapsula 차단, 관보(ratchakitcha) Cloudflare 챌린지, data.go.th 403 — 이 서버에서 원문을 받을 수 없음. 또 2556 고시 + 개정 고시 통합본이 공식 배포되지 않음 | https://www.diw.go.th/webdiw/ , https://ratchakitcha.soc.go.th/ , https://data.go.th/ |
+| VN | 법령 24/2026 부록 I~IV 외 목록 | 부록 I~IV 는 `intl_regulatory`(VN_DECREE24_*)에 이미 있음. 법령 26/2026 은 법령 24 목록을 인용할 뿐 별도 CAS 부록 없음. 국가화학물질목록은 일괄 공개본 없음 | https://vbpl.moj.gov.vn |
+| IN | MSIHC 규칙 1989 부속서 1 제2부(684종) | India Code 통합본(msihc_rules_ameded_upto_date.pdf)은 물질명만 있고 CAS 없음(이 서버에서 indiacode 는 504) | https://www.indiacode.nic.in/ViewFileUploaded?path=AC_CEN_16_18_00011_198629_1517807327582/rulesindividualfile/&file=msihc_rules_ameded_upto_date.pdf |
+| IN | DGFT ITC(HS) 수입 제한 화학물질 | HS 코드 기준이며 CAS 대응표가 없음 | https://www.dgft.gov.in |
+| MY | DOE MyEHS 'Scheduled EHS'(79건) | 공식 API 로 받을 수 있으나 CAS 가 물질명과 어긋나 있음(예: 'DIOCTYLTIN COMPOUNDS' 84-69-5, 'CADMIUM AND ITS COMPOUNDS' 1163-19-5, 'BENZIDINE…' 71-43-2). 잘못된 일치를 만들 수 있어 쓰지 않음 | https://myehs.doe.gov.my/scheduled-ehs |
+| MY | DOSH ICOP 분류 화학물질 목록(Part 1) | www.dosh.gov.my 502 | https://www.dosh.gov.my/ |
+| ID | PP 74/2001 부록 I(B3 사용 가능·제한·금지) | BPK 공식 PDF 에 부록이 없음, KLHK SIB3POP 호스트 이름 해석 불가 | https://peraturan.bpk.go.id/Download/42458/PP%20NO%2074%20TH%202001.pdf |
+| PH | PICCS, Priority Chemical List, CCO | PICCS 는 로그인 검색만(opms.emb.gov.ph), chemical.emb.gov.ph 403/TLS 오류, emb.gov.ph 403 | https://opms.emb.gov.ph/piccs_search/ , https://chemical.emb.gov.ph/ |
+| SG | EPMA 제2부속서 Table 1 | 물질명·제외 기준만 있음 — CAS 는 같은 NEA 의 제품코드 목록으로 수집(원본은 출처 기록으로 보관) | https://www.nea.gov.sg/docs/default-source/hs/hs--table-1-(27022026).pdf |
+| SG | 화학무기(금지)법 통제 화학물질 | CWC 는 `controlled_lists` 에 이미 있음. SSO(sso.agc.gov.sg)는 이 서버에서 403 | https://sso.agc.gov.sg/Act/EPMA1999 |

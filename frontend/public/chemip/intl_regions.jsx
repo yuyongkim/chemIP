@@ -18,6 +18,9 @@ const INTL_JURISDICTIONS = {
   VN: { ko: "베트남", en: "Vietnam", iso: ["704"] },
   CN: { ko: "중국", en: "China", iso: ["156"] },
   JP: { ko: "일본", en: "Japan", iso: ["392"] },
+  AU: { ko: "호주", en: "Australia", iso: ["036"] },
+  TW: { ko: "대만", en: "Taiwan", iso: ["158"] },
+  SG: { ko: "싱가포르", en: "Singapore", iso: ["702"] },
   INTL: { ko: "국제협약", en: "International conventions", iso: [] },
 };
 
