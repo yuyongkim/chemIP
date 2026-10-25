@@ -99,6 +99,9 @@
 .tc-law-peek { grid-column: 1 / -1; font-size: 12px; color: var(--fg-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .tc-law[open] .tc-law-peek { display: none; }
 .tc-law-kinds { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--unit); }
+.tc-law-names { grid-column: 1 / -1; display: flex; flex-direction: column; gap: calc(var(--unit) * 0.5); margin-top: calc(var(--unit) * 0.5); font-size: 13px; color: var(--fg); }
+.tc-law-name-item::before { content: "· "; color: var(--fg-muted); }
+.tc-law[open] .tc-law-names { display: none; }
 .tc-law > .ui-collapse-body { padding: 0 0 calc(var(--unit) * 3) calc(var(--unit) * 4.5); }
 .tc-law .tc-item { padding: calc(var(--unit) * 2.5) 0; }
 .tc-bullets { margin: 0; padding-left: calc(var(--unit) * 4); }
