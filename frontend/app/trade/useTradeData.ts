@@ -8,7 +8,7 @@ import {
   PRODUCT_SEED_KEYWORDS,
 } from './constants';
 import type { FraudItem, PriceItem, ProductItem, StrategyItem, TabId } from './types';
-import { dedupeProducts, fetchJsonSafe, filterProductsByKeyword, stripHtml } from './utils';
+import { dedupeProducts, fetchJsonSafe, filterProductsByKeyword } from './utils';
 
 interface FetchDataParams {
   tab: TabId;
@@ -57,25 +57,7 @@ export function useTradeData() {
 
             baseItems = dedupeProducts(merged);
 
-            if (baseItems.length === 0) {
-              const fallbackMerged: ProductItem[] = [];
-              for (const seed of PRODUCT_SEED_KEYWORDS.slice(0, 3)) {
-                const fallbackQuery = `${seed} ${c || 'global'} market trends`;
-                const fallbackResult = await fetchJsonSafe(
-                  `/api/trade/naver-news?q=${encodeURIComponent(fallbackQuery)}&limit=20&page=1`,
-                );
-                const fallbackPayload = (fallbackResult.data as { data?: unknown[] } | null) ?? null;
-                const fallbackItems = Array.isArray(fallbackPayload?.data) ? (fallbackPayload.data as ProductItem[]) : [];
-                if (fallbackItems.length > 0) {
-                  fallbackMerged.push(...fallbackItems);
-                }
-              }
-              baseItems = dedupeProducts(fallbackMerged);
-              if (baseItems.length > 0) {
-                setFallbackNote('Insufficient KOTRA data; showing alternative news sources.');
-              }
-            }
-
+            // NAVER 검색결과는 KOTRA 목록에 섞지 않는다(검색 API 약관 2.1~2.4). 라이브 UI는 별도 블록으로 보인다.
             if (baseItems.length === 0) {
               const filteredDemo = c ? DEMO_PRODUCT_ITEMS.filter((item) => item.cntryNm.includes(c)) : DEMO_PRODUCT_ITEMS;
               baseItems = filteredDemo.length > 0 ? filteredDemo : DEMO_PRODUCT_ITEMS;
@@ -109,30 +91,15 @@ export function useTradeData() {
             return;
           }
 
-          const fallbackQuery = `${c || k || 'global'} market entry strategy analysis`;
-          const fallbackResult = await fetchJsonSafe(`/api/trade/naver-news?q=${encodeURIComponent(fallbackQuery)}&limit=20&page=1`);
-          const fallbackPayload = (fallbackResult.data as { data?: unknown[] } | null) ?? null;
-          const fallbackItems = (Array.isArray(fallbackPayload?.data) ? (fallbackPayload.data as ProductItem[]) : []).map((n) => ({
-            title: stripHtml(n.newsTitl || 'Market entry strategy reference'),
-            country: c || n.cntryNm || 'Global',
-            date: n.newsWrtDt || '',
-            url: n.newsUrl || n.kotraNewsUrl || '',
-            summary: stripHtml(n.cntntSumar || n.newsBdt || ''),
-          }));
-          setRawData(fallbackItems);
-          setTotal(fallbackItems.length);
-          if (fallbackItems.length > 0) {
-            setFallbackNote(`No KOTRA strategy data; showing news-based references (query: ${fallbackQuery})`);
-          } else {
-            const filteredDemo = c ? DEMO_STRATEGY_ITEMS.filter((item) => item.country.includes(c)) : DEMO_STRATEGY_ITEMS;
-            const demo = filteredDemo.length > 0 ? filteredDemo : DEMO_STRATEGY_ITEMS;
-            setRawData(demo);
-            setTotal(demo.length);
-            if (demo.length > 0) {
-              setFallbackNote('No live strategy data available; showing sample data.');
-            } else if (!result.ok || !fallbackResult.ok) {
-              setFallbackNote(`Strategy API error (${result.status || fallbackResult.status || 'network'})`);
-            }
+          // NAVER 검색결과를 KOTRA 진출전략 자리에 넣지 않는다(검색 API 약관 2.1~2.4).
+          const filteredDemo = c ? DEMO_STRATEGY_ITEMS.filter((item) => item.country.includes(c)) : DEMO_STRATEGY_ITEMS;
+          const demo = filteredDemo.length > 0 ? filteredDemo : DEMO_STRATEGY_ITEMS;
+          setRawData(demo);
+          setTotal(demo.length);
+          if (demo.length > 0) {
+            setFallbackNote('No live strategy data available; showing sample data.');
+          } else if (!result.ok) {
+            setFallbackNote(`Strategy API error (${result.status || 'network'})`);
           }
           return;
         }
@@ -147,34 +114,15 @@ export function useTradeData() {
             return;
           }
 
-          const fallbackQuery = `${c || 'global'} ${k || 'prices'} exchange rate market trends`;
-          const fallbackResult = await fetchJsonSafe(`/api/trade/naver-news?q=${encodeURIComponent(fallbackQuery)}&limit=20&page=1`);
-          const fallbackPayload = (fallbackResult.data as { data?: unknown[] } | null) ?? null;
-          const fallbackItems = (Array.isArray(fallbackPayload?.data) ? (fallbackPayload.data as ProductItem[]) : []).map((n) => ({
-            itemName: stripHtml(n.newsTitl || 'Price-related news'),
-            price: '-',
-            unit: '',
-            country: c || n.cntryNm || 'Global',
-            currency: '',
-            category: 'News-based price trends',
-            newsUrl: n.newsUrl || n.kotraNewsUrl || '',
-            date: n.newsWrtDt || '',
-            source: n.source || 'Naver',
-          }));
-          setRawData(fallbackItems);
-          setTotal(fallbackItems.length);
-          if (fallbackItems.length > 0) {
-            setFallbackNote(`No KOTRA price data; showing Naver news as fallback (query: ${fallbackQuery})`);
-          } else {
-            const filteredDemo = c ? DEMO_PRICE_ITEMS.filter((item) => (item.country || '').includes(c)) : DEMO_PRICE_ITEMS;
-            const demo = filteredDemo.length > 0 ? filteredDemo : DEMO_PRICE_ITEMS;
-            setRawData(demo);
-            setTotal(demo.length);
-            if (demo.length > 0) {
-              setFallbackNote('No live price data available; showing sample data.');
-            } else if (!result.ok || !fallbackResult.ok) {
-              setFallbackNote(`Price data API error (${result.status || fallbackResult.status || 'network'})`);
-            }
+          // NAVER 검색결과를 KOTRA 가격 자리에 넣지 않는다(검색 API 약관 2.1~2.4).
+          const filteredDemo = c ? DEMO_PRICE_ITEMS.filter((item) => (item.country || '').includes(c)) : DEMO_PRICE_ITEMS;
+          const demo = filteredDemo.length > 0 ? filteredDemo : DEMO_PRICE_ITEMS;
+          setRawData(demo);
+          setTotal(demo.length);
+          if (demo.length > 0) {
+            setFallbackNote('No live price data available; showing sample data.');
+          } else if (!result.ok) {
+            setFallbackNote(`Price data API error (${result.status || 'network'})`);
           }
           return;
         }
