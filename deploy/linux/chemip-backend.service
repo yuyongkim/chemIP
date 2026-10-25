@@ -1,0 +1,54 @@
+# ChemIP 백엔드 — FastAPI/uvicorn, 127.0.0.1:7011 에서만 듣는다(외부 공개는 프론트엔드 → cloudflared 경유).
+# 경로·포트 값은 layout.env 와 같다. 비밀값은 /etc/chemip/chemip.env (env.server.example 참조).
+# 설치: install_app.sh 가 /etc/systemd/system/ 로 복사한다.
+
+[Unit]
+Description=ChemIP backend (uvicorn backend.main:app on 127.0.0.1:7011)
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=20
+
+[Service]
+Type=simple
+User=chemip
+Group=chemip
+WorkingDirectory=/srv/chemip/app
+EnvironmentFile=-/etc/chemip/chemip.env
+
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=PORT=7011
+Environment=LOG_DIR=/srv/chemip/app/logs
+# 데이터 경로
+Environment=TERMINOLOGY_DB_PATH=/srv/chemip/app/data/terminology.db
+Environment=KOSHA_GUIDE_DATA_DIR=/srv/chemip/shared/kosha_guide
+Environment=CHEMENG_INCIDENTS_DB=/srv/chemip/shared/siblings/incidents.db
+# 특허 색인(135 GB · 5.9 GB)은 처음에는 올리지 않는다. 파일이 없으면 특허 색인 결과는 빈 목록이고 특허 탭은 KIPRIS API 만 쓴다.
+# 나중에 블록 볼륨에 올리면 이 두 줄의 경로만 바꾼다.
+Environment=GLOBAL_PATENT_INDEX_DB_PATH=/srv/chemip/app/data/global_patent_index.db
+Environment=USPTO_INDEX_DB_PATH=/srv/chemip/app/data/uspto_index.db
+# EPC 규제 본문 검색 서비스는 클라우드에 없다 → 화면은 "연결하지 못했습니다" 로 물러난다.
+Environment=EPC_QUERY_URL=http://127.0.0.1:15412
+# 로컬 LLM(Ollama)이 없으므로 AI 보고서는 규칙 기반 요약으로 물러난다.
+Environment=LLM_ENABLED=false
+# 운영 설정(PC .env 와 같은 값)
+Environment=CORS_ORIGINS=https://chemip.yule.pics,http://localhost:7000,http://127.0.0.1:7000
+Environment=RATE_LIMIT_ENABLED=true
+Environment=RATE_LIMIT_WINDOW_SECONDS=60
+Environment=RATE_LIMIT_MAX_REQUESTS=300
+
+ExecStart=/srv/chemip/venv/bin/python -m uvicorn backend.main:app --host 127.0.0.1 --port 7011 --no-proxy-headers
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=20
+
+# 격리: 코드는 읽기 전용, 데이터·로그만 쓰기 가능
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/chemip/app/data /srv/chemip/app/logs
+
+[Install]
+WantedBy=multi-user.target

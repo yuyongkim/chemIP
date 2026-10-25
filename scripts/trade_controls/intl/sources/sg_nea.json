@@ -1,0 +1,41 @@
+{
+  "parser": "parse_sg_nea",
+  "downloads": {
+    "page": {
+      "url": "https://www.nea.gov.sg/our-services/pollution-control/chemical-safety/hazardous-substances",
+      "file": "sg/nea_hazardous_substances.html"
+    },
+    "table1": {
+      "url": "https://www.nea.gov.sg/docs/default-source/hs/hs--table-1-(27022026).pdf",
+      "file": "sg/nea_hs_table1_27022026.pdf"
+    },
+    "product_codes": {
+      "url": "https://www.nea.gov.sg/docs/default-source/hs/pcd-hs-prod-code-(chemical-names)_17sep2026.pdf",
+      "file": "sg/nea_pcd_hs_prodcode_chemical_names_17sep2026.pdf"
+    }
+  },
+  "lists": {
+    "hazardous_substances": {
+      "file": "SG_EPMA_HAZARDOUS_SUBSTANCES.json",
+      "list_id": "SG_EPMA_HAZARDOUS_SUBSTANCES",
+      "jurisdiction": "SG",
+      "law": "Environmental Protection and Management Act 1999 (EPMA)",
+      "title": "싱가포르 EPMA 통제 유해물질 — NEA PCD(HS) HS·제품코드·CAS 목록",
+      "directions": [
+        "import",
+        "export"
+      ],
+      "obligation_for_kr_exporter": "EPMA 제2부속서 유해물질(제외 기준 이하 제외)을 싱가포르에 수입·수출·판매하려면 NEA 오염관리국의 Hazardous Substances Licence 가 필요하고, 수입·수출 건마다 TradeNet 허가 신청 시 해당 PCD 제품코드를 신고해야 한다(무허가 수출입은 EPMA 위반). 한국 수출자는 싱가포르 수입자의 라이선스와 제품코드를 확인.",
+      "legal_basis": "Environmental Protection and Management Act 1999 Second Schedule; Environmental Protection and Management (Hazardous Substances) Regulations",
+      "source_url": "https://www.nea.gov.sg/our-services/pollution-control/chemical-safety/hazardous-substances",
+      "license": "NEA 웹사이트 게시 자료(싱가포르 정부 저작물) — NEA Terms of Use 적용, 출처 표시. NEA 는 CAS 목록이 완전하지 않고 참고용이라고 명시.",
+      "known_source_errors": {
+        "2424-06-1": "NEA 표 'CAPTAFOL (Fungicide) – Not in aerosol containers' 행에 2424-06-1 로 인쇄됨(체크디지트 불일치, 다른 captafol 행과 다름). 그 행만 제외.",
+        "882109-81-0": "NEA 표 PFOA 행 CAS 열에 '882109-81-0' 으로 인쇄됨(체크디지트 불일치). 고치지 않고 제외.",
+        "13172-21-6": "NEA 표 'PHOSPHAMIDON (Laboratory reagents)' 행에 13172-21-6 으로 인쇄됨(체크디지트 불일치, 다른 phosphamidon 행과 다름). 그 행만 제외.",
+        "2737-54-9": "NEA 표 POLYCHLORINATED NAPHTHALENES 두 행에 2737-54-9 로 인쇄됨(체크디지트 불일치). 고치지 않고 제외.",
+        "67927-27-4": "NEA 표 POLYCHLORINATED NAPHTHALENES 두 행에 67927-27-4 로 인쇄됨(체크디지트 불일치). 고치지 않고 제외."
+      }
+    }
+  }
+}

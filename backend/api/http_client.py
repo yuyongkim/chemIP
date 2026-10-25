@@ -86,8 +86,10 @@ _ALLOWED_HOSTS = frozenset({
     "eutils.ncbi.nlm.nih.gov",
     "openapi.naver.com",
     "echa.europa.eu",
+    "chem.echa.europa.eu",
     "comptox.epa.gov",
     "www.cdc.gov",
+    "openapi.gg.go.kr",
     "localhost",
     "127.0.0.1",
 })
@@ -114,6 +116,19 @@ def _build_cache_key(url: str, params: dict[str, Any] | None) -> str:
         else:
             flattened.append((str(key), str(value)))
     return f"{url}?{urlencode(flattened, doseq=True)}"
+
+
+def _redact_cache_key(cache_key: str) -> str:
+    from urllib.parse import parse_qsl, urlsplit, urlunsplit
+
+    secret_names = {"key", "servicekey", "apikey", "api_key", "accesskey"}
+    parts = urlsplit(cache_key)
+    if not parts.query:
+        return cache_key
+    pairs = []
+    for key, value in parse_qsl(parts.query, keep_blank_values=True):
+        pairs.append((key, "***" if key.lower() in secret_names else value))
+    return urlunsplit((parts.scheme, parts.netloc, parts.path, urlencode(pairs), parts.fragment))
 
 
 def _clone_response(
@@ -154,7 +169,7 @@ def safe_get(
         with _cache_lock:
             cached = _response_cache.get(cache_key)
             if cached and cached[0] > time():
-                logger.info("HTTP cache hit url=%s", cache_key)
+                logger.info("HTTP cache hit url=%s", _redact_cache_key(cache_key))
                 return _clone_response(
                     url=cached[4],
                     status_code=cached[1],

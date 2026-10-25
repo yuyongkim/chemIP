@@ -29,7 +29,15 @@
   --hazard: oklch(0.62 0.20 30);           /* hazard orange */
   --hazard-soft: oklch(0.95 0.05 30);
   --warn: oklch(0.75 0.15 85);             /* amber */
+  --warn-soft: oklch(0.96 0.05 85);
   --info: oklch(0.58 0.12 220);
+  --info-soft: oklch(0.95 0.03 220);
+  /* 옅은 바탕(-soft) 위 글자색. 어두운 테마에서 따로 밝게 바꾼다 */
+  --safe-ink: oklch(0.32 0.12 145);
+  --hazard-ink: oklch(0.38 0.16 30);
+  --warn-ink: oklch(0.42 0.10 70);
+  --info-ink: oklch(0.38 0.10 230);
+  --on-accent: oklch(1 0 0);               /* 진한 accent 바탕 위 글자 */
 
   /* Radii & elevation */
   --r-0: 0px;
@@ -46,7 +54,9 @@
 
   /* Layout */
   --max-w: 1440px;
-  --rail: 64px;
+  --rail: 88px;
+  --topbar-h: 52px;   /* 상단 바(.topbar) 높이 — sticky 위치 계산용 */
+  --cmdbar-h: 56px;   /* 제품 화면 명령 줄(.cmd) 높이 */
 }
 
 /* Dark tweak */
@@ -65,6 +75,13 @@
   --accent-soft: oklch(0.28 0.08 250);
   --safe-soft: oklch(0.26 0.06 145);
   --hazard-soft: oklch(0.28 0.08 30);
+  --warn-soft: oklch(0.28 0.06 85);
+  --info-soft: oklch(0.26 0.04 220);
+  --accent-ink: oklch(0.82 0.10 250);
+  --safe-ink: oklch(0.84 0.12 145);
+  --hazard-ink: oklch(0.84 0.10 30);
+  --warn-ink: oklch(0.86 0.10 85);
+  --info-ink: oklch(0.84 0.08 220);
   --shadow-1: 0 1px 0 oklch(0 0 0 / .4);
   --shadow-2: 0 8px 24px -8px oklch(0 0 0 / .5);
 }
@@ -74,6 +91,12 @@
 :root[data-accent="teal"]   { --accent: oklch(0.58 0.14 195); --accent-ink: oklch(0.34 0.10 195); --accent-soft: oklch(0.94 0.04 195); }
 :root[data-accent="copper"] { --accent: oklch(0.60 0.14 48);  --accent-ink: oklch(0.36 0.12 48);  --accent-soft: oklch(0.95 0.04 48);  }
 :root[data-accent="mono"]   { --accent: oklch(0.28 0.01 250); --accent-ink: oklch(0.18 0.01 250); --accent-soft: oklch(0.92 0.003 250); }
+
+/* 어두운 테마에서는 accent 변형도 글자색(ink)을 밝게 둔다 */
+:root[data-theme="dark"][data-accent] {
+  --accent-ink: color-mix(in oklch, var(--accent) 40%, oklch(0.96 0.004 240));
+  --accent-soft: color-mix(in oklch, var(--accent) 30%, oklch(0.14 0.012 250));
+}
 
 /* Type tweaks */
 :root[data-type="serif"]   { --font-display: "Instrument Serif", "Pretendard Variable", serif; }

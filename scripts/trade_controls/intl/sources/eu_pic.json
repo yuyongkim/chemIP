@@ -1,0 +1,59 @@
+{
+  "parser": "parse_eu_pic",
+  "celex_prefix": "02012R0649",
+  "downloads": {
+    "sparql": "https://publications.europa.eu/webapi/rdf/sparql",
+    "consolidated": "http://publications.europa.eu/resource/celex/{latest 02012R0649-YYYYMMDD}"
+  },
+  "lists": {
+    "part1": {
+      "file": "EU_PIC_ANNEX_I_PART1.json",
+      "list_id": "EU_PIC_ANNEX_I_PART1",
+      "jurisdiction": "EU",
+      "law": "PIC Regulation (EU) No 649/2012",
+      "title": "EU PIC 규정 부속서 I 제1부 — 수출통보 대상 화학물질 (Export notification)",
+      "directions": ["export"],
+      "obligation_for_kr_exporter": "EU에서 수출(한국 등으로 수입)할 때 적용: EU 수출자는 해당 연도 첫 수출 35일 전 지정국가기관(DNA)에 수출통보, 이후 매년 첫 수출 전 통보(제8조). ECHA가 수입국(한국: 환경부·국립환경과학원)에 전달. 수출 포장·SDS는 수입국 언어 요건 준수(제17조). 한국 수입자는 EU 공급자에게 수출통보 참조번호(RIN) 확인.",
+      "legal_basis": "Regulation (EU) No 649/2012 Art. 8, 17, 19, Annex I Part 1",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2012/649/oj",
+      "license": "EUR-Lex: Commission Decision 2011/833/EU 에 따라 출처 표시 조건으로 재사용 허용. 법적 효력은 EU 관보 인쇄본."
+    },
+    "part2": {
+      "file": "EU_PIC_ANNEX_I_PART2.json",
+      "list_id": "EU_PIC_ANNEX_I_PART2",
+      "jurisdiction": "EU",
+      "law": "PIC Regulation (EU) No 649/2012",
+      "title": "EU PIC 규정 부속서 I 제2부 — PIC 통보 대상 화학물질 (Explicit consent required)",
+      "directions": ["export"],
+      "obligation_for_kr_exporter": "EU에서 수출(한국 등으로 수입)할 때 적용: 수출통보에 더해 수입국의 명시적 동의(explicit consent)가 있어야 수출 가능(제14조(6)). 동의 요청은 EU 위원회·ECHA가 수입국 DNA(한국: 환경부)에 한다. 한국 수입자는 동의 처리 여부를 EU 공급자와 확인.",
+      "legal_basis": "Regulation (EU) No 649/2012 Art. 11, 14(6), Annex I Part 2",
+      "known_source_errors": {"92-92-3": "Part 2 의 4-Nitrobiphenyl CAS 가 '92-92-3'(체크디지트 불일치)으로 인쇄됨. 같은 규정 Part 1 은 92-93-3. 추정 보정하지 않고 family_entries 로 둔다."},
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2012/649/oj",
+      "license": "EUR-Lex: Commission Decision 2011/833/EU 에 따라 출처 표시 조건으로 재사용 허용."
+    },
+    "part3": {
+      "file": "EU_PIC_ANNEX_I_PART3.json",
+      "list_id": "EU_PIC_ANNEX_I_PART3",
+      "jurisdiction": "EU",
+      "law": "PIC Regulation (EU) No 649/2012",
+      "title": "EU PIC 규정 부속서 I 제3부 — 로테르담협약 PIC 절차 대상 (Rotterdam Annex III)",
+      "directions": ["export"],
+      "obligation_for_kr_exporter": "EU에서 수출(한국 등으로 수입)할 때 적용: 수입국이 로테르담협약 사무국에 제출한 수입결정(import response)에 따름(제13~14조). 한국의 수입결정이 '동의'가 아니면 EU 수출 불가. 한국 수입자는 한국의 로테르담 수입결정(PIC Circular)을 확인.",
+      "legal_basis": "Regulation (EU) No 649/2012 Art. 13, 14, Annex I Part 3; Rotterdam Convention Annex III",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2012/649/oj",
+      "license": "EUR-Lex: Commission Decision 2011/833/EU 에 따라 출처 표시 조건으로 재사용 허용."
+    },
+    "annex5": {
+      "file": "EU_PIC_ANNEX_V_EXPORT_BAN.json",
+      "list_id": "EU_PIC_ANNEX_V_EXPORT_BAN",
+      "jurisdiction": "EU",
+      "law": "PIC Regulation (EU) No 649/2012",
+      "title": "EU PIC 규정 부속서 V — 수출금지 화학물질·제품 (Export ban)",
+      "directions": ["export"],
+      "obligation_for_kr_exporter": "EU에서 한국 등 제3국으로 수출 금지(제15조(2)). 한국 수입자는 해당 물질·제품을 EU 공급자로부터 들여올 수 없다.",
+      "legal_basis": "Regulation (EU) No 649/2012 Art. 15(2), Annex V",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2012/649/oj",
+      "license": "EUR-Lex: Commission Decision 2011/833/EU 에 따라 출처 표시 조건으로 재사용 허용."
+    }
+  }
+}

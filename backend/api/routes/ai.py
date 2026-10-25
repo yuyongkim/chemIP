@@ -5,6 +5,7 @@ import logging
 from fastapi import APIRouter, Query
 from pydantic import BaseModel
 
+from backend.api import kipris_policy
 from backend.config.settings import settings
 from backend.core.guide_linker import normalize_search_terms, recommend_guides
 from backend.core.kosha_guide_store import KoshaGuideStore
@@ -59,6 +60,8 @@ def analyze_chemical(request: AnalysisRequest):
     with TerminologyDB() as db:
         cache_reader = getattr(db, "get_ai_cache", None)
         cached = cache_reader(request.chemId) if callable(cache_reader) else None
+        if cached and not kipris_policy.ai_evidence_enabled() and kipris_policy.contains_kipris_evidence(cached):
+            cached = None  # KIPRIS_IN_AI=false: rebuild without KIPRIS evidence
         if cached and not request.use_llm == False:
             logger.info("AI cache hit for %s", request.chemId)
             return {**cached, "cached": True}

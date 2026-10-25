@@ -1,0 +1,35 @@
+{
+  "parser": "parse_cn_monitored",
+  "downloads": {
+    "catalog_2020": {
+      "url": "https://www.gov.cn/gongbao/content/2020/content_5530348.htm",
+      "file": "cn/monitored/content_5530348.htm"
+    },
+    "regulation_2011": {
+      "url": "https://www.gov.cn/gongbao/content/2011/content_1860782.htm",
+      "file": "cn/monitored/reg_2011_content_1860782.htm",
+      "_note": "监控化学品管理条例 (2011 修订) — read to verify 第十四~十八条 quoted in obligation_for_kr_exporter; not parsed."
+    },
+    "mofcom_dual_use_2026": {
+      "url": "https://www.mofcom.gov.cn/zwgk/zcfb/art/2025/art_c03d1e511b2b486e829d68e8f1422aff.html",
+      "file": "cn/mofcom/mofcom_dualuse_2026.pdf",
+      "_note": "2026年度《两用物项和技术进出口许可证管理目录》 Ⅰ-一 lists 名录 第一~三类 for import licensing; read for the obligation text, not parsed."
+    }
+  },
+  "expected_items": {"第一类": 16, "第二类": 14, "第三类": 17},
+  "lists": {
+    "monitored": {
+      "file": "CN_MONITORED_CHEMICALS.json",
+      "list_id": "CN_MONITORED_CHEMICALS",
+      "jurisdiction": "CN",
+      "law": "监控化学品管理条例",
+      "title": "중국 각류 감시화학품 목록(各类监控化学品名录, 2020) — CWC 이행 제1~3류 + 제4류 DOC",
+      "directions": ["import", "export"],
+      "obligation_for_kr_exporter": "중국 수입 시: 제1·2·3류는 공업정보화부·상무부 지정 단위(被指定单位)에 위탁해서만 수입 가능(条例 第十四条). 제1류는 과학연구·의료·제약·방호 목적만, 최종용도 증명 → 공업정보화부 의견 후 국무원 비준 → 상무부 수입허가증(第十五条). 제2·3류는 최종용도 설명·증명 제출 → 공업정보화부 비준 → 상무부 수입허가증(第十六条; 2026 两用物项和技术进口许可证管理目录 Ⅰ-一). 한국 수출자는 최종용도 증명서류를 수입자에게 제공. 제4류(DOC, 특히 P·S·F 함유)는 중국 내 생산 특별허가 대상(수입 허가 목록에는 없음).",
+      "legal_basis": "监控化学品管理条例(国务院令第190号, 2011 修订) 第二条·第十四~十八条; 各类监控化学品名录(工业和信息化部令第52号, 2020); 商务部·海关总署 2026年度《两用物项和技术进出口许可证管理目录》Ⅰ-一",
+      "source_url": "https://www.gov.cn/gongbao/content/2020/content_5530348.htm",
+      "license": "중국 정부 공보 게재 부령. 중국 저작권법 제5조: 법률·법규·국가기관 결정·명령 등 공문서는 저작권 보호 대상이 아님.",
+      "notes": ["제1~3류는 CWC 부속서 목록 1~3 의 중국 이행. CWC 목록 자체는 cwc_schedules.json(OPCW)에 별도로 있다. 여기 CAS 는 중국 名录 원문 괄호 표기 그대로."]
+    }
+  }
+}

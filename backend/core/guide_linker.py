@@ -162,6 +162,8 @@ def recommend_guides(
     if not terms:
         return []
 
+    exact_cas_terms = [term for term in terms if CAS_PATTERN.fullmatch(term)]
+
     merged: dict[str, dict[str, Any]] = {}
     for term in terms:
         items, _ = store.search(query=term, limit=per_term_limit, offset=0)
@@ -228,7 +230,9 @@ def recommend_guides(
         )
         enriched.append(row)
 
-    if any(int(item.get("exact_match_score", 0)) > 0 for item in enriched):
+    if exact_cas_terms and any(int(item.get("exact_cas_matches", 0)) > 0 for item in enriched):
+        enriched = [item for item in enriched if int(item.get("exact_cas_matches", 0)) > 0]
+    elif any(int(item.get("exact_match_score", 0)) > 0 for item in enriched):
         enriched = [item for item in enriched if int(item.get("exact_match_score", 0)) > 0]
 
     enriched.sort(

@@ -23,6 +23,20 @@ def _ensure_available() -> None:
         )
 
 
+def _filter_cached_recommendations(recommendations: list[dict], terms: list[str]) -> list[dict]:
+    cas_terms = {term for term in terms if term and term.count("-") == 2}
+    if not cas_terms:
+        return recommendations
+
+    exact_matches: list[dict] = []
+    for item in recommendations:
+        for cas_no in item.get("guide_cas_numbers", []) or []:
+            if cas_no in cas_terms:
+                exact_matches.append(item)
+                break
+    return exact_matches or recommendations
+
+
 @router.get("/status")
 def get_guide_status():
     return store.stats()
@@ -85,15 +99,17 @@ def recommend_guides_for_chemical(
 
             if not refresh:
                 cached = db.get_guide_mappings(chem_id, limit=limit)
+                cached_terms = normalize_search_terms(
+                    chemical_name,
+                    meta.get("name", ""),
+                    meta.get("name_en", ""),
+                    meta.get("cas_no", ""),
+                )
                 if cached:
+                    cached = _filter_cached_recommendations(cached, cached_terms)
                     return {
                         "chem_id": chem_id,
-                        "terms": normalize_search_terms(
-                            chemical_name,
-                            meta.get("name", ""),
-                            meta.get("name_en", ""),
-                            meta.get("cas_no", ""),
-                        ),
+                        "terms": cached_terms,
                         "recommendations": cached,
                         "total": len(cached),
                         "from_cache": True,

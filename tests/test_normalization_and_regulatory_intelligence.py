@@ -153,3 +153,56 @@ def test_safe_get_reuses_cached_response(monkeypatch) -> None:
     assert session.calls == 1
     assert first.json() == {"ok": True}
     assert second.json() == {"ok": True}
+
+
+def test_http_cache_log_redacts_secret_query_params() -> None:
+    redacted = http_client._redact_cache_key(
+        "https://apis.data.go.kr/example?ServiceKey=secret&KEY=gg-secret&q=benzene&accessKey=prtr"
+    )
+
+    assert "secret" not in redacted
+    assert "gg-secret" not in redacted
+    assert "prtr" not in redacted
+    assert "q=benzene" in redacted
+
+
+def test_handling_site_profile_uses_chemical_context(monkeypatch) -> None:
+    class FakeDB:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            return False
+
+        def get_chemical_meta_by_chem_id(self, chem_id):
+            assert chem_id == "001032"
+            return {"id": 68, "name": "톨루엔 (Toluene)", "name_en": "Toluene", "cas_no": "108-88-3", "source": "KOSHA"}
+
+        def get_chemical_meta_by_cas(self, _chem_id):
+            return None
+
+        def get_aliases_for_chemical(self, chem_id, limit=24):
+            assert chem_id == "001032"
+            return [{"alias": "methylbenzene"}]
+
+    class FakeHandlers:
+        def build_profile(self, **kwargs):
+            assert kwargs["cas_no"] == "108-88-3"
+            assert "methylbenzene" in kwargs["aliases"]
+            return {
+                "query": {"cas_no": kwargs["cas_no"], "terms": ["톨루엔"], "year": kwargs["year"]},
+                "sources": {
+                    "prtr_summary": {"available": True, "data": {"company_count": 610}},
+                    "gyeonggi_facilities": {"available": True, "total": 0, "data": []},
+                    "chemical_accidents": {"available": True, "total": 0, "data": []},
+                },
+            }
+
+    monkeypatch.setattr(regulations, "TerminologyDB", FakeDB)
+    monkeypatch.setattr(regulations, "_handlers", FakeHandlers())
+
+    response = client.get("/api/regulations/handlers/001032")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["chemical"]["cas_no"] == "108-88-3"
+    assert payload["sources"]["prtr_summary"]["data"]["company_count"] == 610

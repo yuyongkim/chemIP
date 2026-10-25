@@ -1,0 +1,63 @@
+# ChemIP 클라우드 서버 업로드 목록 — sync_to_server.ps1 이 이 파일만 읽는다.
+#
+# 형식:  종류 | 원본 | 서버 쪽 대상 | 옵션
+#   code    저장소 기준 상대 경로(폴더·파일·*.md 같은 glob). 묶음 code.tar 로 올라가 /srv/chemip/app/<같은 경로> 로 풀린다.
+#   exclude code 묶음에서 뺄 이름 패턴(경로 조각 하나와 비교).
+#   db      SQLite. 운영 중에도 일관된 사본이 되도록 Python backup API 로 스냅숏한 뒤 /srv/chemip/app/<대상> 로 올린다.
+#   file    일반 파일. 그대로 /srv/chemip/app/<대상> 로 올린다.
+#   state   운영 중 계속 쓰이는 SQLite(요청 게시판·이용 집계). -IncludeState 를 줄 때만 올린다(첫 이전·최종 전환 때).
+#   shared  저장소 밖 자료. /srv/chemip/shared/<대상> 로 올린다. 원본에 ${변수} 를 쓸 수 있다.
+#   shareddb 저장소 밖 SQLite. shared 와 같되 db 처럼 스냅숏해서 올린다.
+#   옵션 optional = 원본이 없으면 경고만 하고 건너뛴다.
+#
+# 올리지 않는 것: .env(비밀값) · .venv · node_modules · .next · __pycache__ · logs · backups · archive ·
+#   data/global_patent_index.db(135 GB) · data/uspto_index.db(5.9 GB) · data/pubchem_cache(1.4 GB, 빌드 스크립트 전용) ·
+#   data/terminology*.bak/.corrupted · 논문·스크린샷 · scripts/(색인 빌드용, 런타임 불필요)
+#
+# 원본 변수 기본값(sync_to_server.ps1 매개변수로 바꿀 수 있다):
+#   ${KOSHA_GUIDE_SRC}      = C:\Users\USER\Desktop\EPC engineering\datasets\kosha_guide
+#   ${CHEMENG_INCIDENTS_SRC} = C:\Users\USER\Desktop\Chem_Eng\Chem_Eng\data\incidents.db
+
+# ---- 코드 -------------------------------------------------------------
+code    | backend/                         |  |
+code    | requirements.txt                 |  |
+code    | docs/*.md                        |  |
+code    | deploy/linux/                    |  |
+code    | frontend/app/                    |  |
+code    | frontend/components/             |  |
+code    | frontend/lib/                    |  |
+code    | frontend/public/                 |  |
+code    | frontend/package.json            |  |
+code    | frontend/package-lock.json       |  |
+code    | frontend/next.config.ts          |  |
+code    | frontend/tsconfig.json           |  |
+code    | frontend/postcss.config.mjs      |  |
+code    | frontend/eslint.config.mjs       |  |
+
+exclude | __pycache__ |  |
+exclude | *.pyc       |  |
+exclude | *.log       |  |
+exclude | .env        |  |
+exclude | .env.*      |  |
+exclude | node_modules |  |
+exclude | .next       |  |
+exclude | _staging    |  |
+exclude | *.tsbuildinfo |  |
+
+# ---- 데이터(읽기 위주) ------------------------------------------------
+db      | data/terminology.db              | data/terminology.db |
+db      | data/echo_cas_index.db           | data/echo_cas_index.db |
+db      | data/kr_permit_context.db        | data/kr_permit_context.db |
+db      | data/prtr/prtr_facilities.sqlite | data/prtr/prtr_facilities.sqlite |
+file    | data/prtr/prtr_summary_2022.xlsx | data/prtr/prtr_summary_2022.xlsx |
+
+# ---- 운영 상태(전환 시점에만) -----------------------------------------
+state   | data/feedback.db                 | data/feedback.db |
+state   | data/usage.db                    | data/usage.db |
+
+# ---- 저장소 밖 자료 ---------------------------------------------------
+# KOSHA 가이드: 백엔드는 guides.json 과 normalized/guide_documents_text.json 두 개만 읽는다(files/ PDF 539 MB 는 불필요).
+shared  | ${KOSHA_GUIDE_SRC}/guides.json                            | kosha_guide/guides.json |
+shared  | ${KOSHA_GUIDE_SRC}/normalized/guide_documents_text.json   | kosha_guide/normalized/guide_documents_text.json |
+# Chem_Eng 사고 사례 DB(읽기 전용). 없으면 사고 패널만 "연결하지 못했습니다" 로 물러난다.
+shareddb| ${CHEMENG_INCIDENTS_SRC}                                  | siblings/incidents.db | optional

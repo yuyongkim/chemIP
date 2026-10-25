@@ -1,0 +1,10 @@
+{
+  "_note": "Korean 별표 8 English names that do not textually match the INCB Red List name. Each alias states the evidence. Keys and values are matched with common.name_key().",
+  "kr_to_incb": [
+    {
+      "kr_name_en": "3,4-methylenedioxyphenyl-2-propanone methyl glycidic acid methyl ester",
+      "incb_name": "3,4-MDP-2-P methyl glycidate",
+      "evidence": "INCB Red List (23rd ed.) footnote 5: '3,4-MDP-2-P methyl glycidic acid and its methyl ester were included in Table 1'; the Table I entry for the methyl ester is printed as '3,4-MDP-2-P methyl glycidate' (CAS 13605-48-6)."
+    }
+  ]
+}

@@ -9,8 +9,32 @@ const SOURCES = [
   { code: "PubMed", kr: "미 의학도서관", en: "Literature", desc: "Article summary retrieval across 36M+ indexed biomedical citations.", endpoint: "/api/drugs/pubmed", live: true },
   { code: "USPTO", kr: "미 특허청 인덱스", en: "Global Patents", desc: "Local index across 11M US patent grants + applications, offline-capable.", endpoint: "/uspto/{chem_id}", live: false },
   { code: "GLOBAL", kr: "EPO·JPO·WIPO 인덱스", en: "Intl. Patents", desc: "Pre-built local index for cross-jurisdictional patent landscape analysis.", endpoint: "/global/{chem_id}", live: false },
-  { code: "NAVER", kr: "네이버 뉴스 API", en: "News Fallback", desc: "News-derived fallback when upstream KOTRA data is sparse for a country-keyword pair.", endpoint: "/api/trade/news", live: true },
+  { code: "NAVER", kr: "네이버 뉴스 API", en: "News Fallback", desc: "NAVER search results shown as a separate, labelled block (never merged with KOTRA).", endpoint: "/api/trade/naver-news", live: true },
 ];
+
+// Acronym glossary — hover tooltips for data-source / regulation abbreviations.
+// Keys are UPPERCASE (lookup is case-insensitive via Abbr).
+const GLOSSARY = {
+  KOSHA:     { name: "Korea Occupational Safety & Health Agency", kr: "한국산업안전보건공단", desc: "국내 공식 MSDS·작업환경측정·노출기준(OEL)을 제공하는 기관." },
+  ECHA:      { name: "European Chemicals Agency", kr: "유럽화학물질청", desc: "EU REACH·CLP 규제를 총괄. SVHC 후보목록·인가(Annex XIV)·제한(Annex XVII)을 관리." },
+  NIOSH:     { name: "US National Institute for Occupational Safety and Health", kr: "미 국립산업안전보건연구원", desc: "REL 권고노출기준·Pocket Guide·IDLH 값 등 직업보건 데이터를 제공." },
+  COMPTOX:   { name: "EPA CompTox Chemicals Dashboard", kr: "미 환경청 화학물질 대시보드", desc: "물성·독성·노출 예측치를 통합한 EPA 공개 화학 데이터베이스." },
+  PUBCHEM:   { name: "NIH PubChem", kr: "미 국립보건원 화학 DB", desc: "구조·물성·생리활성을 담은 세계 최대 공개 화학 데이터베이스." },
+  KIPRIS:    { name: "Korea Intellectual Property Rights Information Service", kr: "한국특허정보원", desc: "국내 특허·실용신안·상표·디자인 검색 서비스." },
+  KOTRA:     { name: "Korea Trade-Investment Promotion Agency", kr: "대한무역투자진흥공사", desc: "해외시장뉴스·진출전략·규제정보(REACH Q&A 포함)를 제공." },
+  MFDS:      { name: "Ministry of Food and Drug Safety", kr: "식품의약품안전처", desc: "국내 의약품·의약외품 허가 및 안전정보를 관할." },
+  OPENFDA:   { name: "US FDA open API", kr: "미 식약청 오픈 API", desc: "미국 의약품 라벨·부작용 보고 등 공개 데이터 API." },
+  PUBMED:    { name: "US National Library of Medicine", kr: "미 의학도서관 문헌 DB", desc: "3,600만+ 생의학 논문 초록을 검색." },
+  USPTO:     { name: "US Patent and Trademark Office", kr: "미 특허청", desc: "미국 특허 등록·출원 인덱스." },
+  NAVER:     { name: "NAVER News API", kr: "네이버 뉴스 API", desc: "KOTRA 와 섞지 않고 \"네이버 검색결과\" 블록에 따로 보이는 뉴스 검색." },
+  GHS:       { name: "Globally Harmonized System", kr: "화학물질 분류·표지 국제조화시스템", desc: "유해성 분류와 그림문자·신호어·주의문구의 국제 표준." },
+  CAS:       { name: "Chemical Abstracts Service number", kr: "화학물질 고유 등록번호", desc: "물질을 전 세계 공통으로 식별하는 고유번호(예: 67-64-1)." },
+  REACH:     { name: "Registration, Evaluation, Authorisation and Restriction of Chemicals", kr: "EU 신화학물질관리제도", desc: "EU 화학물질 등록·평가·인가·제한 규정." },
+  "K-REACH": { name: "Korea REACH", kr: "화학물질의 등록 및 평가 등에 관한 법률", desc: "국내 화학물질 등록·평가 제도." },
+  KISCHEM:   { name: "Korea Information System for Chemical safety", kr: "화학물질정보처리시스템", desc: "국내 화학물질 안전정보 통합 제공 시스템." },
+  NCIS:      { name: "National Chemicals Information System (KECO)", kr: "화학물질종합정보시스템", desc: "한국환경공단의 화학물질 분류·분자정보·규제 데이터." },
+  SVHC:      { name: "Substances of Very High Concern", kr: "고위험성 우려물질", desc: "REACH 후보목록에 등재된 발암성·잔류성 등 고위험 물질." },
+};
 
 const WORKFLOWS = [
   {

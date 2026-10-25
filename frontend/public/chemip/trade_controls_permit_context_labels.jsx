@@ -1,0 +1,60 @@
+// Labels for the "실제 통합허가 사례" section (trade_controls_sections/kr_permit_context*.jsx, kr_permit_duration_hint.jsx).
+// 화면 문구는 이 파일 한 곳. 데이터: /api/integrations/kr-permit-context/{cas} (backend/integrations/kr_permit_context_store.py).
+
+const KR_PERMIT_CONTEXT_LABELS = {
+  title: "실제 통합허가 사례",
+  hint: "통합환경허가 검토결과서에 적힌 배출구별 허가배출기준을 모은 것입니다. 실제 배출량이 아니라 허가 조건 값입니다.",
+  loading: "통합허가 사례를 불러오는 중입니다…",
+  count: n => `기준 ${n}개`,
+  unavailable: "통합허가 사례 자료가 아직 준비되지 않았습니다.",
+  empty: "통합허가 검토결과서 배출기준 표에서 이 물질(또는 물질군)을 찾지 못했습니다.",
+  relation: {
+    direct: "이 물질",
+    family_parent: g => `물질군 기준 · ${g}`,
+    related: (g, as) => `물질군 기준 · ${g}${as ? ` (${as})` : ""}`,
+  },
+  relationHint: {
+    family_parent: "검토결과서에는 'X 및 그 화합물' 단위로 기준이 정해져 있어, 원소 자체가 아닌 화합물 전체에 걸린 기준입니다.",
+    related: "이 물질 단독 기준이 아니라 이 물질을 포함하는 물질군 기준입니다.",
+  },
+  sites: (n, outlets) => `배출기준이 설정된 사업장 ${n.toLocaleString("ko-KR")}곳 · 배출구 ${outlets.toLocaleString("ko-KR")}개`,
+  years: (a, b) => (a && b ? (a === b ? `허가 ${a}년` : `허가 ${a}–${b}년`) : ""),
+  median: (v, unit) => `배출기준 중앙값 ${v} ${unit}`,
+  o2: o => `표준산소 ${o}%`,
+  range: (lo, hi) => `범위 ${lo}–${hi}`,
+  iqr: (a, b) => `사분위 ${a}–${b}`,
+  rows: n => `${n.toLocaleString("ko-KR")}건`,
+  otherUnits: "다른 기준",
+  industries: "업종별",
+  industryItem: (ind, n, med) => `${ind} ${n}곳${med ? ` (${med})` : ""}`,
+  durationTitle: "통합허가 처리기간",
+  durationOverall: (pt, med, n, a, b) => `${pt} 중앙값 ${med}일 (n=${n}, 사분위 ${a}–${b}일)`,
+  durationIndustry: "주요 업종",
+  durationIndustryItem: (ind, med, n) => `${ind} ${med}일 (n=${n})`,
+  durationNote: "본신청 접수일(없으면 신청일)부터 허가일까지이며, 그 전에 거치는 사전협의 기간은 빠져 있습니다.",
+  durationHint: (med, n, a, b) => `실제 처리기간: 통합허가 중앙값 ${med}일 (n=${n}, 사분위 ${a}–${b}일) · 사전협의 기간 제외`,
+  durationHintSource: "IEPS 검토결과서 집계",
+  emissionsTitle: "CleanSYS 굴뚝자동측정(TMS) 연간 배출량",
+  emissionsItem: (label, year, sites, kg) => `${label} ${year}년: ${sites}곳 · ${kg} kg`,
+  emissionsNote: "TMS 가 붙은 굴뚝만 집계되므로 사업장 전체 배출량이 아닙니다.",
+  samples: n => `허가 사례 보기 (${n})`,
+  sampleDate: { permit: d => `허가 ${d}`, post: d => `게시 ${d}` },
+  sampleDecision: d => `결정번호 ${d}`,
+  sampleLink: "IEPS 원문 ↗",
+  namesSeen: "검토결과서 표기",
+  unknownIndustry: "업종 미상",
+  sourceTitle: "출처",
+  sources: [
+    { label: "국립환경과학원 통합환경허가시스템(IEPS) 정보공개", key: "ieps_board_url" },
+    { label: "한국환경공단 CleanSYS", key: "cleansys_url" },
+  ],
+  retrieved: r => `수집 ${r}`,
+  // 이 인허가 카드에 실제 처리기간을 덧붙인다(kr_permits_env.json 의 permit_id).
+  durationHintPermitIds: ["KR_IPPC_INTEGRATED_PERMIT"],
+  durationPostType: "통합허가",
+  maxIndustries: 5,
+  maxDurationIndustries: 3,
+  maxOtherUnits: 3,
+};
+
+Object.assign(window, { KR_PERMIT_CONTEXT_LABELS });

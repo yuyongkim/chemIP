@@ -34,6 +34,27 @@ def _int_env(name: str, default: int) -> int:
         return default
 
 
+def _bool_env(name: str, default: bool) -> bool:
+    """Parse a true/false env var; anything unrecognised keeps ``default``."""
+    raw = os.getenv(name)
+    if raw is None or str(raw).strip() == "":
+        return default
+    value = str(raw).strip().lower()
+    if value in ("1", "true", "yes", "on"):
+        return True
+    if value in ("0", "false", "no", "off"):
+        return False
+    return default
+
+
+def _list_env(name: str, default: list[str]) -> list[str]:
+    """Parse a comma-separated env var into a list of non-empty tokens."""
+    raw = os.getenv(name)
+    if raw is None or str(raw).strip() == "":
+        return list(default)
+    return [part.strip() for part in str(raw).split(",") if part.strip()]
+
+
 def _float_env(name: str, default: float) -> float:
     """Parse a float env var, falling back to ``default`` on missing/invalid."""
     raw = os.getenv(name)
@@ -58,12 +79,20 @@ class Settings:
     # Default to decoded key for requests
     KOSHA_SERVICE_KEY = KOSHA_SERVICE_KEY_DECODED
 
+    # Legacy base URLs (kept for scripts/*). The backend adapter now picks routes
+    # from KOSHA_MSDS_ROUTES — profiles live in backend/api/kosha_msds_routes.py.
     KOSHA_API_URL = "https://msds.kosha.or.kr/openapi/service/msdschem"
     KOSHA_FALLBACK_API_URL = "https://apis.data.go.kr/B552468/msdschem"
+    # Ordered route list. First = licensed data.go.kr 15157612 (msdschem1);
+    # the rest are the pre-2026-10 routes, tried only when the first fails.
+    KOSHA_MSDS_ROUTES = _list_env("KOSHA_MSDS_ROUTES", ["datagokr", "datagokr_legacy", "kosha_direct"])
 
     # KIPRIS API
     KIPRIS_API_KEY = os.getenv("KIPRIS_API_KEY", "")
     KIPRIS_API_URL = "http://plus.kipris.or.kr/kipo-api/kipi/patUtiModInfoSearchSevice/getWordSearch"
+    # KIPRIS Plus 이용약관 제19조 — 공개 화면 노출·AI 근거 사용 스위치 (기본: 현행 유지)
+    KIPRIS_PUBLIC_DISPLAY = _bool_env("KIPRIS_PUBLIC_DISPLAY", True)
+    KIPRIS_IN_AI = _bool_env("KIPRIS_IN_AI", True)
 
     # KOTRA API
     KOTRA_API_KEY_DECODED = os.getenv("KOTRA_API_KEY_DECODED", "")
@@ -114,6 +143,13 @@ class Settings:
     DRUG_API_KEY_DECODED = os.getenv("DRUG_API_KEY_DECODED", "")
     DRUG_API_KEY_ENCODED = os.getenv("DRUG_API_KEY_ENCODED", "")
     DRUG_SERVICE_KEY = DRUG_API_KEY_DECODED
+    # MFDS 의약품 제품 허가정보 (data.go.kr 15095677). Tried in order; the next
+    # one is used when a route errors or returns no rows.
+    MFDS_APPROVAL_URLS = _list_env("MFDS_APPROVAL_URLS", [
+        "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService08/getDrugPrdtPrmsnInq08",
+        "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService08/getDrugPrdtPrmsnDtlInq08",
+        "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnInq07",
+    ])
 
     # Naver Search API
     NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID", "")

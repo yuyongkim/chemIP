@@ -61,6 +61,7 @@ API 및 데이터 디버깅용 스크립트들입니다.
 | `inspect_data_dbs.py` | 데이터 DB 검사 |
 | `inspect_db.py` | DB 검사 |
 | `monitor_indexing.py` | 인덱싱 모니터링 |
+| `check_runtime_health.py` | 로컬/공개 ChemIP 런타임 헬스체크 |
 
 ### 🧪 테스트 (Testing)
 
@@ -82,4 +83,7 @@ python scripts/verify_global_index.py
 
 # 화학물질 데이터 수집
 python scripts/fetch_all_chemicals.py
+
+# 운영 점검
+python scripts/check_runtime_health.py
 ```

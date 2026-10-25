@@ -1,0 +1,42 @@
+{
+  "parser": "parse_jp_poison",
+  "source_version": "NIHS 毒劇物一覧/検索用ファイル (毒物及び劇物指定令 令和6年政令第196号까지 수록, NIHS 2024-05-30 갱신)",
+  "downloads": {
+    "doku": {"url": "https://www.nihs.go.jp/law/dokugeki/doku.files/sheet001.html", "page": "https://www.nihs.go.jp/law/dokugeki/doku.html", "file": "jp/nihs/doku_sheet001.html"},
+    "geki": {"url": "https://www.nihs.go.jp/law/dokugeki/geki.files/sheet001.html", "page": "https://www.nihs.go.jp/law/dokugeki/geki.html", "file": "jp/nihs/geki_sheet001.html"},
+    "toku": {"url": "https://www.nihs.go.jp/law/dokugeki/toku.files/sheet001.html", "page": "https://www.nihs.go.jp/law/dokugeki/toku.html", "file": "jp/nihs/toku_sheet001.html"}
+  },
+  "lists": {
+    "poison": {
+      "file": "JP_PDSCL_POISON.json",
+      "list_id": "JP_PDSCL_POISON",
+      "jurisdiction": "JP",
+      "law": "毒物及び劇物取締法",
+      "title": "일본 독극물단속법 독물(毒物, 특정독물 포함)",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "일본에서 판매·수여 목적으로 수입하려면 수입자가 毒物劇物輸入業 등록(영업소 소재 도도부현 지사, 법 제3조②·제4조, 5년마다 갱신) 필요. 특정毒物은 毒物劇物輸入業者 또는 特定毒物研究者만 수입 가능(제3조의2②). 용기·피포에 「医薬用外」 및 적색 바탕 백색 「毒物」 표시, 명칭·성분·함량 등 표시(제12조). 한국 수출자는 일본 수입자의 등록 여부를 확인하고 표시 가능한 라벨·성분 정보를 제공. 농도·제제에 따른 제외규정은 법 제2조·指定令 원문으로 확인.",
+      "legal_basis": "毒物及び劇物取締法(昭和25年法律第303号) 第2条①③·別表第一·別表第三, 第3条②, 第3条の2②, 第4条, 第12条; 毒物及び劇物指定令(昭和40年政令第2号) 第1条·第3条",
+      "source_url": "https://www.nihs.go.jp/law/dokugeki/dokugeki.html",
+      "license": "국립의약품식품위생연구소(NIHS, 후생노동성 소관) 공개 검색용 파일. 이용조건 페이지는 확인되지 않음. 법 별표·정령 내용 자체는 일본 저작권법 제13조(법령은 저작권 목적이 아님). NIHS 주의사항: 官報와 다르면 官報 우선, 제외규정 미반영, 군 지정은 일부 예시만 수록.",
+      "notes": ["NIHS 파일은 指定令 令和6年政令第196号까지 수록. 이후 令和7年政令第358号(2025-10-29 공포, 2025-11-01 시행)는 미반영 — 劇物 쪽 변경(신규 1종·제외 1건)이며 毒物 변경 여부는 원문 확인 필요.",
+                "CAS 는 NIHS 가 예시로 붙인 번호다. 염·제제·군 지정(예: 有機シアン化合物) 은 망라되지 않으므로 등재 없음이 비해당을 뜻하지 않는다."]
+    },
+    "deleterious": {
+      "file": "JP_PDSCL_DELETERIOUS.json",
+      "list_id": "JP_PDSCL_DELETERIOUS",
+      "jurisdiction": "JP",
+      "law": "毒物及び劇物取締法",
+      "title": "일본 독극물단속법 극물(劇物)",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "일본에서 판매·수여 목적으로 수입하려면 수입자가 毒物劇物輸入業 등록(법 제3조②·제4조) 필요. 용기·피포에 「医薬用外」 및 백색 바탕 적색 「劇物」 표시, 명칭·성분·함량 등 표시(제12조). 농도에 따른 제외규정(예: 일정 % 이하 제제 제외)은 指定令 원문으로 확인. 한국 수출자는 수입자 등록 확인과 표시 정보 제공.",
+      "legal_basis": "毒物及び劇物取締法(昭和25年法律第303号) 第2条②·別表第二, 第3条②, 第4条, 第12条; 毒物及び劇物指定令(昭和40年政令第2号) 第2条",
+      "source_url": "https://www.nihs.go.jp/law/dokugeki/dokugeki.html",
+      "license": "국립의약품식품위생연구소(NIHS, 후생노동성 소관) 공개 검색용 파일. 이용조건 페이지는 확인되지 않음. 법 별표·정령 내용 자체는 일본 저작권법 제13조. NIHS 주의사항: 官報 우선, 제외규정 미반영, 군 지정은 일부 예시만 수록.",
+      "family_additions": [
+        {"name": "4-[2-(4-ターシヤリ-ブチルフエニル)エトキシ]キナゾリン(別名フェナザキン)", "detail": "令和7年政令第358号로 劇物 신규 지정(2025-11-01 시행). NIHS 파일 미수록이라 CAS 미기재(추정 금지)."}
+      ],
+      "notes": ["NIHS 파일은 指定令 令和6年政令第196号까지 수록. 令和7年政令第358号(2025-10-29 공포): 劇物 신규 1종(フェナザキン, family_entries 에 이름만), 塩素酸ナトリウム 함유 일부 제제의 劇物 제외 — 반영 안 됨.",
+                "CAS 는 NIHS 가 예시로 붙인 번호다. 염·제제·군 지정(예: 無機亜鉛塩類) 은 망라되지 않는다."]
+    }
+  }
+}

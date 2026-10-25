@@ -3,6 +3,7 @@ from backend.api.patent_fetcher import PatentFetcher
 from backend.api.uspto_adapter import UsptoAdapter
 from backend.api.global_patent_adapter import GlobalPatentAdapter
 from backend.api.kipris_adapter import KiprisAdapter
+from backend.api import kipris_policy
 
 router = APIRouter()
 
@@ -16,6 +17,10 @@ def _run_patent_search(query_text: str, page: int, effective_limit: int) -> dict
     query_text = (query_text or "").strip()
     if not query_text:
         raise HTTPException(status_code=422, detail="Missing patent query")
+
+    if not kipris_policy.public_display_enabled():
+        # KIPRIS_PUBLIC_DISPLAY=false: no KIPRIS rows, only a "KIPRIS에서 보기" link.
+        return kipris_policy.link_only_search(query_text, page, effective_limit)
 
     fetcher = PatentFetcher()
     all_results = fetcher.search_patents(query_text)
@@ -35,7 +40,16 @@ def _run_patent_search(query_text: str, page: int, effective_limit: int) -> dict
         "page": page,
         "limit": effective_limit,
         "total_pages": (total + effective_limit - 1) // effective_limit if total > 0 else 0,
+        "display_mode": kipris_policy.DISPLAY_FULL,
+        "kipris_link": kipris_policy.search_link(query_text),
+        "link_label": kipris_policy.KIPRIS_LINK_LABEL,
     }
+
+
+@router.get("/policy")
+def get_kipris_policy():
+    """KIPRIS display/AI switches (KIPRIS_PUBLIC_DISPLAY, KIPRIS_IN_AI) for the UI."""
+    return kipris_policy.policy()
 
 
 @router.get("")
@@ -70,6 +84,8 @@ def get_kipris_patent_detail(application_number: str):
     """
     Fetch detailed KIPRIS patent info by application number.
     """
+    if not kipris_policy.public_display_enabled():
+        return kipris_policy.link_only_detail(application_number)
     adapter = KiprisAdapter()
     detail = adapter.get_patent_detail(application_number)
     upstream_error = getattr(adapter, "last_error", None)

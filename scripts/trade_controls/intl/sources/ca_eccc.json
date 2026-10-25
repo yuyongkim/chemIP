@@ -1,0 +1,102 @@
+{
+  "parser": "parse_ca_eccc",
+  "headers": {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-CA,en;q=0.9"
+  },
+  "downloads": {
+    "search_page": "https://pollution-waste.canada.ca/substances-search/Substance?lang=en",
+    "export": "https://pollution-waste.canada.ca/substances-search/Substance/SearchByListOrGroup?ListGroupCode={code}&exportToExcel=Export+to+Excel"
+  },
+  "flag_text": {
+    "Significant New Activity": "SNAc 대상(신규 활동 시 사전 통보)",
+    "Reduced Regulatory Requirement": "RRR 고분자",
+    "Existing Substance": "기존물질(1984–86 유통)",
+    "following notification in accordance with the New Substances Notification Regulations": "신규물질 통보 후 등재",
+    "Ministerial Condition": "장관 조건(Ministerial Condition) 부과"
+  },
+  "lists": {
+    "dsl": {
+      "file": "CA_DSL.json",
+      "eccc_code": "DSL",
+      "list_id": "CA_DSL",
+      "jurisdiction": "CA",
+      "law": "Canadian Environmental Protection Act, 1999 (CEPA)",
+      "title": "캐나다 국내물질목록(DSL, Domestic Substances List) — 등재 여부",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "DSL 등재 물질은 캐나다에서 기존물질이라 수입 시 신규물질 통보(NSNR)가 필요 없다(단 'SNAc 대상' 표시가 있으면 신규 활동 전 통보, CEPA 제81(3)조). DSL 에 없으면 신규물질: 캐나다 수입자가 연간 수입량이 기준(일반 화학물질 100 kg 등)을 넘기 전에 ECCC 에 신규물질 통보(New Substances Notification Regulations (Chemicals and Polymers), CEPA 제81조)하고 평가기간이 끝나야 수입 가능. 한국 수출자는 수입자에게 CAS·조성 정보를 제공.",
+      "legal_basis": "CEPA 1999 s. 66, 81, 87; New Substances Notification Regulations (Chemicals and Polymers) SOR/2005-247",
+      "source_url": "https://www.canada.ca/en/environment-climate-change/services/canadian-environmental-protection-act-registry/substances-list/domestic.html",
+      "license": "Government of Canada 자료: Open Government Licence – Canada(출처 표시 재사용) / canada.ca 이용약관. 법적 효력 원문은 Canada Gazette Part II.",
+      "absence_note": "공개 DSL 에 CAS 로 없음: 캐나다에서 신규물질일 수 있다 — 수입 전 NSNR 신규물질 통보 대상인지 확인(NDSL 등재 여부도 확인). 기밀(masked name·CAN) 물질 약 3,200건은 CAS 가 공개되지 않으므로 ECCC 에 DSL 기밀 조회(search of the confidential DSL)로 최종 확인."
+    },
+    "ndsl": {
+      "file": "CA_NDSL.json",
+      "eccc_code": "NDSL",
+      "list_id": "CA_NDSL",
+      "jurisdiction": "CA",
+      "law": "Canadian Environmental Protection Act, 1999 (CEPA)",
+      "title": "캐나다 비국내물질목록(NDSL, Non-domestic Substances List)",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "NDSL 물질은 캐나다에서 신규물질이지만 국제적으로 유통된 물질이라 신규물질 통보 시 요구 자료가 줄어든다(NSNR Schedule 4·5, 통보 기준량 연 1,000 kg 부터). 캐나다 수입자가 기준량 초과 전 통보해야 한다. DSL 에도 있으면 DSL 이 우선한다.",
+      "legal_basis": "CEPA 1999 s. 66(2), 81; New Substances Notification Regulations (Chemicals and Polymers) SOR/2005-247 s. 7–8, Schedules 4–5",
+      "source_url": "https://www.canada.ca/en/environment-climate-change/services/canadian-environmental-protection-act-registry/substances-list/non-domestic.html",
+      "license": "Government of Canada 자료: Open Government Licence – Canada(출처 표시 재사용)."
+    },
+    "cepa_sch1": {
+      "file": "CA_CEPA_SCHEDULE1.json",
+      "eccc_code": "CEPASch1",
+      "keep_no_cas": true,
+      "list_id": "CA_CEPA_SCHEDULE1",
+      "jurisdiction": "CA",
+      "law": "Canadian Environmental Protection Act, 1999 (CEPA)",
+      "title": "캐나다 CEPA 부속서 1 독성물질 목록(List of Toxic Substances, Part 1·2)",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "부속서 1 등재 자체는 직접 의무가 아니라 위해관리 수단(금지·제한 규정, 오염방지계획, 배출·제품 농도 규정 등)을 둘 근거다(CEPA 제90·93조). 수출 물질·제품이 해당 물질의 개별 규정(예: Prohibition of Certain Toxic Substances Regulations 2025, 제품 VOC·납·수은 규정)에 걸리는지 캐나다 수입자와 확인. 부속서 1 물질은 CEPA 부속서 3 수출통제목록 대상일 수 있다(캐나다에서 수출 시).",
+      "legal_basis": "CEPA 1999 s. 64, 90, 93, Schedule 1 (Parts 1–2)",
+      "source_url": "https://laws-lois.justice.gc.ca/eng/acts/c-15.31/page-50.html",
+      "license": "Government of Canada 자료: Open Government Licence – Canada(출처 표시 재사용). 법적 효력 원문은 Justice Laws 의 CEPA Schedule 1.",
+      "notes": ["ECCC 표기: 한 항목에 이 목록에 적히지 않은 다른 물질도 포함될 수 있다(This item might include other substances)."]
+    },
+    "pctsr": {
+      "file": "CA_PROHIBITION_TOXIC_SUBSTANCES_2025.json",
+      "eccc_code": "PCTSR_CAT",
+      "list_id": "CA_PROHIBITION_TOXIC_SUBSTANCES_2025",
+      "jurisdiction": "CA",
+      "law": "Prohibition of Certain Toxic Substances Regulations, 2025 (SOR/2025-270)",
+      "title": "캐나다 특정 독성물질 금지 규정 2025 — 제조·사용·판매·수입 금지(PFOS·PFOA·LC-PFCA·PBDE·HBCD·DP 등)",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "물질 자체와 그 물질을 함유한 제품의 캐나다 수입·판매·사용이 금지 또는 제한된다(제한된 면제·허가 제외, 2026-06-30 시행; 2012 규정 대체). 수출품(혼합물·완제품 포함)에 해당 물질이 없는지 확인하고 함유 시 규정의 면제 조건·허가(permit) 여부를 캐나다 수입자와 확인. ECCC 표기: CAS 는 안내용이며 규정의 정의에 맞으면 CAS 와 무관하게 적용.",
+      "legal_basis": "SOR/2025-270 (CEPA 1999 s. 93); 이전 SOR/2012-285 대체",
+      "source_url": "https://laws.justice.gc.ca/eng/regulations/SOR-2025-270/index.html",
+      "license": "Government of Canada 자료: Open Government Licence – Canada(출처 표시 재사용)."
+    },
+    "snac": {
+      "file": "CA_SNAC.json",
+      "eccc_code": "SNAc",
+      "list_id": "CA_SNAC",
+      "jurisdiction": "CA",
+      "law": "Canadian Environmental Protection Act, 1999 (CEPA)",
+      "title": "캐나다 중요신규활동(SNAc) 명령·고시 대상 물질",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "고시된 '중요 신규 활동'(특정 용도·농도·수량의 수입·제조·사용)을 하려면 캐나다 수입자가 사전에 ECCC 에 SNAN 통보하고 평가기간이 끝나야 한다(CEPA 제81(4)·86조). 고시별 대상 활동을 확인하고, 한국 수출자는 용도·함량 정보를 수입자에게 제공.",
+      "legal_basis": "CEPA 1999 s. 81(4), 85, 86, 87(3)",
+      "source_url": "https://www.canada.ca/en/environment-climate-change/services/managing-pollution/evaluating-new-substances/significant-new-activity-orders-notices.html",
+      "license": "Government of Canada 자료: Open Government Licence – Canada(출처 표시 재사용)."
+    },
+    "asbestos": {
+      "file": "CA_ASBESTOS_PROHIBITION.json",
+      "eccc_code": "Asbestos",
+      "list_id": "CA_ASBESTOS_PROHIBITION",
+      "jurisdiction": "CA",
+      "law": "Prohibition of Asbestos and Products Containing Asbestos Regulations (SOR/2018-196)",
+      "title": "캐나다 석면 및 석면 함유 제품 금지 규정 대상 석면",
+      "directions": ["import", "export"],
+      "obligation_for_kr_exporter": "가공 석면섬유·석면 함유 제품·미량 초과 석면 함유 소비자제품의 캐나다 수입·판매·사용 금지(허가·제외 예외). 같은 규정이 캐나다에서의 수출도 금지한다.",
+      "legal_basis": "SOR/2018-196 (CEPA 1999 s. 93)",
+      "source_url": "https://pollution-waste.canada.ca/environmental-protection-registry/regulations/view?id=150",
+      "license": "Government of Canada 자료: Open Government Licence – Canada(출처 표시 재사용)."
+    }
+  }
+}

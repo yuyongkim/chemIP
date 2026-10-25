@@ -1,0 +1,7 @@
+# 저장소 requirements.txt 에 빠져 있지만 백엔드가 지연 import 하는 패키지(PC 에서는 전역 Python 에 깔려 있어 드러나지 않았다).
+#   pandas + openpyxl : data/prtr/prtr_summary_2022.xlsx 읽기(handlers_adapter.get_prtr_summary)
+#   xlrd              : PRTR 사업장 엑셀(.xls) 응답 파싱(handlers_adapter._parse_prtr_facility_excel)
+# 범위만 고정한다 — Ubuntu 22.04(Python 3.10)와 24.04(3.12) 모두에서 맞는 최신판을 pip 이 고른다.
+pandas>=2.0,<4
+openpyxl>=3.1,<4
+xlrd>=2.0,<3

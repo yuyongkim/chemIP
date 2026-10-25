@@ -1,0 +1,33 @@
+{
+  "parser": "parse_au_aiic",
+  "downloads": {
+    "search_page": {
+      "url": "https://services.industrialchemicals.gov.au/search-inventory/",
+      "base": "https://services.industrialchemicals.gov.au",
+      "file": "au/aicis_search_inventory.html"
+    },
+    "inventory": {
+      "file": "au/aicis_inventory_download.xlsx"
+    }
+  },
+  "lists": {
+    "inventory": {
+      "file": "AU_AIIC_INVENTORY.json",
+      "list_id": "AU_AIIC_INVENTORY",
+      "jurisdiction": "AU",
+      "law": "Industrial Chemicals Act 2019",
+      "title": "호주 산업화학물질 목록(AIIC, AICIS Inventory) — 공개 등재 물질과 등재 조건",
+      "directions": [
+        "import"
+      ],
+      "obligation_for_kr_exporter": "호주로 산업화학물질을 들여오는 호주 수입자(introducer)는 AICIS 에 등록하고 도입 범주를 정해야 한다. AIIC 등재 물질은 '등재 도입(listed introduction)'으로 수입할 수 있으나, 등재 조건(특정 정보 제출 요건·평가 범위 한정·도입·사용 조건)이 붙어 있으면 그 범위 안에서만 가능하고 기록 보존 의무가 있다. 미등재면 면제·신고·평가 도입 중 하나로 분류해야 한다(평가 도입은 사전 평가증명서 필요). 한국 수출자는 정확한 CAS·성분 정보를 호주 수입자에게 제공.",
+      "legal_basis": "Industrial Chemicals Act 2019 ss 10–11, 26–27, 81–87; Industrial Chemicals (General) Rules 2019 Chapter 2·4",
+      "source_url": "https://services.industrialchemicals.gov.au/search-inventory/",
+      "license": "AICIS 게시 자료(호주 정부 저작물) — AICIS copyright statement 적용. 내려받기 파일 안내문: CAS 등록번호는 미국화학회(ACS) 지식재산으로 CAS 의 명시적 허락 아래 사용. 다운로드 파일은 편의본이며 공식 목록은 온라인 Inventory.",
+      "absence_note": "AIIC 공개 목록에 없음: 호주에서 '등재 도입'이 아니다 — 수입 전 면제(exempted)·신고(reported)·평가(assessed) 도입 중 하나로 분류해야 한다. 기밀 등재(CBI) 물질은 공개 목록에 없으므로 AICIS 온라인 검색·문의로 최종 확인.",
+      "notes": [
+        "AICIS 다운로드 안내문: 다운로드본은 편의용이며 최신 등재·조건은 온라인 Inventory 기준, 기밀 등재 물질 제외"
+      ]
+    }
+  }
+}

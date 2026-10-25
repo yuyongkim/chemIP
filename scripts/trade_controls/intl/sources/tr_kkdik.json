@@ -1,0 +1,44 @@
+{
+  "parser": "parse_tr_kkdik",
+  "version": "KKDİK (RG 23/6/2017 No 30105 Mükerrer; değişik RG 29/11/2019 No 30963, 23/12/2023 No 32408) — mevzuat.gov.tr ek dosyası",
+  "downloads": {
+    "annex_zip": "https://www.mevzuat.gov.tr/MevzuatMetin/yonetmelik/7.5.23694-Ek.zip",
+    "text": "https://www.mevzuat.gov.tr/MevzuatMetin/yonetmelik/7.5.23694.pdf"
+  },
+  "appendices": {
+    "EK-17_ek-I": "KKDİK Ek-17 Ek-I (madde 28: kanserojen 1A)",
+    "EK-17_ek-II": "KKDİK Ek-17 Ek-II (madde 28: kanserojen 1B)",
+    "EK-17_ek-III": "KKDİK Ek-17 Ek-III (madde 29: mutajen 1A)",
+    "EK-17_ek-IV": "KKDİK Ek-17 Ek-IV (madde 29: mutajen 1B)",
+    "EK-17_ek-V": "KKDİK Ek-17 Ek-V (madde 30: üreme toksik 1A)",
+    "EK-17_ek-VI": "KKDİK Ek-17 Ek-VI (madde 30: üreme toksik 1B)",
+    "EK-17_ek-VIII": "KKDİK Ek-17 Ek-VIII (madde 43: aromatik aminler)",
+    "EK-17_ek-IX": "KKDİK Ek-17 Ek-IX (madde 43: azo boyar maddeler)"
+  },
+  "lists": {
+    "restrictions": {
+      "file": "TR_KKDIK_ANNEX17.json",
+      "list_id": "TR_KKDIK_ANNEX17",
+      "jurisdiction": "TR",
+      "law": "KKDİK (Türkiye REACH) Yönetmeliği",
+      "title": "튀르키예 KKDİK 부속서 17 제한물질(부속 CMR·아조 목록 포함)",
+      "directions": [
+        "import"
+      ],
+      "obligation_for_kr_exporter": "부속서 17 항목별 조건(용도 금지·농도 한도·완제품 함유 한도)에 맞지 않으면 튀르키예 시장 출시·사용 불가. 수출 물질·혼합물·완제품이 해당 항목 조건을 지키는지 튀르키예 수입자와 확인. KKDİK 등록(튀르키예 수입자 또는 유일대리인, 연 1톤 이상)은 별도 의무이며 이 목록과 무관.",
+      "legal_basis": "KKDİK Yönetmeliği (RG 30105 Mükerrer) Ek-17 ve ekleri",
+      "source_url": "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=23694&MevzuatTur=7&MevzuatTertip=5",
+      "license": "튀르키예 법령·관보 공표물은 저작권법(FSEK) 제31조에 따라 자유 이용 가능한 것으로 보임(조문 미확인). 법적 효력은 Resmî Gazete 공포본.",
+      "notes": [
+        "mevzuat.gov.tr 부속서 묶음의 Ek-17 파일 날짜는 2019-11-29 이다. 2023-12-23 개정(RG 32408) 내용이 이 파일에 반영됐는지는 확인하지 못했다 — 최신 조건은 Resmî Gazete 확인."
+      ],
+      "known_source_errors": {
+        "132237-32-0": "Ek-17 madde 6(asbest) 에 132237-32-0 으로 인쇄됨(체크디지트 불일치). 비교: EU·UK REACH 같은 항목의 크리소타일은 132207-32-0. 보정하지 않고 family_entries 로 둔다.",
+        "90460-80-5": "Ek-17 madde 31(kreosot 등) 에 90460-80-5 로 인쇄됨(체크디지트 불일치). 어느 물질의 오식인지 원문만으로 확정할 수 없어 보정하지 않는다.",
+        "936341-27-2": "Ek-17 benzidin tuzları 에 936341-27-2 로 인쇄됨(체크디지트 불일치). 보정하지 않는다.",
+        "4612-52-2": "Ek-17 madde 12(2-naftilamin tuzları) 에 4612-52-2 로 인쇄됨(체크디지트 불일치). 비교: EU 같은 항목에 612-52-2(2-naphthylammonium chloride). 보정하지 않는다.",
+        "677536-67-5": "Ek-17 madde 6(asbest) 에 677536-67-5 로 인쇄됨(체크디지트 불일치). 비교: EU·UK 같은 항목의 안토필라이트는 77536-67-5. 보정하지 않는다."
+      }
+    }
+  }
+}

@@ -1,67 +1,83 @@
+"""KOSHA MSDS OpenAPI client.
+
+Routes are tried in the order of ``settings.KOSHA_MSDS_ROUTES`` (profiles in
+``kosha_msds_routes.py``). The default first route is the data.go.kr 15157612
+service; the older routes are fallbacks used only when it fails.
+"""
+
 import logging
-import socket
+import re
+import threading
+import time
 from typing import Any, Dict
 
-import requests
-
 from backend.api.http_client import safe_get
+from backend.api.kosha_msds_routes import KoshaRoute, resolve_routes
 from backend.config.settings import settings
 
 logger = logging.getLogger(__name__)
 
+# A route that failed is skipped for this long (unless it is the only one left).
+ROUTE_COOLDOWN_SECONDS = 300
+
+_RESULT_CODE_RE = re.compile(r"<resultCode>\s*([^<\s]+)\s*</resultCode>")
+
+
+def _response_error(text: str) -> str | None:
+    """Return why a 200 response is not a usable KOSHA answer, or None if it is."""
+    match = _RESULT_CODE_RE.search(text or "")
+    if not match:
+        return "no resultCode in response"
+    if match.group(1) != "00":
+        return f"resultCode {match.group(1)}"
+    return None
+
 
 class KoshaMsdsAdapter:
-    def __init__(self):
-        self.base_url = settings.KOSHA_API_URL
-        self.fallback_url = settings.KOSHA_FALLBACK_API_URL
+    def __init__(self, route_names: list[str] | None = None):
+        self.routes: list[KoshaRoute] = resolve_routes(route_names or settings.KOSHA_MSDS_ROUTES)
         self.service_key = settings.KOSHA_SERVICE_KEY
-        self._use_fallback = False
+        self._failed_until: dict[str, float] = {}
+        self._lock = threading.Lock()
+        # Kept for callers/scripts that read these attributes.
+        self.base_url = self.routes[0].base_url
+        self.fallback_url = self.routes[1].base_url if len(self.routes) > 1 else ""
 
-    def _is_primary_reachable(self, timeout: float = 2.0) -> bool:
-        try:
-            sock = socket.create_connection(("msds.kosha.or.kr", 443), timeout=timeout)
-            sock.close()
-            return True
-        except (OSError, socket.timeout):
-            return False
+    def _ordered_routes(self) -> list[KoshaRoute]:
+        now = time.monotonic()
+        with self._lock:
+            ready = [r for r in self.routes if self._failed_until.get(r.name, 0) <= now]
+            cooling = [r for r in self.routes if r not in ready]
+        return ready + cooling
 
-    def _get_base_url(self) -> str:
-        if self._use_fallback:
-            return self.fallback_url
-        if not self._is_primary_reachable():
-            logger.info("KOSHA primary unreachable, switching to data.go.kr fallback")
-            self._use_fallback = True
-            return self.fallback_url
-        return self.base_url
+    def _mark(self, route: KoshaRoute, ok: bool) -> None:
+        with self._lock:
+            if ok:
+                self._failed_until.pop(route.name, None)
+            else:
+                self._failed_until[route.name] = time.monotonic() + ROUTE_COOLDOWN_SECONDS
 
-    def _try_request(self, path: str, params: dict) -> Dict[str, Any]:
-        """Try primary URL first, fall back to data.go.kr on failure."""
-        urls_to_try = []
-        if not self._use_fallback:
-            urls_to_try.append(self.base_url)
-        urls_to_try.append(self.fallback_url)
-
-        last_error = None
-        for base in urls_to_try:
-            url = f"{base}/{path}"
+    def _try_request(self, url_for, params: dict) -> Dict[str, Any]:
+        """Try each configured route in turn; return the first valid answer."""
+        errors: list[str] = []
+        for route in self._ordered_routes():
+            url = url_for(route)
             try:
                 response = safe_get(url, params=params)
                 response.raise_for_status()
-                if base == self.fallback_url and not self._use_fallback:
-                    logger.info("Fallback succeeded, caching preference")
-                    self._use_fallback = True
-                return {"status": "success", "data": response.text, "source": base}
-            except (requests.Timeout, requests.ConnectionError) as e:
-                last_error = e
-                logger.debug("Failed on %s: %s", base, e)
+                problem = _response_error(response.text)
+                if problem:
+                    raise ValueError(problem)
+            except Exception as exc:  # network, HTTP, or API-level error
+                self._mark(route, ok=False)
+                errors.append(f"{route.name}: {type(exc).__name__}: {exc}"[:200])
+                logger.debug("KOSHA route %s failed: %s", route.name, exc)
                 continue
-            except Exception as e:
-                last_error = e
-                logger.debug("Error on %s: %s", base, e)
-                continue
+            self._mark(route, ok=True)
+            return {"status": "success", "data": response.text, "source": route.base_url, "route": route.name}
 
-        logger.error("All KOSHA endpoints failed: %s", last_error)
-        return {"status": "error", "message": f"All endpoints failed: {last_error}"}
+        logger.error("All KOSHA routes failed: %s", "; ".join(errors))
+        return {"status": "error", "message": "All KOSHA routes failed: " + "; ".join(errors)}
 
     def search_msds(
         self,
@@ -81,9 +97,9 @@ class KoshaMsdsAdapter:
             "numOfRows": num_of_rows,
             "pageNo": page_no,
         }
-        result = self._try_request("chemlist", params)
+        result = self._try_request(lambda r: r.list_url(), params)
         if result["status"] == "success":
-            logger.info("KOSHA MSDS search for '%s': success (via %s)", keyword, result.get("source", ""))
+            logger.info("KOSHA MSDS search for '%s': success (via %s)", keyword, result.get("route", ""))
         return result
 
     def get_msds_detail(self, chem_id: str, section_seq: int = 1) -> Dict[str, Any]:
@@ -92,13 +108,12 @@ class KoshaMsdsAdapter:
         :param chem_id: 화학물질 ID (예: 001008)
         :param section_seq: 항목 번호 (1~16)
         """
-        endpoint = f"getChemDetail{section_seq:02d}"
         params = {
             "serviceKey": self.service_key,
             "chemId": chem_id,
         }
-        result = self._try_request(endpoint, params)
+        result = self._try_request(lambda r: r.detail_url(section_seq), params)
         if result["status"] == "success":
             logger.info("KOSHA MSDS detail for '%s' sec %s: success (via %s)",
-                        chem_id, section_seq, result.get("source", ""))
+                        chem_id, section_seq, result.get("route", ""))
         return result

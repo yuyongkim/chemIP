@@ -3,11 +3,16 @@
 const ROOT = __dirname;
 const FOOD_ROOT = path.resolve(__dirname, '..', 'food');
 
+// 파이썬 앱은 venv 중계 python.exe를 거치면 PM2(콘솔 없음)가 자식 콘솔 창을 새로 띄운다.
+// 실제 파이썬을 직접 실행하고, venv 패키지는 PYTHONPATH로 연결한다. 경로는 여기서만 정의한다.
+const PYTHON = 'C:\\Program Files\\Python313\\python.exe';
+const sitePackages = (root) => path.join(root, '.venv', 'Lib', 'site-packages');
+
 module.exports = {
   apps: [
     {
       name: 'Hub-Dashboard-9000',
-      script: 'python',
+      script: PYTHON,
       args: 'dashboard_server.py',
       cwd: ROOT,
       watch: false,
@@ -19,12 +24,13 @@ module.exports = {
     },
     {
       name: 'T3-ChemIP-Backend',
-      script: 'python',
+      script: PYTHON,
       args: '-m uvicorn backend.main:app --host 127.0.0.1 --port 7011 --no-proxy-headers',
       cwd: ROOT,
       watch: false,
       ignore_watch: ['frontend/node_modules', 'data', 'logs', '.venv', 'archive', 'backups', '_archive'],
       env: {
+        PYTHONPATH: sitePackages(ROOT),
         PORT: 7011,
         LOG_DIR: './logs',
         LLM_MODEL: 'gemma3:4b',
@@ -54,12 +60,13 @@ module.exports = {
     },
     {
       name: 'T4-SoulsKitchen-Backend',
-      script: 'python',
+      script: PYTHON,
       args: '-m uvicorn backend.main:app --host 127.0.0.1 --port 8010 --reload',
       cwd: FOOD_ROOT,
       watch: ['backend'],
       ignore_watch: ['frontend/node_modules', 'data', 'logs', '.venv'],
       env: {
+        PYTHONPATH: sitePackages(FOOD_ROOT),
         PORT: 8010,
       },
       max_restarts: 3,
@@ -67,9 +74,9 @@ module.exports = {
     },
     {
       name: 'T4-SoulsKitchen-Frontend',
-      script: 'npm',
-      interpreter: 'none',
-      args: 'run dev -- --port 8002',
+      // npm.cmd는 cmd 콘솔 창을 만든다 -> node로 vite를 직접 실행
+      script: 'node',
+      args: './node_modules/vite/bin/vite.js --port 8002',
       cwd: path.join(FOOD_ROOT, 'frontend'),
       watch: ['src'],
       ignore_watch: ['node_modules', 'dist', 'logs'],

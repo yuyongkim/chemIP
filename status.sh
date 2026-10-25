@@ -32,3 +32,13 @@ done
 
 echo
 echo "Dashboard URL: http://localhost:9000"
+
+echo
+echo "===== RUNTIME HEALTH ====="
+if command -v python >/dev/null 2>&1; then
+  python scripts/check_runtime_health.py
+elif command -v python3 >/dev/null 2>&1; then
+  python3 scripts/check_runtime_health.py
+else
+  echo "[WARN] python/python3 not found. Skipping runtime health check."
+fi

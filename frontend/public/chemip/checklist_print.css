@@ -1,0 +1,38 @@
+/* 중소기업 체크리스트(trade_controls_sections/checklist_export.jsx) — 버튼 줄과 인쇄 전용 배치.
+   화면에서는 .tc-print-root 를 숨기고, 인쇄 중(body.tc-printing)에는 앱 화면을 숨기고 체크리스트만 찍는다.
+   색·글꼴은 tokens.css 변수만, 간격은 --unit(4px) 배수. */
+
+.tc-checklist-bar { display: flex; flex-wrap: wrap; gap: calc(var(--unit) * 2); align-items: center; margin-top: calc(var(--unit) * 3); }
+.tc-checklist-bar .ui-hint { flex: 1 1 280px; }
+
+.tc-print-root { display: none; }
+
+@media print {
+  body.tc-printing #app-root { display: none !important; }
+  body.tc-printing { background: var(--bg-elevated); }
+  body.tc-printing .tc-print-root { display: block; color: var(--fg); font-family: var(--font-body); font-size: 10pt; line-height: 1.45; }
+  @page { size: A4; margin: 14mm 12mm; }
+}
+
+.tcp-title { font-family: var(--font-display); font-size: 16pt; margin: 0 0 calc(var(--unit) * 2); }
+.tcp-heading { display: grid; grid-template-columns: max-content 1fr; gap: var(--unit) calc(var(--unit) * 4); margin: 0 0 calc(var(--unit) * 3); }
+.tcp-heading dt { color: var(--fg-muted); }
+.tcp-heading dd { margin: 0; }
+.tcp-disclaimer { border: 1px solid var(--hazard); border-radius: var(--r-2); padding: calc(var(--unit) * 2) calc(var(--unit) * 3); margin: calc(var(--unit) * 3) 0; }
+.tcp-group { margin-top: calc(var(--unit) * 4); }
+.tcp-group h2 { font-family: var(--font-display); font-size: 12pt; margin: 0 0 calc(var(--unit) * 1.5); break-after: avoid; }
+.tcp-group h2 span { color: var(--fg-muted); font-weight: 400; }
+.tcp-empty { margin: 0; color: var(--fg-muted); }
+.tcp-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.tcp-table th, .tcp-table td { border: 1px solid var(--border-strong); padding: calc(var(--unit) * 1.25) calc(var(--unit) * 1.75); vertical-align: top; text-align: left; overflow-wrap: anywhere; }
+.tcp-table th { background: var(--bg-sunken); font-weight: 600; }
+.tcp-table tr { break-inside: avoid; }
+.tcp-check { text-align: center !important; }
+.tcp-table col.tcp-col-check { width: 6%; }
+.tcp-item { font-weight: 600; }
+.tcp-table col.tcp-col-item { width: 26%; }
+.tcp-table col.tcp-col-detail { width: 46%; }
+.tcp-table col.tcp-col-basis { width: 22%; }
+.tcp-k { color: var(--fg-muted); }
+.tcp-url { font-family: var(--font-mono); font-size: 8pt; color: var(--fg-muted); margin-top: calc(var(--unit) * 0.5); }
+.tcp-footer { margin-top: calc(var(--unit) * 3); font-size: 8pt; color: var(--fg-muted); }
