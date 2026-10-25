@@ -1,0 +1,45 @@
+{
+  "parser": "parse_ca_ecl",
+  "downloads": {
+    "xml": "https://laws-lois.justice.gc.ca/eng/XML/C-15.31.xml",
+    "page": "https://laws-lois.justice.gc.ca/eng/acts/c-15.31/page-52.html"
+  },
+  "lists": {
+    "part1": {
+      "file": "CA_EXPORT_CONTROL_LIST_PART1.json",
+      "list_id": "CA_EXPORT_CONTROL_LIST_PART1",
+      "jurisdiction": "CA",
+      "law": "Canadian Environmental Protection Act, 1999 (CEPA) Schedule 3",
+      "title": "캐나다 CEPA 부속서 3 수출통제목록 제1부 — 사용 금지 물질(Prohibited Substances)",
+      "directions": ["export"],
+      "obligation_for_kr_exporter": "캐나다에서 수출(한국으로 수입)할 때 적용: 캐나다 수출자는 수출 전 장관에게 사전 통보해야 하며(CEPA 제101조), 제1부 물질은 폐기 목적 등 규정이 허용하는 경우에만 수출 가능(Export of Substances on the Export Control List Regulations SOR/2013-88). 한국 수입자는 캐나다 공급자의 수출통보 여부를 확인.",
+      "legal_basis": "CEPA 1999 s. 100–103, Schedule 3 Part 1; SOR/2013-88",
+      "source_url": "https://laws-lois.justice.gc.ca/eng/acts/c-15.31/page-52.html",
+      "license": "Justice Laws Website: 캐나다 연방 법령은 비상업·상업 목적 복제 허용(Reproduction of Federal Law Order SI/97-5), 공식본은 인쇄 관보·법령집."
+    },
+    "part2": {
+      "file": "CA_EXPORT_CONTROL_LIST_PART2.json",
+      "list_id": "CA_EXPORT_CONTROL_LIST_PART2",
+      "jurisdiction": "CA",
+      "law": "Canadian Environmental Protection Act, 1999 (CEPA) Schedule 3",
+      "title": "캐나다 CEPA 부속서 3 수출통제목록 제2부 — 국제협약상 통보·동의 대상(로테르담 PIC·스톡홀름 등)",
+      "directions": ["export"],
+      "obligation_for_kr_exporter": "캐나다에서 수출(한국으로 수입)할 때 적용: 캐나다 수출자는 수출 전 장관에게 통보(CEPA 제101조)하고, 로테르담협약 PIC 물질이면 수입국(한국)의 수입결정·동의에 따라야 한다(SOR/2013-88). 한국 수입자는 한국의 로테르담 수입결정과 캐나다 공급자의 수출통보 여부를 확인.",
+      "legal_basis": "CEPA 1999 s. 100–103, Schedule 3 Part 2; SOR/2013-88",
+      "source_url": "https://laws-lois.justice.gc.ca/eng/acts/c-15.31/page-52.html",
+      "license": "Justice Laws Website: Reproduction of Federal Law Order SI/97-5 에 따라 복제 허용."
+    },
+    "part3": {
+      "file": "CA_EXPORT_CONTROL_LIST_PART3.json",
+      "list_id": "CA_EXPORT_CONTROL_LIST_PART3",
+      "jurisdiction": "CA",
+      "law": "Canadian Environmental Protection Act, 1999 (CEPA) Schedule 3",
+      "title": "캐나다 CEPA 부속서 3 수출통제목록 제3부 — 사용 제한 물질(Restricted Substances)",
+      "directions": ["export"],
+      "obligation_for_kr_exporter": "캐나다에서 수출(한국으로 수입)할 때 적용: 캐나다 수출자는 수출 전 장관에게 사전 통보(CEPA 제101조, SOR/2013-88). 한국 수입자 의무는 없으나 캐나다 공급자의 통보 여부를 확인.",
+      "legal_basis": "CEPA 1999 s. 100–103, Schedule 3 Part 3; SOR/2013-88",
+      "source_url": "https://laws-lois.justice.gc.ca/eng/acts/c-15.31/page-52.html",
+      "license": "Justice Laws Website: Reproduction of Federal Law Order SI/97-5 에 따라 복제 허용."
+    }
+  }
+}

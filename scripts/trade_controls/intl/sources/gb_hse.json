@@ -1,0 +1,97 @@
+{
+  "parser": "parse_gb_hse",
+  "downloads": {
+    "candidate": {"url": "https://www.hse.gov.uk/reach/assets/docs/candidate-list.xlsx", "page": "https://www.hse.gov.uk/reach/candidate-list.htm"},
+    "restrictions": {"url": "https://www.hse.gov.uk/reach/assets/docs/list-of-restrictions.xlsx", "page": "https://www.hse.gov.uk/reach/restrictions.htm"},
+    "pic": {"url": "https://www.hse.gov.uk/pic/assets/docs/gb-pic-list.xlsx", "page": "https://www.hse.gov.uk/pic/pic-list.htm"},
+    "mcl": {"url": "https://www.hse.gov.uk/chemical-classification/assets/docs/mcl-list.xlsx", "page": "https://www.hse.gov.uk/chemical-classification/classification/mcl-list.htm"}
+  },
+  "lists": {
+    "candidate": {
+      "file": "GB_UKREACH_SVHC_CANDIDATE.json",
+      "list_id": "GB_UKREACH_SVHC_CANDIDATE",
+      "jurisdiction": "GB",
+      "law": "UK REACH (retained Regulation (EC) No 1907/2006, as amended by SI 2019/758 etc.)",
+      "title": "영국 UK REACH 고우려물질(SVHC) 후보물질 목록 — HSE Candidate List",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "영국(그레이트브리튼) 수입자(또는 한국 제조사가 지정한 GB 유일대리인)가 의무 주체. 물질·혼합물: SDS 제공(UK REACH 제31조). 완제품에 0.1% w/w 초과 함유: 공급망 정보 전달·소비자 요청 시 45일 내 회신(제33조), 연간 1톤 초과 시 HSE 신고(제7조(2)). EU 후보목록과 별개이므로 영국 목록을 따로 확인. 북아일랜드는 EU REACH 적용.",
+      "legal_basis": "UK REACH Art. 7(2), 31, 33, 57, 59; The REACH etc. (Amendment etc.) (EU Exit) Regulations 2019 (SI 2019/758)",
+      "source_url": "https://www.hse.gov.uk/reach/candidate-list.htm",
+      "license": "HSE 자료: Open Government Licence v3.0(출처 표시 재사용, © Crown copyright). 법적 효력은 HSE 공표 목록·관련 법령.",
+      "notes": ["HSE 표의 4,4'-[2,2,2-trifluoro-1-(trifluoromethyl)ethylidene]diphenol(포함일 2026-10-19) CAS 칸이 '147861-1'(CAS 형식 아님)로 인쇄되어 CAS 없이 family_entries 로 둔다. 보정하지 않음."]
+    },
+    "restrictions": {
+      "file": "GB_UKREACH_ANNEX_XVII.json",
+      "list_id": "GB_UKREACH_ANNEX_XVII",
+      "jurisdiction": "GB",
+      "law": "UK REACH (retained Regulation (EC) No 1907/2006)",
+      "title": "영국 UK REACH 부속서 XVII 제한물질 — HSE List of restrictions",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "제한 항목별 조건(용도 금지·농도 한도·완제품 함유 한도)에 맞지 않으면 그레이트브리튼 시장 출시·사용 불가(UK REACH 제67조). 수출 물질·혼합물·완제품이 해당 항목 조건을 지키는지 확인(EU 와 항목·시점이 다를 수 있음).",
+      "legal_basis": "UK REACH Art. 67–68, Annex XVII; SI 2019/758, SI 2019/1144, SI 2020/1577",
+      "source_url": "https://www.hse.gov.uk/reach/restrictions.htm",
+      "license": "HSE 자료: Open Government Licence v3.0(출처 표시 재사용). HSE 고지: 법적 원문은 관련 SI 와 2020-12-31 시점 REACH 를 함께 읽어야 한다."
+    },
+    "mcl": {
+      "file": "GB_CLP_MCL.json",
+      "list_id": "GB_CLP_MCL",
+      "jurisdiction": "GB",
+      "law": "GB CLP Regulation (retained Regulation (EC) No 1272/2008)",
+      "title": "영국 GB 강제 분류·표시 목록(GB MCL List)",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "GB MCL 등재 물질은 그 분류·표시(유해성 구분·H 문구·특정농도한계·M 계수·ATE)를 의무로 적용해야 한다(GB CLP 제4(3)조). 영국으로 수출하는 물질·혼합물의 SDS·라벨을 GB MCL 기준으로 작성하고(EU CLH 와 다를 수 있음), 영국 수입자는 HSE 에 분류 통보(GB CLP 제40조).",
+      "legal_basis": "GB CLP Art. 4(3), 36–38, 40, Annex VI Part 3 (GB MCL list)",
+      "source_url": "https://www.hse.gov.uk/chemical-classification/classification/mcl-list.htm",
+      "license": "HSE 자료: Open Government Licence v3.0(출처 표시 재사용)."
+    },
+    "pic_part1": {
+      "file": "GB_PIC_PART1.json",
+      "list_id": "GB_PIC_PART1",
+      "jurisdiction": "GB",
+      "law": "GB PIC (retained Regulation (EU) No 649/2012)",
+      "title": "영국 GB PIC 목록 제1부 — 수출통보 대상 화학물질",
+      "directions": ["export"],
+      "obligation_for_kr_exporter": "영국(그레이트브리튼)에서 수출(한국으로 수입)할 때 적용: GB 수출자는 해당 연도 첫 수출 35일 전 HSE 에 수출통보(GB PIC 제8조), HSE 가 수입국(한국: 환경부)에 전달. 한국 수입자는 영국 공급자에게 수출통보 참조번호 확인.",
+      "legal_basis": "GB PIC Regulation Art. 7, 8, 17, 19, GB PIC list Part 1",
+      "source_url": "https://www.hse.gov.uk/pic/pic-list.htm",
+      "license": "HSE 자료: Open Government Licence v3.0(출처 표시 재사용)."
+    },
+    "pic_part2": {
+      "file": "GB_PIC_PART2.json",
+      "list_id": "GB_PIC_PART2",
+      "jurisdiction": "GB",
+      "law": "GB PIC (retained Regulation (EU) No 649/2012)",
+      "title": "영국 GB PIC 목록 제2부 — PIC 통보 대상 화학물질(명시적 동의 필요)",
+      "directions": ["export"],
+      "obligation_for_kr_exporter": "영국에서 수출(한국으로 수입)할 때 적용: 수출통보에 더해 수입국의 명시적 동의(explicit consent)가 있어야 수출 가능(GB PIC 제14조(6)). 동의 요청은 HSE 가 수입국 DNA(한국: 환경부)에 한다.",
+      "legal_basis": "GB PIC Regulation Art. 11, 14(6), GB PIC list Part 2",
+      "source_url": "https://www.hse.gov.uk/pic/pic-list.htm",
+      "known_source_errors": {"92-92-3": "Part 2 의 4-Nitrobiphenyl CAS 가 '92-92-3'(체크디지트 불일치)으로 인쇄됨(EU PIC Part 2 와 같은 오식). 같은 목록 Part 1·UK REACH 제한목록은 92-93-3. 추정 보정하지 않고 family_entries 로 둔다."},
+      "license": "HSE 자료: Open Government Licence v3.0(출처 표시 재사용)."
+    },
+    "pic_part3": {
+      "file": "GB_PIC_PART3.json",
+      "list_id": "GB_PIC_PART3",
+      "jurisdiction": "GB",
+      "law": "GB PIC (retained Regulation (EU) No 649/2012)",
+      "title": "영국 GB PIC 목록 제3부 — 로테르담협약 PIC 절차 대상",
+      "directions": ["export"],
+      "obligation_for_kr_exporter": "영국에서 수출(한국으로 수입)할 때 적용: 수입국이 로테르담협약 사무국에 낸 수입결정(import response)에 따름(GB PIC 제13~14조). 한국의 수입결정이 '동의'가 아니면 영국에서 수출 불가.",
+      "legal_basis": "GB PIC Regulation Art. 13, 14, GB PIC list Part 3; Rotterdam Convention Annex III",
+      "source_url": "https://www.hse.gov.uk/pic/pic-list.htm",
+      "license": "HSE 자료: Open Government Licence v3.0(출처 표시 재사용)."
+    },
+    "pic_export_ban": {
+      "file": "GB_PIC_EXPORT_BAN.json",
+      "list_id": "GB_PIC_EXPORT_BAN",
+      "jurisdiction": "GB",
+      "law": "GB PIC (retained Regulation (EU) No 649/2012)",
+      "title": "영국 GB PIC 목록 제4·5부 — 수출금지 화학물질·제품(POPs·수은 등)",
+      "directions": ["export"],
+      "obligation_for_kr_exporter": "그레이트브리튼에서 한국 등 제3국으로 수출 금지(GB PIC 제15(2)조, 규정상 면제 제외). 한국 수입자는 해당 물질·제품을 영국 공급자로부터 들여올 수 없다.",
+      "legal_basis": "GB PIC Regulation Art. 15, GB PIC list Parts 4–5",
+      "source_url": "https://www.hse.gov.uk/pic/pic-list.htm",
+      "license": "HSE 자료: Open Government Licence v3.0(출처 표시 재사용)."
+    }
+  }
+}

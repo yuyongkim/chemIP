@@ -1,0 +1,70 @@
+{
+  "parser": "parse_ch_fedlex",
+  "downloads": {
+    "pic": {
+      "url": "https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2004/725/20241001/de/xml/fedlex-data-admin-ch-eli-cc-2004-725-20241001-de-xml-4.xml",
+      "file": "pic_v_SR814.82_20241001_de.xml",
+      "version": "PIC-Verordnung SR 814.82, Fedlex 통합본(Stand) 2024-10-01 (그 뒤 통합본 없음, 2026-10-25 확인)"
+    },
+    "chemrrv": {
+      "url": "https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/2005/478/20260716/de/xml/fedlex-data-admin-ch-eli-cc-2005-478-20260716-de-xml-1.xml",
+      "file": "chemrrv_SR814.81_20260716_de.xml",
+      "version": "ChemRRV SR 814.81, Fedlex 통합본(Stand) 2026-07-16 — 2026-10-25 현재 시행본(Fedlex 에는 2032년 이후 시행 예정 통합본도 따로 있음)"
+    },
+    "candidate": {
+      "url": "https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/oce/2025/101/de/xlsx/fedlex-data-admin-ch-eli-oce-2025-101-de-xlsx.xlsx",
+      "file": "chemv_annex3_candidate_2025-09-01.xlsx",
+      "version": "ChemV Anhang 3 (AS 2025 506 부속 파일)"
+    }
+  },
+  "lists": {
+    "pic_annex1": {
+      "file": "CH_PIC_ANNEX1.json",
+      "list_id": "CH_PIC_ANNEX1",
+      "jurisdiction": "CH",
+      "law": "PIC-Verordnung (ChemPICV), SR 814.82",
+      "title": "스위스 PIC 법령 부속서 1 — 스위스 내 금지·엄격제한 물질(수출통보 대상)",
+      "directions": ["export"],
+      "obligation_for_kr_exporter": "스위스에서 수출(한국으로 수입)할 때 적용: 스위스 수출자는 수입국별 연도 첫 수출 전에 연방환경청(BAFU/FOEN)에 수출통보(PIC-V 제5조 이하, 기한은 법령 원문 확인), BAFU 가 수입국(한국: 환경부)에 전달. 한국 수입자는 스위스 공급자에게 통보 여부 확인.",
+      "legal_basis": "PIC-Verordnung SR 814.82 Art. 2 Abs. 1 Bst. a, Art. 5–9, Anhang 1",
+      "source_url": "https://www.fedlex.admin.ch/eli/cc/2004/725/de",
+      "license": "스위스 법령·관보는 저작권 보호 대상이 아님(URG 제5조). 법적 효력은 독일어·프랑스어·이탈리아어 공식본(Fedlex)."
+    },
+    "pic_annex2": {
+      "file": "CH_PIC_ANNEX2.json",
+      "list_id": "CH_PIC_ANNEX2",
+      "jurisdiction": "CH",
+      "law": "PIC-Verordnung (ChemPICV), SR 814.82",
+      "title": "스위스 PIC 법령 부속서 2 — 로테르담협약 PIC 절차 대상",
+      "directions": ["export"],
+      "obligation_for_kr_exporter": "스위스에서 수출(한국으로 수입)할 때 적용: 수입국의 로테르담 수입결정(import response) 또는 명시적 동의에 따라야 수출 가능(PIC-V 제10조 이하). 한국의 수입결정이 '동의'가 아니면 스위스에서 수출 불가.",
+      "legal_basis": "PIC-Verordnung SR 814.82 Art. 10–14, Anhang 2; Rotterdam Convention Annex III",
+      "source_url": "https://www.fedlex.admin.ch/eli/cc/2004/725/de",
+      "license": "스위스 법령은 저작권 보호 대상이 아님(URG 제5조)."
+    },
+    "chemrrv": {
+      "file": "CH_CHEMRRV_RESTRICTIONS.json",
+      "list_id": "CH_CHEMRRV_RESTRICTIONS",
+      "jurisdiction": "CH",
+      "law": "Chemikalien-Risikoreduktions-Verordnung (ChemRRV), SR 814.81",
+      "title": "스위스 화학물질 위해저감 법령(ChemRRV) 부속서 1·2 — 금지·제한 물질(부속서 절별)",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "부속서 절별 조건(물질·혼합물·완제품의 제조·시장 출시·수입·사용 금지, 농도 한도, 면제)에 맞아야 스위스 시장에 출시할 수 있다(ChemRRV 제3조). 수출 물질·제품이 해당 절의 조건을 지키는지 스위스 수입자와 확인(EU REACH 부속서 XVII 와 비슷하지만 별도 법령).",
+      "legal_basis": "ChemRRV SR 814.81 Art. 3, Anhänge 1 und 2",
+      "source_url": "https://www.fedlex.admin.ch/eli/cc/2005/478/de",
+      "license": "스위스 법령은 저작권 보호 대상이 아님(URG 제5조). 법적 효력은 Fedlex 공식본."
+    },
+    "candidate": {
+      "file": "CH_CHEMV_CANDIDATE_LIST.json",
+      "list_id": "CH_CHEMV_CANDIDATE_LIST",
+      "jurisdiction": "CH",
+      "law": "Chemikalienverordnung (ChemV), SR 813.11",
+      "title": "스위스 ChemV 부속서 3 — 고우려물질 후보목록(Kandidatenliste)",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "스위스 수입자·제조자 의무: 후보물질 0.1% 초과 함유 완제품의 정보 전달(요청 시 45일 내 회신), 물질·혼합물 SDS 제공(ChemV 의 후보물질 관련 조항). 한국 수출자는 함량 정보·SDS 를 제공. EU 후보목록을 일정 시차를 두고 따라가므로 이 판의 기준일을 확인.",
+      "legal_basis": "ChemV SR 813.11 Anhang 3 (Kandidatenliste) und die darauf verweisenden Bestimmungen",
+      "source_url": "https://www.fedlex.admin.ch/eli/oc/2025/506/de",
+      "license": "스위스 법령·관보는 저작권 보호 대상이 아님(URG 제5조)."
+    }
+  }
+}

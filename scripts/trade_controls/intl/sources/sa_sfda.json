@@ -1,0 +1,46 @@
+{
+  "parser": "parse_sa_sfda",
+  "pause": 0.4,
+  "headers": {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36",
+    "Accept-Language": "en"
+  },
+  "lists": {
+    "prohibited": {
+      "file": "SA_SFDA_COSMETICS_PROHIBITED.json",
+      "label": "Prohibited Ingredients List (cosmetics)",
+      "list_url": "https://sfda.gov.sa/en/ProhibitedIngredientsList?page={page}",
+      "list_id": "SA_SFDA_COSMETICS_PROHIBITED",
+      "jurisdiction": "SA",
+      "law": "SFDA 화장품 규제(Saudi Food and Drug Authority — cosmetics)",
+      "title": "사우디아라비아 SFDA 화장품 금지 원료 목록(Prohibited Ingredients List)",
+      "directions": [
+        "import"
+      ],
+      "obligation_for_kr_exporter": "화장품에만 적용: 이 원료를 함유한 화장품은 사우디 시장에 출시·수입할 수 없다(SFDA 화장품 등록·통관 시 성분 심사). 일반 산업용 화학물질 수입 규제 목록이 아니다. 한국 화장품 수출자는 전성분을 이 목록과 대조하고 사우디 수입자(등록 주체)에게 성분표를 제공.",
+      "legal_basis": "SFDA 화장품 관리 법령·기술규정(목록은 SFDA 웹사이트 공표본)",
+      "source_url": "https://sfda.gov.sa/en/ProhibitedIngredientsList",
+      "license": "SFDA 웹사이트 공표 자료. 재사용 조건 고지를 찾지 못함 — 출처 표시, 원문 확인 권장."
+    },
+    "restricted": {
+      "file": "SA_SFDA_COSMETICS_RESTRICTED.json",
+      "label": "Restricted Substances List (cosmetics)",
+      "list_url": "https://sfda.gov.sa/en/RestrictedSubstancesList?page={page}",
+      "list_id": "SA_SFDA_COSMETICS_RESTRICTED",
+      "jurisdiction": "SA",
+      "law": "SFDA 화장품 규제(Saudi Food and Drug Authority — cosmetics)",
+      "title": "사우디아라비아 SFDA 화장품 제한 원료 목록(Restricted Substances List)",
+      "directions": [
+        "import"
+      ],
+      "obligation_for_kr_exporter": "화장품에만 적용: 제품 종류·최대 농도·표시 문구 등 SFDA 가 정한 조건(목록의 Details) 안에서만 사용 가능. 일반 산업용 화학물질 목록이 아니다. 한국 화장품 수출자는 배합 농도와 표시 요건을 Details 원문과 대조.",
+      "legal_basis": "SFDA 화장품 관리 법령·기술규정(목록은 SFDA 웹사이트 공표본)",
+      "source_url": "https://sfda.gov.sa/en/RestrictedSubstancesList",
+      "license": "SFDA 웹사이트 공표 자료. 재사용 조건 고지를 찾지 못함 — 출처 표시, 원문 확인 권장.",
+      "known_source_errors": {
+        "1693-43-4": "SFDA 표의 3-Amino-2,4-dichlorophenol and its hydrochloride CAS 칸에 1693-43-4(체크디지트 불일치)로 인쇄됨. 보정하지 않고 같은 행의 다른 유효 CAS 만 쓴다(없으면 family_entries).",
+        "3245-91-7": "SFDA 표의 4-((4-Amino-3-methylphenyl)(4-imino-3-methyl-2,5-cyclohexadien-1-ylidene)methyl)-2-methyl-phenylamine 계열 행 CAS 칸에 3245-91-7(체크디지트 불일치)로 인쇄됨. 보정하지 않는다."
+      }
+    }
+  }
+}

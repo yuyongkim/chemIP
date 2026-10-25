@@ -21,6 +21,11 @@ const INTL_JURISDICTIONS = {
   AU: { ko: "호주", en: "Australia", iso: ["036"] },
   TW: { ko: "대만", en: "Taiwan", iso: ["158"] },
   SG: { ko: "싱가포르", en: "Singapore", iso: ["702"] },
+  CA: { ko: "캐나다", en: "Canada", iso: ["124"] },
+  GB: { ko: "영국", en: "United Kingdom", iso: ["826"] },
+  CH: { ko: "스위스", en: "Switzerland", iso: ["756"] },
+  TR: { ko: "튀르키예", en: "Türkiye", iso: ["792"] },
+  SA: { ko: "사우디아라비아", en: "Saudi Arabia", iso: ["682"] },
   INTL: { ko: "국제협약", en: "International conventions", iso: [] },
 };
 

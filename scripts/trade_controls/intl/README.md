@@ -33,6 +33,13 @@ S:\chemip_trade_controls_venv\Scripts\python.exe -I scripts\trade_controls\colle
 | `parse_jp_cscl.py` | 일본 化審法 第一種·第二種特定化学物質, 監視化学物質 (METI 목록 + NITE J-CHECK CAS) |
 | `jp_meti_pdf.py` / `jp_jcheck.py` | `parse_jp_cscl.py` 보조: METI 목록 PDF 읽기 / J-CHECK 조회 |
 | `parse_jp_poison.py` | 일본 毒物及び劇物取締法 毒物·劇物 (NIHS 毒劇物 검색용 파일; CAS 는 예시) |
+| `intl_xlsx.py` | 공식 .xlsx 읽기 보조(시트 행, 셀 정리, CAS 칸의 공백·소프트하이픈 제거). CA·GB·CH 수집기가 사용 |
+| `parse_ca_eccc.py` | 캐나다 ECCC Substances Search 'Export to Excel': DSL·NDSL(등재 여부), CEPA 부속서 1, 특정 독성물질 금지 규정 2025, SNAc, 석면 금지 규정. 공식 건수는 검색 페이지 목록 선택란 |
+| `parse_ca_ecl.py` | 캐나다 CEPA 부속서 3 수출통제목록 제1~3부 (Justice Laws 통합 XML) |
+| `parse_gb_hse.py` | 영국 HSE: UK REACH 후보물질·부속서 XVII 제한, GB MCL(강제 분류), GB PIC 제1~5부 |
+| `parse_ch_fedlex.py` | 스위스 Fedlex 독일어 공식본: PIC-V 부속서 1·2, ChemRRV 부속서 1·2(절별, 본문 속 CAS 포함), ChemV 부속서 3 후보목록 xlsx |
+| `parse_tr_kkdik.py` | 튀르키예 KKDİK 부속서 17 제한 + 부속 목록(Ek-I~IX), mevzuat.gov.tr 부속서 묶음(zip 안 .docx) |
+| `parse_sa_sfda.py` | 사우디 SFDA 화장품 금지·제한 원료(쪽 나눔 HTML 표 전체). 화장품 한정 |
 | `parse_au_aiic.py` | 호주 AICIS 산업화학물질 목록(AIIC) 내려받기 .xlsx(검색 페이지의 다운로드 링크를 매번 읽음). 등재 여부(`absence_note`)·등재 조건 |
 | `parse_au_legislation.py` | 호주 연방법령(legislation.gov.au 최신 통합본 HTML): 수입금지규정 1956 부속서 9 유기염소계, 산업화학물질 일반규칙 2019 제6장(로테르담 대상 도입·수출 승인, 수은) |
 | `parse_tw_tcscca.py` | 대만 毒性及關注化學物質管理法: 環境部 개방데이터 毒性化學物質(toxic_p_23, 禁止運作事項·許可用途 결합)·關注化學物質(txmg_p_76), 登錄辦法 附表九 기존화학물질 표준등록 106종 |
@@ -70,3 +77,22 @@ S:\chemip_trade_controls_venv\Scripts\python.exe -I scripts\trade_controls\colle
 | PH | PICCS, Priority Chemical List, CCO | PICCS 는 로그인 검색만(opms.emb.gov.ph), chemical.emb.gov.ph 403/TLS 오류, emb.gov.ph 403 | https://opms.emb.gov.ph/piccs_search/ , https://chemical.emb.gov.ph/ |
 | SG | EPMA 제2부속서 Table 1 | 물질명·제외 기준만 있음 — CAS 는 같은 NEA 의 제품코드 목록으로 수집(원본은 출처 기록으로 보관) | https://www.nea.gov.sg/docs/default-source/hs/hs--table-1-(27022026).pdf |
 | SG | 화학무기(금지)법 통제 화학물질 | CWC 는 `controlled_lists` 에 이미 있음. SSO(sso.agc.gov.sg)는 이 서버에서 403 | https://sso.agc.gov.sg/Act/EPMA1999 |
+
+## 아시아·태평양 외 — 수집하지 않은 목록(2026-10-25 확인)
+
+공식 내려받기 파일에 CAS 가 없거나 받을 수 없어 만들지 않은 목록. CAS 를 추정하거나 손으로 옮기지 않는다.
+
+| 국가 | 목록 | 사유 | 확인한 URL |
+|---|---|---|---|
+| BR | 연방경찰 통제 화학물질(Portaria MJSP 204/2022, 이전 240/2019) 목록 I–VII | 공식 PDF 는 코드·물질명만 있고 CAS 없음(141건). DOU 의 Portaria 204 페이지는 403 | https://www.gov.br/pf/pt-br/assuntos/produtos-quimicos/legislacao/listas.pdf |
+| BR | 육군 통제품(PCE, Portaria 118-COLOG/2019 부속서 I) | 표에 CAS 열 없음. DFPC 공식 파일은 연결 끊김 | https://www.dfpc.eb.mil.br/phocadownload/Portarias_EB_COLOG/Portarian118.pdf |
+| BR | Lei 15.022/2024 화학물질 인벤토리 | 시행령·우선관리 목록 미공포(초안 의견수렴 단계) | https://www.gov.br/mma |
+| MX | CICOPLAFEST·SEMARNAT·Salud 수출입 규제 Acuerdo(DOF 2020-12-26) | 관세 세번(fracción) 기준. CAS 는 일부 품목에만 드문드문(오식 포함) 있어 CAS 목록이 아님 | https://www.dof.gob.mx/nota_detalle.php?codigo=5608827&fecha=26/12/2020 (5608831, 5608830) |
+| MX | 화학 전구물질법(Ley Federal para el Control de Precursores Químicos) 제4조 | 물질명만 있고 CAS 없음 | https://www.diputados.gob.mx/LeyesBiblio/ |
+| RU/EAEU | EAEU 위원회 결정 제30호 부속서 2 단일 제한품목 목록 | 2.1(오존층)·2.3(유해폐기물)·2.12(마약·전구물질)·2.13(독성물질)은 CAS 없음. 2.30(실험용 POPs, 31행 16 CAS)만 CAS 가 있어 범위가 너무 좁아 보류 | https://eec.eaeunion.org/comission/department/catr/nontariff/Pr2_30.php |
+| RU/EAEU | TR EAEU 041/2017 화학물질 등록부 | 기술규정 미시행, 등록부 미구축 | https://eec.eaeunion.org |
+| SA | NCEC 화학물질관리법 시행규칙 목록 1–9 | 목록 4–6 은 NCEC 지침으로 미루어져 미공표. ncec.gov.sa 자료실은 동적 로딩으로 파일 없음 | https://ncec.gov.sa |
+| GCC | 걸프 통합 금지·제한 화학물질 목록 | 찾지 못함 | — |
+| TR | KKDİK SVHC 후보목록 | 공식 내려받기 목록 없음(kkdik.csb.gov.tr 없음, kimyasallar.csb.gov.tr·cygm.csb.gov.tr 접속 불가) | https://kimyasallar.csb.gov.tr/mevzuat/54 |
+| TR | PIC 규정(Bazı Zararlı Kimyasalların İhracatı ve İthalatı, RG 28/1/2023 No 32087) 부속서 | 부속서 PDF 가 스캔 이미지(텍스트 층 없음). OCR 결과는 공식 기계판독본이 아니라 쓰지 않음 | https://www.resmigazete.gov.tr/eskiler/2023/01/20230128-1-1.pdf |
+| CA | — | DSL·NDSL 의 기밀 물질(CAN, masked name)은 CAS 비공개라 목록에 없음(행 수만 notes 에 기록) | https://pollution-waste.canada.ca/substances-search/ |
