@@ -5,7 +5,20 @@
 <!-- /chemip 와 /chemip/ 어느 주소로 열어도 상대 경로(tokens.css 등)가 /chemip/ 아래에서 읽히게 한다 -->
 <base href="/chemip/" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>ChemIP — 중소기업 화학물질 규제·MSDS 무료 안내</title>
+<title>ChemIP | 화학물질 MSDS·규제·인허가·수출입 통합 조회</title>
+<meta name="description" content="화학물질의 MSDS, 국내외 규제, 인허가, 수출입 통제를 CAS 번호로 한 번에 조회하는 무료 통합 도구. 한국과 미국을 포함한 51개 상대국 규제를 가입 없이 확인하세요." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://chemip.yule.pics/chemip" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="ChemIP" />
+<meta property="og:locale" content="ko_KR" />
+<meta property="og:url" content="https://chemip.yule.pics/chemip" />
+<meta property="og:title" content="ChemIP | 화학물질 MSDS·규제·인허가·수출입 통합 조회" />
+<meta property="og:description" content="화학물질의 MSDS, 국내외 규제, 인허가, 수출입 통제를 CAS 번호로 한 번에 조회하는 무료 통합 도구. 한국과 미국을 포함한 51개 상대국 규제를 다룹니다." />
+<meta name="twitter:card" content="summary" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"ChemIP","url":"https://chemip.yule.pics/chemip","applicationCategory":"BusinessApplication","operatingSystem":"Web","inLanguage":"ko","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},"description":"화학물질 MSDS·국내외 규제·인허가·수출입 통제 통합 조회 도구"}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
@@ -20,7 +33,14 @@
 <link rel="stylesheet" href="landing.css?v=20261025ko3" />
 </head>
 <body>
-<div id="app-root"></div>
+<div id="app-root">
+  <main style="max-width:720px;margin:0 auto;padding:56px 20px;font-family:'Pretendard Variable',system-ui,sans-serif;line-height:1.7;color:#1a1a1a">
+    <h1 style="font-size:1.6rem;margin:0 0 16px">ChemIP — 화학물질 MSDS·규제·인허가·수출입 통합 조회</h1>
+    <p>ChemIP는 화학물질의 물질안전보건자료(MSDS), 국내외 규제와 인허가, 수출입 통제 정보를 CAS 번호로 한 번에 조회하는 무료 도구입니다. 가입 없이 사용할 수 있습니다.</p>
+    <p>한국은 물론 미국을 포함한 51개 상대국의 규제를 함께 다룹니다. 규제 전담 인력이 없는 실무자도 바로 확인할 수 있도록 공신력 있는 출처(공공데이터포털 MSDS, 특허청 KIPRIS, KOTRA 무역정보 등)를 정리해 보여 줍니다.</p>
+    <p style="color:#666;font-size:.9rem">화면이 보이지 않으면 브라우저의 JavaScript를 켜 주세요.</p>
+  </main>
+</div>
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
