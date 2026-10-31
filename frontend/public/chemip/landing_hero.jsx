@@ -34,6 +34,7 @@ function LandingHero({ setView }) {
             </a>
           ))}
         </div>
+        <LandingRecent setView={setView} />
         <div className="hero-cta">
           <button className="btn" onClick={() => setView && setView("board")}><Icon name="doc" size={14} /> {H.ctaBoard}</button>
           <a className="btn ghost" href="#ld-steps">{H.ctaHow} <Icon name="down" size={13} /></a>

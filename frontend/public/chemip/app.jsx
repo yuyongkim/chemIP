@@ -46,13 +46,14 @@ function App() {
   const [view, setView] = useState(() => {
     if (link.view) return link.view;
     let saved = "";
-    try { saved = localStorage.getItem("chemip-app-view") || ""; } catch (e) {}
+    // 같은 탭의 새로고침만 화면을 잇는다. 주소로 새로 들어오면 첫 화면부터 연다(보던 물질은 landing_recent.jsx).
+    try { saved = sessionStorage.getItem("chemip-app-view") || ""; } catch (e) {}
     return APP_SCREENS.some(v => v.k === saved && v.nav) ? saved : "landing";
   });
   const [tweaksOpen, setTweaksOpen] = useState(false);
   const [tweaks, setTweak] = useTweaks();
 
-  useEffect(() => { try { localStorage.setItem("chemip-app-view", view); } catch (e) {} }, [view]);
+  useEffect(() => { try { sessionStorage.setItem("chemip-app-view", view); } catch (e) {} }, [view]);
 
   useEffect(() => {
     const h = (e) => {

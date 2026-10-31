@@ -13,6 +13,7 @@ const FEATURED_CHEMICALS = [
 const LANDING_LABELS = {
   hero: {
     kicker: "중소기업 화학물질 실무 도우미 · 무료",
+    recent: "최근 조회",
     title: "물질 하나만 넣으면,",
     titleSub: "지켜야 할 규제가 한 화면에 모입니다.",
     lede: `규제 담당자가 따로 없는 회사를 위해 만들었습니다. 물질 이름이나 CAS 번호를 넣으면 MSDS, 국내 법령 {kr_lists}개 목록 등재 여부, 인허가·신고, 수출입 의무, 상대국 규제, HS 코드를 모아 보여 드리고 체크리스트로 뽑아 드립니다.`,

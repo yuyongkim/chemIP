@@ -99,3 +99,6 @@
 .footer h6, .footer-bottom { font-family: var(--font-body); letter-spacing: 0; }
 /* 한글 제목·문단이 어절 중간에서 끊기지 않게 */
 .ld-title, .ld-h2, .ld-lede, .ld-output, .ld-steps, .ld-disclaimer, .section h2.about-sme-title, .about-sme-body { word-break: keep-all; overflow-wrap: anywhere; }
+
+.ld-recent { display: flex; flex-wrap: wrap; align-items: baseline; gap: calc(var(--unit) * 2); margin: calc(var(--unit) * 3) 0 0; font-size: 14px; color: var(--fg-muted); }
+.ld-recent-link { padding: 0; border: 0; background: none; color: var(--accent); font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
