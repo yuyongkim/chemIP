@@ -28,6 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ cas: stri
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- untyped JSON from the backend
 async function jget(path: string): Promise<any | null> {
   try {
     const r = await fetch(`${BACKEND}${path}`, { cache: "no-store" });
@@ -56,7 +57,7 @@ export default async function ChemCasPage({ params }: { params: Promise<{ cas: s
     : [];
   const krLaws: Array<{ law?: string; lists?: Array<{ title?: string }> }> =
     Array.isArray(trade?.kr_law_lists) ? trade.kr_law_lists : [];
-  const controlled: any[] = Array.isArray(trade?.controlled_lists) ? trade.controlled_lists : [];
+  const controlled: unknown[] = Array.isArray(trade?.controlled_lists) ? trade.controlled_lists : [];
 
   const appUrl = `/chemip?cas=${encodeURIComponent(cas)}`;
 
