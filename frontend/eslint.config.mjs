@@ -22,6 +22,10 @@ const eslintConfig = defineConfig([
     "public/**",
     // Standalone Playwright/browser probe scripts run outside the build.
     "e2e/**",
+    // Node build/test scripts (CommonJS, run directly with node).
+    "scripts/**",
+    // Retired copies kept for rollback only.
+    "_legacy_*/**",
   ]),
 ]);
 
