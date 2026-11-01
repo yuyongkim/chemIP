@@ -1,11 +1,10 @@
-# ChemIP — Chemical regulation, permit and trade-control lookup for SMEs
+# ChemIP — Chemical regulation, permit and trade-control lookup
 
 [한국어](README.md) | **English**
 
 Enter one substance name or CAS number and ChemIP collects, on one screen, its MSDS, every Korean statutory list it is on,
 the permits and notifications those lists trigger, import/export obligations, destination-country regulations and HS codes,
-and exports the result as a checklist (print, PDF, CSV). It is built for small and medium-sized enterprises that have no
-in-house regulatory staff.
+and exports the result as a checklist (print, PDF, CSV).
 
 - Service: https://chemip.yule.pics/chemip/ (free, no sign-up)
 - License: AGPL-3.0
