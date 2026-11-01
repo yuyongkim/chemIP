@@ -136,3 +136,22 @@ def extract_items(data: Dict[str, Any]) -> tuple[list[Any], int]:
             return items_raw, total or len(items_raw)
 
     return [], total
+
+
+def xml_item_fields(xml_text: str, tags) -> list[Dict[str, str]]:
+    """For every ``<item>``: ``{tag: stripped text}`` for each of ``tags`` that is present and non-empty.
+
+    Items with none of the tags are skipped. Tag order is kept. Raises ``ET.ParseError`` on bad XML.
+    Shared by the data.go.kr item-list adapters (KISCHEM, chemical accidents).
+    """
+    root = ET.fromstring(xml_text)
+    records: list[Dict[str, str]] = []
+    for item in root.findall(".//item"):
+        record: Dict[str, str] = {}
+        for tag in tags:
+            node = item.find(tag)
+            if node is not None and node.text:
+                record[tag] = node.text.strip()
+        if record:
+            records.append(record)
+    return records

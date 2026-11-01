@@ -1,7 +1,8 @@
-// Labels for the 중소기업 체크리스트(인쇄/PDF · CSV) on the 규제·인허가 / 수출입 tab.
+// Labels for the 체크리스트(인쇄/PDF · CSV) on the 규제·인허가 / 수출입 tab.
 // 화면 코드(trade_controls_sections/checklist_export.jsx)와 순수 함수(trade_controls_checklist_helpers.jsx)는 이 문구만 읽는다.
+// 영어: trade_controls_checklist_labels_en.jsx 가 TC_CHECKLIST_LABELS = langPick(KO, EN) 으로 정한다.
 
-const TC_CHECKLIST_LABELS = {
+const TC_CHECKLIST_LABELS_KO = {
   printButton: "체크리스트 인쇄/PDF",
   csvButton: "CSV 내려받기",
   hint: "이 물질의 의무·인허가·등재 목록을 근거 조문과 함께 한 장으로 정리합니다. PDF 는 인쇄 창에서 \"PDF로 저장\"을 고르십시오.",
@@ -36,4 +37,4 @@ const TC_CHECKLIST_LABELS = {
   },
 };
 
-Object.assign(window, { TC_CHECKLIST_LABELS });
+Object.assign(window, { TC_CHECKLIST_LABELS_KO });

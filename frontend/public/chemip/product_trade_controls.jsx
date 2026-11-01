@@ -1,5 +1,5 @@
 // Product · 규제·인허가 / 수출입 tab — shell only: holds direction/country state, calls the hook, lays out sections.
-// Data: useTradeControls (api.jsx) → /api/regulations/trade-controls/{cas}. Sections: trade_controls_sections/*.jsx,
+// Data: useTradeControls (api_trade.jsx) → /api/regulations/trade-controls/{cas}. Sections: trade_controls_sections/*.jsx,
 // strings: trade_controls_labels.jsx, pure helpers: trade_controls_helpers.jsx, shared UI: ui_common.jsx.
 
 function TradeControlsTab({ selected }) {
@@ -8,7 +8,7 @@ function TradeControlsTab({ selected }) {
   const [direction, setDirection] = React.useState("import");
   const [country, setCountry] = React.useState("");
   const { data, loading, error } = useTradeControls(cas, direction, country);
-  const name = selected?.name || selected?.name_en || cas;
+  const name = tcSubstanceName(selected, data) || cas;
   const ok = cas && !loading && data && !data.error;
   // 방향·상대국을 바꾸는 동안 직전 결과를 흐리게 보여 화면이 통째로 비었다 차는 것을 막는다(같은 물질일 때만).
   const last = React.useRef({ cas: "", data: null });

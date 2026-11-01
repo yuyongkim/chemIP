@@ -1,128 +1,46 @@
-﻿import json
+"""KOTRA (data.go.kr B410001) and Korea Tour API client: one request helper + one search method per service.
+
+Payload parsing: backend/api/kotra_parsing.py. Item mapping: backend/api/kotra_mappers.py.
+The old private helper names (_parse_json, _map_fraud, ...) stay on the class as aliases.
+"""
 import logging
-import re
-import xml.etree.ElementTree as ET
-from html import unescape
 from typing import Any, Dict, Optional
 
 import requests
 
+from backend.api import kotra_mappers as M
+from backend.api import kotra_parsing
 from backend.api.http_client import safe_get
-from backend.api.text_utils import (
-    coalesce,
-    element_to_dict,
-    extract_items,
-    html_to_text,
-    normalize_text,
-    parse_json_response,
-    parse_xml_response,
-)
+from backend.api.text_utils import coalesce, normalize_text
 from backend.config.settings import settings
 
 logger = logging.getLogger(__name__)
 
 
 class KotraAdapter:
-    def __init__(self):
-        self.kotra_key = settings.KOTRA_SERVICE_KEY
-        self.tourism_key = coalesce(settings.TOURISM_API_KEY_DECODED, self.kotra_key)
+
+    # Old private names (pure helpers now in kotra_parsing / kotra_mappers).
+    _parse_json = staticmethod(kotra_parsing.parse_json)
+    _parse_xml = staticmethod(kotra_parsing.parse_xml)
+    _element_to_dict = staticmethod(kotra_parsing.element_to_dict)
+    _extract_items = staticmethod(kotra_parsing.extract_items)
+    _map_product_news = staticmethod(M.map_product_news)
+    _map_strategy = staticmethod(M.map_strategy)
+    _map_price = staticmethod(M.map_price)
+    _map_fraud = staticmethod(M.map_fraud)
+    _map_country_info = staticmethod(M.map_country_info)
+    _map_import_item = staticmethod(M.map_import_item)
+    _map_enterprise_success = staticmethod(M.map_enterprise_success)
+    _html_to_text = staticmethod(M.html_to_text)
+    _extract_labeled_value = staticmethod(M.extract_labeled_value)
+    _infer_fraud_category = staticmethod(M.infer_fraud_category)
 
     def _normalize_text(self, obj):
         return normalize_text(obj)
 
-    def _parse_json(self, raw: str) -> Dict[str, Any]:
-        try:
-            if not raw:
-                return {}
-            return self._normalize_text(json.loads(raw))
-        except Exception:
-            return {}
-
-    def _parse_xml(self, raw: bytes) -> Dict[str, Any]:
-        try:
-            root = ET.fromstring(raw)
-            return self._element_to_dict(root)
-        except Exception:
-            return {}
-
-    def _element_to_dict(self, element: ET.Element) -> Any:
-        if len(element) == 0:
-            text = element.text.strip() if element.text else ""
-            return self._normalize_text(text)
-        result: Dict[str, Any] = {}
-        for child in element:
-            child_value = self._element_to_dict(child)
-            if child.tag in result:
-                if not isinstance(result[child.tag], list):
-                    result[child.tag] = [result[child.tag]]
-                result[child.tag].append(child_value)
-            else:
-                result[child.tag] = child_value
-        if element.attrib:
-            result.update({f"@{k}": self._normalize_text(v) for k, v in element.attrib.items()})
-        return result
-
-    def _extract_items(self, data: Dict[str, Any]) -> tuple[list[Any], int]:
-        if not isinstance(data, dict):
-            return [], 0
-
-        items = []
-        total = 0
-        response = data.get("response", data)
-
-        if isinstance(response, dict):
-            header = response.get("header")
-            if isinstance(header, dict):
-                result_code = str(header.get("resultCode", ""))
-                if result_code and result_code != "00":
-                    result_msg = header.get("resultMsg", "")
-                    return [], 0
-
-            body = response.get("body", response)
-        else:
-            body = data
-
-        if isinstance(body, dict):
-            if isinstance(body.get("items"), dict):
-                nested = body["items"]
-                if isinstance(nested, dict) and "item" in nested:
-                    items = nested["item"]
-            elif "items" in body:
-                items = body["items"]
-            elif "itemList" in body:
-                items = body["itemList"]
-            elif isinstance(body.get("item"), list):
-                items = body["item"]
-            elif isinstance(body.get("item"), dict):
-                items = [body["item"]]
-            else:
-                candidate = body.get("itemList", body.get("item", body.get("items")))
-                if isinstance(candidate, list):
-                    items = candidate
-                elif isinstance(candidate, dict):
-                    items = [candidate]
-
-            if isinstance(body.get("totalCount"), (int, str)):
-                try:
-                    total = int(body.get("totalCount", 0))
-                except Exception:
-                    total = 0
-            if isinstance(body.get("totalCnt"), (int, str)):
-                try:
-                    total = int(body.get("totalCnt", 0))
-                except Exception:
-                    pass
-            if isinstance(body.get("numOfRows"), (int, str)) and total == 0 and isinstance(body.get("pageNo"), (int, str)):
-                total = len(items)
-
-        if isinstance(items, dict):
-            items = items.get("item", [])
-        if isinstance(items, dict):
-            items = [items]
-        if not isinstance(items, list):
-            items = []
-
-        return [self._normalize_text(item) for item in items], total or len(items)
+    def __init__(self):
+        self.kotra_key = settings.KOTRA_SERVICE_KEY
+        self.tourism_key = coalesce(settings.TOURISM_API_KEY_DECODED, self.kotra_key)
 
     def _request(
         self,
@@ -170,91 +88,6 @@ class KotraAdapter:
             return {"status": "error", "message": f"Request failed: {e}", "total": 0, "data": []}
         except Exception as e:
             return {"status": "error", "message": f"Unexpected error: {e}", "total": 0, "data": []}
-
-    def _map_product_news(self, item: Dict[str, Any]) -> Dict[str, Any]:
-        return {
-            "newsTitl": item.get("newsTitl", "") or item.get("sj", "") or item.get("title", ""),
-            "cntryNm": item.get("cntryNm", "") or item.get("natNm", ""),
-            "newsWrtDt": item.get("newsWrtDt", "") or item.get("regDt", "") or item.get("writedate", ""),
-            "kotraNewsUrl": item.get("kotraNewsUrl", "") or item.get("newsUrl", "") or item.get("url", ""),
-            "newsBdt": item.get("newsBdt", "") or item.get("cntntSumar", "") or item.get("summary", ""),
-            "cntntSumar": item.get("cntntSumar", "") or item.get("summary", ""),
-            "source": item.get("source", "KOTRA"),
-        }
-
-    def _map_strategy(self, item: Dict[str, Any]) -> Dict[str, Any]:
-        return {
-            "title": item.get("title", "") or item.get("newsTitl", ""),
-            "country": item.get("country", "") or item.get("cntryNm", "") or item.get("natNm", ""),
-            "date": item.get("date", "") or item.get("newsWrtDt", "") or item.get("regDt", ""),
-            "url": item.get("url", "") or item.get("newsUrl", "") or item.get("kotraNewsUrl", ""),
-            "summary": item.get("summary", "") or item.get("cntntSumar", "") or item.get("newsBdt", ""),
-            "source": item.get("source", "KOTRA"),
-        }
-
-    def _map_price(self, item: Dict[str, Any]) -> Dict[str, Any]:
-        return {
-            "itemName": item.get("itemName", "") or item.get("itemNm", "") or item.get("cmdltNm", ""),
-            "price": item.get("price", "") or item.get("itemPrc", ""),
-            "unit": item.get("unit", "") or item.get("untNm", ""),
-            "country": item.get("country", "") or item.get("cntryNm", "") or item.get("natNm", ""),
-            "currency": item.get("currency", "") or item.get("mnyUtNm", ""),
-            "category": item.get("category", "") or item.get("ctgryNm", ""),
-            "date": item.get("date", "") or item.get("regDt", ""),
-            "url": item.get("url", "") or item.get("newsUrl", ""),
-            "source": item.get("source", "KOTRA"),
-        }
-
-    def _map_fraud(self, item: Dict[str, Any]) -> Dict[str, Any]:
-        plain = self._html_to_text(item.get("bdtCntnt", "") or item.get("cntntSumar", "") or item.get("content", ""))
-        country = item.get("cntryNm", "") or self._extract_labeled_value(plain, ["발생국가", "국가"])
-        period = item.get("regDt", "") or self._extract_labeled_value(plain, ["발생시기", "시기"])
-        amount = self._extract_labeled_value(plain, ["피해금액", "금액"])
-        source_url = item.get("kotraNewsUrl", "") or item.get("newsUrl", "") or item.get("url", "")
-        return {
-            "title": item.get("title", "") or item.get("newsTitl", "") or "무역 사기 사례",
-            "content": item.get("bdtCntnt", "") or item.get("cntntSumar", ""),
-            "plainText": plain,
-            "date": period,
-            "incidentPeriod": period,
-            "country": country,
-            "amount": amount,
-            "category": item.get("ctgryNm", "") or self._infer_fraud_category(plain),
-            "url": source_url,
-            "source": item.get("source", "KOTRA"),
-        }
-
-    def _html_to_text(self, html_text: str) -> str:
-        text = html_text or ""
-        text = re.sub(r"(?i)<br\s*/?>", "\n", text)
-        text = re.sub(r"(?i)</p>", "\n", text)
-        text = re.sub(r"<[^>]+>", "", text)
-        text = unescape(text)
-        text = re.sub(r"\r\n?", "\n", text)
-        text = re.sub(r"[ \t]+", " ", text)
-        text = re.sub(r"\n{2,}", "\n", text)
-        return text.strip()
-
-    def _extract_labeled_value(self, text: str, labels: list[str]) -> str:
-        for label in labels:
-            match = re.search(rf"{re.escape(label)}\s*[:：]?\s*([^\n]+)", text)
-            if match:
-                return match.group(1).strip()
-        return ""
-
-    def _infer_fraud_category(self, text: str) -> str:
-        if not text:
-            return ""
-        rules = [
-            ("비자/초청", ["비자", "초청장", "불법 체류"]),
-            ("결제/송금", ["송금", "결제", "T/T", "입금"]),
-            ("물류/선적", ["선적", "물류비", "운송", "배송"]),
-            ("사칭/위장 바이어", ["사칭", "위장", "가짜", "악용"]),
-        ]
-        for label, terms in rules:
-            if any(term in text for term in terms):
-                return label
-        return "기타"
 
     def search_market_news(self, keyword: str, country: str = "", industry: str = "", page_no: int = 1, num_of_rows: int = 10) -> dict:
         result = self._request(
@@ -370,36 +203,3 @@ class KotraAdapter:
             },
             is_tourism=True,
         )
-
-    def _map_country_info(self, item: Dict[str, Any]) -> Dict[str, Any]:
-        return {
-            "countryCode": item.get("isoWd2CntCd", "") or item.get("nat2CntCd", ""),
-            "countryName": item.get("natnNm", "") or item.get("countryName", ""),
-            "title": item.get("subject", "") or item.get("title", ""),
-            "summary": item.get("overview", "") or item.get("content", ""),
-            "source": "KOTRA National Info",
-        }
-
-    def _map_import_item(self, item: Dict[str, Any]) -> Dict[str, Any]:
-        return {
-            "hsCode": item.get("hscd", "") or item.get("HSCD", ""),
-            "productName": item.get("cmdltName", "") or item.get("productName", ""),
-            "regulation": item.get("reglCn", "") or item.get("regulation", ""),
-            "country": item.get("probeTgtNatName", "") or item.get("HQURT_NAME", ""),
-            "startDate": item.get("regStrDe", "") or item.get("REGL_STR_DE", ""),
-            "endDate": item.get("regEndDe", "") or item.get("REGL_END_DE", ""),
-            "source": "KOTRA Import Regulation",
-        }
-
-    def _map_enterprise_success(self, item: Dict[str, Any]) -> Dict[str, Any]:
-        return {
-            "title": item.get("titl", "") or item.get("title", ""),
-            "country": item.get("natnNm", "") or item.get("country", ""),
-            "summary": item.get("cn", "") or item.get("summary", ""),
-            "industry": item.get("indust", "") or item.get("industry", ""),
-            "company": item.get("entpNm", "") or item.get("company", ""),
-            "date": item.get("regDt", "") or item.get("date", ""),
-            "source": "KOTRA Enterprise Success",
-        }
-
-

@@ -1,6 +1,6 @@
-// 연구·개발 화면 문구(DEV_LABELS). 중소기업 사용자에게는 필요 없는 화면(논문 연구·벤치마크·모바일 시안·개발자 소개)을 모은 입구.
+// 연구·개발 화면 문구(DEV_LABELS_KO, 영어: dev_labels_en.jsx). 일반 사용자에게는 필요 없는 화면(논문 연구·벤치마크·모바일 시안·개발자 소개)을 모은 입구.
 
-const DEV_LABELS = {
+const DEV_LABELS_KO = {
   title: "연구·개발",
   lede: "논문·심사·개발 참여를 위한 화면을 모아 두었습니다. 물질 규제 확인에는 필요하지 않습니다. 아래 화면은 대부분 영문입니다.",
   cards: [
@@ -15,4 +15,4 @@ const DEV_LABELS = {
   hideOverview: "접기",
 };
 
-Object.assign(window, { DEV_LABELS });
+Object.assign(window, { DEV_LABELS_KO });

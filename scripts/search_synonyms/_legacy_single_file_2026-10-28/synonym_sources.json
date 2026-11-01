@@ -1,0 +1,23 @@
+{
+  "_about": "Where the search synonym file (synonyms.jsonl) takes its names from. tier decides the ranking bonus (ranking.json 'synonym_tier_bonus'): 'registry' = an official registry name of that CAS, 'synonym' = a listed synonym / trade or industry label. KISCHEM is 'synonym' tier: its rows sometimes carry the parent substance's name on a related CAS (사이클로헥산 on cyclohexene 110-83-8, 활성탄 on 16291-96-6, Warfarin on its enantiomers). Built by scripts/search_synonyms/build_synonyms.py; terminology.db is read-only.",
+  "db_sources": [
+    {"code": "ncis_eng", "table": "ncis_substance", "column": "name_eng", "tier": "registry",
+     "ref": "NCIS 화학물질정보 (data.go.kr B552584 ncissbstn) 영문명"},
+    {"code": "ncis_kor", "table": "ncis_substance", "column": "name_kor", "tier": "registry",
+     "ref": "NCIS 화학물질정보 국문명"},
+    {"code": "ncis_eng2", "table": "ncis_substance", "column": "name2_eng", "tier": "synonym",
+     "ref": "NCIS 화학물질정보 영문 이명"},
+    {"code": "ncis_kor2", "table": "ncis_substance", "column": "name2_kor", "tier": "synonym",
+     "ref": "NCIS 화학물질정보 국문 이명"},
+    {"code": "kreach_en", "table": "kreach_chemicals", "column": "name_en", "tier": "registry",
+     "ref": "K-REACH 기존화학물질 영문명 (kreach_chemicals)"},
+    {"code": "kischem_ko", "table": "kischem_safety", "column": "chem_ko", "tier": "synonym",
+     "ref": "화학물질안전원 KISCHEM 국문명"},
+    {"code": "kischem_en", "table": "kischem_safety", "column": "chem_en", "tier": "synonym",
+     "ref": "화학물질안전원 KISCHEM 영문명"}
+  ],
+  "curated": {"code": "curated", "file": "curated_synonyms.json"},
+  "max_name_chars": 80,
+  "split": ";",
+  "strip_chars": " ·"
+}

@@ -1,0 +1,1007 @@
+{
+ "_about": "Korean names of the chemical elements for the substance search: the element's CAS gets its Korean name as a registry-tier synonym, so a bare element name (니켈, 납, 크롬) ranks the element above its compounds. Each item names its source; 'corroborated_by' lists where the same spelling appears in local official data (KISCHEM 화학물질안전원 rows, NCIS 국문명, law.go.kr lists in backend/data/trade_controls/kr_lists). 'expect_en' is checked by build_synonyms.py against the CAS's English names in terminology.db so a wrong CAS fails the build. Silicon's old name 실리콘 is left out on purpose: in Korean it usually means silicone (polymer). Plutonium (7440-07-5) is not in chemical_terms and is left out.",
+ "sources": {
+  "kcs_element": {
+   "tier": "registry",
+   "ref": "대한화학회 원소 이름 (IUPAC 이름을 따른 한글 표기, 2014 표준 주기율표; KS 화학 용어 표기 개정 2005 기술표준원 보도)",
+   "url": "https://www.kcsnet.or.kr"
+  },
+  "stdict_element": {
+   "tier": "registry",
+   "ref": "국립국어원 표준국어대사전 표제어(관용 원소 이름: 크롬·망간·브롬·요오드·나트륨·칼륨 등). 대한화학회도 소듐/나트륨, 포타슘/칼륨 병용을 허용",
+   "url": "https://stdict.korean.go.kr"
+  }
+ },
+ "items": [
+  {
+   "name": "수소",
+   "cas": "1333-74-0",
+   "symbol": "H",
+   "expect_en": "Hydrogen",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4364 '수소'",
+    "kr_lists KR_GAS_FLAMMABLE (시행규칙 제2조제1항제1호 열거)",
+    "kr_lists KR_GAS_SPECIFIC (법 제20조제1항 열거)",
+    "chemical_terms KOSHA '수소 ( 관용명 : HYDROGEN GAS )'"
+   ]
+  },
+  {
+   "name": "헬륨",
+   "cas": "7440-59-7",
+   "symbol": "He",
+   "expect_en": "Helium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "chemical_terms KOSHA '헬륨 ( 관용명 : 헬륨 가스(HELIUM GAS) ) (헬륨 ( 관용명 : 원자 헬륨(ATOMIC HELIUM) ))'"
+   ]
+  },
+  {
+   "name": "리튬",
+   "cas": "7439-93-2",
+   "symbol": "Li",
+   "expect_en": "Lithium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 1357 '리튬, 원소'",
+    "kr_lists KR_OSH_DANGEROUS_SUBSTANCES (별표 9 제2호가 물반응성 물질 및 인화성 고체 > 리튬; 기준량 5킬로그램)"
+   ]
+  },
+  {
+   "name": "베릴륨",
+   "cas": "7440-41-7",
+   "symbol": "Be",
+   "expect_en": "Beryllium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4884 '베릴륨, 원소'",
+    "NCIS 국문명 '베릴륨'",
+    "kr_lists KR_CLEAN_AIR_HAZARDOUS_MONITORING (유해성대기감시물질 (시행규칙 별표 1의2) — '베릴륨 및 그 화합물' 중 베릴륨 자체)",
+    "kr_lists KR_CLEAN_AIR_POLLUTANTS (대기오염물질 (시행규칙 별표 1) — '베릴륨 및 그 화합물' 중 베릴륨 자체)"
+   ]
+  },
+  {
+   "name": "붕소",
+   "cas": "7440-42-8",
+   "symbol": "B",
+   "expect_en": "Boron",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 3197 '붕소'",
+    "kr_lists KR_DRINKING_WATER_STANDARDS (먹는물 수질기준 별표 1 제2호 카목: 붕소는 1.0㎎/L를 넘지 아니할 것(염지하수의 경우에는 적용하지 아니한 다) — 원소 자체)",
+    "chemical_terms KISCHEM '·붕소'"
+   ]
+  },
+  {
+   "name": "탄소",
+   "cas": "7440-44-0",
+   "symbol": "C",
+   "expect_en": "Carbon",
+   "source": "kcs_element",
+   "corroborated_by": []
+  },
+  {
+   "name": "질소",
+   "cas": "7727-37-9",
+   "symbol": "N",
+   "expect_en": "Nitrogen",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4970 '질소'",
+    "kr_lists KR_CPBSA_BIOCIDE_LOW_RISK (위해성이 낮은 살생물물질 순번 14 — 물질승인 면제(법 제12조제1항 단서))"
+   ]
+  },
+  {
+   "name": "산소",
+   "cas": "7782-44-7",
+   "symbol": "O",
+   "expect_en": "Oxygen",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4992 '산소'",
+    "kr_lists KR_GAS_SPECIFIC (법 제20조제1항 열거)",
+    "chemical_terms KOSHA '산소 ( 관용명 : 산소, 압축가스(Oxygen, compressed [UN1072] [Nonflammable gas]) ) (산소 ( 관용명 : 산소, 냉동액화가스(Oxygen, refrigerated liquid (cryogenic liquid) [UN1073] [Nonflammable gas]) ))'"
+   ]
+  },
+  {
+   "name": "플루오린",
+   "cas": "7782-41-4",
+   "symbol": "F",
+   "expect_en": "Fluorine",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4990 '플루오린'"
+   ]
+  },
+  {
+   "name": "불소",
+   "cas": "7782-41-4",
+   "symbol": "F",
+   "expect_en": "Fluorine",
+   "source": "stdict_element",
+   "corroborated_by": [
+    "NCIS 국문명 '불소'",
+    "kr_lists KR_GAS_TOXIC (시행규칙 제2조제1항제2호 열거)",
+    "kr_lists KR_OSH_DANGEROUS_SUBSTANCES (별표 9 제7호바 급성 독성 물질 > 황화수소ㆍ황산ㆍ질산ㆍ테트라메틸납ㆍ디에틸렌트리아민ㆍ플루오린화 카보닐ㆍ헥사플루오로아세톤ㆍ트리플루오르화염소ㆍ푸르푸릴알코올ㆍ아닐린ㆍ불소ㆍ카보닐플루오라이드ㆍ발연황산ㆍ메틸에틸케톤 과산화물ㆍ디메틸에테르ㆍ페놀ㆍ벤질클로라이드ㆍ포스포러스펜톡사이드ㆍ벤질디메틸아민ㆍ피롤리딘 등 가스 LC50 (쥐, 4시간 흡입)이 100ppm 이상 500ppm 이하인 화학물질, 증기 LC50(쥐, 4시간 흡입)이 0.5mg/ℓ 이상 2.0mg/ℓ 이하인 화학물질, 분진 또는 미스트 0.05mg/ℓ 이상 0.5mg/ℓ 이하인 독성물질; 기준량 20킬로그램)"
+   ]
+  },
+  {
+   "name": "플루오르",
+   "cas": "7782-41-4",
+   "symbol": "F",
+   "expect_en": "Fluorine",
+   "source": "stdict_element",
+   "corroborated_by": []
+  },
+  {
+   "name": "네온",
+   "cas": "7440-01-9",
+   "symbol": "Ne",
+   "expect_en": "Neon",
+   "source": "kcs_element",
+   "corroborated_by": []
+  },
+  {
+   "name": "소듐",
+   "cas": "7440-23-5",
+   "symbol": "Na",
+   "expect_en": "Sodium",
+   "source": "kcs_element",
+   "corroborated_by": []
+  },
+  {
+   "name": "나트륨",
+   "cas": "7440-23-5",
+   "symbol": "Na",
+   "expect_en": "Sodium",
+   "source": "stdict_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4878 '나트륨'",
+    "NCIS 국문명 '나트륨'",
+    "kr_lists KR_CHEM_PRTR (Ⅱ그룹(취급량 연 10톤 이상), 조사대상범위 무게함유율 1.0 이상)",
+    "kr_lists KR_HAZMAT_DESIGNATED (시행령 별표 1 제3류(자연발화성물질및금수성물질) 2. 나트륨; 지정수량 10킬로그램)",
+    "chemical_terms KOSHA 'Sodium ( 관용명 : 나트륨 )'"
+   ]
+  },
+  {
+   "name": "마그네슘",
+   "cas": "7439-95-4",
+   "symbol": "Mg",
+   "expect_en": "Magnesium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4873 '마그네슘, 원소'",
+    "kr_lists KR_HAZMAT_DESIGNATED (시행령 별표 1 제2류(가연성고체) 6. 마그네슘; 지정수량 500킬로그램; 조건: 2mm 체 미통과 덩어리·지름 2mm 이상 막대 모양 제외 (비고 6))",
+    "chemical_terms KOSHA 'Magnesium ( 관용명 : 마그네슘 )'"
+   ]
+  },
+  {
+   "name": "알루미늄",
+   "cas": "7429-90-5",
+   "symbol": "Al",
+   "expect_en": "Aluminium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4872 '알루미늄'",
+    "kr_lists KR_CLEAN_AIR_HAZARDOUS_MONITORING (유해성대기감시물질 (시행규칙 별표 1의2) — '알루미늄 및 그 화합물' 중 알루미늄 자체)",
+    "kr_lists KR_CLEAN_AIR_POLLUTANTS (대기오염물질 (시행규칙 별표 1) — '알루미늄 및 그 화합물' 중 알루미늄 자체)"
+   ]
+  },
+  {
+   "name": "규소",
+   "cas": "7440-21-3",
+   "symbol": "Si",
+   "expect_en": "Silicon",
+   "source": "kcs_element",
+   "corroborated_by": []
+  },
+  {
+   "name": "인",
+   "cas": "7723-14-0",
+   "symbol": "P",
+   "expect_en": "Phosphorus",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4968 '인'",
+    "NCIS 국문명 '인'",
+    "kr_lists KR_CHEM_PRTR (Ⅱ그룹(취급량 연 10톤 이상), 조사대상범위 무게함유율 1.0 이상)",
+    "chemical_terms KISCHEM '·인'"
+   ]
+  },
+  {
+   "name": "황",
+   "cas": "7704-34-9",
+   "symbol": "S",
+   "expect_en": "Sulfur",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4965 '황'",
+    "kr_lists KR_CHEM_PRTR (Ⅱ그룹(취급량 연 10톤 이상), 조사대상범위 무게함유율 1.0 이상)",
+    "kr_lists KR_CPBSA_PRESERVATIVES (제1장 광택코팅제 — 제품 내 사용가능 보존용 물질 2))"
+   ]
+  },
+  {
+   "name": "염소",
+   "cas": "7782-50-5",
+   "symbol": "Cl",
+   "expect_en": "Chlorine",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4994 '염소'",
+    "NCIS 국문명 '염소'",
+    "kr_lists KR_CHEM_PRTR (Ⅱ그룹(취급량 연 10톤 이상), 조사대상범위 무게함유율 1.0 이상)",
+    "kr_lists KR_CLEAN_AIR_HAZARDOUS_MONITORING (유해성대기감시물질 (시행규칙 별표 1의2) — '염소 및 염화수소'의 일부)"
+   ]
+  },
+  {
+   "name": "아르곤",
+   "cas": "7440-37-1",
+   "symbol": "Ar",
+   "expect_en": "Argon",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4881 '아르곤'",
+    "chemical_terms KOSHA '아르곤 (ARGON)'"
+   ]
+  },
+  {
+   "name": "포타슘",
+   "cas": "7440-09-7",
+   "symbol": "K",
+   "expect_en": "Potassium",
+   "source": "kcs_element",
+   "corroborated_by": []
+  },
+  {
+   "name": "칼륨",
+   "cas": "7440-09-7",
+   "symbol": "K",
+   "expect_en": "Potassium",
+   "source": "stdict_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4043 '칼륨'",
+    "NCIS 국문명 '칼륨'",
+    "kr_lists KR_CHEM_PRTR (Ⅱ그룹(취급량 연 10톤 이상), 조사대상범위 무게함유율 1.0 이상)",
+    "kr_lists KR_HAZMAT_DESIGNATED (시행령 별표 1 제3류(자연발화성물질및금수성물질) 1. 칼륨; 지정수량 10킬로그램)"
+   ]
+  },
+  {
+   "name": "칼슘",
+   "cas": "7440-70-2",
+   "symbol": "Ca",
+   "expect_en": "Calcium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 1364 '칼슘, 원소'",
+    "NCIS 국문명 '칼슘'",
+    "kr_lists KR_CPBSA_BIOCIDE_EXISTING_DEFERRED (승인유예대상 기존살생물물질 연번 140 [승인유예기간 유지] 제품유형·승인유예기간: 3-가. 제품보존용 보존제 ~2027.12.31.; 3-다. 섬유·가죽류용 보존제 ~2027.12.31.)",
+    "kr_lists KR_TRANSPORT_SHIP_DGL (위험물 선박운송 기준 별표 1 UN1401 칼슘 / CALCIUM — 정표찰(등급) 4.3, 부표찰 -, 용기등급 II)"
+   ]
+  },
+  {
+   "name": "스칸듐",
+   "cas": "7440-20-2",
+   "symbol": "Sc",
+   "expect_en": "Scandium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 1362 '스칸듐'",
+    "chemical_terms KOSHA '스칸듐(SCANDIUM)'"
+   ]
+  },
+  {
+   "name": "타이타늄",
+   "cas": "7440-32-6",
+   "symbol": "Ti",
+   "expect_en": "Titanium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "chemical_terms KOSHA '타이타늄(티타늄)(TITANIUM)'"
+   ]
+  },
+  {
+   "name": "티타늄",
+   "cas": "7440-32-6",
+   "symbol": "Ti",
+   "expect_en": "Titanium",
+   "source": "stdict_element",
+   "corroborated_by": [
+    "chemical_terms KOSHA '타이타늄(티타늄)(TITANIUM)'"
+   ]
+  },
+  {
+   "name": "바나듐",
+   "cas": "7440-62-2",
+   "symbol": "V",
+   "expect_en": "Vanadium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 131 '바나듐, 원소'",
+    "kr_lists KR_CLEAN_AIR_POLLUTANTS (대기오염물질 (시행규칙 별표 1) — '바나듐 및 그 화합물' 중 바나듐 자체)",
+    "chemical_terms KOSHA '바나듐(VANADIUM)'"
+   ]
+  },
+  {
+   "name": "크로뮴",
+   "cas": "7440-47-3",
+   "symbol": "Cr",
+   "expect_en": "Chromium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4886 '크로뮴, 원소'"
+   ]
+  },
+  {
+   "name": "크롬",
+   "cas": "7440-47-3",
+   "symbol": "Cr",
+   "expect_en": "Chromium",
+   "source": "stdict_element",
+   "corroborated_by": [
+    "kr_lists KR_CHILD_COMMON_SAFETY_CHEMICALS (유해원소 용출 허용치 크로뮴(Cr) 60 mg/kg 이하 (공통안전기준 3.1.1) — 원소 자체)",
+    "kr_lists KR_CLEAN_AIR_HAZARDOUS_MONITORING (유해성대기감시물질 (시행규칙 별표 1의2) — '크롬 및 그 화합물' 중 크롬 자체)"
+   ]
+  },
+  {
+   "name": "망가니즈",
+   "cas": "7439-96-5",
+   "symbol": "Mn",
+   "expect_en": "Manganese",
+   "source": "kcs_element",
+   "corroborated_by": []
+  },
+  {
+   "name": "망간",
+   "cas": "7439-96-5",
+   "symbol": "Mn",
+   "expect_en": "Manganese",
+   "source": "stdict_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4874 '망간, 원소'",
+    "kr_lists KR_CPBSA_CONTENT_LIMITS (제1장 광택코팅제(Gloss coatings) — <표3> 제품 내 함유물질 함량 기준: 분사형: 망간으로써 100 이하; 비분사형: -(3) (단위 : mg/kg) — '망간 및 그 화합물' 중 망간 자체)",
+    "kr_lists KR_DRINKING_WATER_STANDARDS (먹는물 수질기준 별표 1 제5호 타목: 망간은 0.3㎎/L(수돗물의 경우 0.05㎎/L)를 넘지 아니할 것. 다만, 샘물 및 염지하수의 경우에는 적용하지 아니한다. — 원소 자체)"
+   ]
+  },
+  {
+   "name": "철",
+   "cas": "7439-89-6",
+   "symbol": "Fe",
+   "expect_en": "Iron",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 124 '철, 원소'",
+    "kr_lists KR_CLEAN_AIR_POLLUTANTS (대기오염물질 (시행규칙 별표 1) — '철 및 그 화합물' 중 철 자체)",
+    "kr_lists KR_DRINKING_WATER_STANDARDS (먹는물 수질기준 별표 1 제5호 카목: 철은 0.3㎎/L를 넘지 아니할 것. 다만, 샘물 및 염지하수의 경우에는 적용 하지 아니한다. — 원소 자체)"
+   ]
+  },
+  {
+   "name": "코발트",
+   "cas": "7440-48-4",
+   "symbol": "Co",
+   "expect_en": "Cobalt",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 130 '코발트, 원소'",
+    "NCIS 국문명 '코발트'",
+    "kr_lists KR_OSH_MANAGED_HAZARDOUS (안전보건규칙 별표 12 2.23 (금속류(25종)))",
+    "kr_lists KR_OSH_MSDS_NO_TRADE_SECRET (고시 제16조제3호 (관리대상 유해물질; 근거 목록 KR_OSH_MANAGED_HAZARDOUS) | 고시 제16조제4호 (작업환경측정 대상 유해인자; 근거 목록 KR_OSH_WEM) | 고시 제16조제5호 (특수건강진단 대상 유해인자; 근거 목록 KR_OSH_SHE))"
+   ]
+  },
+  {
+   "name": "니켈",
+   "cas": "7440-02-0",
+   "symbol": "Ni",
+   "expect_en": "Nickel",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4876 '니켈, 원소'",
+    "kr_lists KR_CLEAN_AIR_HAZARDOUS_MONITORING (유해성대기감시물질 (시행규칙 별표 1의2) — '니켈 및 그 화합물' 중 니켈 자체)",
+    "kr_lists KR_CLEAN_AIR_POLLUTANTS (대기오염물질 (시행규칙 별표 1) — '니켈 및 그 화합물' 중 니켈 자체)"
+   ]
+  },
+  {
+   "name": "구리",
+   "cas": "7440-50-8",
+   "symbol": "Cu",
+   "expect_en": "Copper",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4887 '구리, 원소'",
+    "NCIS 국문명 '구리(단, 입자크기 1㎜ 이상인 경우 제외)'",
+    "kr_lists KR_CLEAN_AIR_HAZARDOUS_MONITORING (유해성대기감시물질 (시행규칙 별표 1의2) — '구리 및 그 화합물' 중 구리 자체)",
+    "kr_lists KR_CLEAN_AIR_POLLUTANTS (대기오염물질 (시행규칙 별표 1) — '구리 및 그 화합물' 중 구리 자체)"
+   ]
+  },
+  {
+   "name": "아연",
+   "cas": "7440-66-6",
+   "symbol": "Zn",
+   "expect_en": "Zinc",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4888 '아연, 원소'",
+    "NCIS 국문명 '아연 (단, 입자크기 1㎜ 이상인 경우 제외)'",
+    "kr_lists KR_CLEAN_AIR_POLLUTANTS (대기오염물질 (시행규칙 별표 1) — '아연 및 그 화합물' 중 아연 자체)",
+    "kr_lists KR_DRINKING_WATER_STANDARDS (먹는물 수질기준 별표 1 제5호 아목: 아연은 3㎎/L를 넘지 아니할 것 — 원소 자체)",
+    "chemical_terms KOSHA 'Zinc ( 관용명 : 아연 )'"
+   ]
+  },
+  {
+   "name": "갈륨",
+   "cas": "7440-55-3",
+   "symbol": "Ga",
+   "expect_en": "Gallium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "NCIS 국문명 '갈륨'",
+    "kr_lists KR_TRANSPORT_SHIP_DGL (위험물 선박운송 기준 별표 1 UN2803 갈륨 / GALLIUM — 정표찰(등급) 8, 부표찰 -, 용기등급 III)",
+    "chemical_terms KOSHA '갈륨(GALLIUM)'"
+   ]
+  },
+  {
+   "name": "저마늄",
+   "cas": "7440-56-4",
+   "symbol": "Ge",
+   "expect_en": "Germanium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "chemical_terms KOSHA '저마늄(게르마늄)(GERMANIUM)'"
+   ]
+  },
+  {
+   "name": "게르마늄",
+   "cas": "7440-56-4",
+   "symbol": "Ge",
+   "expect_en": "Germanium",
+   "source": "stdict_element",
+   "corroborated_by": [
+    "chemical_terms KOSHA '저마늄(게르마늄)(GERMANIUM)'"
+   ]
+  },
+  {
+   "name": "비소",
+   "cas": "7440-38-2",
+   "symbol": "As",
+   "expect_en": "Arsenic",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4882 '비소 원소'",
+    "NCIS 국문명 '비소'",
+    "kr_lists KR_CHILD_COMMON_SAFETY_CHEMICALS (유해원소 용출 허용치 비소(As) 25 mg/kg 이하 (공통안전기준 3.1.1) — 원소 자체)",
+    "kr_lists KR_CLEAN_AIR_HAZARDOUS_MONITORING (유해성대기감시물질 (시행규칙 별표 1의2) — '비소 및 그 화합물' 중 비소 자체)"
+   ]
+  },
+  {
+   "name": "셀레늄",
+   "cas": "7782-49-2",
+   "symbol": "Se",
+   "expect_en": "Selenium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4993 '셀레늄 원소'",
+    "NCIS 국문명 '셀레늄'",
+    "kr_lists KR_CHILD_COMMON_SAFETY_CHEMICALS (유해원소 용출 허용치 셀레늄(Se) 500 mg/kg 이하 (공통안전기준 3.1.1) — 원소 자체)",
+    "kr_lists KR_DRINKING_WATER_STANDARDS (먹는물 수질기준 별표 1 제2호 라목: 셀레늄은 0.01㎎/L(염지하수의 경우에는 0.05㎎/L)를 넘지 아니할 것 — 원소 자체)"
+   ]
+  },
+  {
+   "name": "셀렌",
+   "cas": "7782-49-2",
+   "symbol": "Se",
+   "expect_en": "Selenium",
+   "source": "stdict_element",
+   "corroborated_by": [
+    "kr_lists KR_CLEAN_AIR_POLLUTANTS (대기오염물질 (시행규칙 별표 1) — '셀렌 및 그 화합물' 중 셀렌 자체)",
+    "kr_lists KR_COSMETIC_PROHIBITED (화장품에 사용할 수 없는 원료 (화장품 안전기준 등에 관한 규정 별표 1))"
+   ]
+  },
+  {
+   "name": "브로민",
+   "cas": "7726-95-6",
+   "symbol": "Br",
+   "expect_en": "Bromine",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4969 '브로민'"
+   ]
+  },
+  {
+   "name": "브롬",
+   "cas": "7726-95-6",
+   "symbol": "Br",
+   "expect_en": "Bromine",
+   "source": "stdict_element",
+   "corroborated_by": [
+    "NCIS 국문명 '브롬'",
+    "kr_lists KR_CHEM_PRTR (Ⅱ그룹(취급량 연 10톤 이상), 조사대상범위 무게함유율 1.0 이상)",
+    "kr_lists KR_CLEAN_AIR_POLLUTANTS (대기오염물질 (시행규칙 별표 1) — '브롬 및 그 화합물' 중 브롬 자체)"
+   ]
+  },
+  {
+   "name": "크립톤",
+   "cas": "7439-90-9",
+   "symbol": "Kr",
+   "expect_en": "Krypton",
+   "source": "kcs_element",
+   "corroborated_by": []
+  },
+  {
+   "name": "루비듐",
+   "cas": "7440-17-7",
+   "symbol": "Rb",
+   "expect_en": "Rubidium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 2981 '루비듐'",
+    "kr_lists KR_TRANSPORT_SHIP_DGL (위험물 선박운송 기준 별표 1 UN1423 루비듐 / RUBIDIUM — 정표찰(등급) 4.3, 부표찰 -, 용기등급 I)",
+    "chemical_terms KISCHEM '·루비듐'"
+   ]
+  },
+  {
+   "name": "스트론튬",
+   "cas": "7440-24-6",
+   "symbol": "Sr",
+   "expect_en": "Strontium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 2986 '스트론튬, 원소'",
+    "kr_lists KR_DRINKING_WATER_STANDARDS (먹는물 수질기준 별표 1 제2호 파목: 스트론튬은 4mg/L를 넘지 아니할 것(먹는염지하수 및 먹는해양심층수의 경우에만 적용한다) — 원소 자체)"
+   ]
+  },
+  {
+   "name": "이트륨",
+   "cas": "7440-65-5",
+   "symbol": "Y",
+   "expect_en": "Yttrium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 132 '이트륨, 원소'"
+   ]
+  },
+  {
+   "name": "지르코늄",
+   "cas": "7440-67-7",
+   "symbol": "Zr",
+   "expect_en": "Zirconium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 133 '지르코늄, 원소'",
+    "kr_lists KR_COSMETIC_PROHIBITED (화장품에 사용할 수 없는 원료 (화장품 안전기준 등에 관한 규정 별표 1))",
+    "kr_lists KR_OSH_MANAGED_HAZARDOUS (안전보건규칙 별표 12 2.20 (금속류(25종)))"
+   ]
+  },
+  {
+   "name": "나이오븀",
+   "cas": "7440-03-1",
+   "symbol": "Nb",
+   "expect_en": "Niobium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 125 '나이오븀'",
+    "NCIS 국문명 '나이오븀'"
+   ]
+  },
+  {
+   "name": "니오브",
+   "cas": "7440-03-1",
+   "symbol": "Nb",
+   "expect_en": "Niobium",
+   "source": "stdict_element",
+   "corroborated_by": []
+  },
+  {
+   "name": "몰리브데넘",
+   "cas": "7439-98-7",
+   "symbol": "Mo",
+   "expect_en": "Molybdenum",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 1358 '몰리브데넘'"
+   ]
+  },
+  {
+   "name": "몰리브덴",
+   "cas": "7439-98-7",
+   "symbol": "Mo",
+   "expect_en": "Molybdenum",
+   "source": "stdict_element",
+   "corroborated_by": [
+    "chemical_terms KOSHA '몰리브덴 ( 관용명 : MOLYBDATE )'"
+   ]
+  },
+  {
+   "name": "루테늄",
+   "cas": "7440-18-8",
+   "symbol": "Ru",
+   "expect_en": "Ruthenium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "chemical_terms KOSHA '루테늄 ( 관용명 : RU-A1; )'"
+   ]
+  },
+  {
+   "name": "로듐",
+   "cas": "7440-16-6",
+   "symbol": "Rh",
+   "expect_en": "Rhodium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 1361 '로듐'",
+    "chemical_terms KOSHA '로듐(금속,불가용성화합물)'"
+   ]
+  },
+  {
+   "name": "팔라듐",
+   "cas": "7440-05-3",
+   "symbol": "Pd",
+   "expect_en": "Palladium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 126 '팔라듐 원소'",
+    "chemical_terms KOSHA '팔라듐(PALLADIUM)'"
+   ]
+  },
+  {
+   "name": "은",
+   "cas": "7440-22-4",
+   "symbol": "Ag",
+   "expect_en": "Silver",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4877 '은, 원소'",
+    "kr_lists KR_CPBSA_CONTENT_LIMITS (제1장 세정제(Cleaners) — <표4> 제품 내 사용물질 함량 기준: 분사형 일반용: 은으로써 0.03 이하; 분사형 특정목적용: -(8); 비분사형 일반용: -(8); 비분사형 특정목적용: -(8) (단위 : %(w/w)) — '은 및 그 화합물' 중 은 자체)",
+    "kr_lists KR_CPBSA_CONTENT_LIMITS (제2장 제거제(Removers) — <표4> 제품 내 사용물질 함량 기준: 분사형 일반용: 은으로써 70 이하; 분사형 특정목적용: -(8); 비분사형 일반용: -(8); 비분사형 특정목적용: -(8) (단위 : %(w/w)) — '은 및 그 화합물' 중 은 자체)"
+   ]
+  },
+  {
+   "name": "카드뮴",
+   "cas": "7440-43-9",
+   "symbol": "Cd",
+   "expect_en": "Cadmium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4885 '카드뮴, 원소'",
+    "NCIS 국문명 '카드뮴'",
+    "kr_lists KR_CHILD_COMMON_SAFETY_CHEMICALS (유해원소 용출 허용치 카드뮴(Cd) 75 mg/kg 이하 (공통안전기준 3.1.1) — 원소 자체)",
+    "kr_lists KR_CHILD_COMMON_SAFETY_CHEMICALS (유해원소 함유량 허용치 총 카드뮴(Cd) 75 mg/kg 이하 (공통안전기준 3.1.2) — 원소 자체)",
+    "chemical_terms KOSHA '카드뮴'"
+   ]
+  },
+  {
+   "name": "인듐",
+   "cas": "7440-74-6",
+   "symbol": "In",
+   "expect_en": "Indium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 1365 '인듐'",
+    "kr_lists KR_OSH_MANAGED_HAZARDOUS (안전보건규칙 별표 12 2.18 (금속류(25종)))",
+    "kr_lists KR_OSH_MSDS_NO_TRADE_SECRET (고시 제16조제3호 (관리대상 유해물질; 근거 목록 KR_OSH_MANAGED_HAZARDOUS) | 고시 제16조제4호 (작업환경측정 대상 유해인자; 근거 목록 KR_OSH_WEM) | 고시 제16조제5호 (특수건강진단 대상 유해인자; 근거 목록 KR_OSH_SHE))"
+   ]
+  },
+  {
+   "name": "주석",
+   "cas": "7440-31-5",
+   "symbol": "Sn",
+   "expect_en": "Tin",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4879 '주석'",
+    "kr_lists KR_CLEAN_AIR_POLLUTANTS (대기오염물질 (시행규칙 별표 1) — '주석 및 그 화합물' 중 주석 자체)",
+    "kr_lists KR_OSH_MANAGED_HAZARDOUS (안전보건규칙 별표 12 2.19 (금속류(25종)))"
+   ]
+  },
+  {
+   "name": "안티모니",
+   "cas": "7440-36-0",
+   "symbol": "Sb",
+   "expect_en": "Antimony",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4880 '안티모니, 원소'"
+   ]
+  },
+  {
+   "name": "안티몬",
+   "cas": "7440-36-0",
+   "symbol": "Sb",
+   "expect_en": "Antimony",
+   "source": "stdict_element",
+   "corroborated_by": [
+    "kr_lists KR_CHILD_COMMON_SAFETY_CHEMICALS (유해원소 용출 허용치 안티모니(Sb) 60 mg/kg 이하 (공통안전기준 3.1.1) — 원소 자체)",
+    "kr_lists KR_CLEAN_AIR_POLLUTANTS (대기오염물질 (시행규칙 별표 1) — '안티몬 및 그 화합물' 중 안티몬 자체)"
+   ]
+  },
+  {
+   "name": "텔루륨",
+   "cas": "13494-80-9",
+   "symbol": "Te",
+   "expect_en": "Tellurium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4135 '텔루륨'",
+    "kr_lists KR_CLEAN_AIR_POLLUTANTS (대기오염물질 (시행규칙 별표 1) — '텔루륨 및 그 화합물' 중 텔루륨 자체)",
+    "kr_lists KR_COSMETIC_PROHIBITED (화장품에 사용할 수 없는 원료 (화장품 안전기준 등에 관한 규정 별표 1))"
+   ]
+  },
+  {
+   "name": "텔루르",
+   "cas": "13494-80-9",
+   "symbol": "Te",
+   "expect_en": "Tellurium",
+   "source": "stdict_element",
+   "corroborated_by": []
+  },
+  {
+   "name": "아이오딘",
+   "cas": "7553-56-2",
+   "symbol": "I",
+   "expect_en": "Iodine",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 136 '아이오딘, 원소'"
+   ]
+  },
+  {
+   "name": "요오드",
+   "cas": "7553-56-2",
+   "symbol": "I",
+   "expect_en": "Iodine",
+   "source": "stdict_element",
+   "corroborated_by": [
+    "kr_lists KR_COSMETIC_PROHIBITED (화장품에 사용할 수 없는 원료 (화장품 안전기준 등에 관한 규정 별표 1))",
+    "kr_lists KR_OSH_MANAGED_HAZARDOUS (안전보건규칙 별표 12 2.15 (금속류(25종)))"
+   ]
+  },
+  {
+   "name": "제논",
+   "cas": "7440-63-3",
+   "symbol": "Xe",
+   "expect_en": "Xenon",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "NCIS 국문명 '제논, 압축'"
+   ]
+  },
+  {
+   "name": "크세논",
+   "cas": "7440-63-3",
+   "symbol": "Xe",
+   "expect_en": "Xenon",
+   "source": "stdict_element",
+   "corroborated_by": [
+    "kr_lists KR_TRANSPORT_SHIP_DGL (위험물 선박운송 기준 별표 1 UN2036 크세논 / XENON — 정표찰(등급) 2.2, 부표찰 -, 용기등급 -)"
+   ]
+  },
+  {
+   "name": "세슘",
+   "cas": "7440-46-2",
+   "symbol": "Cs",
+   "expect_en": "Cesium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 2849 '세슘, 원소'",
+    "chemical_terms KISCHEM '·세슘, 원소'"
+   ]
+  },
+  {
+   "name": "바륨",
+   "cas": "7440-39-3",
+   "symbol": "Ba",
+   "expect_en": "Barium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4883 '바륨 원소'",
+    "kr_lists KR_CHILD_COMMON_SAFETY_CHEMICALS (유해원소 용출 허용치 바륨(Ba) 1 000 mg/kg 이하 (공통안전기준 3.1.1) — 원소 자체)",
+    "kr_lists KR_CLEAN_AIR_POLLUTANTS (대기오염물질 (시행규칙 별표 1) — '바륨 및 그 화합물' 중 바륨 자체)",
+    "chemical_terms KOSHA 'Barium ( 관용명 : 바륨 )'"
+   ]
+  },
+  {
+   "name": "란타넘",
+   "cas": "7439-91-0",
+   "symbol": "La",
+   "expect_en": "Lanthanum",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "chemical_terms KOSHA '란타넘 (LANTHANUM)'"
+   ]
+  },
+  {
+   "name": "란탄",
+   "cas": "7439-91-0",
+   "symbol": "La",
+   "expect_en": "Lanthanum",
+   "source": "stdict_element",
+   "corroborated_by": []
+  },
+  {
+   "name": "세륨",
+   "cas": "7440-45-1",
+   "symbol": "Ce",
+   "expect_en": "Cerium",
+   "source": "kcs_element",
+   "corroborated_by": []
+  },
+  {
+   "name": "하프늄",
+   "cas": "7440-58-6",
+   "symbol": "Hf",
+   "expect_en": "Hafnium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 2889 '하프늄, 원소'"
+   ]
+  },
+  {
+   "name": "탄탈럼",
+   "cas": "7440-25-7",
+   "symbol": "Ta",
+   "expect_en": "Tantalum",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "chemical_terms KOSHA '탄탈럼(탄탈) ( 관용명 : TANTALUM-181 )'"
+   ]
+  },
+  {
+   "name": "탄탈",
+   "cas": "7440-25-7",
+   "symbol": "Ta",
+   "expect_en": "Tantalum",
+   "source": "stdict_element",
+   "corroborated_by": [
+    "chemical_terms KOSHA '탄탈럼(탄탈) ( 관용명 : TANTALUM-181 )'"
+   ]
+  },
+  {
+   "name": "텅스텐",
+   "cas": "7440-33-7",
+   "symbol": "W",
+   "expect_en": "Tungsten",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 1363 '텅스텐, 원소'",
+    "kr_lists KR_OSH_MANAGED_HAZARDOUS (안전보건규칙 별표 12 2.25 (금속류(25종)))",
+    "kr_lists KR_OSH_MSDS_NO_TRADE_SECRET (고시 제16조제3호 (관리대상 유해물질; 근거 목록 KR_OSH_MANAGED_HAZARDOUS) | 고시 제16조제4호 (작업환경측정 대상 유해인자; 근거 목록 KR_OSH_WEM) | 고시 제16조제5호 (특수건강진단 대상 유해인자; 근거 목록 KR_OSH_SHE))"
+   ]
+  },
+  {
+   "name": "레늄",
+   "cas": "7440-15-5",
+   "symbol": "Re",
+   "expect_en": "Rhenium",
+   "source": "kcs_element",
+   "corroborated_by": []
+  },
+  {
+   "name": "오스뮴",
+   "cas": "7440-04-2",
+   "symbol": "Os",
+   "expect_en": "Osmium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 1359 '오스뮴, 원소'"
+   ]
+  },
+  {
+   "name": "이리듐",
+   "cas": "7439-88-5",
+   "symbol": "Ir",
+   "expect_en": "Iridium",
+   "source": "kcs_element",
+   "corroborated_by": []
+  },
+  {
+   "name": "백금",
+   "cas": "7440-06-4",
+   "symbol": "Pt",
+   "expect_en": "Platinum",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 127 '백금'",
+    "NCIS 국문명 '백금'",
+    "kr_lists KR_OSH_MANAGED_HAZARDOUS (안전보건규칙 별표 12 2.6 (금속류(25종)))",
+    "kr_lists KR_OSH_MSDS_NO_TRADE_SECRET (고시 제16조제3호 (관리대상 유해물질; 근거 목록 KR_OSH_MANAGED_HAZARDOUS) | 고시 제16조제4호 (작업환경측정 대상 유해인자; 근거 목록 KR_OSH_WEM))"
+   ]
+  },
+  {
+   "name": "금",
+   "cas": "7440-57-5",
+   "symbol": "Au",
+   "expect_en": "Gold",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "kr_lists KR_CPBSA_BIOCIDE_EXISTING_DEFERRED (승인유예대상 기존살생물물질 연번 139 [승인유예기간 유지] 제품유형·승인유예기간: 3-가. 제품보존용 보존제 ~2027.12.31.)",
+    "chemical_terms KOSHA '금 ( 관용명 : 금 리프(GOLD LEAF); )'"
+   ]
+  },
+  {
+   "name": "수은",
+   "cas": "7439-97-6",
+   "symbol": "Hg",
+   "expect_en": "Mercury",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 4875 '수은'",
+    "NCIS 국문명 '수은'",
+    "kr_lists KR_CHILD_COMMON_SAFETY_CHEMICALS (유해원소 용출 허용치 수은(Hg) 60 mg/kg 이하 (공통안전기준 3.1.1) — 원소 자체)",
+    "kr_lists KR_CLEAN_AIR_HAZARDOUS_MONITORING (유해성대기감시물질 (시행규칙 별표 1의2) — '수은 및 그 화합물' 중 수은 자체)"
+   ]
+  },
+  {
+   "name": "탈륨",
+   "cas": "7440-28-0",
+   "symbol": "Tl",
+   "expect_en": "Thallium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 5507 '탈륨, 원소'",
+    "kr_lists KR_COSMETIC_PROHIBITED (화장품에 사용할 수 없는 원료 (화장품 안전기준 등에 관한 규정 별표 1))"
+   ]
+  },
+  {
+   "name": "납",
+   "cas": "7439-92-1",
+   "symbol": "Pb",
+   "expect_en": "Lead",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 1356 '납, 원소'",
+    "NCIS 국문명 '납(입자지름≥1mm)'",
+    "kr_lists KR_CHILD_COMMON_SAFETY_CHEMICALS (유해원소 용출 허용치 납(Pb) 90 mg/kg 이하 (공통안전기준 3.1.1) — 원소 자체)",
+    "kr_lists KR_CHILD_COMMON_SAFETY_CHEMICALS (유해원소 함유량 허용치 총 납(Pb) 100 mg/kg 이하 (공통안전기준 3.1.2) — 원소 자체)"
+   ]
+  },
+  {
+   "name": "비스무트",
+   "cas": "7440-69-9",
+   "symbol": "Bi",
+   "expect_en": "Bismuth",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 134 '비스무트, 원소'"
+   ]
+  },
+  {
+   "name": "라돈",
+   "cas": "10043-92-2",
+   "symbol": "Rn",
+   "expect_en": "Radon",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "kr_lists KR_INDOOR_AIR_POLLUTANTS (실내공기질 관리법 오염물질 (시행규칙 별표 1))"
+   ]
+  },
+  {
+   "name": "라듐",
+   "cas": "7440-14-4",
+   "symbol": "Ra",
+   "expect_en": "Radium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 1360 '라듐'",
+    "chemical_terms KISCHEM '·라듐'"
+   ]
+  },
+  {
+   "name": "토륨",
+   "cas": "7440-29-1",
+   "symbol": "Th",
+   "expect_en": "Thorium",
+   "source": "kcs_element",
+   "corroborated_by": []
+  },
+  {
+   "name": "우라늄",
+   "cas": "7440-61-1",
+   "symbol": "U",
+   "expect_en": "Uranium",
+   "source": "kcs_element",
+   "corroborated_by": [
+    "KISCHEM data_no 3307 '우라늄 원소'",
+    "kr_lists KR_DRINKING_WATER_STANDARDS (먹는물 수질기준 별표 1 제2호 하목: 우라늄은 30㎍/L를 넘지 않을 것[수돗물(지하수를 원수로 사용하는 수돗 물을 말한다), 샘물, 먹는샘물, 먹는염지하수 및 먹는물공동시설의 물의 경 우에만 적용한다)] — 원소 자체)",
+    "chemical_terms KOSHA '우라늄 (Uranium)'"
+   ]
+  }
+ ]
+}

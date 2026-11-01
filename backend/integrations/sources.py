@@ -28,3 +28,13 @@ ENVIRONMENT_PUBLIC_URL = "https://env.yule.pics"
 ENV_KR_PROCESSED_DIR = Path(os.getenv("ENV_KR_PROCESSED_DIR", DESKTOP / "Environment" / "Environment_1" / "data" / "processed" / "intl" / "kr"))
 KR_PERMIT_CONTEXT_DB = Path(os.getenv("KR_PERMIT_CONTEXT_DB", Path(__file__).resolve().parents[2] / "data" / "kr_permit_context.db"))
 IEPS_POST_URL = "https://ieps.nier.go.kr/web/board/7/{post_id}/?pMENUMST_ID=176"
+
+# Environment: 텍사스 TCEQ 대기 배출사고 보고(Air Emission Event Reports, 공개 자료) 가공본.
+# track_11_events = 사고·오염물질 표, p1p/cache = 사고별 배출점·배출점별 오염물질 표.
+# scripts/build_tceq_event_index.py 가 읽어 data/tceq_event_cas_index.db 를 만든다.
+ENV_TCEQ_EVENTS_DIR = Path(os.getenv("ENV_TCEQ_EVENTS_DIR", DESKTOP / "Environment" / "Environment_1" / "data" / "processed" / "track_11_events"))
+ENV_TCEQ_POINTS_DIR = Path(os.getenv("ENV_TCEQ_POINTS_DIR", DESKTOP / "Environment" / "Environment_1" / "data" / "processed" / "p1p" / "cache"))
+TCEQ_EVENT_CAS_INDEX_DB = Path(os.getenv("TCEQ_EVENT_CAS_INDEX_DB", Path(__file__).resolve().parents[2] / "data" / "tceq_event_cas_index.db"))
+# 사고 한 건의 공개 상세 화면(사고번호 = incident_number). Environment 수집 원본 raw/<번호>.html 과 같은 주소다.
+TCEQ_EVENT_URL = "https://www2.tceq.texas.gov/oce/eer/index.cfm?fuseaction=main.getDetails&target={incident_number}"
+TCEQ_EVENTS_INFO_URL = "https://www.tceq.texas.gov/airquality/emission-events"

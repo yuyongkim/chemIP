@@ -1,4 +1,4 @@
-// Pure helpers for the 중소기업 체크리스트 — trade-controls 응답 → 체크리스트 묶음/행, CSV 문자열. No React, no DOM.
+// Pure helpers for the 체크리스트 — trade-controls 응답 → 체크리스트 묶음/행, CSV 문자열. No React, no DOM.
 // 입력은 /api/regulations/trade-controls/{cas} 응답. tcConditions·tcEntryName·tcGroupListings·tcCountryName 은 trade_controls_helpers.jsx.
 
 function tcJoin(values, sep = " · ") {
@@ -51,7 +51,7 @@ function tcChecklistGroups(data) {
   })) });
   groups.push({ key: "hs", title: G.hs, rows: (data.hs || []).map(h => ({
     title: [`HS ${h.hs6 || "—"}`, h.cn8 && `CN ${h.cn8}`, h.hsk10 && `HSK ${h.hsk10}`].filter(Boolean).join(" · "),
-    details: [h.title_ko || h.title_en, h.description].filter(Boolean).join(" · "),
+    details: [tcLocalized(h.title_ko, h.title_en), h.description].filter(Boolean).join(" · "),
     basis: TC_CHECKLIST_LABELS.hsBasis,
     url: data.hs_meta?.ecics_info_url || "",
   })) });
@@ -100,7 +100,7 @@ function tcCsvCell(v) {
   return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
-// 머리 정보 몇 줄 + 빈 줄 + 표. 엑셀에서 한글이 깨지지 않게 BOM 을 붙인다.
+// 머리 정보 몇 줄 + 빈 줄 + 표. 엑셀에서 한글이 깨지지 않게 BOM 을 붙인다. 머리 칸·표 머리는 화면 언어(TC_CHECKLIST_LABELS).
 function tcChecklistCsv({ heading, groups }) {
   const C = TC_CHECKLIST_LABELS.csv;
   const lines = heading.map(([k, v]) => [k, v]);

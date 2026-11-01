@@ -1,0 +1,170 @@
+{
+  "_doc": "Exposure-limit (OEL) sources, defined once. Read by oel_fetch.py (method http), oel_fetch_browser.cjs (method browser), the oel_* parsers and oel_build.py (sources table). Raw files land in data/portal_raw/oel/<source_id>/ with manifest.json (url, retrieved_at, sha256). link_only sources never store values.",
+  "raw_dir": "G:\\MSDS\\data\\portal_raw\\oel",
+  "sources": [
+    {
+      "source_id": "kr_moel_notice",
+      "jurisdiction": "KR",
+      "name": "고용노동부 고시 「화학물질 및 물리적 인자의 노출기준」 별표 1 (제2020-48호)",
+      "name_en": "MOEL Notice 'Exposure Limits for Chemical Substances and Physical Factors', Annex 1 (No. 2020-48)",
+      "url": "https://www.law.go.kr/행정규칙/화학물질및물리적인자의노출기준",
+      "license": "Public notice; not protected by copyright (Korean Copyright Act Art. 7). Source: law.go.kr",
+      "as_of": "2020-01-16",
+      "method": "http",
+      "files": [
+        {
+          "file": "annex1.hwp",
+          "url": "https://www.law.go.kr/LSW/flDownload.do?flSeq=55904849&bylClsCd=200201"
+        },
+        {
+          "file": "notice.html",
+          "url": "https://www.law.go.kr/LSW/admRulInfoP.do?admRulSeq=2100000186058&chrClsCd=010201"
+        }
+      ]
+    },
+    {
+      "source_id": "us_osha_z",
+      "jurisdiction": "US",
+      "name": "OSHA PEL, 29 CFR 1910.1000 Tables Z-1, Z-2, Z-3 (eCFR)",
+      "name_en": "OSHA PEL, 29 CFR 1910.1000 Tables Z-1, Z-2, Z-3 (eCFR)",
+      "url": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1910/subpart-Z/section-1910.1000",
+      "license": "U.S. federal government work, public domain (17 U.S.C. 105)",
+      "as_of": "2026-10-27",
+      "method": "http",
+      "files": [
+        {
+          "file": "1910.1000.xml",
+          "url": "https://www.ecfr.gov/api/versioner/v1/full/2026-10-27/title-29.xml?part=1910&section=1910.1000"
+        }
+      ]
+    },
+    {
+      "source_id": "us_osha_specific",
+      "jurisdiction": "US",
+      "name": "OSHA PEL, substance-specific standards 29 CFR 1910.1001-1910.1053 (eCFR)",
+      "name_en": "OSHA PEL, substance-specific standards 29 CFR 1910.1001-1910.1053 (eCFR)",
+      "url": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1910/subpart-Z",
+      "license": "U.S. federal government work, public domain (17 U.S.C. 105)",
+      "as_of": "2026-10-27",
+      "method": "http",
+      "files_from_sections": {
+        "url": "https://www.ecfr.gov/api/versioner/v1/full/2026-10-27/title-29.xml?part=1910&section={section}",
+        "sections": [
+          "1910.1001",
+          "1910.1017",
+          "1910.1018",
+          "1910.1024",
+          "1910.1025",
+          "1910.1026",
+          "1910.1027",
+          "1910.1028",
+          "1910.1044",
+          "1910.1045",
+          "1910.1047",
+          "1910.1048",
+          "1910.1050",
+          "1910.1051",
+          "1910.1052",
+          "1910.1053"
+        ]
+      }
+    },
+    {
+      "source_id": "us_niosh_npg",
+      "jurisdiction": "US",
+      "name": "NIOSH Pocket Guide to Chemical Hazards (REL, IDLH)",
+      "name_en": "NIOSH Pocket Guide to Chemical Hazards (REL, IDLH)",
+      "url": "https://www.cdc.gov/niosh/npg/",
+      "license": "U.S. federal government work, public domain (17 U.S.C. 105). Source: CDC/NIOSH",
+      "as_of": "",
+      "method": "browser",
+      "index": {
+        "file": "npgdcas.html",
+        "url": "https://www.cdc.gov/niosh/npg/npgdcas.html"
+      },
+      "page_url": "https://www.cdc.gov/niosh/npg/{page}"
+    },
+    {
+      "source_id": "eu_ioelv",
+      "jurisdiction": "EU",
+      "name": "EU indicative OELVs: Directives 2000/39/EC, 2006/15/EC, 2009/161/EU, (EU) 2017/164, (EU) 2019/1831",
+      "name_en": "EU indicative OELVs: Directives 2000/39/EC, 2006/15/EC, 2009/161/EU, (EU) 2017/164, (EU) 2019/1831",
+      "url": "https://eur-lex.europa.eu/",
+      "license": "© European Union, EUR-Lex. Reuse authorised with source acknowledgement (Commission Decision 2011/833/EU)",
+      "as_of": "",
+      "method": "browser",
+      "files": [
+        {
+          "file": "2000_39.html",
+          "celex": "02000L0039-20210520",
+          "date": "2021-05-20",
+          "order": 1
+        },
+        {
+          "file": "2006_15.html",
+          "celex": "32006L0015",
+          "date": "2006-02-09",
+          "order": 2
+        },
+        {
+          "file": "2009_161.html",
+          "celex": "02009L0161-20180821",
+          "date": "2018-08-21",
+          "order": 3
+        },
+        {
+          "file": "2017_164.html",
+          "celex": "32017L0164",
+          "date": "2017-01-31",
+          "order": 4
+        },
+        {
+          "file": "2019_1831.html",
+          "celex": "02019L1831-20191031",
+          "date": "2019-10-31",
+          "order": 5
+        }
+      ],
+      "page_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:{celex}"
+    },
+    {
+      "source_id": "eu_boelv",
+      "jurisdiction": "EU",
+      "name": "EU binding OELVs: Directive 2004/37/EC Annex III (consolidated)",
+      "name_en": "EU binding OELVs: Directive 2004/37/EC Annex III (consolidated)",
+      "url": "https://eur-lex.europa.eu/",
+      "license": "© European Union, EUR-Lex. Reuse authorised with source acknowledgement (Commission Decision 2011/833/EU)",
+      "as_of": "",
+      "method": "browser",
+      "files": [
+        {
+          "file": "2004_37.html",
+          "celex": "02004L0037-20240408",
+          "date": "2024-04-08",
+          "order": 1
+        }
+      ],
+      "page_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:{celex}"
+    },
+    {
+      "source_id": "acgih_tlv",
+      "jurisdiction": "US",
+      "name": "ACGIH TLV",
+      "name_en": "ACGIH TLV",
+      "url": "https://www.acgih.org/science/tlv-bei-guidelines/",
+      "license": "Copyrighted by ACGIH. Link only, no values stored",
+      "as_of": "",
+      "method": "link_only"
+    },
+    {
+      "source_id": "gestis_ilv",
+      "jurisdiction": "INTL",
+      "name": "GESTIS International Limit Values (IFA/DGUV)",
+      "name_en": "GESTIS International Limit Values (IFA/DGUV)",
+      "url": "https://ilv.ifa.dguv.de/",
+      "license": "IFA terms forbid republishing or harvesting. Link only, no values stored",
+      "as_of": "",
+      "method": "link_only"
+    }
+  ]
+}

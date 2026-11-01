@@ -4,8 +4,11 @@ import { useEffect, useState, type ReactNode } from 'react';
 import {
   AlertTriangle,
   Beaker,
+  Building2,
   FlaskConical,
+  Globe,
   Loader2,
+  MapPin,
   Shield,
   Sparkles,
 } from 'lucide-react';
@@ -52,6 +55,21 @@ interface EchaItem {
   ec_number?: string;
   molecular_formula?: string;
   regulatory_processes?: string[];
+  reach_status?: { code: string; label: string }[];
+}
+
+interface KotraReachItem {
+  newsTitl?: string;
+  kotraNewsUrl?: string;
+  cntntSumar?: string;
+  newsWrtDt?: string;
+  cntryNm?: string;
+}
+
+interface KotraReachResponse {
+  status?: string;
+  total?: number;
+  data?: KotraReachItem[];
 }
 
 interface NioshItem {
@@ -94,13 +112,109 @@ interface RegulatoryIntelligenceResponse {
   };
 }
 
+interface PrtrSummaryData {
+  cas_no?: string;
+  chemical_name?: string;
+  company_count?: number;
+  air_release_kg?: number;
+  water_release_kg?: number;
+  total_release_kg?: number;
+  total_transfer_kg?: number;
+}
+
+interface HandlingFacilityItem {
+  company_name?: string;
+  materials?: string[];
+  materials_text?: string;
+  sigun?: string;
+  road_address?: string;
+  lot_address?: string;
+  latitude?: string;
+  longitude?: string;
+  evacuation_facility?: string;
+  evacuation_distance_m?: number;
+}
+
+interface PrtrFacilityItem {
+  company_name?: string;
+  address?: string;
+  air_release_kg?: number;
+  water_release_kg?: number;
+  soil_release_kg?: number;
+  total_release_kg?: number;
+  self_landfill_kg?: number;
+  wastewater_transfer_kg?: number;
+  waste_transfer_kg?: number;
+  total_transfer_kg?: number;
+  reported_total_kg?: number;
+}
+
+interface PrtrAggregateItem {
+  dimension_name?: string;
+  dimension_type?: string;
+  iarc_group?: string;
+  chemical_name?: string;
+  release_total_kg?: number;
+  self_landfill_kg?: number;
+  transfer_total_kg?: number;
+  reported_total_kg?: number;
+}
+
+interface PrtrAggregateData {
+  material_totals?: PrtrAggregateItem;
+  top_regions?: PrtrAggregateItem[];
+  top_industrial_complexes?: PrtrAggregateItem[];
+  top_industries?: PrtrAggregateItem[];
+  carcinogenic_classes?: PrtrAggregateItem[];
+}
+
+interface ChemicalAccidentItem {
+  data_no?: string;
+  date?: string;
+  type?: string;
+  area?: string;
+  address?: string;
+  cause?: string;
+  chemical?: string;
+  place?: string;
+  summary?: string;
+}
+
+interface HandlingSourcePayload<T> {
+  available?: boolean;
+  source?: string;
+  year?: number;
+  total?: number;
+  limit?: number;
+  ranking_basis?: string;
+  data: T[] | T | null;
+  message?: string;
+}
+
+interface HandlingProfileResponse {
+  query: {
+    cas_no?: string;
+    terms?: string[];
+    year?: number;
+  };
+  sources: {
+    prtr_summary: HandlingSourcePayload<PrtrSummaryData>;
+    prtr_facilities: HandlingSourcePayload<PrtrFacilityItem>;
+    prtr_aggregates: HandlingSourcePayload<PrtrAggregateData>;
+    gyeonggi_facilities: HandlingSourcePayload<HandlingFacilityItem>;
+    chemical_accidents: HandlingSourcePayload<ChemicalAccidentItem>;
+  };
+}
+
 interface KoreanRegulationPanelProps {
   chemId: string;
   chemicalName: string;
 }
 
-export default function KoreanRegulationPanel({ chemId }: KoreanRegulationPanelProps) {
+export default function KoreanRegulationPanel({ chemId, chemicalName }: KoreanRegulationPanelProps) {
   const [data, setData] = useState<RegulatoryIntelligenceResponse | null>(null);
+  const [handlingProfile, setHandlingProfile] = useState<HandlingProfileResponse | null>(null);
+  const [kotraReach, setKotraReach] = useState<KotraReachItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -109,20 +223,29 @@ export default function KoreanRegulationPanel({ chemId }: KoreanRegulationPanelP
       setLoading(true);
       setError('');
 
-      const result = await fetchJsonSafe<RegulatoryIntelligenceResponse>(`/api/regulations/intelligence/${encodeURIComponent(chemId)}`);
-      if (result.ok && result.data) {
-        setData(result.data);
+      const kotraQuery = (chemicalName || '').trim();
+      const [intelligenceResult, handlingResult, kotraResult] = await Promise.all([
+        fetchJsonSafe<RegulatoryIntelligenceResponse>(`/api/regulations/intelligence/${encodeURIComponent(chemId)}`),
+        fetchJsonSafe<HandlingProfileResponse>(`/api/regulations/handlers/${encodeURIComponent(chemId)}?year=2024&accident_years=5&facility_limit=10`),
+        fetchJsonSafe<KotraReachResponse>(`/api/regulations/kotra/reach?q=${encodeURIComponent(kotraQuery)}&limit=8`),
+      ]);
+
+      if (intelligenceResult.ok && intelligenceResult.data) {
+        setData(intelligenceResult.data);
       } else {
         setData(null);
-        setError(getErrorMessage(result, 'Failed to load regulatory intelligence.'));
+        setError(getErrorMessage(intelligenceResult, 'Failed to load regulatory intelligence.'));
       }
+
+      setHandlingProfile(handlingResult.ok && handlingResult.data ? handlingResult.data : null);
+      setKotraReach(kotraResult.ok && kotraResult.data?.data ? kotraResult.data.data : []);
       setLoading(false);
     };
 
     if (chemId) {
       void fetchData();
     }
-  }, [chemId]);
+  }, [chemId, chemicalName]);
 
   if (loading) {
     return (
@@ -160,6 +283,8 @@ export default function KoreanRegulationPanel({ chemId }: KoreanRegulationPanelP
           {error}
         </div>
       )}
+
+      <HandlingSitesSection profile={handlingProfile} />
 
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
         <div className="bg-slate-50 px-6 py-5 border-b border-slate-100">
@@ -282,6 +407,22 @@ export default function KoreanRegulationPanel({ chemId }: KoreanRegulationPanelP
                 <InfoRow label="Formula" value={item.molecular_formula} />
                 <InfoRow label="RML ID" value={item.rml_id} />
                 {item.iupac_name && item.iupac_name !== item.name && <TextBlock label="IUPAC" value={item.iupac_name} />}
+                {item.reach_status && item.reach_status.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {item.reach_status.map((s) => (
+                      <span
+                        key={s.code}
+                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                          s.code === "REG_REGISTERED"
+                            ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                            : "bg-amber-50 text-amber-800 border border-amber-300"
+                        }`}
+                      >
+                        {s.label}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 {item.regulatory_processes && item.regulatory_processes.length > 0 && (
                   <TagGroup title="Processes" items={item.regulatory_processes} tone="sky" compact />
                 )}
@@ -338,8 +479,257 @@ export default function KoreanRegulationPanel({ chemId }: KoreanRegulationPanelP
           </div>
         </SourceCard>
       </div>
+
+      {kotraReach.length > 0 && (
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Globe className="w-5 h-5 text-indigo-600" />
+            <div>
+              <h3 className="font-semibold text-gray-900">KOTRA · REACH 자료</h3>
+              <p className="text-xs text-gray-500">
+                해외시장뉴스에서 검색한 REACH 관련 규제·상담 자료 (원문: dream.kotra.or.kr)
+              </p>
+            </div>
+          </div>
+          <ul className="space-y-2.5">
+            {kotraReach.map((item, index) => (
+              <li key={`kotra-${index}`} className="text-sm">
+                <a
+                  href={item.kotraNewsUrl || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-700 hover:underline font-medium"
+                >
+                  {item.newsTitl || '(제목 없음)'}
+                </a>
+                {item.cntntSumar && (
+                  <p className="text-gray-500 text-xs mt-0.5 line-clamp-2">{item.cntntSumar}</p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
+}
+
+function HandlingSitesSection({ profile }: { profile: HandlingProfileResponse | null }) {
+  const prtr = profile?.sources.prtr_summary.data as PrtrSummaryData | null | undefined;
+  const facilities = Array.isArray(profile?.sources.gyeonggi_facilities.data)
+    ? profile.sources.gyeonggi_facilities.data
+    : [];
+  const prtrFacilities = Array.isArray(profile?.sources.prtr_facilities?.data)
+    ? profile.sources.prtr_facilities.data
+    : [];
+  const prtrFacilitySource = profile?.sources.prtr_facilities;
+  const aggregates = profile?.sources.prtr_aggregates.data as PrtrAggregateData | null | undefined;
+  const accidents = Array.isArray(profile?.sources.chemical_accidents.data)
+    ? profile.sources.chemical_accidents.data
+    : [];
+
+  return (
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+      <div className="bg-cyan-50 px-6 py-5 border-b border-cyan-100">
+        <div className="flex items-center gap-2">
+          <Building2 className="w-5 h-5 text-cyan-700" />
+          <h3 className="font-semibold text-cyan-950">Handling Sites & Release Signals</h3>
+        </div>
+        <p className="text-sm text-cyan-700 mt-1">
+          Korean facility, PRTR summary, and chemical accident records linked by CAS and aliases
+        </p>
+      </div>
+      <div className="p-6 space-y-5">
+        {prtr ? (
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+            <MetricTile label="PRTR year" value={String(profile?.query.year || 2024)} />
+            <MetricTile label="Reporting companies" value={formatNumber(prtr.company_count)} />
+            <MetricTile label="Total release" value={`${formatNumber(prtr.total_release_kg)} kg/y`} />
+            <MetricTile label="Total transfer" value={`${formatNumber(prtr.total_transfer_kg)} kg/y`} />
+          </div>
+        ) : (
+          <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            PRTR company-count summary is not available for this substance in the local cache.
+          </div>
+        )}
+
+        {aggregates && (
+          <div className="rounded-xl border border-gray-200 p-4">
+            <div className="flex items-center justify-between gap-3 mb-3">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-cyan-700" />
+                <h4 className="font-semibold text-gray-900">PRTR concentration breakdown</h4>
+              </div>
+              <span className="text-xs text-gray-500">aggregate workbook</span>
+            </div>
+            {aggregates.material_totals && (
+              <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+                <MetricTile label="Reported total" value={`${formatNumber(aggregates.material_totals.reported_total_kg)} kg/y`} />
+                <MetricTile label="Release subtotal" value={`${formatNumber(aggregates.material_totals.release_total_kg)} kg/y`} />
+                <MetricTile label="Transfer subtotal" value={`${formatNumber(aggregates.material_totals.transfer_total_kg)} kg/y`} />
+              </div>
+            )}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <AggregateList title="Top regions" items={aggregates.top_regions || []} />
+              <AggregateList title="Top industrial complexes" items={aggregates.top_industrial_complexes || []} />
+              <AggregateList title="Top industries" items={aggregates.top_industries || []} />
+            </div>
+            {!!aggregates.carcinogenic_classes?.length && (
+              <p className="mt-3 text-xs text-rose-700">
+                IARC: {aggregates.carcinogenic_classes.map((item) => item.iarc_group).filter(Boolean).join(', ')}
+              </p>
+            )}
+          </div>
+        )}
+
+        <div className="rounded-xl border border-gray-200 p-4">
+          <div className="flex items-center justify-between gap-3 mb-3">
+            <div className="flex items-center gap-2">
+              <Building2 className="w-4 h-4 text-cyan-700" />
+              <h4 className="font-semibold text-gray-900">PRTR reported volume Top 10</h4>
+            </div>
+            <span className="text-xs text-gray-500">
+              {formatNumber(prtrFacilities.length)} of {formatNumber(prtrFacilitySource?.total || 0)}
+            </span>
+          </div>
+          {prtrFacilities.length === 0 ? (
+            <p className="text-sm text-gray-500">No PRTR company rows were returned for this material.</p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-100 text-left text-xs text-gray-500">
+                    <th className="py-2 pr-4 font-medium">Company</th>
+                    <th className="py-2 pr-4 font-medium">Address</th>
+                    <th className="py-2 pr-4 font-medium text-right">Reported total kg/y</th>
+                    <th className="py-2 pr-4 font-medium text-right">Release kg/y</th>
+                    <th className="py-2 pr-4 font-medium text-right">Transfer kg/y</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {prtrFacilities.map((item, index) => (
+                    <tr key={`${item.company_name || 'prtr'}-${index}`} className="border-b border-gray-50">
+                      <td className="py-2 pr-4 text-gray-900">{item.company_name || '-'}</td>
+                      <td className="py-2 pr-4 text-gray-500 max-w-xs truncate">{item.address || '-'}</td>
+                      <td className="py-2 pr-4 text-right text-gray-900 font-medium">{formatNumber(item.reported_total_kg)}</td>
+                      <td className="py-2 pr-4 text-right text-gray-700">{formatNumber(item.total_release_kg)}</td>
+                      <td className="py-2 pr-4 text-right text-gray-700">{formatNumber(item.total_transfer_kg)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p className="mt-2 text-xs text-gray-500">
+                Ranked by PRTR reported total: release + transfer + self-landfill. Showing top {formatNumber(prtrFacilitySource?.limit || 10)} of {formatNumber(prtrFacilitySource?.total || prtrFacilities.length)} rows.
+              </p>
+            </div>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
+          <div className="rounded-xl border border-gray-200 p-4">
+            <div className="flex items-center justify-between gap-3 mb-3">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-cyan-700" />
+                <h4 className="font-semibold text-gray-900">Gyeonggi hazardous facilities</h4>
+              </div>
+              <span className="text-xs text-gray-500">{facilities.length} matches</span>
+            </div>
+            {facilities.length === 0 ? (
+              <p className="text-sm text-gray-500">No matching Gyeonggi facility records for the current aliases.</p>
+            ) : (
+              <div className="space-y-3">
+                {facilities.slice(0, 8).map((item, index) => (
+                  <div key={`${item.company_name || 'facility'}-${index}`} className="rounded-lg bg-gray-50 border border-gray-100 p-3 text-sm">
+                    <div className="font-medium text-gray-900">{item.company_name || 'Unnamed facility'}</div>
+                    <div className="mt-1 text-gray-600">{item.road_address || item.lot_address}</div>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {(item.materials?.length ? item.materials : [item.materials_text || '']).filter(Boolean).map((material) => (
+                        <span key={material} className="rounded-full bg-cyan-50 text-cyan-700 border border-cyan-100 px-2.5 py-1 text-xs">
+                          {material}
+                        </span>
+                      ))}
+                    </div>
+                    {item.evacuation_facility && (
+                      <div className="mt-2 text-xs text-gray-500">
+                        Evacuation: {item.evacuation_facility}
+                        {item.evacuation_distance_m ? ` · ${formatNumber(item.evacuation_distance_m)} m` : ''}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="rounded-xl border border-gray-200 p-4">
+            <div className="flex items-center justify-between gap-3 mb-3">
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 text-rose-600" />
+                <h4 className="font-semibold text-gray-900">Related accident history</h4>
+              </div>
+              <span className="text-xs text-gray-500">{accidents.length} matches</span>
+            </div>
+            {accidents.length === 0 ? (
+              <p className="text-sm text-gray-500">No matching recent chemical accident records.</p>
+            ) : (
+              <div className="space-y-3">
+                {accidents.slice(0, 8).map((item, index) => (
+                  <div key={`${item.data_no || 'accident'}-${index}`} className="rounded-lg bg-gray-50 border border-gray-100 p-3 text-sm">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-medium text-gray-900">{item.place || 'Unknown site'}</span>
+                      {item.date && <span className="text-xs text-gray-500">{item.date}</span>}
+                    </div>
+                    <div className="mt-1 text-gray-600">{item.area || item.address}</div>
+                    {item.chemical && <div className="mt-1 text-gray-700">Material: {item.chemical}</div>}
+                    {item.summary && <p className="mt-2 text-gray-500 line-clamp-3">{item.summary}</p>}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MetricTile({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
+      <div className="text-xs font-medium uppercase tracking-wide text-gray-500">{label}</div>
+      <div className="mt-1 text-xl font-semibold text-gray-900">{value || '-'}</div>
+    </div>
+  );
+}
+
+function AggregateList({ title, items }: { title: string; items: PrtrAggregateItem[] }) {
+  return (
+    <div>
+      <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500">{title}</div>
+      {items.length === 0 ? (
+        <p className="text-sm text-gray-500">No aggregate rows.</p>
+      ) : (
+        <div className="space-y-2">
+          {items.map((item, index) => (
+            <div key={`${title}-${item.dimension_name || index}`} className="rounded-lg bg-gray-50 px-3 py-2">
+              <div className="flex items-start justify-between gap-3">
+                <span className="text-sm font-medium text-gray-900">{item.dimension_name || '-'}</span>
+                <span className="text-sm tabular-nums text-gray-700">{formatNumber(item.reported_total_kg)}</span>
+              </div>
+              <div className="mt-1 text-xs text-gray-500">
+                release {formatNumber(item.release_total_kg)} · transfer {formatNumber(item.transfer_total_kg)}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function formatNumber(value?: number): string {
+  if (value === undefined || value === null || Number.isNaN(value)) return '-';
+  return new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(value);
 }
 
 function readField(item: CompToxItem | Record<string, unknown>, keys: string[]): string {

@@ -1,0 +1,62 @@
+// 용어사전 화면 문구(한국어 기준 모양, GLOSSARY_LABELS_KO). 영어: glossary_labels_en.jsx → 화면이 읽는 GLOSSARY_LABELS.
+// 분류 이름(cats)·시험 이름(exams)은 자료 파일(glossary_<분류>.jsx)과 등록 목록(glossary_registry.jsx)의 key 를 쓴다.
+
+const GLOSSARY_LABELS_KO = {
+  title: "용어사전",
+  sub: "화학안전·산업위생·위험물·화학공학 용어를 한·영으로 풀이합니다. 화공안전기술사·산업위생관리기사·위험물산업기사·화공기사 대비용으로 법정 용어에는 근거 조문을 붙였습니다.",
+  searchPlaceholder: "용어 찾기 (예: 인화점, HAZOP, 지정수량, 환류비)",
+  searchAria: "용어 찾기",
+  allCats: "전체 분류",
+  allExams: "전체 시험",
+  indexAria: "첫 글자로 찾기",
+  indexAll: "전체",
+  count: (n, all) => (n === all ? `${n.toLocaleString("ko-KR")}개 용어` : `${n.toLocaleString("ko-KR")}개 / 전체 ${all.toLocaleString("ko-KR")}개`),
+  empty: "조건에 맞는 용어가 없습니다. 분류·첫 글자를 '전체'로 바꾸거나 다른 말로 찾아 보세요.",
+  notFound: (key) => `'${key}' 용어를 찾지 못했습니다. 아래 목록에서 찾아 보세요.`,
+  cats: {
+    psm: "공정안전",
+    fire: "화재·폭발",
+    ih: "산업위생",
+    tox: "독성·환경",
+    reg: "화학물질 규제·GHS",
+    hazmat: "위험물",
+    unitop: "단위조작",
+    thermo: "열역학·반응",
+    fluid: "유체·열전달",
+    control: "공정제어",
+    abbr: "자료원·약어",
+  },
+  exams: {
+    pse: "화공안전기술사",
+    ih: "산업위생관리기사",
+    hm: "위험물산업기사",
+    ce: "화공기사",
+  },
+  field: {
+    law: "근거 조문",
+    ref: "참고",
+    unit: "단위",
+    see: "관련 용어",
+    calc: "관련 계산기",
+    view: "관련 화면",
+    exams: "시험",
+    alias: "다른 이름",
+    src: "정의 출처",
+  },
+  src: {
+    own: "ChemIP 작성",
+    law: "법령 정의(저작권법 제7조, 보호받지 않는 저작물)",
+    std: "표준·교재를 바탕으로 ChemIP 작성",
+    calc: "ChemIP 작성(공학 계산기 용어 설명)",
+    abbr: "ChemIP 작성(자료원·약어 설명)",
+  },
+  lawOpen: "국가법령정보센터에서 보기",
+  copyLink: "주소 복사",
+  copied: "복사했습니다",
+  close: "닫기",
+  showDetail: (term) => `${term} 자세히 보기`,
+  screens: { sources: "자료 출처", product: "물질 검색", calc: "공학 계산기", search: "통합 검색", applicability: "적용 법규 판정기" },
+  note: "정의는 학습·실무 참고용입니다. 법적 판단은 국가법령정보센터의 현행 법령 원문으로 확인하세요.",
+};
+
+Object.assign(window, { GLOSSARY_LABELS_KO });

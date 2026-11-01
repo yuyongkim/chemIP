@@ -82,7 +82,7 @@ export default function OperationsGuidePage() {
               </h3>
               <div className="space-y-2 text-sm font-mono text-gray-700">
                 {[
-                  { name: 'data/', desc: '140GB DB files', severity: 'high' },
+                  { name: 'data/', desc: '144GB DB files', severity: 'high' },
                   { name: '.venv/', desc: 'Virtual environment', severity: 'med' },
                   { name: 'node_modules/', desc: 'npm packages', severity: 'med' },
                   { name: '.env', desc: 'API keys & secrets', severity: 'high' },
@@ -216,7 +216,7 @@ docker run -d -p 7010:7010 \\
                 {[
                   'Git repository access granted',
                   '.env shared via secure channel',
-                  '140GB DB transfer method decided',
+                  '144GB DB transfer method decided',
                   'API key access confirmed',
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-sm text-gray-700">

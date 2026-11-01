@@ -1,0 +1,17 @@
+[
+ {
+  "category": "petrochem_KPIA",
+  "ref": "KCIA 기타 / 옥탄올",
+  "why": "industry label for 2-ethylhexanol and/or 1-octanol; not one substance"
+ },
+ {
+  "category": "petrochem_KPIA",
+  "ref": "KCIA 합성수지 / PC",
+  "why": "POLY(BISPHENOL A CARBONATE): no DB name"
+ },
+ {
+  "category": "petrochem_KPIA",
+  "ref": "KCIA 합성고무 / SBR",
+  "why": "Styrene-butadiene rubber: ambiguous ['61789-96-6', '9003-55-8']"
+ }
+]

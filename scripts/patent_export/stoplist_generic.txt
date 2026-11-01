@@ -1,0 +1,350 @@
+# Generic dictionary words that are also registered as substance names/synonyms.
+# One per line, lower case. Applied at scan time. Corpus-frequency cut (config.MAX_TERM_DF) is applied later.
+water
+oil
+oils
+resin
+resins
+solution
+solutions
+powder
+chemical
+chemicals
+compound
+compounds
+rubber
+acid
+acids
+salt
+salts
+sugar
+sugars
+alcohol
+alcohols
+polymer
+polymers
+copolymer
+monomer
+wax
+waxes
+paper
+glass
+steel
+lead
+gold
+silver
+iron
+metal
+metals
+alloy
+alloys
+mineral
+minerals
+glue
+paint
+paints
+ink
+inks
+dye
+dyes
+pigment
+pigments
+fiber
+fibre
+fibers
+fibres
+cement
+concrete
+clay
+sand
+stone
+coal
+coke
+tar
+pitch
+soap
+starch
+protein
+proteins
+enzyme
+enzymes
+extract
+extracts
+essence
+flour
+fat
+fats
+gas
+gases
+vapor
+vapour
+steam
+smoke
+dust
+ash
+ashes
+soot
+lime
+chalk
+latex
+silicone
+silicones
+plastic
+plastics
+nylon
+foam
+gel
+gels
+emulsion
+emulsions
+suspension
+mixture
+mixtures
+reaction
+product
+products
+residue
+residues
+distillate
+distillates
+fraction
+fractions
+catalyst
+catalysts
+base
+bases
+ester
+esters
+ether
+ethers
+amine
+amines
+amide
+amides
+ketone
+ketones
+aldehyde
+aldehydes
+phenols
+glycol
+glycols
+oxide
+oxides
+hydroxide
+hydroxides
+chloride
+chlorides
+sulfate
+sulfates
+sulphate
+sulphates
+nitrate
+nitrates
+phosphate
+phosphates
+carbonate
+carbonates
+silicate
+silicates
+fluoride
+fluorides
+bromide
+iodide
+cyanide
+sulfide
+sulphide
+hydrate
+complex
+complexes
+derivative
+derivatives
+glycerides
+fatty acids
+amino acids
+hydrocarbons
+hydrocarbon
+paraffins
+vinegar
+honey
+milk
+blood
+urine
+serum
+plasma
+vitamin
+vitamins
+hormone
+hormones
+antibody
+antibodies
+toxin
+toxins
+venom
+perfume
+flavor
+flavour
+fragrance
+diamond
+carbon
+oxygen
+hydrogen
+nitrogen
+light
+crude
+spirit
+spirits
+wood
+cotton
+wool
+silk
+leather
+tobacco
+coffee
+cocoa
+tea
+juice
+wine
+beer
+# placeholder strings found in name fields
+[no public or meaningful name is available]
+no public or meaningful name is available
+not available
+not applicable
+non-preferred name
+해당사항 없음
+해당 없음
+자료없음
+자료 없음
+stabilized with mehq
+# generic words seen in a test scan (CNIPA-00300)
+human
+waste
+wastes
+accelerator
+accelerators
+saturated
+oxidized
+grease
+acrylic
+polyether
+polyester
+epoxy resin
+fuel gas
+trans
+cis
+human serum
+# Korean generic words
+알코올
+알콜
+에스테르
+에스터
+에테르
+폴리머
+실리콘
+오일
+왁스
+고무
+용액
+화합물
+그리스
+가솔린
+휘발유
+경유
+등유
+석유
+수지
+아세탈
+# generic / false-friend words seen in a WIPO test scan
+rayon
+branched
+linear
+unknown
+mutant
+mutants
+antigen
+antigens
+protease
+proteases
+secretion
+polyamine
+polyamines
+polyisocyanate
+polyisocyanates
+polyol
+polyols
+# seen in CNIPA test scan
+natural
+synthetic
+# class words / trade names that are English words (WIPO test sample)
+mineral
+command
+express
+anhydride
+anhydrides
+acetal
+acetals
+imide
+amide
+acetate
+acetates
+benzoate
+benzoates
+citrate
+lactate
+stearate
+stearates
+oleate
+palmitate
+acrylate
+acrylates
+methacrylate
+methacrylates
+formate
+propionate
+butyrate
+tartrate
+# false friends / class words from the corpus DF review (first 48 WIPO files)
+aptes
+talon
+isomer
+isomers
+stereoisomer
+stereoisomers
+polymer of
+polygon
+1 to 2
+retinal
+diamine
+diamines
+bovine
+phosphatase
+lipase
+polyamides
+acrylic resin
+molecular sieve
+# full-corpus DF review (158.8M records): placeholders, class words, false friends
+2 to 1
+provisional
+formal
+oligomeric
+methyl ester
+acetic
+chloro
+calcium salt
+cationic polymer
+dicarboxylic acids
+glycoside
+dihydrogen
+cellulase
+amylase
+peroxidase
+phosphodiesterase
+oil gas
+acrylic polymer
+polyester polyol
+zeolites
+deoxyribonucleic acid
+sorbitan
+시멘트
+# NCIS lists it under benzene, but in patents it is petroleum benzine (8032-32-4)
+benzine

@@ -1,4 +1,4 @@
-// 익명 이용 집계 안내 + 최근 30일 숫자. 소개(랜딩)와 자료 출처 화면이 같이 쓴다. 데이터: useUsageSummary(api.jsx).
+// 익명 이용 집계 안내 + 최근 30일 숫자. 소개(랜딩)와 자료 출처 화면이 같이 쓴다. 데이터: useUsageSummary(api_feedback.jsx).
 
 function UsageNotice({ showStats = true }) {
   const U = ABOUT_LABELS.usage;

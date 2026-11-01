@@ -12,6 +12,7 @@ function KrPermitsSection({ data }) {
   const ready = tcSourceReady(data.sources_status, "permits");
   const permits = data.kr_permits || [];
   const groups = tcGroupByLaw(permits);
+  const terms = tcHighlightTerms(data);
   const aside = ready && permits.length ? (
     <>{L.count(permits.length)} · <ExpandAllToggle open={openAll} setOpen={setOpenAll} labels={C} /></>
   ) : ready ? L.count(0) : "";
@@ -40,7 +41,7 @@ function KrPermitsSection({ data }) {
         >
           {g.items.map((p, i) => (
             <React.Fragment key={p.rule_id || p.permit_id || i}>
-              <RuleCard item={p} title={tcPermitName(p)} fieldKeys={TC_PERMIT_FIELDS} />
+              <RuleCard item={p} title={tcPermitName(p)} fieldKeys={TC_PERMIT_FIELDS} terms={terms} />
               <KrPermitDurationHint cas={data.cas} permitId={p.permit_id} />
             </React.Fragment>
           ))}

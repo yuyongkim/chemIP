@@ -3,6 +3,7 @@ export interface Patent {
   applicationNumber?: string;
   title?: string;
   inventionTitle?: string;
+  source?: string;
   jurisdiction?: string;
   section?: string;
   matched_term?: string;
@@ -22,4 +23,17 @@ export interface SearchResponse {
   page: number;
   limit: number;
   total_pages: number;
+}
+
+export interface ChemicalResolution {
+  chem_id: string;
+  name: string;
+  name_en?: string | null;
+  cas_no?: string | null;
+  source?: string | null;
+}
+
+export interface ChemicalSearchItem extends ChemicalResolution {
+  id: number;
+  has_msds?: boolean;
 }

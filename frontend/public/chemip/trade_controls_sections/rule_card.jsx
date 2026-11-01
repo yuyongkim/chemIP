@@ -2,7 +2,7 @@
 // 한국 수출입 의무(kr_obligations)·확인 중 항목·인허가(kr_permits)가 같이 쓴다.
 // 법령 원문 발췌는 길어서 기본으로 접어 둔다(Collapsible).
 
-function RuleCard({ item, title, fieldKeys }) {
+function RuleCard({ item, title, fieldKeys, terms }) {
   const L = TRADE_LABELS;
   const conditions = tcConditions(item.matched_by);
   const supporting = item.citation?.supporting || [];
@@ -21,10 +21,10 @@ function RuleCard({ item, title, fieldKeys }) {
         </span>
       </div>
       {tcFieldRows(item, fieldKeys).map(([k, v]) => (
-        <div key={k} className="tc-field"><span className="tc-field-k">{L.fields[k] || k}</span><span>{v}</span></div>
+        <div key={k} className="tc-field"><span className="tc-field-k">{L.fields[k] || k}</span><span><Highlight text={v} terms={terms} /></span></div>
       ))}
       {conditions.map((c, i) => (
-        <div key={i} className="tc-field"><span className="tc-field-k">{L.sections.permits.condition}</span><span>{c}</span></div>
+        <div key={i} className="tc-field"><span className="tc-field-k">{L.sections.permits.condition}</span><span><Highlight text={c} terms={terms} /></span></div>
       ))}
       <div className="tc-field">
         <span className="tc-field-k">{L.fields.legal_basis}</span>
@@ -39,7 +39,7 @@ function RuleCard({ item, title, fieldKeys }) {
       {item.note && <div className="tc-line tc-muted">{L.fields.note}: {item.note}</div>}
       {quotes.length > 0 && (
         <Collapsible className="tc-quotes" summary={L.quote.show(quotes.length)}>
-          {quotes.map((q, i) => <div key={i} className="tc-quote">{q}</div>)}
+          {quotes.map((q, i) => <div key={i} className="tc-quote"><Highlight text={q} terms={terms} /></div>)}
         </Collapsible>
       )}
       <div className="tc-tags">

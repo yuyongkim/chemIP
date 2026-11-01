@@ -1,0 +1,38 @@
+{
+  "_about": "Gap list for the search synonyms: names users type that no terminology.db table gives for that CAS. Each entry cites its source; every CAS is checked to exist in chemical_terms by build_synonyms.py. Source: 한국화학산업협회(KCIA, 옛 한국석유화학협회) 제품정보·제품통계 페이지의 제품 표기(2026-10-28 조회). Two-letter KCIA labels of polymers and generic two-letter labels (PP, PS, PC, BR, PA, MA) are left out on purpose: they collide with too many other names.",
+  "sources": {
+    "kcia_stats": {"tier": "synonym", "ref": "KCIA 제품통계 표기", "url": "https://kcia.kr/petrochemical-industry/statistics"},
+    "kcia_info": {"tier": "synonym", "ref": "KCIA 제품정보 표기", "url": "https://kcia.kr/petrochemical-industry/product-info"}
+  },
+  "items": [
+    {"name": "프로필렌", "cas": "115-07-1", "source": "kcia_stats"},
+    {"name": "부타디엔", "cas": "106-99-0", "source": "kcia_stats"},
+    {"name": "Butadiene", "cas": "106-99-0", "source": "kcia_info"},
+    {"name": "자일렌", "cas": "1330-20-7", "source": "kcia_stats"},
+    {"name": "Xylene", "cas": "1330-20-7", "source": "kcia_info"},
+    {"name": "초산", "cas": "64-19-7", "source": "kcia_stats"},
+    {"name": "초산에틸", "cas": "141-78-6", "source": "kcia_stats"},
+    {"name": "카본블랙", "cas": "1333-86-4", "source": "kcia_stats"},
+    {"name": "SM", "cas": "100-42-5", "source": "kcia_stats"},
+    {"name": "P-X", "cas": "106-42-3", "source": "kcia_stats"},
+    {"name": "O-X", "cas": "95-47-6", "source": "kcia_stats"},
+    {"name": "EDC", "cas": "107-06-2", "source": "kcia_stats"},
+    {"name": "VCM", "cas": "75-01-4", "source": "kcia_stats"},
+    {"name": "TPA", "cas": "100-21-0", "source": "kcia_stats"},
+    {"name": "EG", "cas": "107-21-1", "source": "kcia_stats"},
+    {"name": "AN", "cas": "107-13-1", "source": "kcia_stats"},
+    {"name": "CPLM", "cas": "105-60-2", "source": "kcia_stats"},
+    {"name": "DMT", "cas": "120-61-6", "source": "kcia_stats"},
+    {"name": "BPA", "cas": "80-05-7", "source": "kcia_stats"},
+    {"name": "LDPE", "cas": "9002-88-4", "source": "kcia_stats"},
+    {"name": "L-LDPE", "cas": "9002-88-4", "source": "kcia_stats"},
+    {"name": "HDPE", "cas": "9002-88-4", "source": "kcia_stats"},
+    {"name": "EVA", "cas": "24937-78-8", "source": "kcia_stats"},
+    {"name": "EPS", "cas": "9003-53-6", "source": "kcia_stats"},
+    {"name": "ABS", "cas": "9003-56-9", "source": "kcia_stats"},
+    {"name": "PVC", "cas": "9002-86-2", "source": "kcia_stats"},
+    {"name": "C-H", "cas": "110-82-7", "source": "kcia_stats", "note": "KCIA 중간원료 표기 (cyclohexane)"},
+    {"name": "아세트알데히트", "cas": "75-07-0", "source": "kcia_info", "note": "KCIA 제품정보 '기타' 표기 그대로(아세트알데히드의 오기); 그 표기를 복사해 검색하는 경우를 위해 둔다"},
+    {"name": "에틸아세테히트", "cas": "141-78-6", "source": "kcia_info", "note": "KCIA 제품정보 '기타' 표기 그대로(에틸아세테이트의 오기)"}
+  ]
+}

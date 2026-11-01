@@ -1,0 +1,70 @@
+{
+  "v": 1,
+  "about": "Mixture classification constants (service 8). Values from CLP Annex I (Regulation (EC) No 1272/2008 as amended) and UN GHS Rev.10, Part 3-4; worked examples in ECHA Guidance on the Application of the CLP Criteria (Part 3 v5.0 Nov 2024, Parts 4-5 v4.0 Nov 2024). Read by the browser through the generated safety_rules_data.jsx; the classification itself runs in the browser (mixghs_core.jsx).",
+  "total_tolerance": 0.5,
+  "acute": {
+    "routes": {
+      "oral":  {"unit": "mg/kg bw", "hazard": "acute_oral",     "bounds": [5, 50, 300, 2000],     "converted": [0.5, 5, 100, 500]},
+      "dermal":{"unit": "mg/kg bw", "hazard": "acute_dermal",   "bounds": [50, 200, 1000, 2000],  "converted": [5, 50, 300, 1100]},
+      "gas":   {"unit": "ppmV",     "hazard": "acute_inh_gas",  "bounds": [100, 500, 2500, 20000],"converted": [10, 100, 700, 4500]},
+      "vapour":{"unit": "mg/L",     "hazard": "acute_inh_vap",  "bounds": [0.5, 2, 10, 20],       "converted": [0.05, 0.5, 3, 11]},
+      "dust":  {"unit": "mg/L",     "hazard": "acute_inh_dust", "bounds": [0.05, 0.5, 1, 5],      "converted": [0.005, 0.05, 0.5, 1.5]}
+    },
+    "inhalation_unstated": "vapour",
+    "relevant_min": 1.0,
+    "relevant_min_cat_1_3": 0.1,
+    "unknown_correction_from": 10.0,
+    "basis": "CLP Annex I 3.1.3.6 (additivity formula, 3.1.3.6.2.3 correction for unknown ingredients >= 10 %), Table 3.1.1 (category ranges), Table 3.1.2 (converted acute toxicity point estimates), 3.1.3.3(a) relevant ingredients, Table 1.1 generic cut-off 0.1 % for Categories 1-3"
+  },
+  "skin": {
+    "relevant_min": 1.0,
+    "corr_gcl": 5.0,
+    "irrit_from_corr_gcl": 1.0,
+    "irrit_gcl": 10.0,
+    "basis": "CLP Annex I 3.2.3.3.4, Table 3.2.3 (additivity; SCLs replace GCLs: sum of C/limit >= 1)"
+  },
+  "eye": {
+    "relevant_min": 1.0,
+    "dam_gcl": 3.0,
+    "irrit_from_dam_gcl": 1.0,
+    "irrit_gcl": 10.0,
+    "basis": "CLP Annex I 3.3.3.3, Table 3.3.3 (Skin Corr. 1 + Eye Dam. 1 summed for Eye Dam. 1; SCLs replace GCLs)"
+  },
+  "sens": {
+    "resp_sens": {"1": 1.0, "1A": 0.1, "1B": 1.0},
+    "resp_sens_gas": {"1": 0.2, "1A": 0.1, "1B": 0.2},
+    "skin_sens": {"1": 1.0, "1A": 0.1, "1B": 1.0},
+    "elicitation_fraction": 0.1,
+    "basis": "CLP Annex I Table 3.4.5 (no additivity); EUH208 at 1/10 of the limit (Annex II 2.8)"
+  },
+  "cmr": {
+    "muta": {"1": 0.1, "1A": 0.1, "1B": 0.1, "2": 1.0},
+    "carc": {"1": 0.1, "1A": 0.1, "1B": 0.1, "2": 1.0},
+    "repr": {"1": 0.3, "1A": 0.3, "1B": 0.3, "2": 3.0},
+    "lact": {"1": 0.3},
+    "basis": "CLP Annex I Tables 3.5.2, 3.6.2, 3.7.2 (no additivity across ingredients is applied here)"
+  },
+  "stot": {
+    "cat1_to_1": 10.0,
+    "cat1_to_2": 1.0,
+    "cat2_to_2": 10.0,
+    "cat3_sum": 20.0,
+    "basis": "CLP Annex I Tables 3.8.3 and 3.9.4; 3.8.3.4.5 (Category 3: 20 % summed, respiratory irritation and narcotic effects separately)"
+  },
+  "asp": {
+    "cat1_sum": 10.0,
+    "viscosity_max_mm2s": 20.5,
+    "basis": "CLP Annex I 3.10.3.3.1 (sum >= 10 % and kinematic viscosity <= 20.5 mm2/s at 40 C)"
+  },
+  "aquatic": {
+    "trigger": 25.0,
+    "relevant_min_cat1": 0.1,
+    "relevant_min_other": 1.0,
+    "basis": "CLP Annex I 4.1.3.5.5, Tables 4.1.1 and 4.1.2 (summation with M-factors, Chronic 1-4); relevant ingredients 4.1.3.1 (0.1 % / M for Acute 1 and Chronic 1, 1 % for others)"
+  },
+  "label": {
+    "drop_ghs07_if": {"acute4": ["GHS06"], "irritant": ["GHS05", "GHS08_resp"], "skin_sens": ["GHS08_resp"]},
+    "drop_h_if": {"H318": ["H314"], "H400": ["H410"], "H319": ["H318", "H314"], "H315": ["H314"]},
+    "basis": "CLP Article 26 (pictogram precedence) and Article 27 (hazard statements: H314 covers H318; Aquatic Acute 1 with Chronic 1 is labelled H410)"
+  }
+}

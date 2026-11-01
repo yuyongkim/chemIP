@@ -1,0 +1,213 @@
+{
+ "_source": {
+  "product_info": "https://kcia.kr/petrochemical-industry/product-info",
+  "statistics": "https://kcia.kr/petrochemical-industry/statistics"
+ },
+ "_fetched": "2026-10-28",
+ "product_info": [
+  {
+   "label": "Ethylene",
+   "group": "기초유분"
+  },
+  {
+   "label": "Propylene",
+   "group": "기초유분"
+  },
+  {
+   "label": "Butadiene",
+   "group": "기초유분"
+  },
+  {
+   "label": "Benzene",
+   "group": "기초유분"
+  },
+  {
+   "label": "Toluene",
+   "group": "기초유분"
+  },
+  {
+   "label": "Xylene",
+   "group": "기초유분"
+  },
+  {
+   "label": "SM",
+   "group": "중간원료"
+  },
+  {
+   "label": "P-X",
+   "group": "중간원료"
+  },
+  {
+   "label": "O-X",
+   "group": "중간원료"
+  },
+  {
+   "label": "C-H",
+   "group": "중간원료"
+  },
+  {
+   "label": "EDC",
+   "group": "중간원료"
+  },
+  {
+   "label": "VCM",
+   "group": "중간원료"
+  },
+  {
+   "label": "LDPE",
+   "group": "합성수지"
+  },
+  {
+   "label": "L-LDPE",
+   "group": "합성수지"
+  },
+  {
+   "label": "EVA",
+   "group": "합성수지"
+  },
+  {
+   "label": "HDPE",
+   "group": "합성수지"
+  },
+  {
+   "label": "PP",
+   "group": "합성수지"
+  },
+  {
+   "label": "PS",
+   "group": "합성수지"
+  },
+  {
+   "label": "EPS",
+   "group": "합성수지"
+  },
+  {
+   "label": "ABS",
+   "group": "합성수지"
+  },
+  {
+   "label": "PVC",
+   "group": "합성수지"
+  },
+  {
+   "label": "PC",
+   "group": "합성수지"
+  },
+  {
+   "label": "TPA",
+   "group": "합섬원료"
+  },
+  {
+   "label": "EG",
+   "group": "합섬원료"
+  },
+  {
+   "label": "AN",
+   "group": "합섬원료"
+  },
+  {
+   "label": "CPLM",
+   "group": "합섬원료"
+  },
+  {
+   "label": "DMT",
+   "group": "합섬원료"
+  },
+  {
+   "label": "SBR",
+   "group": "합성고무"
+  },
+  {
+   "label": "BR",
+   "group": "합성고무"
+  },
+  {
+   "label": "초산",
+   "group": "기타"
+  },
+  {
+   "label": "카본블랙",
+   "group": "기타"
+  },
+  {
+   "label": "PA",
+   "group": "기타"
+  },
+  {
+   "label": "MA",
+   "group": "기타"
+  },
+  {
+   "label": "페놀",
+   "group": "기타"
+  },
+  {
+   "label": "아세톤",
+   "group": "기타"
+  },
+  {
+   "label": "옥탄올",
+   "group": "기타"
+  },
+  {
+   "label": "부탄올",
+   "group": "기타"
+  },
+  {
+   "label": "아세트알데히트",
+   "group": "기타"
+  },
+  {
+   "label": "에틸아세테히트",
+   "group": "기타"
+  },
+  {
+   "label": "에탄올",
+   "group": "기타"
+  },
+  {
+   "label": "BPA",
+   "group": "기타"
+  }
+ ],
+ "statistics_labels": [
+  "에틸렌",
+  "프로필렌",
+  "부타디엔",
+  "벤젠",
+  "톨루엔",
+  "자일렌",
+  "SM",
+  "P-X",
+  "O-X",
+  "C-H",
+  "EDC",
+  "VCM",
+  "LDPE",
+  "L-LDPE",
+  "EVA",
+  "HDPE",
+  "PP",
+  "PS",
+  "EPS",
+  "ABS",
+  "PVC",
+  "PC",
+  "TPA",
+  "EG",
+  "AN",
+  "CPLM",
+  "DMT",
+  "SBR",
+  "BR",
+  "초산",
+  "카본블랙",
+  "페놀",
+  "아세톤",
+  "옥탄올",
+  "부탄올",
+  "초산에틸",
+  "에탄올",
+  "BPA"
+ ]
+}

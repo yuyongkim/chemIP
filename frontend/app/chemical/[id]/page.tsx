@@ -20,7 +20,7 @@ const DrugInfoPanel = dynamic(() => import('./components/DrugInfoPanel'));
 const GuideRecommendationsPanel = dynamic(() => import('./components/GuideRecommendationsPanel'));
 const KoreanRegulationPanel = dynamic(() => import('./components/KoreanRegulationPanel'));
 
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import ChemicalHeaderTabs from './components/ChemicalHeaderTabs';
 import EnglishSafetyCard from './components/EnglishSafetyCard';
@@ -55,6 +55,37 @@ export default function ChemicalDetail() {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  // Scroll-spy: highlight the TOC entry for the section currently at the top of the viewport.
+  const sectionSeqs = data?.sections?.map((s) => s.section_seq).join(',') ?? '';
+  useEffect(() => {
+    if (activeTab !== 'msds' || !sectionSeqs) return;
+    const seqs = sectionSeqs.split(',').map(Number);
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      let current = seqs[0];
+      if (nearBottom) {
+        current = seqs[seqs.length - 1];
+      } else {
+        for (const seq of seqs) {
+          const el = document.getElementById(`section-${seq}`);
+          if (el && el.getBoundingClientRect().top <= 140) current = seq;
+        }
+      }
+      setActiveSection(current);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    update();
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [activeTab, sectionSeqs, setActiveSection]);
 
   const handleExportPdf = useCallback(async () => {
     if (!data) return;

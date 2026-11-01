@@ -1,4 +1,4 @@
-"""형제 프로젝트 연동: 사고 사례(Chem_Eng)·근거 조문(EPC engineering)·미국 집행 사건·한국 통합허가 사례(Environment). 모두 CAS 기준."""
+"""형제 프로젝트 연동: 사고 사례(Chem_Eng)·근거 조문(EPC engineering)·미국 집행 사건·텍사스 배출사고·한국 통합허가 사례(Environment). 모두 CAS 기준."""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ from backend.integrations.echo_enforcement_store import get_enforcement_by_cas
 from backend.integrations.epc_regulation_text import find_provisions
 from backend.integrations.incident_store import get_incidents_by_cas
 from backend.integrations.kr_permit_context_store import get_permit_context_by_cas
+from backend.integrations.tceq_event_store import get_tceq_events_by_cas
 
 router = APIRouter()
 _CAS_RE = re.compile(r"^\d{2,7}-\d{2}-\d$")
@@ -38,6 +39,12 @@ def provisions(cas_no: str, country: str = Query(..., min_length=2, max_length=5
 def enforcement(cas_no: str, limit: int = Query(6, ge=1, le=20)):
     """미국 EPA 집행 사건(ECHO)."""
     return get_enforcement_by_cas(_cas(cas_no), limit=limit)
+
+
+@router.get("/tceq-events/{cas_no}")
+def tceq_events(cas_no: str, limit: int = Query(6, ge=1, le=20)):
+    """텍사스 TCEQ 대기 배출사고 보고(공개 자료, Environment 가공본): 건수·연도·신고 배출량·배출점 종류 분포·최근 사고."""
+    return get_tceq_events_by_cas(_cas(cas_no), limit=limit)
 
 
 @router.get("/kr-permit-context/{cas_no}")

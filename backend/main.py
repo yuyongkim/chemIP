@@ -1,12 +1,10 @@
-from collections import defaultdict, deque
-from datetime import datetime, timezone
-from threading import Lock
-from time import time
-from uuid import uuid4
+"""ChemIP FastAPI entry point: builds ``app`` from backend/server/* and the router table. No request logic here.
 
-from fastapi import FastAPI, Request
+Middleware is registered in the original order (Starlette runs the last registered one first), so request
+handling is unchanged. Run: uvicorn backend.main:app
+"""
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 import logging
 import os
 import sys
@@ -21,15 +19,24 @@ logger.info(f"CWD: {os.getcwd()}")
 # Add project root to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from backend.api.routes import ai, chemicals, docs, drugs, feedback, guides, handlers, integrations, patents, regulations, trade, usage
-from backend.config.settings import settings
-from backend.core.client_ip import client_ip
-from backend.usage.middleware import count_usage
+from backend.config.settings import settings  # noqa: E402
+from backend.server import health  # noqa: E402
+from backend.server.errors import global_exception_handler  # noqa: E402
+from backend.server.rate_limit import _get_client_ip, _rate_limit_buckets, _rate_limit_lock, apply_rate_limit  # noqa: E402,F401
+from backend.server.request_log import _audit_logger, assign_request_id, log_request_summary  # noqa: E402,F401
+from backend.server.routers import API_ROUTERS  # noqa: E402
+from backend.server.security import (  # noqa: E402,F401  (old names kept importable from backend.main)
+    _ALLOWED_ORIGINS,
+    _LOCALHOST_PREFIXES,
+    _PUBLIC_PATHS,
+    _is_localhost,
+    apply_api_key_auth,
+    apply_csrf_check,
+    apply_security_headers,
+)
+from backend.usage.middleware import count_usage  # noqa: E402
 
 app = FastAPI(title="ChemIP Platform API")
-
-_rate_limit_lock = Lock()
-_rate_limit_buckets: dict[str, deque[float]] = defaultdict(deque)
 
 # Configure CORS — restrict methods and headers
 app.add_middleware(
@@ -40,271 +47,19 @@ app.add_middleware(
     allow_headers=["x-api-key", "x-request-id", "content-type"],
 )
 
-# Audit logger (separate from request log — structured for compliance)
-# Wrapped defensively: a filesystem hiccup while attaching the file handler
-# must never crash import/startup (which would trip PM2's restart limit and
-# take the backend permanently offline). Fall back to console logging instead.
-_audit_logger = logging.getLogger("chemip.audit")
-_audit_logger.setLevel(logging.INFO)
-try:
-    _audit_log_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logs")
-    os.makedirs(_audit_log_dir, exist_ok=True)
-    _audit_handler = logging.FileHandler(os.path.join(_audit_log_dir, "audit.log"))
-    _audit_handler.setFormatter(logging.Formatter("%(message)s"))
-    _audit_logger.addHandler(_audit_handler)
-except Exception:  # pragma: no cover - defensive startup guard
-    logger.exception("Failed to initialise audit file logger; continuing without it")
+for _middleware in (assign_request_id, apply_csrf_check, apply_api_key_auth, apply_security_headers,
+                    apply_rate_limit, log_request_summary):
+    app.middleware("http")(_middleware)
 
-
-_LOCALHOST_PREFIXES = ("127.0.0.1", "::1", "localhost")
-
-# Public paths that never require API key auth
-_PUBLIC_PATHS = {"/", "/health"}
-
-
-def _get_client_ip(request: Request) -> str:
-    """Client address for rate limiting and logs — see backend/core/client_ip.py."""
-    return client_ip(request)
-
-
-def _is_localhost(request: Request) -> bool:
-    """Check if the TCP connection originates from localhost.
-
-    Next.js rewrite proxy connects from 127.0.0.1 but forwards
-    Cloudflare headers (cf-connecting-ip, x-forwarded-for).
-    We trust the TCP-level client IP, not the headers, for auth bypass.
-    """
-    host = request.client.host if request.client else ""
-    return any(host.startswith(p) for p in _LOCALHOST_PREFIXES) or host == "testclient"
-
-
-@app.middleware("http")
-async def assign_request_id(request: Request, call_next):
-    request_id = request.headers.get("x-request-id") or str(uuid4())
-    request.state.request_id = request_id
-    response = await call_next(request)
-    response.headers["x-request-id"] = request_id
-    return response
-
-
-_ALLOWED_ORIGINS = {"https://chemip.yule.pics", "http://localhost:7000", "http://127.0.0.1:7000"}
-
-
-@app.middleware("http")
-async def apply_csrf_check(request: Request, call_next):
-    """Block cross-origin state-changing requests without valid Origin."""
-    if request.method in {"GET", "HEAD", "OPTIONS"}:
-        return await call_next(request)
-    if _is_localhost(request):
-        return await call_next(request)
-    origin = request.headers.get("origin", "")
-    if origin and origin not in _ALLOWED_ORIGINS:
-        return JSONResponse(
-            status_code=403,
-            content={"code": "CSRF_REJECTED", "message": "Cross-origin request blocked"},
-        )
-    return await call_next(request)
-
-
-@app.middleware("http")
-async def apply_api_key_auth(request: Request, call_next):
-    """Require API key for non-localhost requests to /api/* endpoints."""
-    if request.method == "OPTIONS":
-        return await call_next(request)
-
-    if request.url.path in _PUBLIC_PATHS:
-        return await call_next(request)
-
-    if _is_localhost(request):
-        return await call_next(request)
-
-    api_key = settings.CHEMIP_API_KEY
-    if not api_key:
-        # No key configured = auth disabled (dev mode)
-        return await call_next(request)
-
-    provided = request.headers.get("x-api-key") or request.query_params.get("api_key")
-    if provided != api_key:
-        client_host = request.client.host if request.client else "none"
-        logger.warning("AUTH_REJECTED path=%s client_host=%s is_local=%s cf_ip=%s",
-                       request.url.path, client_host, _is_localhost(request),
-                       request.headers.get("cf-connecting-ip", ""))
-        return JSONResponse(
-            status_code=401,
-            content={"code": "UNAUTHORIZED", "message": "Invalid or missing API key"},
-        )
-
-    return await call_next(request)
-
-
-@app.middleware("http")
-async def apply_security_headers(request: Request, call_next):
-    response = await call_next(request)
-    response.headers["X-Content-Type-Options"] = "nosniff"
-    response.headers["X-Frame-Options"] = "DENY"
-    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
-    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
-    response.headers["X-Permitted-Cross-Domain-Policies"] = "none"
-    response.headers["Content-Security-Policy"] = (
-        "default-src 'self'; "
-        "img-src 'self' data: https:; "
-        "style-src 'self' 'unsafe-inline'; "
-        "script-src 'self'; "
-        "connect-src 'self' https://chemip.yule.pics; "
-        "frame-ancestors 'none';"
-    )
-    return response
-
-
-@app.middleware("http")
-async def apply_rate_limit(request: Request, call_next):
-    if not settings.RATE_LIMIT_ENABLED:
-        return await call_next(request)
-
-    if request.url.path in {"/health"}:
-        return await call_next(request)
-
-    key = _get_client_ip(request)
-    now = time()
-    window = max(1, settings.RATE_LIMIT_WINDOW_SECONDS)
-    limit = max(1, settings.RATE_LIMIT_MAX_REQUESTS)
-
-    with _rate_limit_lock:
-        bucket = _rate_limit_buckets[key]
-        while bucket and now - bucket[0] > window:
-            bucket.popleft()
-        if len(bucket) >= limit:
-            return JSONResponse(
-                status_code=429,
-                content={
-                    "code": "RATE_LIMIT_EXCEEDED",
-                    "message": "Too many requests",
-                    "detail": f"Exceeded {limit} requests in {window}s window",
-                    "path": request.url.path,
-                },
-            )
-        bucket.append(now)
-
-    return await call_next(request)
-
-
-@app.middleware("http")
-async def log_request_summary(request: Request, call_next):
-    started = time()
-    response = await call_next(request)
-    elapsed_ms = round((time() - started) * 1000, 2)
-    request_id = getattr(request.state, "request_id", "") or request.headers.get("x-request-id", "")
-    ip = _get_client_ip(request)
-    logger.info(
-        "request_id=%s method=%s path=%s status=%s duration_ms=%s ip=%s",
-        request_id,
-        request.method,
-        request.url.path,
-        response.status_code,
-        elapsed_ms,
-        ip,
-    )
-    # Audit log for API calls (structured JSON line)
-    if request.url.path.startswith("/api/"):
-        import json
-        _audit_logger.info(json.dumps({
-            "ts": datetime.now(timezone.utc).isoformat(),
-            "rid": request_id,
-            "ip": ip,
-            "method": request.method,
-            "path": request.url.path,
-            "query": str(request.url.query),
-            "status": response.status_code,
-            "ms": elapsed_ms,
-            "ua": request.headers.get("user-agent", "")[:100],
-        }, ensure_ascii=False))
-    return response
-
-@app.exception_handler(Exception)
-async def global_exception_handler(request: Request, exc: Exception):
-    import traceback
-    request_id = getattr(request.state, "request_id", "")
-    logger.error("Unhandled exception [request_id=%s]: %s", request_id, exc)
-    traceback.print_exc()
-    # Sanitise detail to avoid leaking secrets (API keys, DB paths, etc.)
-    detail = type(exc).__name__
-    return JSONResponse(
-        status_code=500,
-        content={
-            "code": "INTERNAL_SERVER_ERROR",
-            "message": "Unhandled server error",
-            "detail": detail,
-            "path": str(request.url.path),
-            "request_id": request_id,
-        },
-    )
+app.exception_handler(Exception)(global_exception_handler)
 
 # Register Routers
-app.include_router(chemicals.router, prefix="/api/chemicals", tags=["Chemicals"])
-app.include_router(patents.router, prefix="/api/patents", tags=["Patents"])
-app.include_router(trade.router, prefix="/api/trade", tags=["Trade"])
-app.include_router(drugs.router, prefix="/api/drugs", tags=["Drugs"])
-app.include_router(guides.router, prefix="/api/guides", tags=["Guides"])
-app.include_router(regulations.router, prefix="/api/regulations", tags=["Regulations"])
-app.include_router(handlers.router, prefix="/api/handlers", tags=["Handlers"])
-app.include_router(integrations.router, prefix="/api/integrations", tags=["Integrations"])
-app.include_router(ai.router, prefix="/api/ai", tags=["AI"])
-app.include_router(docs.router, prefix="/api/docs", tags=["Docs"])
-app.include_router(feedback.router, prefix="/api/feedback", tags=["Feedback"])
-app.include_router(usage.router, prefix="/api/usage", tags=["Usage"])
+for _module, _prefix, _tag in API_ROUTERS:
+    app.include_router(_module.router, prefix=_prefix, tags=[_tag])
 
 # 익명 이용 집계(물질 조회·수출입 규제 조회 횟수만, 개인 정보 없음) — backend/usage/
 app.middleware("http")(count_usage)
 
-
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to ChemIP Platform API"}
-
-
-def _get_git_revision() -> str:
-    """Best-effort short git hash for version tracking."""
-    try:
-        import subprocess
-        return subprocess.check_output(
-            ["git", "rev-parse", "--short", "HEAD"],
-            stderr=subprocess.DEVNULL,
-            timeout=2,
-        ).decode().strip()
-    except Exception:
-        return "unknown"
-
-
-_GIT_REVISION = _get_git_revision()
-
-
-@app.get("/health")
-def health_check():
-    return {
-        "status": "ok",
-        "service": "chemip-backend",
-        "version": _GIT_REVISION,
-        "time": datetime.now(timezone.utc).isoformat(),
-    }
-
-
-@app.get("/ready")
-def readiness_check(request: Request):
-    # Only expose detailed checks to localhost
-    if _is_localhost(request):
-        checks = {
-            "kotra_key_configured": bool(settings.KOTRA_SERVICE_KEY),
-            "kipris_key_configured": bool(settings.KIPRIS_API_KEY),
-            "drug_key_configured": bool(settings.DRUG_SERVICE_KEY),
-            "echa_available": True,
-            "comptox_key_configured": bool(settings.COMPTOX_API_KEY),
-            "rate_limit_enabled": settings.RATE_LIMIT_ENABLED,
-        }
-        return {
-            "status": "ready",
-            "checks": checks,
-            "time": datetime.now(timezone.utc).isoformat(),
-        }
-    return {"status": "ready", "time": datetime.now(timezone.utc).isoformat()}
-
+# /, /health, /ready (registered after the API routers, as before)
+app.include_router(health.router)
+_GIT_REVISION = health._GIT_REVISION

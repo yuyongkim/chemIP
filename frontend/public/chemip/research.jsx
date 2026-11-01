@@ -25,7 +25,7 @@ function Research({ setView }) {
   return (
     <div className="paper-wrap">
       <header className="paper-hero">
-        <div className="eyebrow"><span className="dot" style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--accent)", display: "inline-block" }} /> RESEARCH · CHEMIP</div>
+        <div className="eyebrow"><span className="dot rs-dot" /> RESEARCH · CHEMIP</div>
         <h1>One database, <em>five papers.</em></h1>
         <p>ChemIP pulls Korean and international chemical-safety records into one auditable,
            CAS-centered evidence base. Five papers grow out of that base — the platform itself,
@@ -34,7 +34,7 @@ function Research({ setView }) {
            a screen you can open here: each card links to the running view its figures came from.</p>
       </header>
 
-      {loading && <div className="muted" style={{ padding: "40px 0", fontFamily: "var(--font-mono)", fontSize: 13 }}>Loading research summary…</div>}
+      {loading && <Loading text="Loading research summary…" />}
 
       {meta && <>
         <div className="paper-grid">
@@ -68,7 +68,7 @@ function Research({ setView }) {
         <FindingBlock finding={meta.finding} cmp={cmp} />
 
         <SectionHead no="4" eyebrow="SUBMISSION STATUS" title="Where each paper is headed" />
-        <div className="mtable-scroll" style={{ marginTop: 4 }}>
+        <div className="mtable-scroll rs-mt">
           <table className="mtable">
             <thead><tr><th>Paper</th><th>Venue</th><th>Status</th><th>Cost</th><th>Live screen</th></tr></thead>
             <tbody>
@@ -85,7 +85,7 @@ function Research({ setView }) {
           </table>
         </div>
 
-        <div style={{ marginTop: 40, display: "flex", gap: 10, flexWrap: "wrap" }}>
+        <div className="rs-links">
           <button className="btn" onClick={() => setView("benchmark")}><Icon name="spark" size={13} /> Explore the benchmark</button>
           <a className="btn ghost" href="https://github.com/yuyongkim/chemIP" target="_blank" rel="noopener"><Icon name="git" size={13} /> Source &amp; data</a>
         </div>
@@ -102,9 +102,9 @@ function FindingBlock({ finding, cmp }) {
     const setting = "ChemIP hybrid RAG + abstention";
     const p = cmp.matrix.claim_support_precision[setting] || {};
     const pick = [
-      { key: "deepseek-v4-flash (truncated)", label: "flash · 420-token budget", color: "var(--hazard)" },
-      { key: "deepseek-v4-flash", label: "flash · 8,000-token budget", color: "var(--safe)" },
-      { key: "deepseek-v4-pro", label: "pro · unchanged", color: "var(--accent)" },
+      { key: "deepseek-v4-flash (truncated)", label: "flash · 420-token budget", tone: "hazard" },
+      { key: "deepseek-v4-flash", label: "flash · 8,000-token budget", tone: "safe" },
+      { key: "deepseek-v4-pro", label: "pro · unchanged", tone: "accent" },
     ];
     return pick.filter(b => p[b.key] != null).map(b => ({ ...b, val: p[b.key] }));
   }, [cmp]);
@@ -119,12 +119,12 @@ function FindingBlock({ finding, cmp }) {
           {bars.map(b => (
             <div className="fbar" key={b.key}>
               <div className="fb-lab">{b.label}</div>
-              <div className="fb-track"><div className="fb-fill" style={{ width: (b.val * 100) + "%", background: b.color }} /></div>
+              <div className="fb-track"><div className={`fb-fill rs-fill tone-${b.tone}`} style={{ "--w": (b.val * 100) + "%" }} /></div>
               <div className="fb-val">{b.val.toFixed(3)}</div>
             </div>
           ))}
-          <div className="fbar" style={{ background: "transparent", display: "flex", alignItems: "center" }}>
-            <div style={{ fontSize: 11.5, lineHeight: 1.5, color: "color-mix(in oklch, var(--fg-inverse) 62%, transparent)" }}>
+          <div className="fbar rs-fbar-note">
+            <div className="rs-fbar-text">
               Claim-support precision, <b>hybrid retrieval + abstention</b>. The first two bars are the
               same model on the same questions; only the token budget differs.
             </div>

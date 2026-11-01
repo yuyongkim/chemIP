@@ -11,8 +11,26 @@ function tcCountryOptions(jurisdictions) {
   return Object.keys(jurisdictions || {}).filter(c => c !== "KR" && c !== "INTL");
 }
 
+// 화면 언어로 고른 값: 영어 화면은 영어 값이 있으면 영어, 한국어 화면은 한국어 값이 있으면 한국어.
+function tcLocalized(ko, en) {
+  return CHEMIP_LANG === "en" ? (en || ko || "") : (ko || en || "");
+}
+
 function tcCountryName(code) {
-  return code ? (INTL_JURISDICTIONS[code]?.ko || code) : "";
+  const j = code ? INTL_JURISDICTIONS[code] : null;
+  return code ? (j ? tcLocalized(j.ko, j.en) : code) : "";
+}
+
+// 상대국 선택지·섹션 제목용 나라 이름. 한국어 화면은 "미국 · United States", 영어 화면은 영어 이름만.
+function tcCountryLabel(code) {
+  return CHEMIP_LANG === "en" ? tcCountryName(code) : jurisdictionLabel(code);
+}
+
+// 물질 이름(탭 문장·체크리스트 머리). 영어 화면은 영문명을 먼저 쓴다.
+function tcSubstanceName(selected, data) {
+  const ko = selected?.name || data?.substance?.name_ko;
+  const en = selected?.name_en || data?.substance?.name_en;
+  return tcLocalized(ko, en) || data?.cas || "";
 }
 
 // 규칙·인허가 한 건에서 보여 줄 [라벨, 값] 쌍. 값이 빈 칸은 뺀다.
@@ -38,22 +56,46 @@ function tcConditions(matchedBy) {
   return (Array.isArray(matchedBy) ? matchedBy : [matchedBy || {}]).map(m => m?.condition).filter(Boolean);
 }
 
+// 목록 이름·등재 내용을 화면 언어로. 영어 이름표는 한 곳(product_intl_helpers.jsx 의 intlListName·intlDetailText,
+// PRODUCT_LABELS.intl)에 있고, 그 파일이 없으면 응답 값을 그대로 쓴다.
+function tcListingListName(x) {
+  return typeof intlListName === "function" ? intlListName(x) : x.list;
+}
+
+function tcListingDetail(detail) {
+  return typeof intlDetailText === "function" ? intlDetailText(detail) : detail;
+}
+
 // 상대국 등재 내역을 나라+목록 단위로 묶는다.
-// product_intl.jsx 의 groupByRegulation 과 비슷하지만 나라 키가 함께 들어간다(그쪽은 window 에 내보내지 않음).
+// product_intl_helpers.jsx 의 groupByRegulation 과 비슷하지만 나라 키가 함께 들어간다.
 function tcGroupListings(listings) {
   const groups = [];
   const at = {};
   (listings || []).forEach(x => {
     const key = `${x.country}|${x.regulation}`;
-    if (!(key in at)) { at[key] = groups.length; groups.push({ key, country: x.country, list: x.list, source: x.source, details: [] }); }
-    if (x.detail && !groups[at[key]].details.includes(x.detail)) groups[at[key]].details.push(x.detail);
+    if (!(key in at)) { at[key] = groups.length; groups.push({ key, country: x.country, list: tcListingListName(x), source: x.source, details: [] }); }
+    const detail = x.detail ? tcListingDetail(x.detail) : "";
+    if (detail && !groups[at[key]].details.includes(detail)) groups[at[key]].details.push(detail);
   });
   return groups;
 }
 
 // 목록 등재 항목(통제 목록·국내 법령)의 표시 이름.
 function tcEntryName(e) {
+  if (CHEMIP_LANG === "en") return e?.name_en || e?.name || e?.family || e?.name_ko || "";
   return e?.name_ko || e?.name || e?.family || e?.name_en || "";
+}
+
+// 규제 화면에서 노랗게 표시할 낱말: 이 물질의 한글명·영문명·CAS. 목록 항목·조문 발췌·KOTRA 품목명에 같이 쓴다.
+function tcHighlightTerms(data) {
+  const s = data?.substance || {};
+  return [s.name_ko, s.name_en, data?.cas].filter(Boolean);
+}
+
+// 목록 항목 한 줄의 표시 낱말: 물질 공통 낱말 + 그 목록에 실린 이름(예: 스위스 목록의 "Benzol").
+function tcEntryTerms(entry, terms) {
+  const own = entry?.cas && terms.includes(entry.cas) ? tcEntryName(entry) : null;
+  return own ? [...terms, own] : terms;
 }
 
 function tcCustomsCount(rules) {
@@ -68,16 +110,17 @@ function tcQuoteLines(verified) {
     .filter(Boolean);
 }
 
-// 인허가 종류(kind) 표시 글자. 영문 코드(permit·approval …)는 한국어로, 이미 한국어면 그대로.
+// 인허가 종류(kind) 표시 글자. 한국어 화면: 영문 코드(permit·approval …)는 한국어로, 이미 한국어면 그대로.
+// 영어 화면: 영문 코드·한국어 종류 모두 영어로(trade_controls_labels_en.jsx kinds).
 function tcKindLabel(kind) {
   const k = String(kind || "").trim();
   return TRADE_LABELS.kinds[k] || k;
 }
 
-// 종류 글자 → Badge tone ("hazard" | "accent" | "").
+// 종류 글자 → Badge tone ("hazard" | "accent" | ""). 대소문자는 가리지 않는다(영어 화면).
 function tcKindTone(kind) {
-  const label = tcKindLabel(kind);
-  const hit = TRADE_LABELS.kindTones.find(([word]) => label.includes(word));
+  const label = tcKindLabel(kind).toLowerCase();
+  const hit = TRADE_LABELS.kindTones.find(([word]) => label.includes(word.toLowerCase()));
   return hit ? hit[1] : "";
 }
 
@@ -137,5 +180,5 @@ Object.assign(window, {
 
 Object.assign(window, {
   tcSourceReady, tcCountryOptions, tcCountryName, tcFieldRows, tcMatchTags, tcConditions,
-  tcGroupListings, tcEntryName, tcCustomsCount, tcQuoteLines,
+  tcGroupListings, tcEntryName, tcCustomsCount, tcQuoteLines, tcLocalized, tcCountryLabel, tcSubstanceName,
 });

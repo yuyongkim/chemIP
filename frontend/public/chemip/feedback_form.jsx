@@ -47,7 +47,7 @@ function FeedbackForm({ meta, prefill, onDone, onCancel }) {
         <FbField label={F.category} error={fe.category}>
           <div className="seg" role="group" aria-label={F.category}>
             {categories.map(c => (
-              <button type="button" key={c} aria-pressed={values.category === c} onClick={() => setValues(v => ({ ...v, category: c }))}>{c}</button>
+              <button type="button" key={c} aria-pressed={values.category === c} onClick={() => setValues(v => ({ ...v, category: c }))}>{fbValueName(c)}</button>
             ))}
           </div>
         </FbField>
@@ -64,7 +64,7 @@ function FeedbackForm({ meta, prefill, onDone, onCancel }) {
           <FbField label={F.companySize} error={fe.company_size}>
             <select className="fb-input" value={values.company_size} onChange={set("company_size")}>
               <option value="">{F.companySizeNone}</option>
-              {(meta?.company_sizes || []).map(s => <option key={s} value={s}>{s}</option>)}
+              {(meta?.company_sizes || []).map(s => <option key={s} value={s}>{fbValueName(s)}</option>)}
             </select>
           </FbField>
         </div>

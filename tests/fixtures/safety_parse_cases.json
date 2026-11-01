@@ -1,0 +1,530 @@
+{
+ "about": "Shared parity cases for scripts/portal_build (ghs_parse.py, reactive_groups.py) and frontend/public/chemip (ghs_hazard_parse.jsx, compat_core.jsx). Both test suites must reproduce every 'out'. Regenerate only after checking the outputs by hand.",
+ "kosha": [
+  {
+   "in": "인화성 액체 : 구분2|피부 부식성/피부 자극성 : 구분2|심한 눈 손상성/눈 자극성 : 구분2|생식세포 변이원성 : 구분1A|발암성 : 구분1B|특정표적장기 독성(반복 노출) : 구분1|흡인 유해성 : 구분1|만성 수생환경 유해성 : 구분2",
+   "out": [
+    "flam_liq:2",
+    "skin:2",
+    "eye:2",
+    "muta:1A",
+    "carc:1B",
+    "stot_re:1",
+    "asp:1",
+    "aq_chronic:2"
+   ]
+  },
+  {
+   "in": "급성 독성(흡입: 증기) : 구분3|피부 과민성 : 구분1(1A/1B)|특정표적장기 독성(1회 노출) : 구분3(마취영향)|특정표적장기 독성(1회 노출) : 구분3(호흡기 자극)|생식독성 : 수유독성|심한 눈 손상성/눈 자극성 : 구분2A|자료없음",
+   "out": [
+    "acute_inh_vap:3",
+    "skin_sens:1",
+    "stot_se:3N",
+    "stot_se:3R",
+    "lact:1",
+    "eye:2"
+   ]
+  },
+  {
+   "in": "산화성 액체 : 구분1|피부 부식성/피부 자극성 : 구분1|급성 독성(흡입) : 구분1",
+   "out": [
+    "ox_liq:1",
+    "skin:1",
+    "acute_inh:1"
+   ]
+  },
+  {
+   "in": "자기반응성 물질 및 혼합물 : 형식G|폭발성 물질 : 등급1.1|고압가스 : 액화가스|급성 독성(흡입: 분진/미스트) : 구분4|급성 독성(흡입: 가스) : 구분2|급성 독성(경피) : 구분3|생식독성 : 구분1B|폭발성 물질 : 불안정한 폭발성 물질",
+   "out": [
+    "self_react:G",
+    "expl:1.1",
+    "press_gas:액화가스",
+    "acute_inh_dust:4",
+    "acute_inh_gas:2",
+    "acute_dermal:3",
+    "repr:1B",
+    "expl:unst"
+   ]
+  }
+ ],
+ "clp": [
+  {
+   "codes": "Acute Tox. 3 *\nSTOT SE 3\nAquatic Acute1\nLact.",
+   "h": "H331\nH336\nH400\nH362",
+   "out": [
+    "acute_inh:3*",
+    "stot_se:3N",
+    "aq_acute:1",
+    "lact:1"
+   ]
+  },
+  {
+   "codes": "Carc. 1B\nAcute Tox. 2 *\nAcute Tox. 3 *\nSTOT SE 3\nSTOT RE 1\nSkin Irrit. 2\nEye Irrit. 2\nSkin Sens. 1",
+   "h": "H350i\nH330\nH301\nH335\nH372 **\nH315\nH319\nH317",
+   "out": [
+    "carc:1B",
+    "acute_inh:2*",
+    "acute_oral:3*",
+    "stot_se:3R",
+    "stot_re:1",
+    "skin:2",
+    "eye:2",
+    "skin_sens:1"
+   ]
+  },
+  {
+   "codes": "Flam. Gas 1A\nPress. Gas\nOrg. Perox. D\nExpl. 1.1\nWater-react. 1\nSkin Corr. 1A\nEye Dam. 1",
+   "h": "H220\n\nH242\nH201\nH260\nH314\nH318",
+   "out": [
+    "flam_gas:1A",
+    "press_gas:",
+    "org_perox:D",
+    "expl:1.1",
+    "water_react:1",
+    "skin:1A",
+    "eye:1"
+   ]
+  },
+  {
+   "codes": "Acute Tox. 4 *\nAcute Tox. 4 *\nSkin Corr. 1A",
+   "h": "H332\nH302",
+   "out": [
+    "acute_inh:4*",
+    "acute_oral:4*",
+    "skin:1A"
+   ]
+  }
+ ],
+ "scl": [
+  {
+   "in": "Ox. Liq. 1; H271: C ≥ 70.0% ****\nOx. Liq. 2; H272: 50.0% ≤ C < 70.0% ****\n*\nSkin Corr. 1A; H314: C ≥ 70.0%\nSkin Corr. 1B; H314: 50.0% ≤ C < 70.0%\nSkin Irrit. 2; H315: 35.0% ≤ C < 50.0%\nEye Dam. 1; H318: 8.0% ≤ C < 50.0%\nEye Irrit. 2; H319: 5.0% ≤ C < 8.0%\nSTOT SE 3; H335: C ≥ 35.0%",
+   "out": {
+    "scl": [
+     [
+      "ox_liq",
+      "1",
+      70.0
+     ],
+     [
+      "ox_liq",
+      "2",
+      50.0
+     ],
+     [
+      "skin",
+      "1A",
+      70.0
+     ],
+     [
+      "skin",
+      "1B",
+      50.0
+     ],
+     [
+      "skin",
+      "2",
+      35.0
+     ],
+     [
+      "eye",
+      "1",
+      8.0
+     ],
+     [
+      "eye",
+      "2",
+      5.0
+     ],
+     [
+      "stot_se",
+      "3R",
+      35.0
+     ]
+    ],
+    "ate": {},
+    "m": []
+   }
+  },
+  {
+   "in": "inhalation: ATE = 0.27 mg/L dusts or mists\ndermal: ATE = 311.0 mg/kg bw\noral: ATE = 125.0 mg/kg bw\nSkin Sens. 1A; H317: C ≥ 0.0015%\nM = 100\nM = 100",
+   "out": {
+    "scl": [
+     [
+      "skin_sens",
+      "1A",
+      0.0015
+     ]
+    ],
+    "ate": {
+     "dust": 0.27,
+     "dermal": 311.0,
+     "oral": 125.0
+    },
+    "m": [
+     100.0,
+     100.0
+    ]
+   }
+  },
+  {
+   "in": "Carc 1B; H350: C ≥ ,01 %\nSTOT RE 1; : C ≥ ,1 %\nSTOT RE 2; H373: ,01 % ≤ C < ,1 %",
+   "out": {
+    "scl": [
+     [
+      "carc",
+      "1B",
+      0.01
+     ],
+     [
+      "stot_re",
+      "1",
+      0.1
+     ],
+     [
+      "stot_re",
+      "2",
+      0.01
+     ]
+    ],
+    "ate": {},
+    "m": []
+   }
+  },
+  {
+   "in": "inhalation:\nATE = 7,6 mg/L (vapour)\noral:\nATE=1 000 mg/kg bw\nSTOT SE 3; H335: C < 10.0%",
+   "out": {
+    "scl": [],
+    "ate": {
+     "vapour": 7.6,
+     "oral": 1000.0
+    },
+    "m": []
+   }
+  },
+  {
+   "in": "inhalation: ATE = 100.0 ppmV gases\noral: ATE = 500.0 mg/kg bw",
+   "out": {
+    "scl": [],
+    "ate": {
+     "gas": 100.0,
+     "oral": 500.0
+    },
+    "m": []
+   }
+  }
+ ],
+ "m_factors": [
+  {
+   "hazards": [
+    "aq_acute:1",
+    "aq_chronic:1"
+   ],
+   "m": [
+    100,
+    10
+   ],
+   "out": {
+    "acute": 100,
+    "chronic": 10
+   }
+  },
+  {
+   "hazards": [
+    "aq_acute:1",
+    "aq_chronic:1"
+   ],
+   "m": [
+    10
+   ],
+   "out": {
+    "acute": 10,
+    "chronic": 10
+   }
+  },
+  {
+   "hazards": [
+    "aq_chronic:1"
+   ],
+   "m": [
+    1000
+   ],
+   "out": {
+    "chronic": 1000
+   }
+  }
+ ],
+ "reactive": [
+  {
+   "hazards": [
+    "ox_liq:1",
+    "skin:1",
+    "acute_inh:1"
+   ],
+   "names": [
+    "질산",
+    "Nitric acid"
+   ],
+   "ph": null,
+   "s14": "8",
+   "s15": "6류 질산 (300kg)",
+   "euh": [],
+   "out": [
+    [
+     "kr",
+     "6",
+     "s15:6류 질산 (300kg)"
+    ],
+    [
+     "un",
+     "8",
+     "s14:8"
+    ],
+    [
+     "ghs",
+     "OX",
+     "ox_liq:1"
+    ],
+    [
+     "ghs",
+     "AC",
+     "name"
+    ]
+   ]
+  },
+  {
+   "hazards": [
+    "skin:1",
+    "met_corr:1",
+    "acute_dermal:4"
+   ],
+   "names": [
+    "수산화나트륨",
+    "Sodium hydroxide"
+   ],
+   "ph": 14.0,
+   "s14": "8",
+   "s15": "해당없음",
+   "euh": [],
+   "out": [
+    [
+     "un",
+     "8",
+     "s14:8"
+    ],
+    [
+     "ghs",
+     "BA",
+     "ph:14"
+    ]
+   ]
+  },
+  {
+   "hazards": [
+    "flam_liq:2",
+    "eye:2",
+    "stot_se:3N"
+   ],
+   "names": [
+    "아세톤",
+    "Acetone"
+   ],
+   "ph": null,
+   "s14": "3",
+   "s15": "제1석유류 수용성액체 (400리터)",
+   "euh": [],
+   "out": [
+    [
+     "kr",
+     "4",
+     "s15:제1석유류 수용성액체 (400리터)"
+    ],
+    [
+     "un",
+     "3",
+     "s14:3"
+    ],
+    [
+     "ghs",
+     "FL",
+     "flam_liq:2"
+    ]
+   ]
+  },
+  {
+   "hazards": [
+    "skin:1B"
+   ],
+   "names": [
+    "Triethylamine"
+   ],
+   "ph": null,
+   "s14": "3(8)",
+   "s15": "",
+   "euh": [],
+   "out": [
+    [
+     "un",
+     "3",
+     "s14:3(8)"
+    ],
+    [
+     "un",
+     "8",
+     "s14:3(8) (sub)"
+    ],
+    [
+     "ghs",
+     "BA",
+     "name"
+    ]
+   ]
+  },
+  {
+   "hazards": [
+    "skin:1A"
+   ],
+   "names": [
+    "mystery corrosive"
+   ],
+   "ph": null,
+   "s14": "8(부위험성6.1)",
+   "s15": "",
+   "euh": [
+    "EUH032"
+   ],
+   "out": [
+    [
+     "un",
+     "8",
+     "s14:8(부위험성6.1)"
+    ],
+    [
+     "un",
+     "6.1",
+     "s14:8(부위험성6.1) (sub)"
+    ],
+    [
+     "ghs",
+     "CO",
+     "skin:1A"
+    ],
+    [
+     "ghs",
+     "AG",
+     "EUH032"
+    ]
+   ]
+  },
+  {
+   "hazards": [
+    "water_react:1",
+    "pyr_sol:1"
+   ],
+   "names": [
+    "Sodium"
+   ],
+   "ph": null,
+   "s14": "4.3",
+   "s15": "3류 금속나트륨 (10kg)",
+   "euh": [
+    "EUH029"
+   ],
+   "out": [
+    [
+     "kr",
+     "3",
+     "s15:3류 금속나트륨 (10kg)"
+    ],
+    [
+     "un",
+     "4.3",
+     "s14:4.3"
+    ],
+    [
+     "ghs",
+     "PY",
+     "pyr_sol:1"
+    ],
+    [
+     "ghs",
+     "WR",
+     "water_react:1"
+    ],
+    [
+     "ghs",
+     "WT",
+     "EUH029"
+    ]
+   ]
+  },
+  {
+   "hazards": [],
+   "names": [
+    "Water"
+   ],
+   "ph": 7.0,
+   "s14": "해당없음",
+   "s15": "해당없음(비위험물)",
+   "euh": [],
+   "out": []
+  },
+  {
+   "hazards": [
+    "org_perox:D"
+   ],
+   "names": [
+    "dibenzoyl peroxide"
+   ],
+   "ph": null,
+   "s14": "5.2",
+   "s15": "5류 유기과산화물 (10kg)",
+   "euh": [],
+   "out": [
+    [
+     "kr",
+     "5",
+     "s15:5류 유기과산화물 (10kg)"
+    ],
+    [
+     "un",
+     "5.2",
+     "s14:5.2"
+    ],
+    [
+     "ghs",
+     "OP",
+     "org_perox:D"
+    ]
+   ]
+  },
+  {
+   "hazards": [
+    "expl:1.1"
+   ],
+   "names": [
+    "TNT"
+   ],
+   "ph": null,
+   "s14": "1.1D",
+   "s15": "제5류 니트로화합물",
+   "euh": [],
+   "out": [
+    [
+     "kr",
+     "5",
+     "s15:제5류 니트로화합물"
+    ],
+    [
+     "un",
+     "1",
+     "s14:1.1D"
+    ],
+    [
+     "ghs",
+     "EX",
+     "expl:1.1"
+    ]
+   ]
+  }
+ ]
+}

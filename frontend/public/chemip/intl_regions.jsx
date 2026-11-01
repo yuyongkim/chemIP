@@ -29,9 +29,16 @@ const INTL_JURISDICTIONS = {
   INTL: { ko: "국제협약", en: "International conventions", iso: [] },
 };
 
-function jurisdictionLabel(code) {
+// Name in the screen language (ko | en, lang.jsx). Unknown codes stay as the code.
+function jurisdictionName(code) {
   const j = INTL_JURISDICTIONS[code];
-  return j ? `${j.ko} · ${j.en}` : code;
+  return j ? tr(j.ko, j.en) : code;
 }
 
-Object.assign(window, { INTL_JURISDICTIONS, jurisdictionLabel });
+// Button / heading label: "한국 · Korea" in Korean, just "Korea" in English.
+function jurisdictionLabel(code) {
+  const j = INTL_JURISDICTIONS[code];
+  return j ? tr(`${j.ko} · ${j.en}`, j.en) : code;
+}
+
+Object.assign(window, { INTL_JURISDICTIONS, jurisdictionName, jurisdictionLabel });

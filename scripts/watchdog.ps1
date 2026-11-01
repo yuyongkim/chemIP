@@ -23,7 +23,9 @@ if ((Get-Item $log -ErrorAction SilentlyContinue).Length -gt 5MB) { Move-Item $l
 
 # 1) 순수 HTTP 점검만 수행한다 (창 안 뜸).
 $backend  = Probe 'http://127.0.0.1:7011/health'
-$frontend = Probe 'http://127.0.0.1:7000/'
+# 2026-10-28: '/' 는 /chemip/index.html(307) -> /chemip(308) 로 넘어가는데 PowerShell 5.1 이 308 을 따라가지 못해
+# 정상인데도 FAIL 로 보고 5분마다 재시작했다. 화면 주소를 직접 점검한다.
+$frontend = Probe 'http://127.0.0.1:7000/chemip'
 
 # 2) 하나라도 죽었을 때만 PM2 에 손댄다.
 if ($backend -ne 200 -or $frontend -ne 200) {

@@ -13,6 +13,8 @@
 | `build_global_index.py` | 글로벌 특허 인덱스 생성 (140GB+) |
 | `build_uspto_index.py` | USPTO 특허 인덱스 생성 |
 | `rebuild_fts.py` | Full-Text Search 인덱스 재구축 |
+| `search_synonyms/build_synonyms.py` | 물질 검색 동의어 `backend/data/search/synonyms.jsonl` 생성 (NCIS·K-REACH·KISCHEM 이름 + 출처 있는 보충 목록) |
+| `substance_search_benchmark/` | 흔한 물질 검색 정확도 측정 (KCIA·사고대비물질·산안법·시드, 자세한 것은 그 폴더 README) |
 | `verify_global_index.py` | 글로벌 인덱스 검증 |
 
 ### 📥 데이터 수집 (Fetching)

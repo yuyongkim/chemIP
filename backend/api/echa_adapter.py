@@ -9,6 +9,8 @@ Endpoint layout (reverse-engineered from ECHA CHEM Angular SPA):
     /api-dossier-list/v1/dossier      — REACH dossier list
     /api-registrants/v1/registrants   — registrant companies
     /api-cnl-inventory/harmonized/    — CLP harmonised classification
+
+Response parsing: backend/api/echa_parsing.py. Error handling: backend/api/adapter_support.py.
 """
 
 from __future__ import annotations
@@ -18,6 +20,8 @@ from typing import Any, Dict
 
 import requests
 
+from backend.api.adapter_support import ErrorTrackingMixin
+from backend.api.echa_parsing import REACH_LIST_LABELS, first_value, normalize_search_results, reach_status
 from backend.api.http_client import safe_get
 from backend.config.settings import settings
 
@@ -30,19 +34,20 @@ _REGISTRANTS = f"{_BASE}/api-registrants/v1/registrants"
 _CLP_HARMONIZED = f"{_BASE}/api-cnl-inventory/harmonized"
 
 
-class EchaAdapter:
+class EchaAdapter(ErrorTrackingMixin):
     """Client for ECHA CHEM public substance data (no auth required)."""
+
+    _error_label = "ECHA"
+
+    # Old private names, kept for callers that used them.
+    _first = staticmethod(first_value)
+    _normalize_search_results = staticmethod(normalize_search_results)
+    _reach_status = staticmethod(reach_status)
+    _REACH_LIST_LABELS = REACH_LIST_LABELS
 
     def __init__(self, timeout: int | None = None):
         self.timeout = timeout or max(settings.HTTP_TIMEOUT_SECONDS, 15)
         self.last_error: str | None = None
-
-    def _clear_error(self) -> None:
-        self.last_error = None
-
-    def _set_error(self, message: str) -> None:
-        self.last_error = message
-        logger.warning("ECHA API issue: %s", message)
 
     def _get(self, url: str, params: dict[str, Any] | None = None) -> requests.Response:
         return safe_get(
@@ -51,6 +56,21 @@ class EchaAdapter:
             headers={"Accept": "application/json"},
             timeout=self.timeout,
         )
+
+    def _get_json(self, url: str, params: dict[str, Any] | None = None) -> Any:
+        resp = self._get(url, params)
+        resp.raise_for_status()
+        return resp.json()
+
+    def _list_call(self, url: str, params: dict[str, Any], *, label: str, noun: str, rml_id: str, timeout_message: str,
+                   failure_log: str) -> Dict[str, Any]:
+        """GET a paged ECHA list endpoint and answer {"status", "data": items, "total": len(items)}."""
+        def call() -> Dict[str, Any]:
+            items = self._get_json(url, params).get("items", [])
+            logger.info("ECHA %s for %s: %d %s", label, rml_id, len(items), noun)
+            return {"status": "success", "data": items, "total": len(items)}
+
+        return self._guarded(call, timeout_message=timeout_message, connection_prefix="ECHA", failure_log=(failure_log, rml_id))
 
     # ------------------------------------------------------------------
     # Public methods
@@ -77,27 +97,15 @@ class EchaAdapter:
             "pageSize": min(max(1, page_size), 100),
         }
 
-        try:
-            resp = self._get(_SUBSTANCE_SEARCH, params)
-            resp.raise_for_status()
-            payload = resp.json()
-
-            items = self._normalize_search_results(payload)
-            state = payload.get("state", {})
-            total = state.get("totalItems", len(items))
+        def call() -> Dict[str, Any]:
+            payload = self._get_json(_SUBSTANCE_SEARCH, params)
+            items = normalize_search_results(payload)
+            total = payload.get("state", {}).get("totalItems", len(items))
             logger.info("ECHA substance search '%s': %d results", query, total)
             return {"status": "success", "data": items, "total": total}
 
-        except requests.Timeout:
-            self._set_error("Request timeout")
-            return {"status": "error", "message": "ECHA request timeout"}
-        except requests.ConnectionError as exc:
-            self._set_error(f"Connection error: {exc}")
-            return {"status": "error", "message": f"ECHA connection error: {exc}"}
-        except Exception as exc:
-            self._set_error(f"Unexpected error: {exc}")
-            logger.exception("ECHA search failed for '%s'", query)
-            return {"status": "error", "message": str(exc)}
+        return self._guarded(call, timeout_message="ECHA request timeout", connection_prefix="ECHA",
+                             failure_log=("ECHA search failed for '%s'", query))
 
     def get_dossier_list(self, rml_id: str) -> Dict[str, Any]:
         """Retrieve REACH registration dossiers for a substance.
@@ -108,59 +116,18 @@ class EchaAdapter:
         self._clear_error()
         if not rml_id:
             return {"status": "error", "message": "Missing rml_id"}
-
-        params = {
-            "rmlId": rml_id,
-            "legislation": "REACH",
-            "pageIndex": 1,
-            "pageSize": 100,
-        }
-
-        try:
-            resp = self._get(_DOSSIER_LIST, params)
-            resp.raise_for_status()
-            payload = resp.json()
-            items = payload.get("items", [])
-            logger.info("ECHA dossier list for %s: %d dossiers", rml_id, len(items))
-            return {"status": "success", "data": items, "total": len(items)}
-
-        except requests.Timeout:
-            self._set_error("Request timeout")
-            return {"status": "error", "message": "ECHA dossier request timeout"}
-        except requests.ConnectionError as exc:
-            self._set_error(f"Connection error: {exc}")
-            return {"status": "error", "message": f"ECHA connection error: {exc}"}
-        except Exception as exc:
-            self._set_error(f"Unexpected error: {exc}")
-            logger.exception("ECHA dossier list failed for %s", rml_id)
-            return {"status": "error", "message": str(exc)}
+        params = {"rmlId": rml_id, "legislation": "REACH", "pageIndex": 1, "pageSize": 100}
+        return self._list_call(_DOSSIER_LIST, params, label="dossier list", noun="dossiers", rml_id=rml_id,
+                               timeout_message="ECHA dossier request timeout", failure_log="ECHA dossier list failed for %s")
 
     def get_registrants(self, rml_id: str) -> Dict[str, Any]:
         """Get companies that registered a substance under REACH."""
         self._clear_error()
         if not rml_id:
             return {"status": "error", "message": "Missing rml_id"}
-
         params = {"rmlId": rml_id, "pageIndex": 1, "pageSize": 100}
-
-        try:
-            resp = self._get(_REGISTRANTS, params)
-            resp.raise_for_status()
-            payload = resp.json()
-            items = payload.get("items", [])
-            logger.info("ECHA registrants for %s: %d entries", rml_id, len(items))
-            return {"status": "success", "data": items, "total": len(items)}
-
-        except requests.Timeout:
-            self._set_error("Request timeout")
-            return {"status": "error", "message": "ECHA registrant request timeout"}
-        except requests.ConnectionError as exc:
-            self._set_error(f"Connection error: {exc}")
-            return {"status": "error", "message": f"ECHA connection error: {exc}"}
-        except Exception as exc:
-            self._set_error(f"Unexpected error: {exc}")
-            logger.exception("ECHA registrants failed for %s", rml_id)
-            return {"status": "error", "message": str(exc)}
+        return self._list_call(_REGISTRANTS, params, label="registrants", noun="entries", rml_id=rml_id,
+                               timeout_message="ECHA registrant request timeout", failure_log="ECHA registrants failed for %s")
 
     def get_clp_classification(self, rml_id: str) -> Dict[str, Any]:
         """Look up harmonised CLP classification for a substance.
@@ -172,146 +139,25 @@ class EchaAdapter:
         if not rml_id:
             return {"status": "error", "message": "Missing rml_id"}
 
-        url = f"{_CLP_HARMONIZED}/{rml_id}/classifications"
-
-        try:
-            resp = self._get(url)
-            resp.raise_for_status()
-            payload = resp.json()
-
+        def call() -> Dict[str, Any]:
+            payload = self._get_json(f"{_CLP_HARMONIZED}/{rml_id}/classifications")
             classifications = payload if isinstance(payload, list) else payload.get("items", [])
             logger.info("ECHA CLP for %s: %d classifications", rml_id, len(classifications))
             return {"status": "success", "data": classifications, "total": len(classifications)}
 
-        except requests.Timeout:
-            self._set_error("Request timeout")
-            return {"status": "error", "message": "ECHA CLP request timeout"}
-        except requests.ConnectionError as exc:
-            self._set_error(f"Connection error: {exc}")
-            return {"status": "error", "message": f"ECHA connection error: {exc}"}
-        except Exception as exc:
-            self._set_error(f"Unexpected error: {exc}")
-            logger.exception("ECHA CLP lookup failed for %s", rml_id)
-            return {"status": "error", "message": str(exc)}
+        return self._guarded(call, timeout_message="ECHA CLP request timeout", connection_prefix="ECHA",
+                             failure_log=("ECHA CLP lookup failed for %s", rml_id))
+
+    def _clp_entry(self, kind: str, classification_id: str) -> Dict[str, Any]:
+        self._clear_error()
+        if not classification_id:
+            return {"status": "error", "message": "Missing classification_id"}
+        return self._guarded(lambda: {"status": "success", "data": self._get_json(f"{_CLP_HARMONIZED}/{kind}/{classification_id}")})
 
     def get_clp_labelling(self, classification_id: str) -> Dict[str, Any]:
         """Get hazard statements and signal word for a classification entry."""
-        self._clear_error()
-        if not classification_id:
-            return {"status": "error", "message": "Missing classification_id"}
-
-        url = f"{_CLP_HARMONIZED}/labelling/{classification_id}"
-
-        try:
-            resp = self._get(url)
-            resp.raise_for_status()
-            data = resp.json()
-            return {"status": "success", "data": data}
-
-        except Exception as exc:
-            self._set_error(f"Unexpected error: {exc}")
-            return {"status": "error", "message": str(exc)}
+        return self._clp_entry("labelling", classification_id)
 
     def get_clp_pictograms(self, classification_id: str) -> Dict[str, Any]:
         """Get GHS pictogram codes for a classification entry."""
-        self._clear_error()
-        if not classification_id:
-            return {"status": "error", "message": "Missing classification_id"}
-
-        url = f"{_CLP_HARMONIZED}/pictograms/{classification_id}"
-
-        try:
-            resp = self._get(url)
-            resp.raise_for_status()
-            data = resp.json()
-            return {"status": "success", "data": data}
-
-        except Exception as exc:
-            self._set_error(f"Unexpected error: {exc}")
-            return {"status": "error", "message": str(exc)}
-
-    # ------------------------------------------------------------------
-    # Private helpers
-    # ------------------------------------------------------------------
-
-    @staticmethod
-    def _first(value: Any) -> str:
-        """Return the first meaningful string from a list or scalar."""
-        if isinstance(value, list):
-            for v in value:
-                s = str(v).strip()
-                if s and s != "-":
-                    return s
-            return ""
-        return str(value).strip() if value else ""
-
-    @staticmethod
-    def _normalize_search_results(payload: Any) -> list[dict[str, Any]]:
-        """Extract a flat list from ECHA's substance search response."""
-        raw = []
-        if isinstance(payload, dict):
-            raw = payload.get("items", payload.get("results", []))
-        elif isinstance(payload, list):
-            raw = payload
-
-        if isinstance(raw, dict):
-            raw = [raw]
-
-        first = EchaAdapter._first
-
-        out: list[dict[str, Any]] = []
-        for item in raw:
-            if not isinstance(item, dict):
-                continue
-
-            idx = item.get("substanceIndex", {})
-            rml_id = idx.get("rmlId", "")
-            name = idx.get("rmlName", "") or first(idx.get("ecName", []))
-            cas = idx.get("rmlCas", "") or first(idx.get("casNumber", []))
-            ec = idx.get("rmlEc", "") or first(idx.get("ecNumber", []))
-            iupac = idx.get("rmlIupac", "") or first(idx.get("iupacName", []))
-            formula = idx.get("rmlMolFormula", "") or first(idx.get("molFormula", []))
-            index_no = first(idx.get("indexNumber", []))
-            smiles = idx.get("rmlSmiles", "") or first(idx.get("smiles", []))
-
-            # Regulatory processes — substanceIndex 안에 문자열 코드 배열로 들어있다
-            # (이전엔 item 최상위에서 dict 로 찾아 항상 비어 있었음, 2026-09-28 수정).
-            processes = idx.get("regulatoryProcesses", []) or []
-            if not isinstance(processes, list):
-                processes = []
-            process_codes = [str(p) for p in processes]
-            reach_status = EchaAdapter._reach_status(process_codes)
-
-            out.append({
-                "rml_id": rml_id,
-                "name": name,
-                "iupac_name": iupac,
-                "cas_number": cas,
-                "ec_number": ec,
-                "molecular_formula": formula,
-                "index_number": index_no,
-                "smiles": smiles,
-                "tonnage_band": idx.get("tonnageBand", "") or item.get("tonnageBand", ""),
-                "regulatory_processes": process_codes,
-                "reach_status": reach_status,
-                "source": "ECHA",
-            })
-        return out
-
-    # REACH 핵심 규제 리스트 코드 → 사람이 읽는 라벨
-    _REACH_LIST_LABELS = {
-        "SVHC_CANDIDATE_LIST": "SVHC 후보목록 (Candidate List)",
-        "ANX_14_AUTHORISATION_LIST": "인가대상 (REACH Annex XIV)",
-        "RESTRICTIONS_ANX_17": "제한물질 (REACH Annex XVII)",
-        "REG_REGISTERED": "REACH 등록",
-    }
-
-    @staticmethod
-    def _reach_status(codes: list[str]) -> list[dict[str, str]]:
-        """regulatoryProcesses 코드 목록에서 REACH 4대 상태만 뽑아 라벨링."""
-        code_set = set(codes)
-        return [
-            {"code": c, "label": lbl}
-            for c, lbl in EchaAdapter._REACH_LIST_LABELS.items()
-            if c in code_set
-        ]
+        return self._clp_entry("pictograms", classification_id)

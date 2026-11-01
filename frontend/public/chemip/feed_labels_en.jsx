@@ -1,0 +1,71 @@
+// Incident feed screen labels in English (same shape as FEED_LABELS_KO) and the FEED_LABELS the screen reads.
+
+const FEED_LABELS_EN = {
+  title: "Incident feed",
+  titleEn: "Incident feed",
+  intro: "Chemical incident investigations, records and recent press coverage in one place. Records come from the US CSB and EPA RMP, the EU eMARS, and Korea's KOSHA and National Institute of Chemical Safety; press items show only the headline and a link to the original. Click a substance to open its incident panel.",
+  loading: "Loading…",
+  unavailable: "The incident feed data is not available yet. Please try again shortly.",
+  error: "Could not load the feed.",
+  filters: {
+    aria: "Filter the feed",
+    country: "Country",
+    source: "Source",
+    substance: "Substance",
+    allCountries: "All countries",
+    allSources: "All sources",
+    unknownCountry: "Country unknown",
+    substancePlaceholder: "Substance name or CAS number (e.g. ammonia, 7664-41-7)",
+    substanceList: "Frequent substances",
+    clear: "Clear filters",
+    apply: "Find",
+  },
+  count: (shown, total) => `Showing ${Number(shown).toLocaleString("en-US")} of ${Number(total).toLocaleString("en-US")}`,
+  scopeLatest: "Searching the recent items. Pick a substance by CAS number to search all of its records.",
+  scopeCas: (name, cas, total) => `${name ? `${name} ` : ""}(${cas}): newest of ${Number(total).toLocaleString("en-US")} records`,
+  none: "No items match these filters.",
+  noneCas: (cas) => `No feed items for ${cas} yet.`,
+  more: (n) => `Show ${Number(n).toLocaleString("en-US")} more`,
+  noDate: "Date unknown",
+  open: "Original ↗",
+  openTitle: "Open the original in a new tab",
+  substanceLink: (name) => `${name} · incident cases`,
+  substanceLinkTitle: "Open the incident panel of this substance",
+  equipment: "Equipment",
+  updated: (d) => `Data as of ${d}`,
+  cronUpdated: (d) => `CSB news refreshed ${d}`,
+  kinds: { incident: "Incident record", news: "Agency news", press: "Press" },
+  sourceNames: {
+    chemeng_csb: "US CSB investigations",
+    chemeng_rmp: "US EPA RMP",
+    chemeng_emars: "EU eMARS",
+    chemeng_kosha: "KOSHA accident cases",
+    chemeng_nics: "Korea NICS",
+    csb_rss: "CSB news",
+    press_gnews: "Press",
+  },
+  countries: {
+    DE: "Germany", FR: "France", ES: "Spain", IT: "Italy", BE: "Belgium", DK: "Denmark", GR: "Greece", BG: "Bulgaria",
+    PL: "Poland", NO: "Norway", PT: "Portugal", IE: "Ireland", FI: "Finland", AT: "Austria", SE: "Sweden",
+    CZ: "Czechia", SK: "Slovakia", SI: "Slovenia", HR: "Croatia", HU: "Hungary", RO: "Romania", LU: "Luxembourg",
+    CY: "Cyprus", MT: "Malta", EE: "Estonia", LV: "Latvia", LT: "Lithuania",
+  },
+  attribution: {
+    title: "Sources and terms",
+    note: "Incident records are public agency data, used under each source's terms as listed. Press items show only the headline and a link; no article text is stored.",
+    items: (n) => `${Number(n).toLocaleString("en-US")} items`,
+  },
+  usearch: {
+    screenTitle: "Incident feed",
+    screenHint: "Chemical incident records, agency news and press, filtered by country, source and substance",
+    keywords: ["chemical incident", "incident news", "accident", "explosion", "chemical leak", "release", "CSB", "eMARS", "RMP", "NICS"],
+    badge: "Incident news",
+    substanceTitle: (name) => `${name} · incident feed`,
+    substanceSub: (cas, n) => `CAS ${cas} · ${Number(n).toLocaleString("en-US")} records`,
+    itemSub: (date, source) => [date, source].filter(Boolean).join(" · "),
+  },
+};
+
+const FEED_LABELS = langPick(FEED_LABELS_KO, FEED_LABELS_EN);
+
+Object.assign(window, { FEED_LABELS_EN, FEED_LABELS });

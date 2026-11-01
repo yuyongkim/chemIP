@@ -1,13 +1,13 @@
 // Trade controls · 실제 통합허가 사례 — 이 물질(군) 배출기준이 설정된 사업장 수·기준 분포·업종·처리기간·TMS 배출량.
-// Data: useKrPermitContext (api.jsx) → /api/integrations/kr-permit-context/{cas}. 문구: trade_controls_permit_context_labels.jsx,
+// Data: useKrPermitContext (api_integrations.jsx) → /api/integrations/kr-permit-context/{cas}. 문구: trade_controls_permit_context_labels.jsx,
 // 순수 함수: trade_controls_permit_context_helpers.jsx. 한 건 카드: kr_permit_context_entry.jsx, 배출량: kr_permit_context_emissions.jsx.
 
 function KrPermitContextSection({ cas }) {
   const L = KR_PERMIT_CONTEXT_LABELS;
   const { data, loading, error } = useKrPermitContext(cas);
   const entries = data?.entries || [];
-  const overall = kpcOverallDuration(data, L.durationPostType);
-  const byIndustry = kpcIndustryDurations(data, L.durationPostType, L.maxDurationIndustries);
+  const overall = kpcOverallDuration(data, KPC_KEYS.durationPostType);
+  const byIndustry = kpcIndustryDurations(data, KPC_KEYS.durationPostType, L.maxDurationIndustries);
   const attr = data?.attribution || {};
   const ready = data && data.available !== false;
   return (

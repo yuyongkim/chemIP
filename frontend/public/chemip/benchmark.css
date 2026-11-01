@@ -1,0 +1,44 @@
+/* 벤치마크 화면(benchmark*.jsx, .bm-*) — 예전 인라인 style 을 옮긴 것. 나머지 모양은 paper.css.
+   색·글꼴은 tokens.css 변수만, 간격은 --unit(4px) 배수. 막대 너비·진하기(--w, --o)는 자료 값이라 style 의 CSS 변수로. */
+
+.paper-hero.bm-hero { padding-bottom: calc(var(--unit) * 2); border-bottom: none; position: relative; }
+.bm-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--safe); display: inline-block; }
+
+.bm-note { font-size: calc(12.5px * var(--fs)); margin-bottom: calc(var(--unit) * 3); max-width: 70ch; line-height: 1.6; }
+.bm-null { color: var(--fg-subtle); }
+.mcell .mc-bar.bm-bar { width: var(--w); opacity: var(--o); }
+.mcell .mc-bar.tone-safe { background: var(--safe); }
+.mcell .mc-bar.tone-hazard { background: var(--hazard); }
+.mcell .mc-bar.tone-warn { background: var(--warn); }
+.mcell .mc-bar.tone-accent { background: var(--accent); }
+.bm-foot { font-size: calc(11.5px * var(--fs)); margin-top: calc(var(--unit) * 2.5); font-family: var(--font-mono); }
+.bm-loading { padding: calc(var(--unit) * 10) 0; font-family: var(--font-mono); font-size: calc(13px * var(--fs)); }
+.muted.bm-error { padding: calc(var(--unit) * 7.5) 0; color: var(--hazard); font-family: var(--font-mono); font-size: calc(13px * var(--fs)); }
+
+/* 라벨 탭 */
+.bm-label-bar { display: flex; gap: calc(var(--unit) * 2); align-items: center; margin-bottom: calc(var(--unit) * 4); flex-wrap: wrap; }
+.metric-switch.bm-flat { margin: 0; }
+.bm-mono-note { font-size: calc(11.5px * var(--fs)); font-family: var(--font-mono); }
+.btn.bm-push { margin-left: auto; }
+.bm-spacer { flex: 1; }
+.q-type.bm-prompt { margin-bottom: calc(var(--unit) * 2.5); }
+.lc-rec .name.bm-name-ko { font-weight: 600; color: var(--fg); }
+.bm-ai-box { margin-top: calc(var(--unit) * 3.5); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--r-3); background: var(--bg-sunken); padding: calc(var(--unit) * 2.75) calc(var(--unit) * 3.5); font-size: calc(13px * var(--fs)); }
+.bm-ai-row { display: flex; align-items: center; gap: calc(var(--unit) * 2); flex-wrap: wrap; }
+.bm-ai-kicker { font-family: var(--font-mono); font-size: calc(11px * var(--fs)); letter-spacing: .06em; color: var(--accent-ink); }
+.bm-ai-label { font-weight: 650; }
+.bm-ai-conf { font-family: var(--font-mono); font-size: calc(11px * var(--fs)); color: var(--fg-muted); }
+.bm-ai-reason { margin-top: calc(var(--unit) * 1.5); color: var(--fg-muted); line-height: 1.55; }
+.bm-auto { margin-left: auto; font-size: calc(12px * var(--fs)); color: var(--fg-muted); display: flex; gap: calc(var(--unit) * 1.5); align-items: center; }
+.panel.bm-side-panel { padding: calc(var(--unit) * 4); }
+.panel.bm-keys { font-size: calc(12px * var(--fs)); color: var(--fg-muted); line-height: 1.6; }
+.bm-progress-head { display: flex; justify-content: space-between; font-size: calc(12px * var(--fs)); margin-bottom: calc(var(--unit) * 2); }
+.lc-pfill.bm-fill { width: var(--w); }
+.bm-stats { margin-top: calc(var(--unit) * 3.5); }
+.lc-stat .sw.ok { background: var(--safe); }
+.lc-stat .sw.warn { background: var(--warn); }
+.lc-stat .sw.bad { background: var(--hazard); }
+.lc-stat .sw.info { background: var(--info); }
+.lc-stat .sw.none { background: var(--border-strong); }
+.bm-keys-title { color: var(--fg); font-size: calc(11px * var(--fs)); letter-spacing: .08em; text-transform: uppercase; font-family: var(--font-mono); }
+.bm-keys-row { margin-top: calc(var(--unit) * 2); }

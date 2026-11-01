@@ -1,0 +1,61 @@
+{
+  "_comment": "Temperature-dependent property sources (thermo_props.py). One place. Only sources with allow=true are shipped; the licence gate (tp_licence.py) refuses every other id and every id listed in blocked. Licence verdicts: docs/portal/research/R2_data_sources.md §1, §3 and the primary-source checks noted in licence_check.",
+  "raw_dir": "G:/MSDS/data/portal_raw/tp",
+  "sources": [
+    {
+      "source_id": "chemsep_lite",
+      "allow": true,
+      "name": "ChemSep LITE pure component databank (v8.50: chemsep1 v8.49 + chemsep2 v8.50)",
+      "url": "http://www.chemsep.org/downloads/data/lite.zip",
+      "home": "http://www.chemsep.org/",
+      "license": "Artistic-2.0",
+      "license_url": "https://www.perlfoundation.org/artistic-license-20.html",
+      "citation": "Kooijman, H.A. & Taylor, R. ChemSep pure component property databank, ChemSep LITE v8.50. http://www.chemsep.org (Copyright (c) Harry Kooijman and Ross Taylor, 2024-2025).",
+      "licence_check": "Primary source, 2026-10-31: help/chemsep.lic of the official lite.zip says 'Use of the ChemSep Pure Component Property Databank (and ONLY the ChemSep Pure Component Property Databank) is governed by the Artistic License of the Perl Foundation'; pcd/Artistic_license_2_0.txt is shipped beside chemsep1.xml / chemsep2.xml, whose headers name the same licence.",
+      "modified_version_note": "Modified Version under Artistic-2.0 §4: a subset of the databank (CAS, name, critical and normal-point constants, temperature-dependent correlations) converted from ChemSep XML to JSON; coefficients unchanged, a unit factor (kmol to mol) stored beside them. Not the Standard Version. The unmodified Standard Version is available from http://www.chemsep.org.",
+      "files": ["chemsep1.xml", "chemsep2.xml", "Artistic_license_2_0.txt", "chemsep.lic"]
+    },
+    {
+      "source_id": "nasa_cea",
+      "allow": true,
+      "name": "NASA CEA thermodynamic database thermo.inp (NASA-9 polynomials)",
+      "url": "https://raw.githubusercontent.com/nasa/cea/985fd33368b2334c4162a586c499e0ab41d12bd3/data/thermo.inp",
+      "home": "https://github.com/nasa/cea",
+      "license": "Apache-2.0",
+      "license_url": "https://github.com/nasa/cea/blob/main/LICENSE.txt",
+      "citation": "McBride, B.J., Zehe, M.J. & Gordon, S. (2002). NASA Glenn Coefficients for Calculating Thermodynamic Properties of Individual Species. NASA/TP-2002-211556. Data file: nasa/cea data/thermo.inp, commit 985fd333 (2026-06-22).",
+      "licence_check": "Primary source, 2026-10-31: NOTICE.txt of github.com/nasa/cea lists data/thermo.inp under 'Data' of a repository 'Licensed under the Apache License, Version 2.0'; GitHub licence API reports Apache-2.0.",
+      "notice": "CEA - Chemical Equilibrium with Applications. Copyright (c) 2025, United States Government as represented by the Administrator of the National Aeronautics and Space Administration. Licensed under the Apache License, Version 2.0.",
+      "files": ["thermo.inp", "NOTICE.txt", "LICENSE.txt"]
+    },
+    {
+      "source_id": "wikidata",
+      "allow": true,
+      "name": "Wikidata — critical point (P873 = Q111059) with temperature (P2076) and pressure (P2077) qualifiers",
+      "url": "https://query.wikidata.org/sparql",
+      "home": "https://www.wikidata.org/",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "citation": "Wikidata, statements P873 (phase point = critical point) of items with a CAS number (P231), normalised SI values; queried on the build date.",
+      "licence_check": "Wikidata structured data is CC0 (R2 §1 row 19).",
+      "files": ["critical_points.json"]
+    },
+    {
+      "source_id": "coolprop_heos",
+      "allow": true,
+      "name": "CoolProp fluid constants (chemicals 1.5.2, Misc/heos_constants.tsv)",
+      "url": "https://github.com/CalebBell/chemicals/blob/master/chemicals/Misc/heos_constants.tsv",
+      "home": "http://www.coolprop.org/",
+      "license": "MIT",
+      "license_url": "https://github.com/CoolProp/CoolProp/blob/master/LICENSE",
+      "citation": "Bell, I.H., Wronski, J., Quoilin, S. & Lemort, V. (2014). Pure and Pseudo-pure Fluid Thermophysical Property Evaluation and the Open-Source Thermophysical Property Library CoolProp. Ind. Eng. Chem. Res. 53, 2498-2508. Constants as tabulated in chemicals (Bell, MIT).",
+      "licence_check": "R2 §3 marks Misc/heos_constants.tsv Green (CoolProp-derived, MIT).",
+      "files": ["heos_constants.tsv"]
+    }
+  ],
+  "blocked": {
+    "_comment": "Never shipped (R2 §3 red or amber). Listed so the gate can name them if a record ever claims one.",
+    "red": ["crc", "yaws", "dippr", "perry", "vdi_ppds", "landolt", "janaf", "nist_webbook", "nist_srd", "api_tdb", "iec_60079", "nfpa_497", "trc_book"],
+    "amber_not_shipped": ["poling_antoine", "poling_wagner", "poling_databank", "mcgarry_wagner", "iupac_critical", "psrk_rev4", "zabransky", "atct", "alcock", "common_chemistry", "serat_flash"]
+  }
+}

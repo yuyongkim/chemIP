@@ -3,9 +3,9 @@
 const { useState, useEffect, useRef, useMemo } = React;
 
 /* Simple SVG icon set — stroke icons, uniform weight */
-function Icon({ name, size = 16, stroke = 1.5, style }) {
+function Icon({ name, size = 16, stroke = 1.5, style, className }) {
   const s = size, sw = stroke;
-  const props = { width: s, height: s, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: sw, strokeLinecap: "round", strokeLinejoin: "round", style };
+  const props = { width: s, height: s, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: sw, strokeLinecap: "round", strokeLinejoin: "round", style, className };
   switch (name) {
     case "search": return (<svg {...props}><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>);
     case "atom": return (<svg {...props}><circle cx="12" cy="12" r="1.5" fill="currentColor"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg>);
@@ -87,9 +87,9 @@ function SectionHead({ eyebrow, no, title, kicker }) {
     <div className="section-head">
       <div>
         <div className="section-eyebrow">
-          <b>§ {no}</b> <span style={{ marginLeft: 10 }}>{eyebrow}</span>
+          <b>§ {no}</b> <span className="section-eyebrow-label">{eyebrow}</span>
         </div>
-        {kicker && <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--fg-subtle)", marginTop: 8, lineHeight: 1.5 }}>{kicker}</div>}
+        {kicker && <div className="section-kicker">{kicker}</div>}
       </div>
       <h2>{title}</h2>
     </div>

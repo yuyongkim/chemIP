@@ -7,7 +7,7 @@ import PatentResultsPanel from './components/PatentResultsPanel';
 import { usePatentSearch } from './usePatentSearch';
 
 export default function PatentsPage() {
-  const { query, results, loading, error, searched, currentPage, totalPages, total, handleSearch, handlePageChange } =
+  const { query, results, globalResults, usptoResults, resolvedChemical, warnings, loading, error, searched, currentPage, totalPages, total, handleSearch, handlePageChange } =
     usePatentSearch({ limit: 20 });
 
   return (
@@ -21,8 +21,12 @@ export default function PatentsPage() {
           query={query}
           loading={loading}
           error={error}
+          warnings={warnings}
           searched={searched}
           results={results}
+          globalResults={globalResults}
+          usptoResults={usptoResults}
+          resolvedChemical={resolvedChemical}
           total={total}
           currentPage={currentPage}
           totalPages={totalPages}

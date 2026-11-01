@@ -5,6 +5,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "accent": "blue",
   "type": "default",
   "density": "default",
+  "fs": "default",
   "layout": "2col",
   "dataviz": "spark",
   "showGrid": true,
@@ -21,6 +22,7 @@ const TWEAK_SCHEMA = [
   { key: "theme", options: tweakOpts(["light", "dark"]) },
   { key: "accent", options: tweakOpts(["blue", "indigo", "teal", "copper", "mono"]), cols: 5 },
   { key: "type", options: [["default", TWEAK_TEXT.options.default], ["serif", TWEAK_TEXT.options.serif], ["mono", TWEAK_TEXT.options.monoType], ["korean", TWEAK_TEXT.options.korean]], cols: 4 },
+  { key: "fs", options: tweakOpts(["sm", "default", "lg"]), cols: 3 },
   { key: "density", options: tweakOpts(["compact", "default", "comfy"]), cols: 3 },
   { key: "layout", options: tweakOpts(["2col", "3col", "wide"]), cols: 3 },
   { key: "dataviz", options: tweakOpts(["spark", "heat", "bar"]), cols: 3 },
@@ -34,6 +36,7 @@ function applyTweaks(t) {
   if (t.theme === "dark") r.setAttribute("data-theme", "dark"); else r.removeAttribute("data-theme");
   if (t.accent !== "blue") r.setAttribute("data-accent", t.accent); else r.removeAttribute("data-accent");
   if (t.type !== "default") r.setAttribute("data-type", t.type); else r.removeAttribute("data-type");
+  if (t.fs && t.fs !== "default") r.setAttribute("data-fs", t.fs); else r.removeAttribute("data-fs");
   if (t.density !== "default") r.setAttribute("data-density", t.density); else r.removeAttribute("data-density");
 }
 
@@ -59,7 +62,7 @@ function TweaksPanel({ tweaks, setTweak, onClose }) {
     <div className="tweaks-panel">
       <h3>
         <b>{TWEAK_TEXT.title}</b>
-        <button onClick={onClose} style={{ color: "var(--fg-muted)" }}><Icon name="close" size={14} /></button>
+        <button className="tweaks-close" onClick={onClose}><Icon name="close" size={14} /></button>
       </h3>
       {TWEAK_SCHEMA.map(g => (
         <div key={g.key} className="tweak-group">
@@ -75,13 +78,7 @@ function TweaksPanel({ tweaks, setTweak, onClose }) {
                 onClick={() => setTweak({ [g.key]: val })}
               >
                 {g.key === "accent" && (
-                  <span className="tweak-swatch" style={{
-                    background: val === "blue" ? "oklch(0.52 0.18 250)"
-                      : val === "indigo" ? "oklch(0.52 0.18 275)"
-                      : val === "teal" ? "oklch(0.58 0.14 195)"
-                      : val === "copper" ? "oklch(0.60 0.14 48)"
-                      : "oklch(0.28 0.01 250)"
-                  }} />
+                  <span className={`tweak-swatch sw-${val}`} />
                 )}
                 {lbl}
               </button>
@@ -89,7 +86,7 @@ function TweaksPanel({ tweaks, setTweak, onClose }) {
           </div>
         </div>
       ))}
-      <div style={{ padding: "12px 16px", fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--fg-subtle)", borderTop: "1px solid var(--border)" }}>
+      <div className="tweaks-foot">
         {TWEAK_TEXT.footnote}
       </div>
     </div>

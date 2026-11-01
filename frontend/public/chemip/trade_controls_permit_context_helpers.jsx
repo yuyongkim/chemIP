@@ -2,7 +2,7 @@
 
 function kpcNum(v) {
   if (v === null || v === undefined || v === "") return "";
-  return Number(v).toLocaleString("ko-KR", { maximumFractionDigits: 3 });
+  return Number(v).toLocaleString(KR_PERMIT_CONTEXT_LABELS.numberLocale, { maximumFractionDigits: 3 });
 }
 
 // 분포 한 건 → "6 ppm · 표준산소 12%" 처럼 값 뒤에 붙는 단위 글자.
@@ -12,7 +12,7 @@ function kpcUnitText(d) {
 }
 
 function kpcIndustryName(ind) {
-  return !ind || ind === "미상" ? KR_PERMIT_CONTEXT_LABELS.unknownIndustry : ind;
+  return !ind || ind === KPC_KEYS.unknownIndustry ? KR_PERMIT_CONTEXT_LABELS.unknownIndustry : ind;
 }
 
 // 대표 분포 외의 분포(다른 단위·산소 기준), 건수 많은 순.
@@ -24,7 +24,7 @@ function kpcOtherDistributions(entry) {
 
 // 업종 이름이 있는 상위 업종(사업장 수 순).
 function kpcTopIndustries(entry, max) {
-  return (entry?.industries || []).filter(i => i.industry && i.industry !== "미상").slice(0, max);
+  return (entry?.industries || []).filter(i => i.industry && i.industry !== KPC_KEYS.unknownIndustry).slice(0, max);
 }
 
 // 처리기간 전체 행(post_type 하나).

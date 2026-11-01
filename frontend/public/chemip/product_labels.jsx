@@ -1,7 +1,9 @@
-// 제품 화면(검색·물질 상세·보조 화면·상세 패널) 문구(PRODUCT_LABELS).
+// 제품 화면(검색·물질 상세·보조 화면·상세 패널) 한국어 문구(PRODUCT_LABELS_KO). 영어: product_labels_en.jsx,
+// 화면이 읽는 이름 PRODUCT_LABELS 는 그 파일이 언어에 맞춰 만든다(lang.jsx).
 // { ko, en } 는 제목용: 한국어가 주 표기, en 은 작은 보조 글씨(PanelTitle · SectionHeading)로만 나온다.
+// 키 → 이름 표(…Names: {})가 비어 있으면 응답에 온 이름을 그대로 쓴다(영어 파일만 채운다).
 
-const PRODUCT_LABELS = {
+const PRODUCT_LABELS_KO = {
   rail: {
     search: { ko: "검색", en: "Search" },
     chemical: { ko: "물질 상세", en: "Chemical" },
@@ -25,7 +27,7 @@ const PRODUCT_LABELS = {
   },
   status: {
     loading: "불러오는 중…",
-    error: (e) => `오류: ${e}`,
+    error: (e) => (apiIsNotice(e) ? e : `오류: ${e}`), // 실시간 전용 안내는 "오류:" 없이
     noCas: "CAS 번호 없음",
     scrollToLoad: "아래로 내리면 불러옵니다",
     count: (n, unit = "건") => `${Number(n || 0).toLocaleString("ko-KR")}${unit}`,
@@ -43,10 +45,10 @@ const PRODUCT_LABELS = {
     sourceLabel: "자료원",
     all: "전체",
     other: "기타",
-    sortNote: "정렬: KOSHA(MSDS 있음) → KOSHA → ECHA → 기타",
+    sortNote: "정렬: 가장 일치하는 물질 → KOSHA(MSDS 있음) → KOSHA → ECHA → 기타",
     none: "검색 결과가 없습니다. 다른 이름이나 CAS 번호로 다시 찾아 보세요.",
     groupMsds: "KOSHA · MSDS 있음",
-    cols: { name: "물질명", en: "영문명", cas: "CAS", id: "물질 ID", source: "자료원" },
+    cols: { name: "물질명", en: "영문명", cas: "CAS", id: "물질 ID", source: "자료원" }, // en 칸 = 둘째 이름 칸
     open: "열기 →",
     cards: [
       { t: "규제·인허가 확인", k: "Regulations", desc: "국내 법령 목록, 인허가·신고, 수출입 의무를 한 번에.", ic: "shield" },
@@ -58,6 +60,7 @@ const PRODUCT_LABELS = {
     emptyTitle: "선택한 물질이 없습니다",
     emptyHint: "왼쪽 ‘검색’에서 물질을 골라 주세요.",
     idLabel: "물질 ID",
+    synonym: "관용명",
     loadingMsds: "MSDS 불러오는 중…",
     msdsCount: (n) => `MSDS ${n}/16개 항목`,
     msdsPending: "MSDS 불러오기 대기 중",
@@ -94,6 +97,13 @@ const PRODUCT_LABELS = {
     noSec9: "9번 항목 자료가 없습니다.",
     noSec15: "15번 항목 자료가 없습니다.",
     none: "해당없음",
+    sourceLangNote: "", // 영어 화면에서만: MSDS 본문은 KOSHA 한국어 원문이라는 안내
+    // §15·§2 문장에서 찾는 규제 의무 표시(product_msds_helpers.jsx 의 MSDS_REG_FLAGS 가 이 라벨을 쓴다)
+    flags: {
+      carcinogen: "발암성", h350: "발암성(H350)", mutagen: "변이원성", h340: "변이원성(H340)", reprotox: "생식독성",
+      managed: "관리대상유해물질", toxic: "유독물질", accident: "사고대비물질", restricted: "제한·금지물질",
+      priority: "중점관리물질", workEnv: "작업환경측정 대상", healthExam: "특수건강진단 대상", psm: "PSM 제출대상", oel: "노출기준 설정",
+    },
   },
   patents: {
     heading: (q) => `KIPRIS 특허 · “${q}”`,
@@ -161,6 +171,20 @@ const PRODUCT_LABELS = {
     aliases: "별칭 수",
     terms: "검색어",
     recs: (n) => `${n}건`,
+    loadingIntel: "해외 규제 DB(ECHA·NIOSH·CompTox) 조회 중…",
+    delayed: (e) => `조회가 지연되어 불러오지 못했습니다 (${e}).`,
+    retry: "다시 시도",
+    noReach: "이 물질은 REACH 규제목록(후보목록·인가·제한) 등재 정보가 확인되지 않습니다.",
+    nioshLimits: (rel, pel, idlh) => `REL ${rel} · PEL ${pel} · IDLH ${idlh}`,
+    targetOrgans: (v) => `표적장기: ${v}`,
+    carcinogen: "발암 우려물질",
+    reachNames: {}, // REACH 상태 코드 → 이름(비면 응답의 label)
+    comptoxNoKeyShort: "API key 미설정",
+    kotraReach: "· REACH 자료",
+    kotraNone: "REACH 관련 KOTRA 자료가 없습니다.",
+    krClass: "국내 규제·분류",
+    kischemCount: (n) => `${n} 노출·응급 자료`,
+    ncisCount: (n) => `${n} 분류 자료`,
   },
   views: {
     patents: { title: { ko: "특허 검색", en: "Patent search" }, sub: "KIPRIS 실시간 검색 · 검색어:", emptyHint: "먼저 물질을 골라 주세요. 그 물질의 KIPRIS 특허를 보여 드립니다." },
@@ -182,17 +206,48 @@ const PRODUCT_LABELS = {
       openfdaNone: (q) => `“${q}” OpenFDA 표시사항이 없습니다.`,
       pubmedNone: "PubMed 문헌이 없습니다.",
       ing: "성분", use: "용도", warn: "경고",
+      defaultQuery: "acetaminophen",
+      mfdsTag: "MFDS", openfdaTag: "OpenFDA", openfdaFallback: "OpenFDA label",
+      pmid: (n) => `PMID ${n}`,
     },
   },
   intl: {
     heading: { ko: "국가별 규제", en: "International Regulation" },
     mapAria: "이 물질을 규제 목록에 올린 나라 지도",
-    status: (count, j) => `등재 ${count}건 · ${j}개 국가·기구`,
+    status: (count, j) => `목록 ${count}개 · ${j}개 국가·기구`,
+    aka: (names) => `다른 이름: ${names.join(", ")}`,
     stats: {
       jurisdictions: { m: "국가·기구", sub: "등재된 곳" },
       lists: { m: "규제 목록", sub: "목록 수" },
       listings: { m: "등재 건수", sub: "전체" },
       top: { m: "가장 많은 곳", sub: (n) => `${n}건` },
+    },
+    noCas: "CAS 번호가 없어 국가별 규제 목록을 조회할 수 없습니다.",
+    none: "수집된 국가별 규제 목록에 이 물질이 등재되어 있지 않습니다.",
+    mapError: (e) => `지도를 불러오지 못했습니다 (${e}). 목록은 정상입니다.`,
+    mapHint: "지도나 버튼을 눌러 나라를 고르세요. 색이 진할수록 등재 건수가 많습니다.",
+    mapTitle: (name, label, n) => `${name} · ${label} · ${n}건`,
+    listed: "등재",
+    listHead: (groups, n) => `${groups}개 목록 · ${n}건`,
+    listNames: {}, // regulation 코드 → 목록 이름(비면 응답의 list)
+    detailPhrases: [], // [원문 조각, 바꿀 말] — 등재 내용(detail) 안의 우리말 조각
+
+    provisions: {
+      heading: (j) => `근거 조문 · ${j}`,
+      epcLink: "EPC engineering 법령 본문 검색 ↗",
+      loading: "법령 본문을 찾는 중입니다…",
+      unavailable: "본문 검색 서비스에 연결하지 못했습니다. 위 목록은 정상입니다.",
+      none: "일치하는 조문이 없습니다.",
+      source: "원문 ↗",
+      staticAsOf: (d) => `미리 받아 둔 조문, ${d} 기준`,
+      note: "물질명·CAS로 그 나라 법령 본문(하위 법령·주 법령 포함)을 검색한 결과입니다. 목록 등재의 직접 근거가 아닐 수 있으니 원문을 확인하십시오.",
+    },
+    thresholds: {
+      heading: "임계량 비교 · kg 환산",
+      legend: "진한 막대 = 가장 낮은(엄격한) 기준",
+      ratio: (n) => `최대/최소 ${n}배`,
+      kindNames: {}, // 기준 종류 키 → 이름(비면 응답의 kind_label)
+      note: "lb·t·kg를 kg으로 환산했습니다(1 lb = 0.4536 kg). 형태별로 값이 여러 개면 가장 낮은 값을, Seveso는 하위~상위 기준을 표시합니다. 농도 조건(예: 20% 이상)은 목록마다 다를 수 있어 원문 확인이 필요합니다.",
     },
   },
   incidents: {
@@ -206,6 +261,23 @@ const PRODUCT_LABELS = {
       injuries: { m: "부상", sub: "명" },
       sources: { m: "자료원" },
     },
+    // 사고 자료원 키 → 표시 이름
+    sources: { csb: "CSB", emars: "eMARS", kosha: "KOSHA", nics: "NICS", rmp: "EPA RMP" },
+    offlineBody: "사고 사례 DB에 연결하지 못했습니다.",
+    noneBody: "수집된 사고 사례(CSB·eMARS·KOSHA·NICS·EPA RMP)에 이 물질이 없습니다.",
+    discTitle: "사고 난 설비 → 설계 검증 분야",
+    discNote: " · 사고 기록의 설비를 그 설비를 설계·검사하는 기준에 연결했습니다",
+    discCount: (n) => `${n}건`,
+    epcVerify: "EPC 설계 검증 ↗",
+    experience: (keys) => `Chem_Eng 경험: ${keys} ↗`,
+    fatal: (n) => `사망 ${n}`,
+    injured: (n) => `부상 ${n}`,
+    causes: (c) => `원인: ${c}`,
+    sourceLink: "출처 ↗",
+    recommendations: (n) => ` · 권고 ${n}건`,
+    cases: "사례",
+    casesMeta: (n) => `출처별 최신순 ${n}건 · RMP는 정형 기록만 있어 통계에만 반영`,
+    experienceNames: {}, // Chem_Eng 경험 설비 키 → 이름(비면 키 그대로)
   },
   enforcement: {
     heading: { ko: "미국 환경 집행 사건", en: "US Enforcement" },
@@ -218,7 +290,17 @@ const PRODUCT_LABELS = {
       penalties: { m: "벌금 합계", sub: "부과 벌금 합계" },
       statutes: { m: "근거 법률" },
     },
+    missingBody: "집행 사건 색인이 없습니다.",
+    noneBody: "EPA 집행 사건 중 이 물질을 오염물질로 적은 사건이 없습니다.",
+    fiscalRange: (a, b) => `FY${a}–${b}`,
+    cases: "사건",
+    sorts: [["top_penalty", "벌금 큰 순"], ["recent", "최근 순"]],
+    violations: (v) => `위반: ${v}`,
+    echoLink: (n) => `ECHO ${n} ↗`,
+    note: (src) => `${src}. 사건에 적힌 오염물질 기준이라 이 물질이 주된 위반 사유가 아닐 수 있습니다.`,
   },
+  // EPC 설계 분야 키 → 이름(사고 사례·텍사스 배출사고 공용, 비면 응답의 label)
+  disciplineNames: {},
   handlers: {
     heading: { ko: "취급 사업장", en: "Handling Companies" },
     sourceNote: "PRTR 화학물질 배출·이동량 · /api/handlers",
@@ -231,7 +313,18 @@ const PRODUCT_LABELS = {
       year: { m: "연도", sub: "신고 연도" },
     },
     company: "사업장",
+    cols: { address: "소재지", release: "배출", transfer: "이동", total: "합계" },
+    empty: { scroll: "아래로 스크롤하면 조회합니다.", loading: "PRTR 조회 중…", failed: (e) => `조회 실패: ${e}`, none: "이 물질에 대한 PRTR 배출·이동량 신고 사업장이 없습니다." },
+    topN: (n) => `상위 ${n}`,
+    reported: (n) => ` / 신고 ${n}곳`,
+    sortNote: " · 배출+이동 합계 기준 정렬",
+    collapse: "접기",
+    showAll: (n) => `${n}곳 모두 보기`,
+    accidents: "화학사고 이력",
+    accidentCount: (n) => `${n}건`,
+    gyeonggi: "경기도 위험물 취급",
+    gyeonggiCount: (n) => `${n}곳`,
   },
 };
 
-Object.assign(window, { PRODUCT_LABELS });
+Object.assign(window, { PRODUCT_LABELS_KO });

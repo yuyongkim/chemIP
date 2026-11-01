@@ -1,0 +1,21 @@
+{
+  "_about": "Substance search scoring, defined once. Read by backend/core/terminology/ranking.py; the static exporter copies it into search/manifest.json 'ranking' so the browser (static_search.jsx) scores the same way. Score = path base + max(name bonuses) + exact CAS + KOSHA - derivative penalty.",
+  "version": 2,
+  "alias_hit_base": 900,
+  "alias_hit_step": 40,
+  "synonym_hit_base": 900,
+  "fts_base": 500,
+  "fts_term_step": 40,
+  "fts_row_step": 6,
+  "exact_cas": 1000,
+  "exact_name": 700,
+  "synonym_tier_bonus": {"registry": 800, "synonym": 600},
+  "base_name": 300,
+  "kosha": 40,
+  "derivative_penalty": 150,
+  "derivative_terms": [
+    "polymer", "oligomer", "copolymer", "complex", "complexes", "reaction product", "reaction mass", "rubber",
+    "dimer", "adduct", "compound with", "compd with", "hydrate", "mixture", "deuterated", "13c",
+    "중합체", "공중합체", "고무", "착물", "착화합물", "반응생성물", "반응 생성물", "혼합물", "수화물", "이량체"
+  ]
+}

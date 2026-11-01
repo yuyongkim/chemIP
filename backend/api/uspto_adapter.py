@@ -30,7 +30,7 @@ class UsptoAdapter(PatentIndexBase):
     ) -> list[dict[str, Any]]:
         raw_limit = min(max(offset + (limit * 5), 100), 1000)
         sql = """\
-            SELECT patent_id, title, file_path, matched_term, section, snippet, created_at
+            SELECT patent_id, title, matched_term, section, snippet, created_at
             FROM patent_index
             WHERE chem_id = ?
             LIMIT ?"""
@@ -41,11 +41,10 @@ class UsptoAdapter(PatentIndexBase):
             {
                 "patent_id": row[0],
                 "title": row[1],
-                "file_path": row[2],
-                "matched_term": row[3],
-                "section": row[4],
-                "snippet": row[5],
-                "created_at": row[6],
+                "matched_term": row[2],
+                "section": row[3],
+                "snippet": row[4],
+                "created_at": row[5],
                 "source": "USPTO (Local)",
             }
             for row in rows

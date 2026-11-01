@@ -1,4 +1,4 @@
-// Mobile view — three phones showcasing key screens
+// Mobile view — three phones showcasing key screens. 문구: MOBILE_LABELS(mobile_labels.jsx · mobile_labels_en.jsx)
 
 function MobileBoard() {
   return (
@@ -6,15 +6,15 @@ function MobileBoard() {
       <div className="mobile-board">
         <div>
           <div className="phone"><div className="notch" /><div className="phone-screen"><MobileSearch /></div></div>
-          <div className="phone-label">01 · SEARCH · 검색</div>
+          <div className="phone-label">{MOBILE_LABELS.phones[0]}</div>
         </div>
         <div>
           <div className="phone"><div className="notch" /><div className="phone-screen"><MobileChemical /></div></div>
-          <div className="phone-label">02 · CHEMICAL DETAIL · 상세</div>
+          <div className="phone-label">{MOBILE_LABELS.phones[1]}</div>
         </div>
         <div>
           <div className="phone"><div className="notch" /><div className="phone-screen"><MobileAI /></div></div>
-          <div className="phone-label">03 · AI ANALYSIS · 분석</div>
+          <div className="phone-label">{MOBILE_LABELS.phones[2]}</div>
         </div>
       </div>
     </div>
@@ -57,18 +57,18 @@ function MobileSearch() {
       </div>
       <div className="m-body">
         <div style={{ fontFamily: "var(--font-display)", fontSize: 28, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 4 }}>
-          통합<br />화학 검색
+          {MOBILE_LABELS.searchTitleA}<br />{MOBILE_LABELS.searchTitleB}
         </div>
         <div className="muted" style={{ fontSize: 13, marginBottom: 16 }}>Chemical · patent · trade · drug</div>
         <div className="m-search">
           <Icon name="search" size={16} style={{ color: "var(--fg-subtle)" }} />
-          <input defaultValue="아세톤" />
+          <input defaultValue={MOBILE_LABELS.searchValue} />
           <Icon name="close" size={14} style={{ color: "var(--fg-subtle)" }} />
         </div>
 
-        <div className="m-section"><span>최근 · RECENT</span><span>CLEAR</span></div>
+        <div className="m-section"><span>{MOBILE_LABELS.recent}</span><span>CLEAR</span></div>
         {[
-          { t: "아세톤", s: "CAS 67-64-1 · Acetone", c: "chem" },
+          { t: MOBILE_LABELS.recentFirst, s: "CAS 67-64-1 · Acetone", c: "chem" },
           { t: "acetaminophen", s: "MFDS 20080245 · Tylenol", c: "drug" },
           { t: "HS 2914.11", s: "Vietnam · India · Indonesia", c: "trade" },
           { t: "LG Chem solvent", s: "KIPRIS · 42 results", c: "pat" },
@@ -82,7 +82,7 @@ function MobileSearch() {
           </div>
         ))}
 
-        <div className="m-section"><span>카테고리 · BROWSE</span><span>ALL →</span></div>
+        <div className="m-section"><span>{MOBILE_LABELS.browse}</span><span>ALL →</span></div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
           {[
             { ic: "atom", t: "Chemical", k: "48,132" },
@@ -110,14 +110,14 @@ function MobileChemical() {
         <MStatus />
         <div className="m-topbar">
           <Icon name="chev" size={18} style={{ transform: "rotate(180deg)" }} />
-          <div style={{ textAlign: "center", fontSize: 13, fontWeight: 600 }}>Acetone · 아세톤</div>
+          <div style={{ textAlign: "center", fontSize: 13, fontWeight: 600 }}>{MOBILE_LABELS.chemTitle}</div>
           <Icon name="plus" size={18} />
         </div>
       </div>
       <div className="m-body">
         <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--fg-muted)", letterSpacing: ".08em" }}>CAS 67-64-1 · EC 200-662-2</div>
         <div style={{ fontFamily: "var(--font-display)", fontSize: 32, letterSpacing: "-0.035em", lineHeight: 1, margin: "6px 0 4px" }}>Acetone</div>
-        <div className="muted" style={{ fontSize: 13 }}>(CH₃)₂CO · 아세톤 · propan-2-one</div>
+        <div className="muted" style={{ fontSize: 13 }}>{MOBILE_LABELS.chemSub}</div>
         <div style={{ display: "flex", gap: 6, margin: "12px 0", flexWrap: "wrap" }}>
           <Chip tone="chip hazard"><span className="dot" />FLAMMABLE</Chip>
           <Chip tone="chip hazard"><span className="dot" />EYE IRRITANT</Chip>
@@ -150,13 +150,13 @@ function MobileChemical() {
             <div className="picto" style={{ width: 34, height: 34 }}><span style={{ fontSize: 7 }}>GHS<br />07</span></div>
           </div>
           <div style={{ fontSize: 12, color: "var(--fg-muted)" }}>
-            <b style={{ color: "var(--fg)" }}>H225</b> Highly flammable liquid · 고인화성 액체<br />
-            <b style={{ color: "var(--fg)" }}>H319</b> Serious eye irritation · 심한 눈 자극<br />
-            <b style={{ color: "var(--fg)" }}>H336</b> Drowsiness / dizziness · 졸음·현기증
+            {MOBILE_LABELS.hazards.map(([code, text]) => (
+              <div key={code}><b style={{ color: "var(--fg)" }}>{code}</b> {text}</div>
+            ))}
           </div>
         </div>
 
-        <div className="m-section"><span>PHYSICAL · 물리화학</span></div>
+        <div className="m-section"><span>{MOBILE_LABELS.physical}</span></div>
         <div className="m-card" style={{ padding: 0 }}>
           {[
             ["BP", "56.05 °C"], ["FLASH", "−20 °C"], ["DENSITY", "0.791 g/mL"], ["KOSHA TWA", "500 ppm"],
@@ -205,7 +205,7 @@ function MobileAI() {
           </div>
         </div>
 
-        <div className="m-section"><span>SOURCES · 출처</span><span>7 cited</span></div>
+        <div className="m-section"><span>{MOBILE_LABELS.sources}</span><span>7 cited</span></div>
         {[
           { n: 1, k: "KOSHA", t: "MSDS § 09 Physical" },
           { n: 2, k: "KOSHA", t: "OEL table 2025-rev" },
@@ -219,9 +219,9 @@ function MobileAI() {
           </div>
         ))}
 
-        <div className="m-section"><span>ASK · 질문</span></div>
+        <div className="m-section"><span>{MOBILE_LABELS.ask}</span></div>
         <div className="m-card" style={{ padding: 0 }}>
-          {["What are storage incompatibilities?", "베트남 규제 변경?", "Compare OSHA / KOSHA limits."].map((q, i) => (
+          {MOBILE_LABELS.questions.map((q, i) => (
             <div key={q} style={{ padding: "12px 14px", borderTop: i === 0 ? 0 : "1px solid var(--border)", fontSize: 12.5, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <span>{q}</span>
               <Icon name="chev" size={14} style={{ color: "var(--fg-subtle)" }} />

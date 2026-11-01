@@ -1,0 +1,19 @@
+{
+ "_about": [
+  "law_export.py 가 읽는 근거 표기(데이터). 목록 파일(backend/data/trade_controls/kr_lists/*.json)에 legal_basis 가 있는 목록은 그 글을 쓰고,",
+  "여기에는 legal_basis 가 없는 목록(NCIS 분류, intl_regulatory 의 국내 PSM 목록)만 둔다. 형식은 kr_lists 의 legal_basis 와 같은 한국어 인용 글.",
+  "각 조문은 2026-10-31 말뭉치(data/portal_facts.db law_articles 현행 판)에서 그 목록 이름(term)이 조문 안에 실제로 나오는지 확인했다.",
+  "law_export.py 는 term 이 인용 조문 글에 없으면 그 인용을 버리고 보고서에 남긴다.",
+  "뺀 것: NCIS_REG_EXISTING(등록대상기존화학물질, 현행 화평법 조문에 그 말이 없음), NCIS_CMR(법정 목록 이름 아님), NCIS_ROTTERDAM(국내 지정 조문이 화관법 제21조·농약 고시에 흩어져 있어 한 목록 근거로 묶지 않음)."
+ ],
+ "lists": {
+  "NCIS_EXISTING": {"term": "기존화학물질", "basis": "화학물질의 등록 및 평가 등에 관한 법률 제2조제3호"},
+  "NCIS_HAZARDOUS": {"term": "유해성물질", "basis": "화학물질의 등록 및 평가 등에 관한 법률 제2조제6호, 제2조제6호의2, 제2조제6호의3; 화학물질관리법 제2조제2호, 제2조제2호의2, 제2조제2호의3"},
+  "NCIS_ACCIDENT_PREP": {"term": "사고대비물질", "basis": "화학물질관리법 제2조제6호, 제39조, 같은 법 시행령 제17조"},
+  "NCIS_RESTRICTED": {"term": "제한물질", "basis": "화학물질의 등록 및 평가 등에 관한 법률 제2조제8호, 제27조; 화학물질관리법 제18조"},
+  "NCIS_PROHIBITED": {"term": "금지물질", "basis": "화학물질의 등록 및 평가 등에 관한 법률 제2조제9호, 제27조; 화학물질관리법 제18조"},
+  "NCIS_PRIORITY": {"term": "중점관리물질", "basis": "화학물질의 등록 및 평가 등에 관한 법률 제2조제10호의2, 같은 법 시행령 제3조의2"},
+  "NCIS_POPS": {"term": "잔류성오염물질", "basis": "잔류성오염물질 관리법 제2조제1호; 잔류성오염물질의 종류 및 특정면제에 관한 규정 제2조 및 별표 1"},
+  "IR_KR_OSHA_PSM": {"term": "", "basis": "산업안전보건법 제44조, 같은 법 시행령 제43조 및 별표 13"}
+ }
+}

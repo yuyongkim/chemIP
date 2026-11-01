@@ -1,0 +1,80 @@
+# ChemIP API Worker — test deployment on workers.dev only (no routes, no custom domain).
+name = "chemip-api-test"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+account_id = "be15024b2f5766dabce34ad4ae19c49e"
+workers_dev = true
+
+[observability]
+enabled = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "chemip"
+database_id = "a78b9864-2b16-429f-8cef-57916ad71b62"
+migrations_dir = "migrations"
+
+# Static per-substance (v1/p/), shared (v1/g/) and patent-mapping (v1/pat/<CAS>/) files:
+# src/routes/static_data.js serves /data/<v>/{p,g,tx}/* and /data/<v>/pat/<CAS>/<file>.json.
+[[r2_buckets]]
+binding = "STATIC_DATA"
+bucket_name = "chemip-data"
+
+# Non-secret settings (defaults in src/config.js DEFAULTS). Secrets: see README.
+[vars]
+# 컷오버 뒤 chemip.yule.pics 는 운영 Worker 를 지나므로 test 는 PC 원본(chemip-origin)을 직접 부른다.
+ORIGIN = "https://chemip-origin.yule.pics"
+ORIGIN_TIMEOUT_MS = "8000"
+STATIC_BASE = ""
+STATIC_SUBSTANCE_PATH = "/substances/{id}.json"
+AI_MODEL = "claude-haiku-5-5"
+AI_CLIENT_DAILY_LIMIT = "5"
+AI_GLOBAL_DAILY_CAP = "300"
+AI_CACHE_TTL_HOURS = "720"
+KIPRIS_IN_AI = "false"
+CORS_ORIGINS = "https://chemip.yule.pics,http://localhost:7000,http://127.0.0.1:7000"
+DIAG_ENABLED = "true"
+
+# ── Production (cutover) — 2026-10-28. `node deploy/cloudflare/deploy_worker.mjs --target prod` (= wrangler deploy --env production).
+# Routes take /api/* and the R2 data paths on chemip.yule.pics; everything not implemented here falls back to the PC
+# through its own tunnel hostname chemip-origin.yule.pics (config-chemip-origin.yml). Secrets: set again with --env production.
+[env.production]
+name = "chemip-api"
+workers_dev = false
+# One route for the whole host: /api and R2 data are handled here, every other path is fetched from the Pages project
+# (SITE_ORIGIN, routes/site_proxy.js). DNS keeps pointing at the PC tunnel, so removing this route = instant rollback.
+routes = [
+  { pattern = "chemip.yule.pics/*", zone_name = "yule.pics" },
+]
+
+# 화학사고 소식(CSB RSS → R2 v1/feed/latest.json) 하루 4번 — src/cron_feed.js, docs/portal/INCIDENT_FEED_v1.md 5장. 끄기: crons = []
+[env.production.triggers]
+crons = ["17 */6 * * *"]
+
+[env.production.observability]
+enabled = true
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "chemip"
+database_id = "a78b9864-2b16-429f-8cef-57916ad71b62"
+migrations_dir = "migrations"
+
+[[env.production.r2_buckets]]
+binding = "STATIC_DATA"
+bucket_name = "chemip-data"
+
+[env.production.vars]
+ORIGIN = "https://chemip-origin.yule.pics"
+SITE_ORIGIN = "https://chemip-9h6.pages.dev"
+SITE_ASSETS_DIRECT = "true" # 2026-10-29: yule.pics 는 LAX, pages.dev 는 ICN 에서 응답 → 문서만 이 주소, 나머지는 pages.dev
+ORIGIN_TIMEOUT_MS = "8000"
+STATIC_BASE = ""
+STATIC_SUBSTANCE_PATH = "/substances/{id}.json"
+AI_MODEL = "claude-haiku-5-5"
+AI_CLIENT_DAILY_LIMIT = "5"
+AI_GLOBAL_DAILY_CAP = "300"
+AI_CACHE_TTL_HOURS = "720"
+KIPRIS_IN_AI = "false"
+CORS_ORIGINS = "https://chemip.yule.pics"
+DIAG_ENABLED = "false"

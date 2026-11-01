@@ -1,7 +1,8 @@
 // Labels for the 규제·인허가 / 수출입 tab — every Korean string the tab shows lives here (화면 문구는 이 파일 한 곳).
-// 화면 코드는 TRADE_LABELS 만 읽는다. 나라 이름은 intl_regions.jsx 의 INTL_JURISDICTIONS.
+// 화면 코드는 TRADE_LABELS 만 읽는다(영어는 trade_controls_labels_en.jsx 가 TRADE_LABELS = langPick(KO, EN) 으로 정한다).
+// 나라 이름은 intl_regions.jsx 의 INTL_JURISDICTIONS.
 
-const TRADE_LABELS = {
+const TRADE_LABELS_KO = {
   tabLabel: "규제·인허가 / 수출입",
   title: "규제·인허가 / 수출입",
   noCas: "CAS 번호가 없어 규제를 조회할 수 없습니다.",
@@ -49,7 +50,7 @@ const TRADE_LABELS = {
       obligation: "수출자·수입자 할 일",
       license: "자료 이용조건:",
     },
-    kotra: { query: q => `검색어: ${q}`, title: "KOTRA 수입규제 품목", empty: "KOTRA 수입규제 자료에서 일치하는 품목이 없습니다.", error: "KOTRA 수입규제를 불러오지 못했습니다." },
+    kotra: { query: q => `검색어: ${q}`, title: "KOTRA 수입규제 품목", empty: "KOTRA 수입규제 자료에서 일치하는 품목이 없습니다.", error: "KOTRA 수입규제를 불러오지 못했습니다.", offline: "KOTRA 수입규제는 실시간 조회라 지금 연결할 수 없습니다. 잠시 후 다시 확인해 주십시오." },
   },
   // 탭 맨 위 요약 — 숫자 카드를 누르면 해당 섹션으로 이동한다
   summary: {
@@ -122,4 +123,4 @@ const TRADE_ANCHORS = {
   krLaw: "tc-kr-law", permits: "tc-permits", obligations: "tc-obligations", lists: "tc-lists", hs: "tc-hs",
 };
 
-Object.assign(window, { TRADE_LABELS, TRADE_SOURCE_GROUPS, TRADE_ANCHORS });
+Object.assign(window, { TRADE_LABELS_KO, TRADE_SOURCE_GROUPS, TRADE_ANCHORS });

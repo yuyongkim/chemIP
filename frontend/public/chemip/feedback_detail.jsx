@@ -12,14 +12,14 @@ function FeedbackDetail({ id, onBack }) {
         <article className="panel fb-panel">
           <div className="body">
             <div className="fb-detail-tags">
-              <Badge>{data.category}</Badge>
-              <Badge tone={fbStatusTone(data.status)}>{data.status}</Badge>
+              <Badge>{fbValueName(data.category)}</Badge>
+              <Badge tone={fbStatusTone(data.status)}>{fbValueName(data.status)}</Badge>
               <span className="mono tnum muted">#{data.id}</span>
             </div>
             <h2 className="fb-detail-title">{data.title}</h2>
             <dl className="fb-meta">
               {data.cas && <><dt>{L.detail.cas}</dt><dd className="mono">{data.cas}</dd></>}
-              {data.company_size && <><dt>{L.detail.companySize}</dt><dd>{data.company_size}</dd></>}
+              {data.company_size && <><dt>{L.detail.companySize}</dt><dd>{fbValueName(data.company_size)}</dd></>}
               <dt>{L.detail.created}</dt><dd className="mono tnum">{fbDate(data.created_at, true)}</dd>
             </dl>
             <div className="fb-body">{data.body}</div>

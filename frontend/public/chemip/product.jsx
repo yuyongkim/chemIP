@@ -18,25 +18,32 @@ function Product({ initialQuery = "", link = {} }) {
   const [view, setView] = useState(() => seededView || (seededQuery ? "search" : (localStorage.getItem("chemip-view") || "chemical")));
   const [tab, setTab] = useState("msds");
   const [selected, setSelected] = useSelectedChemical();
+  useEnglishNameFill(selected, setSelected);
   // ?chem= 으로 연 물질을 찾지 못하면 직전 물질을 말없이 보여 주지 않고 알린다.
   const [linkMissing, setLinkMissing] = useState("");
+  // ?chem= 물질을 불러오는 동안에는 직전·기본 물질(아세톤)을 잠깐이라도 보여 주지 않는다.
+  const linkChem = (link.chem || "").trim();
+  const [linkLoading, setLinkLoading] = useState(() => !!linkChem && selected?.chem_id !== linkChem);
 
   // ?chem=001008 — hydrate the selection from the API so a deep link lands on the
   // right substance even in a browser that has never visited the site.
   useEffect(() => {
-    const chemId = (link.chem || "").trim();
-    if (!chemId || selected?.chem_id === chemId) return;
-    apiGet(`/chemicals/${encodeURIComponent(chemId)}`)
-      .then(d => setSelected({
-        chem_id: chemId,
-        name: d.name || chemId,
+    if (!linkChem || selected?.chem_id === linkChem) { setLinkLoading(false); return; }
+    setLinkLoading(true);
+    // CAS 로 온 링크는 같은 CAS 의 KOSHA 물질(MSDS 있음)로 연다(resolveLinkChemId, api_chemicals.jsx).
+    resolveLinkChemId(linkChem)
+      .then(id => fetchChemicalDetail(id).then(d => ({ id, d })))
+      .then(({ id, d }) => setSelected({
+        chem_id: id,
+        name: d.name || id,
         name_en: d.name_en || "",
         cas_no: d.cas_no || "",
         source: d.source || "",
         has_msds: (d.sections || []).length > 0,
       }))
-      .catch(() => setLinkMissing(chemId));
-  }, [link.chem]);
+      .catch(() => setLinkMissing(linkChem))
+      .finally(() => setLinkLoading(false));
+  }, [linkChem]);
   // Top-bar query state — shared between ProductCmd and SearchView.
   // Persist the last query so leaving and returning to Search keeps it.
   const readSavedSearch = () => { try { return localStorage.getItem("chemip-search") || ""; } catch (e) { return ""; } };
@@ -45,9 +52,11 @@ function Product({ initialQuery = "", link = {} }) {
   useEffect(() => { localStorage.setItem("chemip-view", view); }, [view]);
   useEffect(() => { try { localStorage.setItem("chemip-search", searchQuery || ""); } catch (e) {} }, [searchQuery]);
   // First-load default: seed acetone so Chemical/Patents/AI/Guides aren't blank
-  useEffect(() => { if (!selected) setSelected(DEFAULT_CHEMICAL); }, []);
+  useEffect(() => { if (!selected && !linkChem) setSelected(DEFAULT_CHEMICAL); }, []);
 
-  const openChemical = (chem) => { setLinkMissing(""); setSelected(chem); setView("chemical"); };
+  const openChemical = (chem) => { setLinkMissing(""); setLinkLoading(false); setSelected(chem); setView("chemical"); };
+  // 상단 경로 표시도 불러오는 중·못 찾음일 때는 직전 물질 이름을 쓰지 않는다.
+  const shownSelected = (linkLoading || linkMissing) ? null : selected;
   const submitTopSearch = (q) => {
     const trimmed = (q || "").trim();
     if (!trimmed) return;
@@ -61,7 +70,7 @@ function Product({ initialQuery = "", link = {} }) {
       <div className="work">
         <ProductCmd
           view={view}
-          selected={selected}
+          selected={shownSelected}
           query={pendingQuery}
           setQuery={setPendingQuery}
           onSubmit={() => submitTopSearch(pendingQuery)}
@@ -75,7 +84,10 @@ function Product({ initialQuery = "", link = {} }) {
             </EmptyState>
           )}
           {view === "search" && <SearchView onOpen={openChemical} initialQuery={searchQuery} onQuerySubmit={(term) => { setSearchQuery(term); setPendingQuery(term); }} />}
-          {view === "chemical" && !linkMissing && <ChemicalView tab={tab} setTab={setTab} selected={selected} anchor={link.anchor} />}
+          {linkLoading && !linkMissing && view === "chemical" && (
+            <EmptyState card>{UI_COMMON_TEXT.chemLoading(linkChem)}</EmptyState>
+          )}
+          {view === "chemical" && !linkMissing && !linkLoading && <ChemicalView tab={tab} setTab={setTab} selected={selected} anchor={link.anchor} />}
           {view === "patents" && <PatentsView selected={selected} />}
           {view === "trade" && <TradeView selected={selected} />}
           {view === "drugs" && <DrugsView />}
@@ -101,7 +113,7 @@ function ProductRail({ view, setView }) {
   return (
     <aside className="rail">
       {PRODUCT_RAIL.map(it => (
-        <button key={it.k} aria-current={view === it.k ? "page" : undefined} onClick={() => setView(it.k)} title={`${R[it.k].ko} · ${R[it.k].en}`}>
+        <button key={it.k} aria-current={view === it.k ? "page" : undefined} onClick={() => setView(it.k)} title={R[it.k].en !== R[it.k].ko ? `${R[it.k].ko} · ${R[it.k].en}` : R[it.k].en}>
           <Icon name={it.ic} size={18} />
           <span className="rlabel">{R[it.k].ko}</span>
         </button>
@@ -112,10 +124,16 @@ function ProductRail({ view, setView }) {
   );
 }
 
+// 경로 끝 물질 이름: 화면 언어의 이름이 먼저, 다른 언어 이름은 " · " 뒤(chemDisplayNames, product_msds_helpers.jsx).
+function chemCrumbName(selected) {
+  const { primary, secondary } = chemDisplayNames(selected);
+  return secondary ? `${primary} · ${secondary}` : primary;
+}
+
 function ProductCmd({ view, selected, query, setQuery, onSubmit }) {
   const C = PRODUCT_LABELS.crumbs;
   const chemCrumbs = selected
-    ? [C.chemicals, selected.cas_no || selected.chem_id, `${selected.name || selected.name_en}${selected.name && selected.name_en && !selected.name.includes(selected.name_en) ? ` · ${selected.name_en}` : ""}`]
+    ? [C.chemicals, selected.cas_no || selected.chem_id, chemCrumbName(selected)]
     : [C.chemicals, "—", C.none];
   const crumbs = view === "chemical" ? chemCrumbs : (C[view] || []);
   return (
@@ -125,13 +143,13 @@ function ProductCmd({ view, selected, query, setQuery, onSubmit }) {
         {crumbs.map((c, i) => (
           <React.Fragment key={i}>
             <span>{i === crumbs.length - 1 ? <b>{c}</b> : c}</span>
-            {i < crumbs.length - 1 && <Icon name="chev" size={11} style={{ opacity: .4 }} />}
+            {i < crumbs.length - 1 && <Icon name="chev" size={11} className="crumb-sep" />}
           </React.Fragment>
         ))}
       </div>
       <div className="right">
         <div className="search">
-          <Icon name="search" size={14} style={{ color: "var(--fg-subtle)" }} />
+          <Icon name="search" size={14} className="cmd-search-icon" />
           <input
             value={query}
             onChange={e => setQuery(e.target.value)}
