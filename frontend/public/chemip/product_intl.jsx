@@ -1,119 +1,40 @@
 // Product · International regulation — world map of jurisdictions listing this CAS,
-// plus the listings of the selected jurisdiction. Data: /api/regulations/international/{cas}.
-// Jurisdiction names/ISO ids live in intl_regions.jsx; the map shape in data/world-110m.json.
-// Threshold bars: product_thresholds.jsx. Statutory evidence per jurisdiction: product_provisions.jsx.
-
-const WORLD_URL = "data/world-110m.json";
-const MAP_W = 960, MAP_H = 470;
-let worldPromise = null;
-
-function loadWorld() {
-  if (!worldPromise) {
-    worldPromise = fetch(WORLD_URL)
-      .then(r => { if (!r.ok) throw new Error(`map ${r.status}`); return r.json(); })
-      .then(topo => window.topojson.feature(topo, topo.objects.countries).features
-        .filter(f => f.id !== "010")); // Antarctica only wastes vertical space
-    worldPromise.catch(() => { worldPromise = null; });
-  }
-  return worldPromise;
-}
-
-function useWorldPaths() {
-  const [state, setState] = useState({ paths: [], error: null });
-  React.useEffect(() => {
-    if (!window.d3 || !window.topojson) { setState({ paths: [], error: "map library unavailable" }); return; }
-    let cancelled = false;
-    loadWorld().then(features => {
-      if (cancelled) return;
-      const projection = window.d3.geoNaturalEarth1().fitSize([MAP_W, MAP_H], { type: "FeatureCollection", features });
-      const path = window.d3.geoPath(projection);
-      setState({ paths: features.map(f => ({ id: f.id, name: f.properties?.name || "", d: path(f) })), error: null });
-    }).catch(e => { if (!cancelled) setState({ paths: [], error: String(e.message || e) }); });
-    return () => { cancelled = true; };
-  }, []);
-  return state;
-}
-
-// Country-level codes win over the EU block, so a Dutch listing colours the Netherlands itself.
-function isoIndex(codes) {
-  const idx = {};
-  codes.filter(c => (INTL_JURISDICTIONS[c]?.iso || []).length > 1)
-    .forEach(c => INTL_JURISDICTIONS[c].iso.forEach(id => { idx[id] = c; }));
-  codes.filter(c => (INTL_JURISDICTIONS[c]?.iso || []).length === 1)
-    .forEach(c => { idx[INTL_JURISDICTIONS[c].iso[0]] = c; });
-  return idx;
-}
-
-function WorldMap({ paths, byIso, counts, active, onSelect }) {
-  const max = Math.max(1, ...Object.values(counts));
-  return (
-    <svg viewBox={`0 0 ${MAP_W} ${MAP_H}`} role="img" aria-label={PRODUCT_LABELS.intl.mapAria}
-      style={{ width: "100%", height: "auto", display: "block" }}>
-      {paths.map(p => {
-        const code = byIso[p.id];
-        const n = code ? counts[code] : 0;
-        const fill = !code ? "var(--bg-sunken)"
-          : code === active ? "var(--accent)"
-          : `color-mix(in srgb, var(--accent) ${Math.round(30 + 45 * (n / max))}%, var(--bg-sunken))`;
-        return (
-          <path key={p.id || p.name} d={p.d} fill={fill}
-            stroke={code === active ? "var(--accent-ink)" : "var(--border)"} strokeWidth={code === active ? 1.2 : 0.5}
-            style={{ cursor: code ? "pointer" : "default", transition: "fill 120ms" }}
-            onClick={() => code && onSelect(code)}>
-            <title>{code ? `${p.name} · ${jurisdictionLabel(code)} · ${n}건` : p.name}</title>
-          </path>
-        );
-      })}
-    </svg>
-  );
-}
-
-// Old bulk imports store bare markers ("X", or "313" for EPCRA_313) — they say "listed", not a value.
-function meaningfulDetail(x) {
-  const d = String(x.detail || "").trim();
-  if (!d || /^x$/i.test(d) || (/^\d{1,4}$/.test(d) && String(x.regulation).includes(d))) return "";
-  return d;
-}
-
-// One block per regulation; the same list often repeats per form (anhydrous / solution / salts).
-function groupByRegulation(listings) {
-  const groups = [];
-  const at = {};
-  listings.forEach(x => {
-    if (!(x.regulation in at)) {
-      at[x.regulation] = groups.length;
-      groups.push({ regulation: x.regulation, list: x.list, source: x.source, entries: [] });
-    }
-    groups[at[x.regulation]].entries.push({ name: x.name, detail: meaningfulDetail(x) });
-  });
-  return groups;
-}
+// plus the listings of the selected jurisdiction. Data: /api/regulations/international/{cas} (useIntlRegulations).
+// Jurisdiction names/ISO ids live in intl_regions.jsx; the map: intl_world.jsx + product_intl_map.jsx;
+// pure transforms: product_intl_helpers.jsx. Threshold bars: product_thresholds.jsx. Statutory evidence: product_provisions.jsx.
+// EU REACH registration: when the bundled data has none for this CAS, one on-demand lookup (useReachRegistration, api_reach.jsx)
+// is merged in as the EU_REACH_REGISTERED item (intl_reach.jsx) and drawn by ReachEntry (product_intl_reach.jsx).
+// Status-only items ("checking", "not registered", "unknown") are shown but not counted.
+// 문구: PRODUCT_LABELS.intl. 스타일: product_detail.css.
 
 function IntlStat({ label, value, sub }) {
   return (
     <div>
       <div className="m">{label}</div>
       <div className="v tnum">{value}</div>
-      <div className="muted" style={{ fontSize: 11 }}>{sub}</div>
+      <div className="muted pd-stat-sub">{sub}</div>
     </div>
   );
 }
 
-function RegulationGroup({ group, first }) {
+function RegulationGroup({ group }) {
+  const IL = PRODUCT_LABELS.intl;
   return (
-    <div style={{ fontSize: 12, padding: "10px 0", overflowWrap: "anywhere", borderTop: first ? "none" : "1px dashed var(--border)" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
+    <div className="pd-reg-group">
+      <div className="pd-reg-group-head">
         <b>{group.list}</b>
         {group.entries.length > 1 && <span className="muted tnum">{group.entries.length}</span>}
       </div>
-      {group.entries.map((e, i) => (
-        <div key={i} style={{ marginTop: 3 }}>
+      {group.regulation === REACH_LIST_ID && group.entries.map((e, i) => <ReachEntry key={i} entry={e} />)}
+      {group.regulation !== REACH_LIST_ID && group.entries.map((e, i) => (
+        <div key={i} className="pd-reg-entry">
           {e.detail && <span>{e.detail}</span>}
           {e.name && <span className="muted">{e.detail ? " · " : ""}{e.name}</span>}
-          {!e.detail && !e.name && <span className="muted">등재</span>}
+          {e.aka && e.aka.length > 0 && <span className="muted pd-mini"> ({IL.aka(e.aka)})</span>}
+          {!e.detail && !e.name && <span className="muted">{IL.listed}</span>}
         </div>
       ))}
-      <div className="muted mono" style={{ fontSize: 10, marginTop: 3 }}>
+      <div className="muted mono pd-reg-group-foot">
         {group.regulation}{group.source ? ` · ${group.source}` : ""}
       </div>
     </div>
@@ -122,17 +43,21 @@ function RegulationGroup({ group, first }) {
 
 function IntlRegulationPanel({ selected }) {
   const cas = selected?.cas_no || "";
-  const { data, loading, error } = useIntlRegulations(cas);
+  const { data: listed, loading, error } = useIntlRegulations(cas);
+  const needReach = !!cas && !loading && !intlHasReach(listed);
+  const reach = useReachRegistration(cas, needReach);
+  const data = React.useMemo(() => (needReach ? intlWithReach(listed, reach, REACH_LABELS) : listed), [listed, reach, needReach]);
   const { paths, error: mapError } = useWorldPaths();
   const [active, setActive] = useState(null);
 
   const jurisdictions = data?.jurisdictions || {};
-  const codes = Object.keys(jurisdictions).sort((a, b) => jurisdictions[b].length - jurisdictions[a].length);
-  const counts = Object.fromEntries(codes.map(c => [c, jurisdictions[c].length]));
-  const byIso = React.useMemo(() => isoIndex(codes), [codes.join(",")]);
+  const counts = Object.fromEntries(Object.keys(jurisdictions).map(c => [c, intlListingCount(jurisdictions[c])]));
+  const codes = Object.keys(jurisdictions).sort((a, b) => counts[b] - counts[a]);
+  const listedCodes = codes.filter(c => counts[c] > 0); // a jurisdiction with only a status line (REACH checking / none) is not "listed"
+  const byIso = React.useMemo(() => isoIndex(listedCodes), [listedCodes.join(",")]);
   const current = active && jurisdictions[active] ? active : codes[0];
   const groups = groupByRegulation(jurisdictions[current] || []);
-  const listCount = new Set(codes.flatMap(c => jurisdictions[c].map(x => x.regulation))).size;
+  const listCount = new Set(codes.flatMap(c => jurisdictions[c].filter(x => !x.status_only).map(x => x.regulation))).size;
 
   React.useEffect(() => { setActive(null); }, [cas]);
 
@@ -141,52 +66,33 @@ function IntlRegulationPanel({ selected }) {
   const statusText = !cas ? ST.noCas
     : loading ? ST.loading
     : error ? ST.error(error)
-    : IL.status(data?.count || 0, codes.length);
+    : IL.status(data?.count || 0, listedCodes.length);
 
   return (
-    <section id="intl-regulation" style={{ marginTop: 28 }}>
+    <section id="intl-regulation" className="pd-lower">
       <SectionHeading t={IL.heading} meta={statusText} />
 
       {(!cas || (!loading && !error && codes.length === 0)) && (
-        <div className="card" style={{ padding: 20, color: "var(--fg-muted)", fontSize: 13 }}>
-          {!cas ? "CAS 번호가 없어 국가별 규제 목록을 조회할 수 없습니다."
-            : "수집된 국가별 규제 목록에 이 물질이 등재되어 있지 않습니다."}
-        </div>
+        <div className="card pd-lower-empty">{!cas ? IL.noCas : IL.none}</div>
       )}
 
       {codes.length > 0 && (
         <>
-          <div className="chem-hdr" style={{ marginBottom: 14 }}>
-            <div className="stats-mini" style={{ width: "100%" }}>
-              <IntlStat label={IL.stats.jurisdictions.m} value={codes.length} sub={IL.stats.jurisdictions.sub} />
+          <div className="chem-hdr pd-lower-stats">
+            <div className="stats-mini pd-full">
+              <IntlStat label={IL.stats.jurisdictions.m} value={listedCodes.length} sub={IL.stats.jurisdictions.sub} />
               <IntlStat label={IL.stats.lists.m} value={listCount} sub={IL.stats.lists.sub} />
               <IntlStat label={IL.stats.listings.m} value={data?.count || 0} sub={IL.stats.listings.sub} />
-              <IntlStat label={IL.stats.top.m} value={INTL_JURISDICTIONS[codes[0]]?.ko || codes[0]} sub={IL.stats.top.sub(counts[codes[0]])} />
+              <IntlStat label={IL.stats.top.m} value={jurisdictionName(codes[0])} sub={IL.stats.top.sub(counts[codes[0]])} />
             </div>
           </div>
 
-          <div className="layout-2col" style={{ alignItems: "start" }}>
-            <div className="card" style={{ padding: 12 }}>
-              {mapError
-                ? <div className="muted" style={{ fontSize: 12, padding: 12 }}>지도를 불러오지 못했습니다 ({mapError}). 목록은 정상입니다.</div>
-                : <WorldMap paths={paths} byIso={byIso} counts={counts} active={current} onSelect={setActive} />}
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 10 }}>
-                {codes.map(c => (
-                  <button key={c} className="chip" aria-pressed={c === current} onClick={() => setActive(c)}
-                    style={{ cursor: "pointer", fontSize: 11, fontWeight: c === current ? 700 : 500,
-                      background: c === current ? "var(--accent-soft)" : undefined,
-                      borderColor: c === current ? "var(--accent)" : undefined }}>
-                    {jurisdictionLabel(c)} <span className="tnum">{counts[c]}</span>
-                  </button>
-                ))}
-              </div>
-              <div className="muted" style={{ fontSize: 11, marginTop: 8 }}>지도나 버튼을 눌러 나라를 고르세요. 색이 진할수록 등재 건수가 많습니다.</div>
-            </div>
-
+          <div className="layout-2col pd-align-start">
+            <IntlMapCard paths={paths} mapError={mapError} byIso={byIso} counts={counts} codes={codes} current={current} onSelect={setActive} />
             <div className="panel">
-              <h3><b>{jurisdictionLabel(current)}</b> <span className="muted">{groups.length}개 목록 · {counts[current]}건</span></h3>
-              <div className="body" style={{ maxHeight: 560, overflowY: "auto" }}>
-                {groups.map((g, i) => <RegulationGroup key={g.regulation} group={g} first={i === 0} />)}
+              <h3><b>{jurisdictionLabel(current)}</b> <span className="muted">{IL.listHead(groups.length, counts[current])}</span></h3>
+              <div className="body pd-scroll">
+                {groups.map(g => <RegulationGroup key={g.regulation} group={g} />)}
               </div>
             </div>
           </div>

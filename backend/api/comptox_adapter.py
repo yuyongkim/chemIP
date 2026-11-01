@@ -6,15 +6,18 @@ Key is sent as ``x-api-key`` header.
 
 Base: https://comptox.epa.gov/ctx-api/v1/
 Domains: chemical, hazard, exposure, bioactivity
+
+Error handling and list coercion: backend/api/adapter_support.py.
 """
 
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict
+from typing import Any, Callable, Dict
 
 import requests
 
+from backend.api.adapter_support import ErrorTrackingMixin, as_list
 from backend.api.http_client import safe_get, get_http_session
 from backend.config.settings import settings
 
@@ -22,21 +25,24 @@ logger = logging.getLogger(__name__)
 
 _BASE = "https://comptox.epa.gov/ctx-api/v1"
 
+# GET paths that answer a list (or one object) for a DTXSID; one public method each.
+_DTXSID_LIST_PATHS = {
+    "toxval": "/hazard/toxval/search/by-dtxsid/{dtxsid}",
+    "human": "/hazard/human/search/by-dtxsid/{dtxsid}",
+    "cancer": "/hazard/cancer-summary/search/by-dtxsid/{dtxsid}",
+    "functional_use": "/exposure/ccd/functional-use/search/by-dtxsid/{dtxsid}",
+}
 
-class CompToxAdapter:
+
+class CompToxAdapter(ErrorTrackingMixin):
     """Client for EPA CompTox CTX API (requires API key)."""
+
+    _error_label = "CompTox"
 
     def __init__(self, timeout: int | None = None):
         self.api_key = settings.COMPTOX_API_KEY
         self.timeout = timeout or max(settings.HTTP_TIMEOUT_SECONDS, 15)
         self.last_error: str | None = None
-
-    def _clear_error(self) -> None:
-        self.last_error = None
-
-    def _set_error(self, message: str) -> None:
-        self.last_error = message
-        logger.warning("CompTox API issue: %s", message)
 
     @property
     def _headers(self) -> dict[str, str]:
@@ -69,6 +75,23 @@ class CompToxAdapter:
             timeout=self.timeout,
         )
 
+    def _keyed_call(self, fetch: Callable[[], requests.Response], *, as_items: bool = True) -> Dict[str, Any]:
+        """Key check, then one request: {"status", "data": [...], "total"} (or raw "data" when as_items=False)."""
+        self._clear_error()
+        if err := self._check_key():
+            return err
+
+        def call() -> Dict[str, Any]:
+            resp = fetch()
+            resp.raise_for_status()
+            data = resp.json()
+            if not as_items:
+                return {"status": "success", "data": data}
+            items = as_list(data)
+            return {"status": "success", "data": items, "total": len(items)}
+
+        return self._guarded(call)
+
     # ------------------------------------------------------------------
     # Chemical search
     # ------------------------------------------------------------------
@@ -81,41 +104,19 @@ class CompToxAdapter:
         if not query or not query.strip():
             return {"status": "error", "message": "Empty query"}
 
-        try:
+        def call() -> Dict[str, Any]:
             resp = self._get(f"/chemical/search/equal/{query.strip()}")
             resp.raise_for_status()
-            data = resp.json()
-            items = data if isinstance(data, list) else [data] if data else []
+            items = as_list(resp.json())
             logger.info("CompTox search '%s': %d results", query, len(items))
             return {"status": "success", "data": items, "total": len(items)}
 
-        except requests.Timeout:
-            self._set_error("Request timeout")
-            return {"status": "error", "message": "CompTox request timeout"}
-        except requests.ConnectionError as exc:
-            self._set_error(f"Connection error: {exc}")
-            return {"status": "error", "message": f"CompTox connection error: {exc}"}
-        except Exception as exc:
-            self._set_error(f"Unexpected error: {exc}")
-            logger.exception("CompTox search failed for '%s'", query)
-            return {"status": "error", "message": str(exc)}
+        return self._guarded(call, timeout_message="CompTox request timeout", connection_prefix="CompTox",
+                             failure_log=("CompTox search failed for '%s'", query))
 
     def search_chemical_contains(self, query: str, top: int = 20) -> Dict[str, Any]:
         """Partial name search (contains)."""
-        self._clear_error()
-        if err := self._check_key():
-            return err
-
-        try:
-            resp = self._get(f"/chemical/search/contain/{query.strip()}", params={"top": top})
-            resp.raise_for_status()
-            data = resp.json()
-            items = data if isinstance(data, list) else [data] if data else []
-            return {"status": "success", "data": items, "total": len(items)}
-
-        except Exception as exc:
-            self._set_error(f"Unexpected error: {exc}")
-            return {"status": "error", "message": str(exc)}
+        return self._keyed_call(lambda: self._get(f"/chemical/search/contain/{query.strip()}", params={"top": top}))
 
     def get_chemical_detail(self, dtxsid: str, projection: str = "chemicaldetailstandard") -> Dict[str, Any]:
         """Get full chemical details by DTXSID.
@@ -123,98 +124,33 @@ class CompToxAdapter:
         Projections: chemicaldetailall, chemicaldetailstandard,
                      chemicalidentifier, chemicalstructure, compact
         """
-        self._clear_error()
-        if err := self._check_key():
-            return err
-
-        try:
-            resp = self._get(
-                f"/chemical/detail/search/by-dtxsid/{dtxsid}",
-                params={"projection": projection},
-            )
-            resp.raise_for_status()
-            data = resp.json()
-            return {"status": "success", "data": data}
-
-        except Exception as exc:
-            self._set_error(f"Unexpected error: {exc}")
-            return {"status": "error", "message": str(exc)}
+        return self._keyed_call(
+            lambda: self._get(f"/chemical/detail/search/by-dtxsid/{dtxsid}", params={"projection": projection}),
+            as_items=False,
+        )
 
     # ------------------------------------------------------------------
-    # Hazard
+    # Hazard / exposure
     # ------------------------------------------------------------------
+
+    def _by_dtxsid(self, kind: str, dtxsid: str) -> Dict[str, Any]:
+        return self._keyed_call(lambda: self._get(_DTXSID_LIST_PATHS[kind].format(dtxsid=dtxsid)))
 
     def get_hazard_toxval(self, dtxsid: str) -> Dict[str, Any]:
         """Get ToxValDB hazard data for a chemical."""
-        self._clear_error()
-        if err := self._check_key():
-            return err
-
-        try:
-            resp = self._get(f"/hazard/toxval/search/by-dtxsid/{dtxsid}")
-            resp.raise_for_status()
-            data = resp.json()
-            items = data if isinstance(data, list) else [data] if data else []
-            return {"status": "success", "data": items, "total": len(items)}
-
-        except Exception as exc:
-            self._set_error(f"Unexpected error: {exc}")
-            return {"status": "error", "message": str(exc)}
+        return self._by_dtxsid("toxval", dtxsid)
 
     def get_hazard_human(self, dtxsid: str) -> Dict[str, Any]:
         """Get human hazard data."""
-        self._clear_error()
-        if err := self._check_key():
-            return err
-
-        try:
-            resp = self._get(f"/hazard/human/search/by-dtxsid/{dtxsid}")
-            resp.raise_for_status()
-            data = resp.json()
-            items = data if isinstance(data, list) else [data] if data else []
-            return {"status": "success", "data": items, "total": len(items)}
-
-        except Exception as exc:
-            self._set_error(f"Unexpected error: {exc}")
-            return {"status": "error", "message": str(exc)}
+        return self._by_dtxsid("human", dtxsid)
 
     def get_cancer_summary(self, dtxsid: str) -> Dict[str, Any]:
         """Get cancer classification summary."""
-        self._clear_error()
-        if err := self._check_key():
-            return err
-
-        try:
-            resp = self._get(f"/hazard/cancer-summary/search/by-dtxsid/{dtxsid}")
-            resp.raise_for_status()
-            data = resp.json()
-            items = data if isinstance(data, list) else [data] if data else []
-            return {"status": "success", "data": items, "total": len(items)}
-
-        except Exception as exc:
-            self._set_error(f"Unexpected error: {exc}")
-            return {"status": "error", "message": str(exc)}
-
-    # ------------------------------------------------------------------
-    # Exposure
-    # ------------------------------------------------------------------
+        return self._by_dtxsid("cancer", dtxsid)
 
     def get_functional_use(self, dtxsid: str) -> Dict[str, Any]:
         """Get functional use categories for a chemical."""
-        self._clear_error()
-        if err := self._check_key():
-            return err
-
-        try:
-            resp = self._get(f"/exposure/ccd/functional-use/search/by-dtxsid/{dtxsid}")
-            resp.raise_for_status()
-            data = resp.json()
-            items = data if isinstance(data, list) else [data] if data else []
-            return {"status": "success", "data": items, "total": len(items)}
-
-        except Exception as exc:
-            self._set_error(f"Unexpected error: {exc}")
-            return {"status": "error", "message": str(exc)}
+        return self._by_dtxsid("functional_use", dtxsid)
 
     # ------------------------------------------------------------------
     # Batch (POST)
@@ -222,37 +158,8 @@ class CompToxAdapter:
 
     def batch_search(self, queries: list[str]) -> Dict[str, Any]:
         """Batch exact-name/CAS search (max 100 per request)."""
-        self._clear_error()
-        if err := self._check_key():
-            return err
-
-        try:
-            resp = self._post("/chemical/search/equal/", queries[:100])
-            resp.raise_for_status()
-            data = resp.json()
-            items = data if isinstance(data, list) else [data] if data else []
-            return {"status": "success", "data": items, "total": len(items)}
-
-        except Exception as exc:
-            self._set_error(f"Unexpected error: {exc}")
-            return {"status": "error", "message": str(exc)}
+        return self._keyed_call(lambda: self._post("/chemical/search/equal/", queries[:100]))
 
     def batch_detail(self, dtxsids: list[str], projection: str = "chemicaldetailstandard") -> Dict[str, Any]:
         """Batch chemical detail lookup (max 200 per request)."""
-        self._clear_error()
-        if err := self._check_key():
-            return err
-
-        try:
-            resp = self._post(
-                f"/chemical/detail/search/by-dtxsid/?projection={projection}",
-                dtxsids[:200],
-            )
-            resp.raise_for_status()
-            data = resp.json()
-            items = data if isinstance(data, list) else [data] if data else []
-            return {"status": "success", "data": items, "total": len(items)}
-
-        except Exception as exc:
-            self._set_error(f"Unexpected error: {exc}")
-            return {"status": "error", "message": str(exc)}
+        return self._keyed_call(lambda: self._post(f"/chemical/detail/search/by-dtxsid/?projection={projection}", dtxsids[:200]))

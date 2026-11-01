@@ -1,0 +1,11 @@
+{
+ "_about": "Names a source gives for the wrong CAS. build_synonyms.py drops a (cas, name) pair coming from the listed source codes; the same name from another source on that CAS is kept. Every entry cites the row and the evidence that it is wrong.",
+ "items": [
+  {"cas": "110-83-8", "name": "사이클로헥산", "sources": ["kischem_ko"],
+   "reason": "KISCHEM data_no 4219 gives cyclohexene's CAS the Korean name of cyclohexane (사이클로헥산 = cyclohexane, C6H12; 110-83-8 is cyclohexene, C6H10).",
+   "evidence": "NCIS name_eng for 110-83-8 = '1,2,3,4-Tetrahydrobenzene; Cyclohexene'; law.go.kr lists name 110-83-8 시클로헥센 (KR_OSH_OEL, KR_OSH_MSDS_NO_TRADE_SECRET) and 110-82-7 사이클로헥산 / 시클로헥산 (KR_CLEAN_AIR_VOC, KR_OSH_OEL); KISCHEM data_no 4218 (110-82-7) is 사이클로헥세인 / Cyclohexane."},
+  {"cas": "110-83-8", "name": "Cyclohexane", "sources": ["kischem_en"],
+   "reason": "Same KISCHEM row (data_no 4219): English name Cyclohexane on cyclohexene's CAS.",
+   "evidence": "As above; Cyclohexane is CAS 110-82-7 in NCIS, K-REACH and the law.go.kr lists."}
+ ]
+}

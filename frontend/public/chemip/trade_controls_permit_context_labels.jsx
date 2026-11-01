@@ -1,7 +1,12 @@
 // Labels for the "실제 통합허가 사례" section (trade_controls_sections/kr_permit_context*.jsx, kr_permit_duration_hint.jsx).
 // 화면 문구는 이 파일 한 곳. 데이터: /api/integrations/kr-permit-context/{cas} (backend/integrations/kr_permit_context_store.py).
+// 영어: trade_controls_permit_context_labels_en.jsx 가 KR_PERMIT_CONTEXT_LABELS = langPick(KO, EN) 으로 정한다.
 
-const KR_PERMIT_CONTEXT_LABELS = {
+// 자료에 적힌 값(번역하지 않는다): 처리기간 post_type, 업종 미상 표시.
+const KPC_KEYS = { durationPostType: "통합허가", unknownIndustry: "미상" };
+
+const KR_PERMIT_CONTEXT_LABELS_KO = {
+  numberLocale: "ko-KR",
   title: "실제 통합허가 사례",
   hint: "통합환경허가 검토결과서에 적힌 배출구별 허가배출기준을 모은 것입니다. 실제 배출량이 아니라 허가 조건 값입니다.",
   loading: "통합허가 사례를 불러오는 중입니다…",
@@ -51,10 +56,9 @@ const KR_PERMIT_CONTEXT_LABELS = {
   retrieved: r => `수집 ${r}`,
   // 이 인허가 카드에 실제 처리기간을 덧붙인다(kr_permits_env.json 의 permit_id).
   durationHintPermitIds: ["KR_IPPC_INTEGRATED_PERMIT"],
-  durationPostType: "통합허가",
   maxIndustries: 5,
   maxDurationIndustries: 3,
   maxOtherUnits: 3,
 };
 
-Object.assign(window, { KR_PERMIT_CONTEXT_LABELS });
+Object.assign(window, { KPC_KEYS, KR_PERMIT_CONTEXT_LABELS_KO });

@@ -12,7 +12,7 @@ function HsCodesSection({ data }) {
       {hs.map((h, i) => (
         <div key={i} className="tc-item">
           <span className="mono tnum"><b>HS {tcHsDots(h.hs6) || "—"}</b>{h.cn8 ? ` · CN ${h.cn8}` : ""}{h.hsk10 ? ` · HSK ${h.hsk10}` : ""}</span>
-          <div className="tc-line tc-muted">{h.title_ko || h.title_en || ""}{h.description ? ` · ${h.description}` : ""}</div>
+          <div className="tc-line tc-muted">{tcLocalized(h.title_ko, h.title_en)}{h.description ? ` · ${h.description}` : ""}</div>
         </div>
       ))}
       {hsk.length > 0 && (
@@ -20,7 +20,7 @@ function HsCodesSection({ data }) {
           <b>{S.hskTitle}</b>
           <div className="ui-hint">{S.hskHint}</div>
           {hsk.map(k => (
-            <div key={k.hsk10} className="tc-line"><span className="mono tnum">{k.hsk10}</span> {k.name_ko || k.name_en}</div>
+            <div key={k.hsk10} className="tc-line"><span className="mono tnum">{k.hsk10}</span> {tcLocalized(k.name_ko, k.name_en)}</div>
           ))}
         </div>
       )}

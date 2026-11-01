@@ -1,10 +1,10 @@
-// Labels for the 요청 게시판 view — every Korean string the board shows lives here.
+// Labels for the 요청 게시판 view — every Korean string the board shows lives here (English: feedback_labels_en.jsx).
 // 분류·회사 규모·상태 값과 길이 제한은 백엔드(backend/feedback/schema.py)가 정하고 /api/feedback/meta 로 읽는다.
 
-const FEEDBACK_LABELS = {
+const FEEDBACK_LABELS_KO = {
   navLabel: "요청 게시판",
   title: "요청 게시판",
-  lede: "필요한 기능, 틀린 자료, 추가해야 할 물질을 남겨 주십시오. 중소기업 실무에 필요한 순서대로 반영합니다.",
+  lede: "필요한 기능, 틀린 자료, 추가해야 할 물질을 남겨 주십시오. 실무에 필요한 순서대로 반영합니다.",
   write: "글쓰기",
   backToList: "← 목록으로",
   empty: "아직 등록된 글이 없습니다. 첫 요청을 남겨 주십시오.",
@@ -50,12 +50,13 @@ const FEEDBACK_LABELS = {
     tooMany: "짧은 시간에 너무 많이 등록했습니다. 잠시 후 다시 시도해 주십시오.",
     failed: "등록하지 못했습니다. 잠시 후 다시 시도해 주십시오.",
     invalid: "입력값을 확인해 주십시오.",
+    // 칸별 오류 문구를 화면 쪽에서 바꿀 때(키 = 서버 errors 의 칸 이름). 비어 있으면 서버 문구를 그대로 보인다.
+    fieldErrors: {},
   },
   // "이 물질 자료가 틀렸나요?" — 물질 상세에서 글쓰기 화면을 미리 채워 연다.
   report: {
     link: "이 물질 자료가 틀렸나요?",
     hint: "요청 게시판에 CAS 번호를 채운 채로 글쓰기 화면이 열립니다.",
-    category: "자료 오류",
     title: (name, cas) => `[${cas || "CAS 없음"}] ${name || ""} 자료 오류 제보`.trim(),
   },
   // 운영자(관리자) 모드 — 게시판 바닥글의 작은 링크로 들어간다. 토큰은 이 탭(sessionStorage)에만 둔다.
@@ -89,9 +90,13 @@ const FEEDBACK_LABELS = {
     deleted: id => `#${id} 글을 삭제했습니다.`,
     deleteFailed: "삭제하지 못했습니다.",
     viewPublic: "공개 화면 보기",
+    // true 면 서버가 준 오류 문구(한국어)를 그대로 보이고, false 면 이 파일의 문구만 쓴다.
+    serverMessages: true,
   },
+  // 분류·회사 규모·상태 값(서버 meta, 한국어)의 표시 이름. 비어 있으면 값을 그대로 보인다.
+  values: {},
   // 상태값별 표시 톤(app.css .chip 변형). 상태 값 자체는 백엔드 meta.statuses.
   statusTone: { "접수": "", "검토 중": "accent", "반영": "safe", "보류": "hazard" },
 };
 
-Object.assign(window, { FEEDBACK_LABELS });
+Object.assign(window, { FEEDBACK_LABELS_KO });

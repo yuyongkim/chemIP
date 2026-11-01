@@ -1,14 +1,6 @@
 // Shared UI — empty state ("자료 준비 중"), error, badge, source link, titled panel, collapsible group.
 // 두 화면 이상에서 쓰는 표시 조각만 둔다. 스타일은 trade_controls.css 의 .ui-* (tokens.css 변수 사용).
-// 문구는 부르는 쪽이 넘긴다(기본 문구만 UI_COMMON_TEXT 에).
-
-const UI_COMMON_TEXT = {
-  preparing: "자료 준비 중입니다. 수집이 끝나면 자동으로 표시됩니다.",
-  error: "조회하지 못했습니다.",
-  sourceLink: "원문 ↗",
-  chemNotFound: id => `요청한 물질(${id})을 찾지 못했습니다. 검색에서 이름·CAS 로 다시 찾아 주십시오.`,
-  goSearch: "물질 검색으로 가기",
-};
+// 문구는 부르는 쪽이 넘긴다(기본 문구만 UI_COMMON_TEXT 에 — ui_common_labels.jsx · ui_common_labels_en.jsx).
 
 // kind: "empty"(기본) | "preparing" | "error". card=true 면 카드 모양으로 단독 표시.
 function EmptyState({ kind = "empty", card = false, children }) {
@@ -16,7 +8,9 @@ function EmptyState({ kind = "empty", card = false, children }) {
   return <div className={`ui-empty${kind === "error" ? " error" : ""}${card ? " card-like" : ""}`}>{text}</div>;
 }
 
+// 실시간 전용 안내(apiIsNotice, api_errors.jsx)는 오류 모양 없이 그 문구만 보인다.
 function ErrorState({ message, card = false }) {
+  if (apiIsNotice(message)) return <EmptyState card={card}>{message}</EmptyState>;
   return <EmptyState kind="error" card={card}>{UI_COMMON_TEXT.error}{message ? ` (${message})` : ""}</EmptyState>;
 }
 
@@ -58,4 +52,4 @@ function ExpandAllToggle({ open, setOpen, labels }) {
   );
 }
 
-Object.assign(window, { UI_COMMON_TEXT, EmptyState, ErrorState, Badge, SourceLink, SectionPanel, Collapsible, ExpandAllToggle });
+Object.assign(window, { EmptyState, ErrorState, Badge, SourceLink, SectionPanel, Collapsible, ExpandAllToggle });

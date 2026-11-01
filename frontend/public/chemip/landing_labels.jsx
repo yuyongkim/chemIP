@@ -1,24 +1,25 @@
-// 처음 화면(랜딩) 문구 — 중소기업 실무자(전담 규제 인력 없음) 대상. 화면 코드는 LANDING_LABELS 만 읽는다.
+// 처음 화면(랜딩) 문구 — 실무자(전담 규제 인력 없음) 대상. 화면 코드는 LANDING_LABELS 만 읽는다(영어: landing_labels_en.jsx).
 // 국내 목록 수처럼 바뀌는 숫자는 문구에 박지 않는다. "{kr_lists}" 자리를 /api/regulations/trade-controls-catalog 값으로
 // 채우고(landingFill), 값이 아직 없으면 숫자 없는 문구(…Fallback)를 쓴다.
 
 // 처음 화면과 검색 화면에서 함께 쓰는 "바로 열어 보기" 예시 물질.
-const FEATURED_CHEMICALS = [
+const FEATURED_CHEMICALS_KO = [
   { chem_id: "001008", name: "벤젠", cas_no: "71-43-2" },
   { chem_id: "001067", name: "아세톤", cas_no: "67-64-1" },
   { chem_id: "001032", name: "톨루엔", cas_no: "108-88-3" },
   { chem_id: "000329", name: "DEHP(프탈레이트)", cas_no: "117-81-7" },
 ];
 
-const LANDING_LABELS = {
+const LANDING_LABELS_KO = {
   hero: {
-    kicker: "중소기업 화학물질 실무 도우미 · 무료",
+    kicker: "화학물질 실무 도우미 · 무료",
+    recent: "최근 조회",
     title: "물질 하나만 넣으면,",
     titleSub: "지켜야 할 규제가 한 화면에 모입니다.",
     lede: `규제 담당자가 따로 없는 회사를 위해 만들었습니다. 물질 이름이나 CAS 번호를 넣으면 MSDS, 국내 법령 {kr_lists}개 목록 등재 여부, 인허가·신고, 수출입 의무, 상대국 규제, HS 코드를 모아 보여 드리고 체크리스트로 뽑아 드립니다.`,
     ledeFallback: "규제 담당자가 따로 없는 회사를 위해 만들었습니다. 물질 이름이나 CAS 번호를 넣으면 MSDS, 국내 법령별 지정 목록 등재 여부, 인허가·신고, 수출입 의무, 상대국 규제, HS 코드를 모아 보여 드리고 체크리스트로 뽑아 드립니다.",
-    en: "Free regulatory checklist for Korean SMEs — one substance, every obligation.",
-    searchPlaceholder: "물질 이름 또는 CAS 번호 (예: 아세톤, 67-64-1)",
+    en: "Free chemical regulatory checklist — one substance, every obligation.",
+    searchPlaceholder: "물질 이름, CAS 번호, 계산기, 용어 (예: 아세톤, 67-64-1, LMTD)",
     searchButton: "검색",
     examples: "바로 열어 보기",
     ctaBoard: "기능 요청하기",
@@ -56,7 +57,7 @@ const LANDING_LABELS = {
     ],
   },
   footer: {
-    about: "중소기업 실무자를 위한 무료 화학물질 규제 안내 도구입니다. 소스 코드는 GNU AGPL-3.0 으로 공개되어 있습니다.",
+    about: "화학물질 실무자를 위한 무료 화학물질 규제 안내 도구입니다. 소스 코드는 GNU AGPL-3.0 으로 공개되어 있습니다.",
     colUse: "이용",
     colOpen: "오픈소스",
     colDev: "연구·개발",
@@ -80,7 +81,7 @@ function landingFill(text, catalog) {
   if (!text) return text;
   if (!/\{\w+\}/.test(text)) return text;
   if (!catalog) return null;
-  return text.replace(/\{(\w+)\}/g, (_, k) => (catalog[k] != null ? catalog[k].toLocaleString("ko-KR") : "")); 
+  return text.replace(/\{(\w+)\}/g, (_, k) => (catalog[k] != null ? catalog[k].toLocaleString(tr("ko-KR", "en-US")) : "")); 
 }
 
-Object.assign(window, { LANDING_LABELS, FEATURED_CHEMICALS, landingFill });
+Object.assign(window, { LANDING_LABELS_KO, FEATURED_CHEMICALS_KO, landingFill });

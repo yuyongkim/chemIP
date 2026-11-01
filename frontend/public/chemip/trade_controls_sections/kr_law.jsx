@@ -8,16 +8,7 @@ function tcObligationText(o) {
 // 한 목록에 같은 물질 항목이 많으면(제품 유형별 함량 기준 등) 앞의 몇 건만 보이고 나머지는 접어 둔다.
 const TC_LAW_ENTRY_PREVIEW = 3;
 
-function KrLawEntry({ entry: e }) {
-  return (
-    <div className="tc-line">
-      <span>{tcEntryName(e)}</span>
-      {e.detail && <span className="tc-muted"> · {e.detail}</span>}
-    </div>
-  );
-}
-
-function KrLawList({ list: l }) {
+function KrLawList({ list: l, terms }) {
   const L = TRADE_LABELS;
   const obligations = (l.obligations || []).map(tcObligationText).filter(Boolean);
   const entries = [...(l.entries || []), ...(l.family_entries || [])];
@@ -29,16 +20,16 @@ function KrLawList({ list: l }) {
         <span className="tc-item-title">{l.title || l.list_id}</span>
         <span className="tc-meta">{[l.list_id, l.amended_on && `${L.fields.amended_on} ${l.amended_on}`].filter(Boolean).join(" · ")}</span>
       </div>
-      {head.map((e, i) => <KrLawEntry key={i} entry={e} />)}
+      {head.map((e, i) => <TcEntryLine key={i} entry={e} terms={terms} />)}
       {rest.length > 0 && (
         <Collapsible className="tc-more" summary={L.collapse.more(rest.length)}>
-          {rest.map((e, i) => <KrLawEntry key={i} entry={e} />)}
+          {rest.map((e, i) => <TcEntryLine key={i} entry={e} terms={terms} />)}
         </Collapsible>
       )}
       {obligations.length > 0 && (
         <div className="tc-field">
           <span className="tc-field-k">{L.fields.obligations}</span>
-          <ul className="tc-bullets">{obligations.map((o, i) => <li key={i}>{o}</li>)}</ul>
+          <ul className="tc-bullets">{obligations.map((o, i) => <li key={i}><Highlight text={o} terms={terms} /></li>)}</ul>
         </div>
       )}
       <div className="tc-line tc-muted">{l.legal_basis}<SourceLink url={l.source_url} /></div>
@@ -53,6 +44,7 @@ function KrLawSection({ data }) {
   const [openAll, setOpenAll] = React.useState(null);
   const ready = tcSourceReady(data.sources_status, "krLaw");
   const laws = data.kr_law_lists || [];
+  const terms = tcHighlightTerms(data);
   const aside = ready && laws.length ? (
     <>{S.lists(laws.length)} · <ExpandAllToggle open={openAll} setOpen={setOpenAll} labels={C} /></>
   ) : ready ? S.lists(0) : "";
@@ -73,7 +65,7 @@ function KrLawSection({ data }) {
             </span>
           )}
         >
-          {g.lists.map(l => <KrLawList key={l.list_id || l.title} list={l} />)}
+          {g.lists.map(l => <KrLawList key={l.list_id || l.title} list={l} terms={terms} />)}
         </Collapsible>
       ))}
     </SectionPanel>

@@ -492,23 +492,25 @@ def test_ai_analyze_returns_sources_and_guides(monkeypatch) -> None:
                 }
             ]
 
-    class FakeGlobalPatentAdapter:
-        def search_patents_by_chem_id(self, chem_id, limit=6, offset=0):
-            assert chem_id == "CHEM-123"
-            return [
+    def fake_read_index(cas):
+        assert cas == "71-43-2"  # CAS from the substance meta, not the chem_id
+        return {
+            "recent": [
                 {
-                    "patent_id": "US-1",
-                    "title": "Local Patent A",
+                    "patent_id": "US1234567B2",
+                    "title": "Mapped Patent A",
                     "jurisdiction": "US",
-                    "category": "usage",
-                    "snippet": "Used as a solvent in a process",
+                    "year": 2024,
+                    "snippet": "abstract text that must not reach AI evidence",
+                    "link": "https://worldwide.espacenet.com/patent/search?q=pn%3DUS1234567B2",
                 }
             ]
+        }
 
     monkeypatch.setattr(ai, "TerminologyDB", FakeDB)
     monkeypatch.setattr(ai, "guide_store", FakeGuideStore())
     monkeypatch.setattr(evidence_collector, "PatentFetcher", FakePatentFetcher)
-    monkeypatch.setattr(evidence_collector, "GlobalPatentAdapter", lambda: FakeGlobalPatentAdapter())
+    monkeypatch.setattr(evidence_collector.patent_mapping, "read_index", fake_read_index)
     monkeypatch.setattr(
         ai,
         "recommend_guides",
@@ -532,7 +534,9 @@ def test_ai_analyze_returns_sources_and_guides(monkeypatch) -> None:
     assert "sources" in payload and len(payload["sources"]) >= 3
     assert payload["guide_recommendations"][0]["guide_no"] == "A-1-2018"
     assert any(source["title"] == "Patent A" for source in payload["sources"])
-    assert any(source["title"] == "Local Patent A" for source in payload["sources"])
+    mapped = [source for source in payload["sources"] if source["title"] == "Mapped Patent A"]
+    assert mapped and mapped[0]["type"] == "patent_mapping"
+    assert "abstract text" not in mapped[0]["snippet"]
     assert payload["llm_used"] is False
 
 
@@ -582,14 +586,11 @@ def test_ai_analyze_llm_fallback_when_unavailable(monkeypatch) -> None:
         def search_patents(self, _keyword):
             return []
 
-    class FakeGlobalPatentAdapter:
-        def search_patents_by_chem_id(self, _chem_id, limit=6, offset=0):
-            return []
 
     monkeypatch.setattr(ai, "TerminologyDB", FakeDB)
     monkeypatch.setattr(ai, "guide_store", FakeGuideStore())
     monkeypatch.setattr(evidence_collector, "PatentFetcher", FakePatentFetcher)
-    monkeypatch.setattr(evidence_collector, "GlobalPatentAdapter", lambda: FakeGlobalPatentAdapter())
+    monkeypatch.setattr(evidence_collector.patent_mapping, "read_index", lambda _cas: None)
     # Force LLM to appear unavailable via the ai module's imported reference
     monkeypatch.setattr(
         ai,

@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+
 import { SECTION_TITLES_KO } from '@/lib/constants';
 
 interface DetailSidebarProps {
@@ -7,16 +9,31 @@ interface DetailSidebarProps {
 }
 
 export default function DetailSidebar({ sections, activeSection, onSectionClick }: DetailSidebarProps) {
+    const navRef = useRef<HTMLElement>(null);
+
+    // Keep the highlighted entry visible inside the scrollable TOC as the page scrolls.
+    useEffect(() => {
+        const nav = navRef.current;
+        const item = nav?.querySelector<HTMLElement>(`[data-seq="${activeSection}"]`);
+        if (!nav || !item) return;
+        const top = item.offsetTop;
+        if (top < nav.scrollTop || top + item.offsetHeight > nav.scrollTop + nav.clientHeight) {
+            nav.scrollTo({ top: top - nav.clientHeight / 2 + item.offsetHeight / 2, behavior: 'smooth' });
+        }
+    }, [activeSection]);
+
     return (
         <aside className="hidden lg:block col-span-1" aria-label="Table of contents">
             <div className="sticky top-24 bg-white rounded-xl border border-gray-100 overflow-hidden">
                 <div className="p-4 border-b border-gray-100">
                     <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Contents</h3>
                 </div>
-                <nav className="max-h-[calc(100vh-200px)] overflow-y-auto p-2">
+                <nav ref={navRef} className="relative max-h-[calc(100vh-200px)] overflow-y-auto p-2">
                     {sections.map((section) => (
                         <button
                             key={section.section_seq}
+                            data-seq={section.section_seq}
+                            aria-current={activeSection === section.section_seq ? 'location' : undefined}
                             onClick={() => onSectionClick(section.section_seq)}
                             className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors mb-1 flex items-center gap-2 ${activeSection === section.section_seq
                                     ? 'bg-blue-50 text-blue-700 font-medium'

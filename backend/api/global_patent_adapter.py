@@ -41,7 +41,7 @@ class GlobalPatentAdapter(PatentIndexBase):
     ) -> list[dict[str, Any]]:
         raw_limit = min(max(offset + (limit * 5), 100), 1000)
         sql = """\
-            SELECT patent_id, title, file_path, matched_term,
+            SELECT patent_id, title, matched_term,
                    jurisdiction, section, snippet, created_at
             FROM patent_index
             WHERE chem_id = ?
@@ -65,12 +65,11 @@ class GlobalPatentAdapter(PatentIndexBase):
 
     @staticmethod
     def _map_row(row: tuple[Any, ...]) -> dict[str, Any]:
-        patent_id, title, file_path, matched_term, jurisdiction, section, snippet, created_at = row
+        patent_id, title, matched_term, jurisdiction, section, snippet, created_at = row
         category, relevance_score = _classify_snippet(snippet, matched_term)
         return {
             "patent_id": patent_id,
             "title": title,
-            "file_path": file_path,
             "matched_term": matched_term,
             "jurisdiction": jurisdiction,
             "section": section,

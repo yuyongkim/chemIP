@@ -9,17 +9,18 @@ function KrObligationsSection({ data }) {
   const rules = data.kr_obligations || [];
   const unverified = data.kr_unverified || [];
   const customs = tcCustomsCount(rules);
+  const terms = tcHighlightTerms(data);
   return (
     <>
       <SectionPanel id={TRADE_ANCHORS.obligations} title={S.obligations.title} aside={ready ? `${L.count(rules.length)}${customs ? ` · ${L.customs} ${customs}` : ""}` : ""}>
         {!ready && <EmptyState kind="preparing" />}
         {ready && rules.length === 0 && <EmptyState>{S.obligations.empty}</EmptyState>}
-        {rules.map((r, i) => <RuleCard key={r.rule_id || i} item={r} title={r.obligation} fieldKeys={TC_OBLIGATION_FIELDS} />)}
+        {rules.map((r, i) => <RuleCard key={r.rule_id || i} item={r} title={r.obligation} fieldKeys={TC_OBLIGATION_FIELDS} terms={terms} />)}
       </SectionPanel>
       {unverified.length > 0 && (
         <SectionPanel title={S.unverified.title} aside={L.count(unverified.length)}>
           <div className="ui-hint">{S.unverified.hint}</div>
-          {unverified.map((r, i) => <RuleCard key={r.rule_id || i} item={r} title={r.obligation} fieldKeys={TC_OBLIGATION_FIELDS} />)}
+          {unverified.map((r, i) => <RuleCard key={r.rule_id || i} item={r} title={r.obligation} fieldKeys={TC_OBLIGATION_FIELDS} terms={terms} />)}
         </SectionPanel>
       )}
     </>

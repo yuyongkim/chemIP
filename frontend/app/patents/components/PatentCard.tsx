@@ -14,6 +14,7 @@ export default function PatentCard({ patent, idx, query }: PatentCardProps) {
   const title = patent.title || patent.inventionTitle || `Patent ${patentId}`;
   const highlightKeywords = buildHighlightKeywords(query, patent.matched_term);
   const sourceUrl = getPatentSourceUrl(patent, query);
+  const sourceLabel = patent.applicationNumber || patent.inventionTitle ? 'View on KIPRIS' : 'View source';
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 hover:border-indigo-300 hover:shadow-md transition-all p-6 group">
@@ -57,6 +58,12 @@ export default function PatentCard({ patent, idx, query }: PatentCardProps) {
         </div>
       )}
 
+      {patent.source && (
+        <div className="mb-3 text-xs font-medium text-gray-500">
+          Source: {patent.source}
+        </div>
+      )}
+
       <div className="mb-4">
         {patent.section && (
           <div className="text-sm text-gray-600 mb-2 font-medium flex items-center gap-2">
@@ -93,7 +100,7 @@ export default function PatentCard({ patent, idx, query }: PatentCardProps) {
           )}
         </div>
         <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-indigo-600 hover:text-indigo-800 flex items-center gap-1">
-          View on KIPRIS <FileText className="w-4 h-4" />
+          {sourceLabel} <FileText className="w-4 h-4" />
         </a>
       </div>
     </div>

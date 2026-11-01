@@ -1,0 +1,57 @@
+{
+  "files": {
+    "intl_regions.jsx": "Jurisdiction reference data: each entry carries both ko and en names; the screen picks one via jurisdictionName/jurisdictionLabel (tr).",
+    "family_sites.jsx": "Family-site list (docs/integration/FAMILY_SITES_v1.md): each entry carries desc {ko, en}; the screen picks one via familySiteDesc (tr).",
+    "safety_rules_data.jsx": "Generated rule data (scripts/portal_build/safety_rules/*.json): KOSHA class-name patterns matched against Korean source data, and ko/en name pairs the screen picks with tr.",
+    "apl_psm_data.jsx": "Statute transcription for the regulatory applicability checker (law.go.kr source text, not copyrighted): each entry carries ko and en names and the screen picks one with tr; regexes match Korean MSDS section 15 source text.",
+    "apl_hazmat_data.jsx": "Statute transcription for the regulatory applicability checker (law.go.kr source text, not copyrighted): each entry carries ko and en names and the screen picks one with tr; regexes match Korean MSDS section 15 source text.",
+    "apl_cca_data.jsx": "Statute transcription for the regulatory applicability checker (law.go.kr source text, not copyrighted): each entry carries ko and en names and the screen picks one with tr; regexes match Korean MSDS section 15 source text.",
+    "catrule_data.jsx": "Statute/directive transcription for the product-page rules by hazard class (law.go.kr, eCFR, EUR-Lex source text): each entry carries ko and en names and the screen picks one with tr.",
+    "apl_cites.jsx": "Statute transcription for the regulatory applicability checker (law.go.kr source text, not copyrighted): each entry carries ko and en names and the screen picks one with tr; regexes match Korean MSDS section 15 source text."
+  },
+  "strings": {
+    "api_content.jsx": {
+      "화학": "default search keyword sent to the Korean news APIs (KOTRA / NAVER) when no substance is selected; a query value, not displayed"
+    },
+    "static_aliases.jsx": {
+      "re:^\\^\\(\\?:관용명\\|별칭": "regex prefix matched against Korean source data (port of backend/core/chemical_aliases.py)",
+      "ㆍ": "separator character stripped from source names (port of backend/core/chemical_aliases.py)"
+    },
+    "static_trade_assembly.jsx": {
+      "세분류": "suffix matched against Korean list names in source data (same as backend/core/trade_controls/substance.py _SUBCATEGORY_SUFFIX)"
+    },
+    "feedback_helpers.jsx": {
+      "자료 오류": "category value stored by the server (backend/feedback/schema.py CATEGORIES); display name comes from FEEDBACK_LABELS.values"
+    },
+    "calc_link.jsx": {
+      "분자량": "Korean MSDS section 9 field name matched against KOSHA data to read the molecular weight; not display text"
+    },
+    "ghs_helpers.jsx": {
+      "자료없음": "KOSHA MSDS source marker for an empty item (section 2); matched in source text, never displayed.",
+      "해당없음": "KOSHA MSDS source marker for 'not applicable' (section 2); matched in source text, never displayed."
+    },
+    "product_msds_helpers.jsx": {
+      "자료없음": "KOSHA MSDS source marker for an empty item; matched in source text, never displayed.",
+      "해당없음": "KOSHA MSDS source marker for 'not applicable'; matched in source text, never displayed."
+    },
+    "product.jsx": {
+      "아세톤 (Acetone)": "Seed substance name as KOSHA publishes it (source data); EN mode shows name_en first via chemDisplayNames."
+    },
+    "ghs_hazard_parse.jsx": {
+      "자료없음": "KOSHA MSDS source marker for an empty item; matched in source text, never displayed.",
+      "불안정": "prefix of the KOSHA category text 불안정한 폭발성 물질 matched in source data (same as scripts/portal_build/ghs_parse.py)"
+    },
+    "compat_core.jsx": {
+      "해당없음": "KOSHA MSDS section 15 value meaning 'not applicable', matched in source text (same as reactive_groups.py)",
+      "비위험물": "KOSHA MSDS section 15 value meaning 'not a dangerous substance', matched in source text (same as reactive_groups.py)"
+    },
+    "law_core.jsx": {
+      "제": "Korean article-number format of the official law text (제N조의M); the article label is source-data notation shown in both languages, like the law names",
+      "조": "Korean article-number format of the official law text (제N조의M); source-data notation",
+      "의": "Korean article-number format of the official law text (제N조의M, data key \"7의2\"); source-data notation"
+    },
+    "law_history.jsx": {
+      "현행": "status value of the 법제처 history rows (law_history.status) used to mark the current version; display name comes from LAW_LABELS.statuses"
+    }
+  }
+}

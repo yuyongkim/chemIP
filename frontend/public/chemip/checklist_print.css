@@ -1,4 +1,4 @@
-/* 중소기업 체크리스트(trade_controls_sections/checklist_export.jsx) — 버튼 줄과 인쇄 전용 배치.
+/* 체크리스트(trade_controls_sections/checklist_export.jsx) — 버튼 줄과 인쇄 전용 배치. 아래쪽에 GHS 경고표지(.gl-*) 표지·인쇄.
    화면에서는 .tc-print-root 를 숨기고, 인쇄 중(body.tc-printing)에는 앱 화면을 숨기고 체크리스트만 찍는다.
    색·글꼴은 tokens.css 변수만, 간격은 --unit(4px) 배수. */
 
@@ -36,3 +36,58 @@
 .tcp-k { color: var(--fg-muted); }
 .tcp-url { font-family: var(--font-mono); font-size: 8pt; color: var(--fg-muted); margin-top: calc(var(--unit) * 0.5); }
 .tcp-footer { margin-top: calc(var(--unit) * 3); font-size: 8pt; color: var(--fg-muted); }
+
+/* 경고표지(ghs_label_sheet.jsx · ghs_label_print.jsx) — 미리 보기와 인쇄가 같은 표지. 크기·글자·@page 는 여기 한 곳.
+   가로 놓기: A4 297×210(여백 6mm → 표지 285×198) · A5 210×148(여백 5mm → 200×138) · 소형 100×70(라벨 용지, 여백 0).
+   그림문자 한 변(--gl-pict)은 표지 면적의 1/40 보다 넉넉하게. 종이 색은 --figure-bg, 글자는 --paper-ink(어두운 테마에서도 같음). */
+.gl-sheet {
+  --gl-w: 200mm; --gl-h: 138mm; --gl-pict: 30mm; --gl-fs: 9pt; --gl-name-fs: 16pt; --gl-signal-fs: 22pt; --gl-k-fs: 7pt;
+  --gl-pad: 5mm; --gl-gap: 3.5mm; --gl-line: 0.5mm;
+  box-sizing: border-box; width: var(--gl-w); height: var(--gl-h); padding: var(--gl-pad);
+  display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: var(--gl-gap); overflow: hidden;
+  border: var(--gl-line) solid var(--paper-ink); background: var(--figure-bg); color: var(--paper-ink);
+  font-family: var(--font-body); font-size: var(--gl-fs); line-height: 1.3; text-align: left;
+}
+.gl-sheet[data-size="a4"] { --gl-w: 285mm; --gl-h: 198mm; --gl-pict: 42mm; --gl-fs: 11.5pt; --gl-name-fs: 22pt; --gl-signal-fs: 30pt; --gl-k-fs: 8.5pt; --gl-pad: 8mm; --gl-gap: 5mm; --gl-line: 0.7mm; }
+.gl-sheet[data-size="small"] { --gl-w: 100mm; --gl-h: 70mm; --gl-pict: 15mm; --gl-fs: 5.4pt; --gl-name-fs: 8.5pt; --gl-signal-fs: 11pt; --gl-k-fs: 4.6pt; --gl-pad: 2.5mm; --gl-gap: 1.5mm; --gl-line: 0.35mm; }
+.gl-sheet * { color: inherit; }
+.gl-k { display: block; font-size: var(--gl-k-fs); font-weight: 600; letter-spacing: .02em; opacity: .75; }
+.gl-name { border-bottom: var(--gl-line) solid var(--paper-ink); padding-bottom: calc(var(--gl-gap) * .6); }
+.gl-name b { font-family: var(--font-display); font-size: var(--gl-name-fs); line-height: 1.15; overflow-wrap: anywhere; }
+.gl-cas { margin-left: calc(var(--gl-gap) * 1.2); font-size: var(--gl-fs); }
+.gl-body { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: calc(var(--gl-gap) * 1.4); min-height: 0; }
+.gl-left { display: grid; align-content: start; gap: var(--gl-gap); justify-items: center; }
+.gl-sheet .gl-picts { display: grid; grid-template-columns: repeat(2, var(--gl-pict)); gap: calc(var(--gl-gap) * .4); margin: 0; }
+.gl-sheet .gl-picts .ghs-fig { margin: 0; }
+.gl-sheet .gl-picts .ghs-pict { width: var(--gl-pict); height: var(--gl-pict); }
+.gl-signal { text-align: center; }
+.gl-signal b { display: block; font-family: var(--font-display); font-size: var(--gl-signal-fs); line-height: 1.05; font-weight: 800; letter-spacing: .02em; }
+.gl-right { display: grid; align-content: start; gap: var(--gl-gap); min-width: 0; overflow: hidden; }
+.gl-block h4 { margin: 0 0 calc(var(--gl-gap) * .3); font-size: var(--gl-k-fs); font-weight: 700; border-bottom: calc(var(--gl-line) * .5) solid var(--paper-ink); }
+.gl-block ul { margin: 0; padding: 0; list-style: none; display: grid; gap: calc(var(--gl-gap) * .15); }
+.gl-block li { overflow-wrap: anywhere; }
+.gl-code { font-family: var(--font-mono); font-weight: 600; }
+.gl-pgroup { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: calc(var(--gl-gap) * .6); margin-top: calc(var(--gl-gap) * .25); }
+.gl-pgroup-k { font-weight: 700; }
+.gl-see-sds { margin: calc(var(--gl-gap) * .4) 0 0; font-weight: 600; }
+.gl-supplier { display: flex; flex-wrap: wrap; gap: calc(var(--gl-gap) * .4) calc(var(--gl-gap) * 1.6); border-top: var(--gl-line) solid var(--paper-ink); padding-top: calc(var(--gl-gap) * .6); }
+.gl-supplier > span { display: inline-flex; gap: calc(var(--gl-gap) * .5); align-items: baseline; min-width: 0; overflow-wrap: anywhere; }
+.gl-supplier .gl-k { display: inline; }
+.gl-blank { display: inline-block; min-width: 18ch; border-bottom: calc(var(--gl-line) * .6) solid var(--paper-ink); }
+
+/* 미리 보기 틀: 실제 크기 표지를 틀 너비에 맞게 줄인다(--gl-scale · --gl-fit-h, ghs_label_fit.jsx) */
+.gl-preview-frame { height: var(--gl-fit-h, auto); overflow: hidden; }
+.gl-preview-frame > .gl-sheet { transform: scale(var(--gl-scale, 1)); transform-origin: top left; }
+
+.gl-print-root { display: none; }
+@media print {
+  body.gl-printing #app-root { display: none !important; }
+  body.gl-printing { background: var(--figure-bg); margin: 0; }
+  body.gl-printing .gl-print-root { display: block; page: gl-a5; }
+  body.gl-printing .gl-print-root[data-size="a4"] { page: gl-a4; }
+  body.gl-printing .gl-print-root[data-size="small"] { page: gl-small; }
+  body.gl-printing .gl-sheet { break-inside: avoid; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+@page gl-a4 { size: A4 landscape; margin: 6mm; }
+@page gl-a5 { size: A5 landscape; margin: 5mm; }
+@page gl-small { size: 100mm 70mm; margin: 0; }

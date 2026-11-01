@@ -1,0 +1,440 @@
+{
+  "parser": "parse_eu_dwd",
+  "celex": "32020L2184",
+  "downloads": {
+    "cellar": "http://publications.europa.eu/resource/celex/32020L2184"
+  },
+  "mapping": {
+    "Acrylamide": {
+      "members": [
+        {
+          "cas": "79-06-1",
+          "check": "acrylamide|2-propenamide"
+        }
+      ]
+    },
+    "Antimony": {
+      "members": [
+        {
+          "cas": "7440-36-0",
+          "check": "^antimony\\b"
+        }
+      ]
+    },
+    "Arsenic": {
+      "members": [
+        {
+          "cas": "7440-38-2",
+          "check": "^arsenic\\b"
+        }
+      ]
+    },
+    "Benzene": {
+      "members": [
+        {
+          "cas": "71-43-2",
+          "check": "^benzene\\b"
+        }
+      ]
+    },
+    "Benzo(a)pyrene": {
+      "members": [
+        {
+          "cas": "50-32-8",
+          "check": "benzo\\[a\\]pyrene"
+        }
+      ]
+    },
+    "Bisphenol A": {
+      "members": [
+        {
+          "cas": "80-05-7",
+          "check": "bisphenol a|4,4'-isopropylidenediphenol|4,4'-\\(1-methylethylidene\\)bis"
+        }
+      ]
+    },
+    "Boron": {
+      "members": [
+        {
+          "cas": "7440-42-8",
+          "check": "^boron$"
+        }
+      ]
+    },
+    "Bromate": {
+      "members": [
+        {
+          "cas": "15541-45-4",
+          "check": "bromate"
+        }
+      ]
+    },
+    "Cadmium": {
+      "members": [
+        {
+          "cas": "7440-43-9",
+          "check": "^cadmium\\b"
+        }
+      ]
+    },
+    "Chlorate": {
+      "members": [
+        {
+          "cas": "14866-68-3",
+          "check": "chlorate"
+        }
+      ]
+    },
+    "Chlorite": {
+      "members": [
+        {
+          "cas": "14998-27-7",
+          "check": "chlorite"
+        }
+      ]
+    },
+    "Chromium": {
+      "members": [
+        {
+          "cas": "7440-47-3",
+          "check": "^chromium\\b"
+        }
+      ]
+    },
+    "Copper": {
+      "members": [
+        {
+          "cas": "7440-50-8",
+          "check": "^copper\\b"
+        }
+      ]
+    },
+    "Cyanide": {
+      "members": [
+        {
+          "cas": "57-12-5",
+          "check": "^cyanide"
+        }
+      ]
+    },
+    "1,2-dichloroethane": {
+      "members": [
+        {
+          "cas": "107-06-2",
+          "check": "1,2-dichloroethane|ethane, 1,2-dichloro"
+        }
+      ]
+    },
+    "Epichlorohydrin": {
+      "members": [
+        {
+          "cas": "106-89-8",
+          "check": "epichlorohydrin|oxirane, \\(chloromethyl\\)"
+        }
+      ]
+    },
+    "Fluoride": {
+      "members": [
+        {
+          "cas": "16984-48-8",
+          "check": "^fluoride"
+        }
+      ]
+    },
+    "Haloacetic acids (HAAs)": {
+      "sum": true,
+      "members": [
+        {
+          "cas": "79-11-8",
+          "check": "chloroacetic acid|acetic acid, chloro-",
+          "name": "Monochloroacetic acid"
+        },
+        {
+          "cas": "79-43-6",
+          "check": "dichloroacetic acid|acetic acid, (2,2-)?dichloro-",
+          "name": "Dichloroacetic acid"
+        },
+        {
+          "cas": "76-03-9",
+          "check": "trichloroacetic acid|acetic acid, (2,2,2-)?trichloro-",
+          "name": "Trichloroacetic acid"
+        },
+        {
+          "cas": "79-08-3",
+          "check": "bromoacetic acid|acetic acid, (2-)?bromo-",
+          "name": "Monobromoacetic acid"
+        },
+        {
+          "cas": "631-64-1",
+          "check": "dibromoacetic acid|acetic acid, (2,2-)?dibromo-",
+          "name": "Dibromoacetic acid"
+        }
+      ]
+    },
+    "Lead": {
+      "members": [
+        {
+          "cas": "7439-92-1",
+          "check": "^lead\\b"
+        }
+      ]
+    },
+    "Mercury": {
+      "members": [
+        {
+          "cas": "7439-97-6",
+          "check": "^mercury\\b"
+        }
+      ]
+    },
+    "Microcystin-LR": {
+      "members": [
+        {
+          "cas": "101043-37-2",
+          "check": "microcystin"
+        }
+      ]
+    },
+    "Nickel": {
+      "members": [
+        {
+          "cas": "7440-02-0",
+          "check": "^nickel\\b"
+        }
+      ]
+    },
+    "Nitrate": {
+      "members": [
+        {
+          "cas": "14797-55-8",
+          "check": "^nitrate"
+        }
+      ]
+    },
+    "Nitrite": {
+      "members": [
+        {
+          "cas": "14797-65-0",
+          "check": "^nitrite"
+        }
+      ]
+    },
+    "Pesticides": {},
+    "Pesticides Total": {},
+    "PFAS Total": {},
+    "Sum of PFAS": {
+      "sum": true,
+      "members": [
+        {
+          "cas": "375-22-4",
+          "check": "perfluorobutanoic|butanoic acid, (2,2,3,3,4,4,4-)?heptafluoro",
+          "name": "Perfluorobutanoic acid (PFBA)"
+        },
+        {
+          "cas": "2706-90-3",
+          "check": "perfluoropentanoic|pentanoic acid, (2,2,3,3,4,4,5,5,5-)?nonafluoro",
+          "name": "Perfluoropentanoic acid (PFPA)"
+        },
+        {
+          "cas": "307-24-4",
+          "check": "perfluorohexanoic|hexanoic acid, (2,2,3,3,4,4,5,5,6,6,6-)?undecafluoro",
+          "name": "Perfluorohexanoic acid (PFHxA)"
+        },
+        {
+          "cas": "375-85-9",
+          "check": "perfluoroheptanoic|heptanoic acid, (2,2,3,3,4,4,5,5,6,6,7,7,7-)?tridecafluoro",
+          "name": "Perfluoroheptanoic acid (PFHpA)"
+        },
+        {
+          "cas": "335-67-1",
+          "check": "perfluorooctanoic|octanoic acid, pentadecafluoro",
+          "name": "Perfluorooctanoic acid (PFOA)"
+        },
+        {
+          "cas": "375-95-1",
+          "check": "perfluorononanoic|perfluorononan-1-oic|heptadecafluoro",
+          "name": "Perfluorononanoic acid (PFNA)"
+        },
+        {
+          "cas": "335-76-2",
+          "check": "perfluorodecanoic|nonadecafluorodecanoic|decanoic acid, .*nonadecafluoro",
+          "name": "Perfluorodecanoic acid (PFDA)"
+        },
+        {
+          "cas": "2058-94-8",
+          "check": "perfluoroundecano|perfluorundecano",
+          "name": "Perfluoroundecanoic acid (PFUnDA)"
+        },
+        {
+          "cas": "307-55-1",
+          "check": "perfluorododecanoic|dodecanoic acid, .*tricosafluoro",
+          "name": "Perfluorododecanoic acid (PFDoDA)"
+        },
+        {
+          "cas": "72629-94-8",
+          "check": "perfluortridecano|perfluorotridecano",
+          "name": "Perfluorotridecanoic acid (PFTrDA)"
+        },
+        {
+          "cas": "375-73-5",
+          "check": "perfluorobutane sulfonic|1-butanesulfonic acid, .*nonafluoro",
+          "name": "Perfluorobutane sulfonic acid (PFBS)"
+        },
+        {
+          "cas": "2706-91-4",
+          "check": "1-pentanesulfonic acid, .*undecafluoro",
+          "name": "Perfluoropentane sulfonic acid (PFPS)"
+        },
+        {
+          "cas": "355-46-4",
+          "check": "perfluorohexane ?sulfonic|1-hexanesulfonic acid, .*tridecafluoro",
+          "name": "Perfluorohexane sulfonic acid (PFHxS)"
+        },
+        {
+          "cas": "375-92-8",
+          "check": "1-heptanesulfonic acid, .*pentadecafluoro",
+          "name": "Perfluoroheptane sulfonic acid (PFHpS)"
+        },
+        {
+          "cas": "1763-23-1",
+          "check": "perfluorooctane ?sulfonic",
+          "name": "Perfluorooctane sulfonic acid (PFOS)"
+        },
+        {
+          "cas": "68259-12-1",
+          "check": "1-nonanesulfonic acid, .*nonadecafluoro",
+          "name": "Perfluorononane sulfonic acid (PFNS)"
+        },
+        {
+          "cas": "335-77-3",
+          "check": "1-decanesulfonic acid, .*heneicosafluoro",
+          "name": "Perfluorodecane sulfonic acid (PFDS)"
+        },
+        {
+          "cas": "749786-16-1",
+          "check": "undecanesulfonic",
+          "name": "Perfluoroundecane sulfonic acid"
+        },
+        {
+          "cas": "79780-39-5",
+          "check": "dodecanesulfonic",
+          "name": "Perfluorododecane sulfonic acid"
+        },
+        {
+          "cas": "791563-89-8",
+          "check": "tridecanesulfonic",
+          "name": "Perfluorotridecane sulfonic acid"
+        }
+      ]
+    },
+    "Polycyclic aromatic hydrocarbons": {
+      "sum": true,
+      "members": [
+        {
+          "cas": "205-99-2",
+          "check": "benzo\\[b\\]fluoranthene|benz\\[e\\]acephenanthrylene",
+          "name": "Benzo(b)fluoranthene"
+        },
+        {
+          "cas": "207-08-9",
+          "check": "benzo\\[k\\]fluoranthene",
+          "name": "Benzo(k)fluoranthene"
+        },
+        {
+          "cas": "191-24-2",
+          "check": "benzo\\[g,?h,?i\\]perylene",
+          "name": "Benzo(ghi)perylene"
+        },
+        {
+          "cas": "193-39-5",
+          "check": "indeno\\[1,2,3-cd\\]pyrene",
+          "name": "Indeno(1,2,3-cd)pyrene"
+        }
+      ]
+    },
+    "Selenium": {
+      "members": [
+        {
+          "cas": "7782-49-2",
+          "check": "^selenium\\b"
+        }
+      ]
+    },
+    "Tetrachloroethene and Trichloroethene": {
+      "sum": true,
+      "members": [
+        {
+          "cas": "127-18-4",
+          "check": "tetrachloroethylene|ethene, (1,1,2,2-)?tetrachloro",
+          "name": "Tetrachloroethene"
+        },
+        {
+          "cas": "79-01-6",
+          "check": "trichloroethylene|ethene, (1,1,2-)?trichloro",
+          "name": "Trichloroethene"
+        }
+      ]
+    },
+    "Trihalomethanes Total": {
+      "sum": true,
+      "members": [
+        {
+          "cas": "67-66-3",
+          "check": "chloroform|methane, trichloro",
+          "name": "Chloroform"
+        },
+        {
+          "cas": "75-25-2",
+          "check": "bromoform|methane, tribromo",
+          "name": "Bromoform"
+        },
+        {
+          "cas": "124-48-1",
+          "check": "chlorodibromomethane|methane, dibromochloro",
+          "name": "Dibromochloromethane"
+        },
+        {
+          "cas": "75-27-4",
+          "check": "dichlorobromomethane|methane, bromodichloro",
+          "name": "Bromodichloromethane"
+        }
+      ]
+    },
+    "Uranium": {
+      "members": [
+        {
+          "cas": "7440-61-1",
+          "check": "^uranium\\b"
+        }
+      ]
+    },
+    "Vinyl chloride": {
+      "members": [
+        {
+          "cas": "75-01-4",
+          "check": "vinyl chloride|ethene, chloro-"
+        }
+      ]
+    }
+  },
+  "lists": {
+    "part_b": {
+      "file": "EU_DWD_ANNEX_I_PART_B.json",
+      "list_id": "EU_DWD_ANNEX_I_PART_B",
+      "jurisdiction": "EU",
+      "law": "Drinking Water Directive (EU) 2020/2184",
+      "title": "EU 먹는물 지침 부속서 I 제B부 — 화학적 항목 기준값(parametric values)",
+      "directions": [
+        "import"
+      ],
+      "obligation_for_kr_exporter": "회원국이 먹는물(수돗물·병입수)에 지켜야 하는 수질 기준값이다(제5조). 물질 수출입 자체의 허가·금지 의무는 아니다. 먹는물 접촉 자재·정수 약품을 EU 에 공급하면 제11조(접촉 자재 최소 위생 요건, 출발물질 positive list)와 회원국 국내 승인 제도를 따로 확인해야 한다. 합계 항목(트라이할로메테인·HAA·PAH·PFAS 합계, 테트라·트라이클로로에텐)은 구성 물질 각각에 같은 합계 기준을 붙였다.",
+      "legal_basis": "Directive (EU) 2020/2184 Art. 5, 11, Annex I Part B",
+      "source_url": "https://eur-lex.europa.eu/eli/dir/2020/2184/oj",
+      "license": "EUR-Lex: Commission Decision 2011/833/EU 에 따라 출처 표시 조건으로 재사용 허용. 법적 효력은 EU 관보(OJ L 435, 23.12.2020). CAS 는 원문에 없고 ChemIP 의 공식 명칭–CAS 목록(TSCA·AIIC·DSL·intl_regulatory)으로 확인한 것만 붙였다.",
+      "notes": [
+        "원문은 항목 이름만 싣는다. 원소 항목(비소·납 등)은 원소 CAS 에 붙였고, 기준은 총량(모든 화합물 형태 포함) 기준이다.",
+        "부속서 I 제C부 지표 항목(알루미늄·염화물·황산염 등)과 제D부는 넣지 않았다."
+      ]
+    }
+  }
+}

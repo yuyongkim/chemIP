@@ -9,6 +9,7 @@ import re
 import sqlite3
 from typing import Any
 
+from backend.core.intl_dedupe import item_details, merge_rows
 from backend.core.intl_quantity import parse_quantity, threshold_summary
 from backend.core.terminology_db import TerminologyDB
 
@@ -40,6 +41,16 @@ REGULATION_LABELS: dict[str, tuple[str, str]] = {
     "VN_DECREE24_APP_II": ("VN", "법령 24/2026 부록 II 조건부 생산·거래"),
     "VN_DECREE24_APP_III": ("VN", "법령 24/2026 부록 III 특별 통제"),
     "VN_DECREE24_APP_IV": ("VN", "법령 24/2026 부록 IV 사고예방·대응계획"),
+    # scripts/load_country_lists_official.py (공식 원문: eCFR·NITE·MHLW·e-Gov·J-CHECK·ECCC)
+    "US_DOT_HMT": ("US", "DOT 위험물 운송표(49 CFR 172.101 HMT)"),
+    "US_DOT_HMT_RQ": ("US", "DOT 유해물질 보고량(49 CFR 172.101 부록 A RQ)"),
+    "JP_PRTR_CLASS1": ("JP", "화관법(化管法) 제1종 지정화학물질"),
+    "JP_PRTR_CLASS2": ("JP", "화관법(化管法) 제2종 지정화학물질"),
+    "JP_ISHL_LABEL_SDS": ("JP", "안위법 라벨 표시·SDS 교부 대상물질"),
+    "JP_ISHL_TOKKA": ("JP", "안위법 특정화학물질(特化則, 시행령 별표 3)"),
+    "JP_ISHL_ORGANIC": ("JP", "안위법 유기용제(有機則, 시행령 별표 6의2)"),
+    "JP_CSCL_PRIORITY": ("JP", "화심법(化審法) 우선평가화학물질"),
+    "CA_NPRI": ("CA", "NPRI 국가오염물질배출목록 보고 대상물질 2025-2027"),
 }
 
 _CAS_RE = re.compile(r"^\d{2,7}-\d{2}-\d$")
@@ -48,29 +59,41 @@ _CAS_RE = re.compile(r"^\d{2,7}-\d{2}-\d$")
 def _fetch(conn: sqlite3.Connection, cas_no: str) -> list[sqlite3.Row]:
     cur = conn.execute(
         "SELECT regulation, detail, source, chemical_name FROM intl_regulatory "
-        "WHERE cas_no = ? ORDER BY regulation",
+        "WHERE cas_no = ? ORDER BY regulation, id",
         (cas_no,),
     )
     return cur.fetchall()
 
 
+def _min_quantity(regulation: str, details: list[str]) -> dict[str, Any] | None:
+    """형태별 기준이 여럿이면 가장 낮은(엄격한) kg 값."""
+    qs = [q for q in (parse_quantity(regulation, d) for d in details) if q]
+    return min(qs, key=lambda q: q["kg"]) if qs else None
+
+
 def get_by_cas(cas_no: str) -> dict[str, Any]:
-    """CAS 하나의 국가별 규제 목록 등재 내역을 국가 단위로 묶어 돌려준다."""
+    """CAS 하나의 국가별 규제 목록 등재 내역을 국가 단위로 묶어 돌려준다.
+
+    같은 목록에 이름 표기만 다른 줄(Ethene / Ethylene)은 한 항목으로 합치고 다른 이름은 aka 로 둔다(intl_dedupe.py).
+    count 는 목록 수(한 목록은 한 번)다.
+    """
     cas_no = (cas_no or "").strip()
     if not _CAS_RE.match(cas_no):
         return {"cas_no": cas_no, "count": 0, "jurisdictions": {}, "error": "invalid_cas"}
 
     with TerminologyDB() as db:
-        rows = _fetch(db.conn, cas_no)
+        rows = [tuple(r) for r in _fetch(db.conn, cas_no)]
 
     jurisdictions: dict[str, list[dict[str, Any]]] = {}
     flat: list[dict[str, Any]] = []
-    for regulation, detail, source, name in rows:
+    items = merge_rows([(r[0], r[1] or "", r[2] or "", r[3] or "") for r in rows])
+    for merged in items:
+        regulation = merged["regulation"]
         country, label = REGULATION_LABELS.get(regulation, ("OTHER", regulation))
-        item = {"regulation": regulation, "list": label, "detail": detail or "", "source": source or "", "name": name or ""}
-        quantity = parse_quantity(regulation, detail or "")
+        item = {"regulation": regulation, "list": label, **{k: v for k, v in merged.items() if k != "regulation"}}
+        quantity = _min_quantity(regulation, item_details(merged))
         if quantity:
             item["quantity"] = quantity
         jurisdictions.setdefault(country, []).append(item)
         flat.append({**item, "country": country})
-    return {"cas_no": cas_no, "count": len(rows), "jurisdictions": jurisdictions, "thresholds": threshold_summary(flat)}
+    return {"cas_no": cas_no, "count": len(items), "jurisdictions": jurisdictions, "thresholds": threshold_summary(flat)}

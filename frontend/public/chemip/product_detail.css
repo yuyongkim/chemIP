@@ -1,0 +1,357 @@
+/* 물질 상세(product_detail.jsx · product_chem_header.jsx · product_<탭>.jsx) 스타일 — 예전 인라인 style 을 옮긴 것.
+   색·글꼴은 tokens.css 변수만, 간격은 --unit(4px) 배수. app.css 의 .panel .row .v 처럼 깊은 규칙보다 이겨야 하는 곳은
+   같은 문맥을 붙여 우선순위를 맞춘다(인라인 style 일 때와 같은 결과). */
+
+/* ── 공용 조각 ── */
+.pd-stack { margin-top: calc(var(--unit) * 4); }
+.pd-note { font-size: calc(12px * var(--fs)); }
+.pd-meta { font-size: calc(11px * var(--fs)); }
+.pd-error-note { color: var(--hazard); font-size: calc(12px * var(--fs)); }
+.pd-warn-text { color: var(--warn-ink); font-size: calc(12px * var(--fs)); }
+.pd-hazard-text { color: var(--hazard); }
+.pd-inline { display: flex; gap: calc(var(--unit) * 2); align-items: center; }
+.pd-tab-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: calc(var(--unit) * 2.5); }
+.pd-tab-head.center { align-items: center; }
+.pd-tab-title { font-family: var(--font-display); font-size: calc(18px * var(--fs)); margin: 0; letter-spacing: -0.01em; }
+.pd-tab-title-sm { font-family: var(--font-display); font-size: calc(16px * var(--fs)); margin: 0; }
+.panel .body.pd-flush { padding: 0; }
+.panel .row.pd-row-top { align-items: flex-start; }
+.panel .row .v.pd-v-sm { font-size: calc(12px * var(--fs)); }
+.panel .row .v.pd-v-xs { font-size: calc(11px * var(--fs)); }
+.panel .row .k.pd-k-xs { font-size: calc(11px * var(--fs)); }
+.pd-chip-row { display: flex; flex-wrap: wrap; gap: calc(var(--unit) * 1.25); margin-top: calc(var(--unit) * 2); }
+.pd-chip-row-sm { margin-top: var(--unit); display: flex; flex-wrap: wrap; gap: var(--unit); }
+.chip.pd-chip-xs { font-size: calc(9px * var(--fs)); }
+.chip.pd-chip-tag { font-size: calc(9px * var(--fs)); margin-top: var(--unit); display: inline-block; }
+
+/* ── 물질 머리(ChemHeader)·빈 화면 ── */
+.card.pd-empty-card { padding: calc(var(--unit) * 10); text-align: center; color: var(--fg-muted); }
+.pd-empty-icon { color: var(--fg-subtle); }
+.pd-empty-title { margin-top: calc(var(--unit) * 3); font-family: var(--font-display); }
+.pd-empty-hint { font-size: calc(13px * var(--fs)); }
+.chem-hdr h1 .pd-name-en { font-weight: 400; }
+.chem-hdr .pd-name-syn { margin-top: calc(var(--unit) * -0.5); font-size: calc(12px * var(--fs)); overflow-wrap: anywhere; }
+.pd-msds-count { font-family: var(--font-mono); font-size: calc(13px * var(--fs)); }
+.pd-hazard-chips { display: flex; gap: calc(var(--unit) * 1.5); margin-top: calc(var(--unit) * 3); flex-wrap: wrap; }
+.chem-hdr .stats-mini .pd-stat-unit { font-size: calc(14px * var(--fs)); color: var(--fg-muted); }
+.chem-hdr .stats-mini .pd-stat-sub { font-size: calc(11px * var(--fs)); }
+.chem-hdr .stats-mini .v.pd-stat-sm { font-size: calc(16px * var(--fs)); }
+.chem-hdr .stats-mini .v.tone-hazard { color: var(--hazard); }
+.chem-hdr .stats-mini .v.tone-warn { color: var(--warn); }
+.chem-hdr .stats-mini .v.tone-safe { color: var(--safe); }
+
+/* ── MSDS 탭 ── */
+.msds-grid .msds-item.is-open { background: var(--accent-soft); }
+.pd-section-panel { margin-top: calc(var(--unit) * 5); }
+.pd-empty-line { font-size: calc(13px * var(--fs)); padding: calc(var(--unit) * 2) 0; }
+.pd-flag-row { display: flex; flex-wrap: wrap; gap: calc(var(--unit) * 1.25); margin-bottom: calc(var(--unit) * 2.5); }
+.pd-flag { font-size: calc(11px * var(--fs)); font-weight: 650; padding: calc(var(--unit) * 0.5) calc(var(--unit) * 2); border-radius: 11px; border: 1px solid; }
+.pd-flag.bad { background: var(--hazard-soft); color: var(--hazard); border-color: var(--hazard); }
+.pd-flag.warn { background: var(--warn-soft); color: var(--warn-ink); border-color: var(--warn); }
+.pd-flag.info { background: var(--info-soft); color: var(--info-ink); border-color: var(--info); }
+.pd-reg-item { padding: calc(var(--unit) * 0.25) 0; }
+
+/* ── 특허 탭 ── */
+.pat-table td.pd-table-empty { text-align: center; color: var(--fg-muted); padding: calc(var(--unit) * 6); }
+.pat-table .title-cell .pd-abstract { display: block; margin-top: var(--unit); line-height: 1.4; }
+.pat-table td.pd-td-sm { font-size: calc(12px * var(--fs)); }
+/* 막대 수(--cols)·높이(--h)·진하기(--o)·너비(--w)는 자료에서 나오므로 그 값만 style 의 CSS 변수로 넘긴다 */
+.pd-bars { display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: var(--unit); align-items: end; height: calc(var(--unit) * 25); }
+.pd-bar { height: var(--h); background: var(--accent); opacity: var(--o); border-radius: var(--r-1) var(--r-1) 0 0; }
+.pd-bars-axis { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: calc(10px * var(--fs)); color: var(--fg-subtle); margin-top: calc(var(--unit) * 1.5); }
+.pd-series-name { font-size: calc(12px * var(--fs)); margin-bottom: var(--unit); }
+.pd-track { height: calc(var(--unit) * 0.75); background: var(--bg-sunken); border-radius: var(--r-1); overflow: hidden; }
+.pd-track-fill { height: 100%; width: var(--w); background: var(--accent); }
+.pd-series-val { font-size: calc(12px * var(--fs)); }
+
+/* ── 시장·뉴스 탭 ── */
+.pd-flush-empty { padding: calc(var(--unit) * 4) calc(var(--unit) * 4.5); color: var(--fg-muted); font-size: calc(13px * var(--fs)); }
+.pd-news-row { display: grid; grid-template-columns: calc(var(--unit) * 18) 1fr auto; gap: calc(var(--unit) * 4); padding: calc(var(--unit) * 3.5) calc(var(--unit) * 4.5); align-items: center; }
+.pd-news-row + .pd-news-row { border-top: 1px solid var(--border); }
+.pd-news-title { font-size: calc(13px * var(--fs)); }
+.pd-news-sum { font-size: calc(11px * var(--fs)); margin-top: calc(var(--unit) * 0.5); }
+
+/* ── 안전 가이드 탭 ── */
+.guide-row.pd-guide-empty { color: var(--fg-muted); justify-content: center; }
+.pd-guide-title { font-size: calc(14px * var(--fs)); }
+.pd-guide-warn { font-size: calc(10px * var(--fs)); color: var(--warn); margin-top: calc(var(--unit) * 0.5); font-family: var(--font-mono); letter-spacing: .06em; }
+.pd-guide-side { display: flex; flex-direction: column; align-items: flex-end; gap: var(--unit); }
+.chip.pd-tier { font-size: calc(9px * var(--fs)); }
+.chip.pd-tier.strong { color: var(--safe); border-color: var(--safe); }
+.chip.pd-tier.moderate { color: var(--fg-muted); border-color: var(--fg-muted); }
+.chip.pd-tier.generic { color: var(--warn); border-color: var(--warn); }
+
+/* ── AI 요약 탭 ── */
+.pd-ai-icon { color: var(--accent); }
+.pd-ai-kicker { font-family: var(--font-mono); font-size: calc(11px * var(--fs)); color: var(--accent-ink); letter-spacing: .08em; }
+.ai-card p.pd-ai-error { color: var(--hazard); }
+.pd-ai-text { font-size: calc(13.5px * var(--fs)); line-height: 1.65; white-space: pre-wrap; color: var(--fg); }
+.pd-ai-src-title { font-size: calc(12px * var(--fs)); }
+.pd-ai-note { font-size: calc(12px * var(--fs)); line-height: 1.5; }
+
+/* ── 해외 규제 탭 ── */
+.pd-retry-row { display: flex; align-items: center; gap: calc(var(--unit) * 2.5); flex-wrap: wrap; }
+.pd-reach-row { display: flex; flex-wrap: wrap; gap: calc(var(--unit) * 1.5); }
+.pd-reach { font-size: calc(11px * var(--fs)); font-weight: 650; padding: calc(var(--unit) * 0.75) calc(var(--unit) * 2.5); border-radius: 11px; border: 1px solid var(--warn); color: var(--warn-ink); background: var(--warn-soft); }
+.pd-reach.registered { border-color: var(--safe); color: var(--safe); background: var(--safe-soft); }
+.pd-list-item { padding: calc(var(--unit) * 1.5) 0; }
+.pd-list-item + .pd-list-item { border-top: 1px solid var(--border); }
+.pd-item-title { font-size: calc(13px * var(--fs)); }
+.pd-item-line { font-size: calc(12px * var(--fs)); margin-top: calc(var(--unit) * 0.5); }
+.pd-item-sub { font-size: calc(11px * var(--fs)); margin-top: calc(var(--unit) * 0.5); }
+.pd-flush-empty-sm { padding: calc(var(--unit) * 3) calc(var(--unit) * 4); }
+.pd-kotra-item { padding: calc(var(--unit) * 2.5) calc(var(--unit) * 4); }
+.pd-kotra-item + .pd-kotra-item { border-top: 1px solid var(--border); }
+.pd-kotra-link { font-size: calc(12px * var(--fs)); font-weight: 600; color: var(--accent-ink); }
+
+/* ── 아래 패널 공용(국가별 규제·사고 사례·EPA 집행·취급 사업장) ── */
+.pd-lower { margin-top: calc(var(--unit) * 7); }
+.card.pd-lower-empty { padding: calc(var(--unit) * 5); color: var(--fg-muted); font-size: calc(13px * var(--fs)); }
+.chem-hdr.pd-lower-stats { margin-bottom: calc(var(--unit) * 3.5); }
+.chem-hdr .stats-mini.pd-full { width: 100%; }
+.layout-2col.pd-align-start { align-items: start; }
+.panel.pd-sub-panel { margin-top: calc(var(--unit) * 3.5); }
+.panel .body.pd-scroll { max-height: calc(var(--unit) * 140); overflow-y: auto; }
+.pd-link-xs { font-size: calc(10px * var(--fs)); }
+.pd-foot-note { font-size: calc(11px * var(--fs)); margin-top: calc(var(--unit) * 2.5); }
+
+/* ── 국가별 규제(product_intl.jsx) ── */
+.pd-map-svg { width: 100%; height: auto; display: block; }
+.pd-map-path { cursor: default; transition: fill 120ms; }
+.pd-map-path.on { cursor: pointer; }
+.card.pd-map-card { padding: calc(var(--unit) * 3); }
+.pd-map-error { font-size: calc(12px * var(--fs)); padding: calc(var(--unit) * 3); }
+.pd-jur-row { display: flex; flex-wrap: wrap; gap: calc(var(--unit) * 1.5); margin-top: calc(var(--unit) * 2.5); }
+.chip.pd-jur { cursor: pointer; font-size: calc(11px * var(--fs)); font-weight: 500; }
+.chip.pd-jur.on { font-weight: 700; background: var(--accent-soft); border-color: var(--accent); }
+.pd-map-hint { font-size: calc(11px * var(--fs)); margin-top: calc(var(--unit) * 2); }
+.pd-reg-group { font-size: calc(12px * var(--fs)); padding: calc(var(--unit) * 2.5) 0; overflow-wrap: anywhere; }
+.pd-reg-group + .pd-reg-group { border-top: 1px dashed var(--border); }
+.pd-reg-group-head { display: flex; justify-content: space-between; gap: calc(var(--unit) * 2); }
+.pd-reg-entry { margin-top: calc(var(--unit) * 0.75); }
+.pd-reg-group-foot { font-size: calc(10px * var(--fs)); margin-top: calc(var(--unit) * 0.75); }
+
+/* ── 근거 조문(product_provisions.jsx) ── */
+.pd-prov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(var(--unit) * 70), 1fr)); gap: calc(var(--unit) * 3); }
+.pd-prov-hit { font-size: calc(12px * var(--fs)); overflow-wrap: anywhere; min-width: 0; }
+.pd-prov-snippet { margin-top: var(--unit); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* ── 임계량 비교(product_thresholds.jsx) — 위치·너비(--l, --w)는 자료에서 나오므로 style 의 CSS 변수로 ── */
+.panel .body.pd-thr-body { padding-top: var(--unit); }
+.pd-thr-kind { padding: calc(var(--unit) * 2.5) 0; border-top: 1px dashed var(--border); }
+.pd-thr-head { display: flex; justify-content: space-between; gap: calc(var(--unit) * 2); font-size: calc(12px * var(--fs)); margin-bottom: calc(var(--unit) * 1.5); }
+.pd-thr-track { position: relative; height: calc(var(--unit) * 2.5); background: transparent; border-radius: 5px; }
+.pd-thr-track.compare { background: var(--bg-sunken); }
+.pd-thr-range { position: absolute; left: var(--l); width: var(--w); top: calc(var(--unit) * 0.75); height: var(--unit); background: color-mix(in srgb, var(--accent) 35%, transparent); }
+.pd-thr-fill { width: var(--w); height: 100%; border-radius: 5px; background: color-mix(in srgb, var(--accent) 45%, var(--bg-sunken)); }
+.pd-thr-fill.strictest { background: var(--accent); }
+.pd-thr-val { text-align: right; font-weight: 500; }
+.pd-thr-val.strong { font-weight: 700; }
+.pd-thr-note { font-size: calc(11px * var(--fs)); margin-top: calc(var(--unit) * 2); }
+
+/* ── 사고 사례(product_incidents.jsx)·EPA 집행(product_enforcement.jsx) ── */
+.pd-between { display: flex; justify-content: space-between; gap: calc(var(--unit) * 2); }
+.card.pd-disc-card { padding: calc(var(--unit) * 3); font-size: calc(12px * var(--fs)); min-width: 0; }
+.pd-mini { font-size: calc(10px * var(--fs)); margin-top: calc(var(--unit) * 0.5); }
+.pd-tag-row { display: flex; flex-wrap: wrap; gap: var(--unit); margin-top: calc(var(--unit) * 1.5); }
+.chip.pd-chip-10 { font-size: calc(10px * var(--fs)); }
+.pd-link-row { display: flex; flex-wrap: wrap; gap: calc(var(--unit) * 2.5); margin-top: calc(var(--unit) * 2); }
+.pd-link-11 { font-size: calc(11px * var(--fs)); }
+.pd-disc-intro { font-size: calc(12px * var(--fs)); margin-bottom: calc(var(--unit) * 2); }
+.pd-disc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(var(--unit) * 55), 1fr)); gap: calc(var(--unit) * 2.5); margin-bottom: calc(var(--unit) * 3.5); }
+.pd-case { font-size: calc(12px * var(--fs)); padding: calc(var(--unit) * 3) 0; overflow-wrap: anywhere; }
+.pd-case.tight { padding: calc(var(--unit) * 2.5) 0; }
+.pd-case + .pd-case { border-top: 1px dashed var(--border); }
+.pd-src-tag { font-size: calc(10px * var(--fs)); white-space: nowrap; }
+.pd-case-summary { margin-top: calc(var(--unit) * 1.5); line-height: 1.55; }
+.pd-case-line { margin-top: var(--unit); }
+.pd-case-desc { margin-top: var(--unit); line-height: 1.5; }
+.pd-case-foot { font-size: calc(10px * var(--fs)); margin-top: var(--unit); }
+.pd-penalty { font-weight: 700; white-space: nowrap; }
+.panel .body.pd-case-list { max-height: calc(var(--unit) * 140); overflow-y: auto; padding-top: var(--unit); }
+.panel .body.pd-case-list.tall { max-height: calc(var(--unit) * 155); }
+.pd-toggle-row { display: flex; gap: calc(var(--unit) * 1.5); }
+.chip.pd-toggle { cursor: pointer; font-size: calc(11px * var(--fs)); font-weight: 500; }
+.chip.pd-toggle.on { font-weight: 700; background: var(--accent-soft); }
+.pd-foot-note-sm { font-size: calc(11px * var(--fs)); margin-top: calc(var(--unit) * 1.5); }
+
+/* ── 취급 사업장(product_handlers.jsx) — 합계 막대 너비(--w)는 자료 값 ── */
+.pat-table th.pd-th-num { width: calc(var(--unit) * 11); }
+.pat-table th.pd-num, .pat-table td.pd-num { text-align: right; }
+.pd-total { font-size: calc(12px * var(--fs)); font-weight: 600; }
+.pd-total-bar { height: calc(var(--unit) * 0.75); border-radius: var(--r-1); margin-top: calc(var(--unit) * 0.75); background: var(--accent); opacity: 0.75; width: var(--w); margin-left: auto; }
+.pd-more-row { margin-top: calc(var(--unit) * 2.5); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: calc(var(--unit) * 2); }
+.layout-2col.pd-side-panels { margin-top: calc(var(--unit) * 4.5); }
+.panel .row .v .pd-plain { font-weight: 400; }
+
+/* ── 네이버 검색결과(naver_results.jsx)·KIPRIS 링크 전용(kipris_link_only.jsx) ── */
+.naver-row { display: grid; grid-template-columns: 1fr auto; gap: calc(var(--unit) * 4); padding: calc(var(--unit) * 3.5) calc(var(--unit) * 4.5); align-items: start; }
+.naver-row + .naver-row { border-top: 1px solid var(--border); }
+.naver-title { font-size: calc(13px * var(--fs)); font-weight: 600; color: inherit; }
+.naver-links { font-size: calc(10px * var(--fs)); margin-top: var(--unit); display: flex; gap: calc(var(--unit) * 2.5); }
+.naver-date { font-size: calc(11px * var(--fs)); white-space: nowrap; }
+.naver-results .ui-hint.naver-attr { padding: calc(var(--unit) * 2.5) calc(var(--unit) * 4.5) 0; }
+.kipris-body { font-size: calc(13px * var(--fs)); margin: 0 0 calc(var(--unit) * 3); }
+.ui-hint.kipris-note { margin-top: calc(var(--unit) * 3); }
+
+/* ── 관련 특허(공개 특허 문헌 매핑) — product_patent_mapping.jsx · patent_mapping_*.jsx ── */
+.pd-pm { margin-bottom: calc(var(--unit) * 6); padding-bottom: calc(var(--unit) * 5); border-bottom: 1px solid var(--border); }
+.ui-hint.pd-pm-provenance { margin: calc(var(--unit) * -1) 0 calc(var(--unit) * 3); }
+.pd-pm-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: calc(var(--unit) * 2); margin-bottom: calc(var(--unit) * 2); }
+.pd-pm-filter { display: inline-flex; align-items: center; gap: calc(var(--unit) * 2); font-size: calc(12px * var(--fs)); }
+.pd-pm-filter select { height: calc(var(--unit) * 7); padding: 0 calc(var(--unit) * 2); border: 1px solid var(--border); border-radius: var(--r-2); background: var(--bg-elevated); font-size: calc(12px * var(--fs)); max-width: 100%; }
+.ui-hint.pd-pm-note { margin-bottom: calc(var(--unit) * 2); }
+.pat-table.pd-pm-table a.pid { text-decoration: none; white-space: nowrap; }
+.pat-table.pd-pm-table a.pid:hover { text-decoration: underline; }
+.series-row.pd-pm-row { width: 100%; text-align: left; background: transparent; border-left: 0; border-right: 0; border-top: 0; cursor: pointer; padding-left: var(--unit); padding-right: var(--unit); border-radius: var(--r-1); }
+.series-row.pd-pm-row:hover { background: var(--bg-sunken); }
+.series-row.pd-pm-row[aria-pressed="true"] { background: var(--accent-soft); }
+.pd-pm-code { font-size: calc(11px * var(--fs)); color: var(--accent-ink); }
+.pd-pm-year { display: grid; grid-template-columns: calc(var(--unit) * 10) 1fr calc(var(--unit) * 14); align-items: center; gap: calc(var(--unit) * 2); padding: calc(var(--unit) * 0.75) 0; font-size: calc(11px * var(--fs)); }
+.pd-pm-year .pd-series-val { text-align: right; font-size: calc(11px * var(--fs)); }
+.ui-hint.pd-pm-earlier { margin-top: calc(var(--unit) * 2); }
+.pd-pm-pager { display: flex; justify-content: center; align-items: center; gap: calc(var(--unit) * 3); margin-top: calc(var(--unit) * 3); font-size: calc(12px * var(--fs)); }
+.pd-pm-pager .btn:disabled { opacity: 0.4; cursor: default; }
+
+/* MSDS 탭: 옆 칸(§9·§15)이 본문보다 훨씬 길면 본문 아래가 통째로 빈다. 넓은 화면에서는 옆 칸을 화면에 붙여 두고 안에서 스크롤한다. */
+@media (min-width: 901px) {
+  .layout-2col.pd-msds { align-items: start; }
+  .pd-msds-side {
+    position: sticky; top: calc(var(--topbar-h) + var(--pd-side-gap));
+    max-height: calc(100vh - var(--topbar-h) - var(--pd-side-gap) * 2);
+    overflow-y: auto; overscroll-behavior: contain;
+  }
+}
+
+/* 물질 상세 "주요 물성" 한 줄(product_facts_strip.jsx, .pd-facts*) — 머리 아래, 탭 위 */
+.pd-facts { border: 1px solid var(--border); border-radius: var(--r-3); background: var(--bg-elevated); padding: calc(var(--unit) * 2.5) calc(var(--unit) * 4); margin: calc(var(--unit) * 3) 0; min-width: 0; }
+.pd-facts-head { display: flex; align-items: baseline; gap: calc(var(--unit) * 2); flex-wrap: wrap; margin-bottom: calc(var(--unit) * 1.5); }
+.pd-facts-title { font-size: calc(12px * var(--fs)); font-weight: 700; color: var(--fg); }
+.pd-facts-note { font-size: calc(11px * var(--fs)); }
+.pd-facts-list { display: flex; flex-wrap: wrap; gap: calc(var(--unit) * 1.5) calc(var(--unit) * 5); margin: 0; }
+.pd-facts-item { min-width: 0; }
+.pd-facts-item dt { font-size: calc(11px * var(--fs)); color: var(--fg-muted); }
+.pd-facts-item dd { margin: 0; font-size: calc(13px * var(--fs)); font-weight: 600; color: var(--fg); overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+  .pd-facts { padding: calc(var(--unit) * 2) calc(var(--unit) * 3); }
+  .pd-facts-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--unit) * 1.5) calc(var(--unit) * 3); }
+}
+
+/* 물질 상세 "관련 물질"(product_related.jsx, .pd-rel-*) — 아래 패널, 취급 사업장 위. 카드 격자, 이유는 작은 조각 */
+.pd-rel-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: calc(var(--unit) * 3); }
+.pd-rel-item { display: flex; flex-direction: column; gap: calc(var(--unit) * 2); min-width: 0; padding: calc(var(--unit) * 3.5); border: 1px solid var(--border); border-radius: var(--r-3); background: var(--bg-elevated); }
+.pd-rel-item:hover { border-color: var(--accent); }
+.pd-rel-link { display: flex; flex-direction: column; gap: calc(var(--unit) * 0.5); color: var(--fg); text-decoration: none; min-width: 0; }
+.pd-rel-name { font-weight: 600; font-size: calc(14px * var(--fs)); color: var(--accent-ink); overflow-wrap: anywhere; word-break: keep-all; }
+.pd-rel-sub { font-size: calc(12px * var(--fs)); color: var(--fg-muted); overflow-wrap: anywhere; }
+.pd-rel-cas { align-self: flex-start; font-size: calc(11px * var(--fs)); }
+.pd-rel-why { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: calc(var(--unit) * 1); }
+.pd-rel-why li { font-size: calc(11px * var(--fs)); line-height: 1.4; padding: calc(var(--unit) * 0.5) calc(var(--unit) * 1.5); border-radius: var(--r-2); background: var(--bg-sunken); color: var(--fg-muted); overflow-wrap: anywhere; word-break: keep-all; }
+.pd-rel-why li.pd-rel-why-fam { background: var(--accent-soft); color: var(--accent-ink); font-weight: 600; }
+.pd-rel-why li.pd-rel-why-ghs { background: var(--hazard-soft); color: var(--hazard-ink); }
+.pd-rel-why li.pd-rel-why-more { background: transparent; padding-left: 0; }
+.pd-rel-source { margin: calc(var(--unit) * 2.5) 0 0; font-size: calc(11px * var(--fs)); color: var(--fg-subtle); }
+@media (max-width: 1100px) { .pd-rel-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .pd-rel-list { grid-template-columns: minmax(0, 1fr); } }
+
+/* Exposure-limit comparison (product_oel.jsx, oel_*.jsx; added 2026-10-31) */
+.pd-oel-bar { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--unit) * 2); margin-bottom: calc(var(--unit) * 2); }
+.pd-oel-bar .pd-mini { margin-top: 0; }
+.pd-oel-wrap { overflow-x: auto; max-width: 100%; }
+.pat-table.pd-oel-table { min-width: calc(var(--unit) * 180); }
+.pat-table.pd-oel-table th, .pat-table.pd-oel-table td { vertical-align: top; padding: calc(var(--unit) * 2) calc(var(--unit) * 2.5); }
+.pd-oel-src { display: flex; flex-direction: column; align-items: flex-start; gap: calc(var(--unit) * 0.75); }
+.pd-oel-badge { text-decoration: none; white-space: nowrap; }
+.pd-oel-val { white-space: nowrap; }
+.pd-oel-line + .pd-oel-line { margin-top: calc(var(--unit) * 1); }
+.pd-oel-note { font-size: calc(11px * var(--fs)); white-space: normal; max-width: calc(var(--unit) * 40); }
+.pd-oel-note-col { font-size: calc(12px * var(--fs)); max-width: calc(var(--unit) * 50); }
+.pd-oel-date { font-size: calc(11px * var(--fs)); white-space: nowrap; }
+.pd-oel-links { margin-top: calc(var(--unit) * 3); font-size: calc(13px * var(--fs)); }
+.pd-oel-links ul { margin: calc(var(--unit) * 1) 0 0; padding-left: calc(var(--unit) * 4); }
+.pd-oel-links li + li { margin-top: calc(var(--unit) * 0.75); }
+
+/* GHS 그림문자 줄(ghs_pictogram_row.jsx, .ghs-*) — MSDS 탭 2항 "그림문자"와 경고표지가 같이 쓴다 */
+.ghs-row { display: flex; flex-wrap: wrap; gap: calc(var(--unit) * 2) calc(var(--unit) * 3); align-items: flex-start; }
+.ghs-fig { display: grid; justify-items: center; gap: var(--unit); margin: 0; }
+.ghs-pict { display: block; width: 56px; height: 56px; }
+.ghs-cap { font-size: calc(11px * var(--fs)); color: var(--fg-muted); text-align: center; max-width: 88px; line-height: 1.3; }
+.ghs-unknown { font-size: calc(12px * var(--fs)); align-self: center; }
+.ghs-row-msds { margin-top: calc(var(--unit) * 1.5); }
+
+/* 온도별 물성(product_tp.jsx, tp_*.jsx) */
+.pd-tp-bar { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--unit) * 2); margin-bottom: calc(var(--unit) * 2); }
+.pd-tp-bar .pd-mini { margin-top: 0; }
+.pd-tp-props { flex-wrap: wrap; }
+.pd-tp-tin { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--unit) * 1.5); margin-bottom: calc(var(--unit) * 2); }
+.pd-tp-tin .pd-mini { margin-top: 0; }
+.pd-tp-tlabel { font-size: calc(13px * var(--fs)); font-weight: 600; }
+.pd-tp-tfield { width: calc(var(--unit) * 24); }
+.pd-tp-tunit { font-size: calc(13px * var(--fs)); color: var(--fg-muted); }
+.pd-tp-chart { margin-bottom: calc(var(--unit) * 3); max-width: 100%; }
+.pd-tp-wrap { overflow-x: auto; max-width: 100%; margin-bottom: calc(var(--unit) * 3); }
+.pat-table.pd-tp-table { min-width: calc(var(--unit) * 150); }
+.pat-table.pd-tp-table.pd-tp-consts { min-width: 0; }
+.pat-table.pd-tp-table th, .pat-table.pd-tp-table td { vertical-align: top; padding: calc(var(--unit) * 1.5) calc(var(--unit) * 2.5); }
+.pd-tp-cap { caption-side: top; text-align: left; font-size: calc(13px * var(--fs)); font-weight: 600; padding-bottom: calc(var(--unit) * 1); }
+.pd-tp-table tr.is-out td { color: var(--fg-muted); }
+.pd-tp-val, .pd-tp-range { white-space: nowrap; }
+.pd-tp-badge { text-decoration: none; white-space: nowrap; }
+.pd-tp-cval { display: inline-flex; align-items: center; gap: calc(var(--unit) * 1); margin-right: calc(var(--unit) * 3); white-space: nowrap; }
+.pd-tp-calc { display: inline-block; margin-bottom: calc(var(--unit) * 2); }
+
+/* 비상대응 기준 패널(product_el.jsx, el_*.jsx) — 노출기준 표(.pd-oel-*)와 같은 틀 */
+.pd-el-block { margin-bottom: calc(var(--unit) * 4); min-width: 0; }
+.pd-el-sub { display: flex; flex-wrap: wrap; align-items: baseline; gap: calc(var(--unit) * 2); margin-bottom: calc(var(--unit) * 1.5); font-size: calc(13px * var(--fs)); }
+.pd-el-wrap { overflow-x: auto; max-width: 100%; }
+.pat-table.pd-el-table { min-width: calc(var(--unit) * 130); }
+.pat-table.pd-el-table th, .pat-table.pd-el-table td { vertical-align: top; padding: calc(var(--unit) * 1.5) calc(var(--unit) * 2.5); }
+.pat-table.pd-el-table th[scope="row"] { white-space: nowrap; }
+.pd-el-val { white-space: nowrap; }
+.pd-el-flag { font-size: calc(10px * var(--fs)); color: var(--hazard-ink); margin-left: 1px; }
+.pd-el-mg { font-size: calc(11px * var(--fs)); }
+.pd-el-probit { font-size: calc(13px * var(--fs)); overflow-wrap: anywhere; margin-bottom: calc(var(--unit) * 1); }
+.pd-el-endpoint { font-size: calc(13px * var(--fs)); margin-bottom: calc(var(--unit) * 1.5); overflow-wrap: anywhere; }
+.pd-el-chips { display: flex; flex-wrap: wrap; gap: calc(var(--unit) * 1.5); margin-bottom: calc(var(--unit) * 1.5); }
+
+/* 국내 근거 조문(product_law_basis.jsx, #kr-law) — 2026-11-01 카드형. 목록 카드(이름·할 일 한 줄·역할 칩·접힌 발췌), 접힌 조문 언급, 작은 꼬리말. */
+.pd-law .body { display: grid; gap: calc(var(--unit) * 3); }
+.pd-law-lists { display: grid; gap: calc(var(--unit) * 2.5); justify-items: start; }
+.pd-law-cards { width: 100%; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: calc(var(--unit) * 2.5); align-items: start; }
+.pd-law-card { min-width: 0; display: grid; gap: calc(var(--unit) * 1.5); padding: calc(var(--unit) * 2.5) calc(var(--unit) * 3); border: 1px solid var(--border); border-radius: var(--r-2); background: var(--bg-elevated); }
+.pd-law-card-head { display: flex; align-items: baseline; justify-content: space-between; gap: calc(var(--unit) * 2); font-size: calc(14px * var(--fs)); line-height: 1.4; overflow-wrap: anywhere; }
+.pd-law-card-head > a { flex: none; white-space: nowrap; }
+.pd-law-duty { margin: 0; padding-left: calc(var(--unit) * 2); border-left: 3px solid var(--accent); font-size: calc(13px * var(--fs)); line-height: 1.5; color: var(--fg); overflow-wrap: anywhere; }
+.pd-law-chips { display: flex; flex-wrap: wrap; gap: var(--unit); }
+.pd-law-chip-wrap { display: inline-flex; align-items: center; gap: calc(var(--unit) * 0.75); max-width: 100%; min-width: 0; }
+.pd-law-chip { display: inline-flex; align-items: baseline; flex-wrap: wrap; gap: 0 var(--unit); max-width: 100%; min-width: 0; padding: calc(var(--unit) * 0.5) calc(var(--unit) * 1.5); border: 1px solid var(--border); border-radius: var(--r-1); background: var(--bg-sunken); color: var(--fg); font-size: calc(12px * var(--fs)); line-height: 1.45; text-decoration: none; overflow-wrap: anywhere; }
+.pd-law-chip:hover { border-color: var(--border-strong); text-decoration: none; }
+.pd-law-role { font-size: calc(10px * var(--fs)); font-weight: 600; color: var(--fg-muted); white-space: nowrap; }
+.pd-law-chip.r-duty { background: var(--warn-soft); border-color: transparent; }
+.pd-law-chip.r-duty .pd-law-role { color: var(--warn-ink); }
+.pd-law-chip.r-def { background: var(--info-soft); border-color: transparent; }
+.pd-law-chip.r-def .pd-law-role { color: var(--info-ink); }
+.pd-law-pdf { font-size: calc(10px * var(--fs)); color: var(--fg-muted); }
+.pd-law-more > summary, .pd-law-mentions > summary { cursor: pointer; font-size: calc(12px * var(--fs)); color: var(--fg-muted); }
+.pd-law-more[open] { display: grid; gap: calc(var(--unit) * 2); }
+.pd-law-ex { min-width: 0; display: grid; gap: calc(var(--unit) * 0.75); padding-left: calc(var(--unit) * 2); border-left: 2px solid var(--border); }
+.pd-law-ex-head { font-size: calc(12px * var(--fs)); line-height: 1.5; overflow-wrap: anywhere; }
+.pd-law-ex-lines { font-size: calc(12.5px * var(--fs)); line-height: 1.6; color: var(--fg-muted); overflow-wrap: anywhere; }
+.pd-law-ex-lines .law-line { margin: 0 0 calc(var(--unit) * 0.5); }
+.law-cite-links { display: inline-flex; flex-wrap: wrap; gap: calc(var(--unit) * 2); margin-left: calc(var(--unit) * 1); }
+.pd-law-mentions { display: grid; gap: calc(var(--unit) * 1.5); }
+.pd-law-mentions[open] > summary { margin-bottom: calc(var(--unit) * 0.5); }
+.pd-law-subhead { font-size: calc(13px * var(--fs)); font-weight: 600; color: var(--fg); }
+.pd-law-note { margin: 0; font-size: calc(11px * var(--fs)); line-height: 1.5; }
+.pd-law-foot { display: grid; gap: calc(var(--unit) * 0.5); padding-top: calc(var(--unit) * 2); border-top: 1px solid var(--border); font-size: calc(11px * var(--fs)); line-height: 1.55; }
+.pd-law-foot p { margin: 0; }
+/* EU REACH registration entry (product_intl_reach.jsx ReachEntry; intl panel + 해외 규제 탭) */
+.pd-reach-entry { display: grid; gap: calc(var(--unit) * 1); }
+.pd-reach-facts { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: calc(var(--unit) * 3); row-gap: calc(var(--unit) * 0.75); }
+.pd-reach-fact { display: contents; }
+.pd-reach-fact dt { font-size: calc(11px * var(--fs)); white-space: nowrap; }
+.pd-reach-fact dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.pd-reach-sub { display: block; font-size: calc(10px * var(--fs)); }
+.pd-reach-link { font-size: calc(11px * var(--fs)); overflow-wrap: anywhere; }
+.pd-reach-source { font-size: calc(10px * var(--fs)); overflow-wrap: anywhere; }
+@media (max-width: 480px) { .pd-reach-facts { grid-template-columns: minmax(0, 1fr); } .pd-reach-fact dd { margin-bottom: calc(var(--unit) * 0.75); } }

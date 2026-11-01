@@ -3,6 +3,17 @@
 import pytest
 
 from backend.config.settings import settings
+from backend.core import terminology_db as _tdb
+
+# scripts/static_export/db.py 는 import 될 때 TerminologyDB.__init__ 를 읽기 전용으로 바꾼다(내보내기용).
+# 내보내기 모듈을 부르는 테스트가 먼저 돌면 그 패치가 남아 tmp DB 를 만드는 테스트가 깨지므로 테스트마다 되돌린다.
+_TERMINOLOGY_INIT = _tdb.TerminologyDB.__init__
+
+
+@pytest.fixture(autouse=True)
+def _restore_terminology_init():
+    _tdb.TerminologyDB.__init__ = _TERMINOLOGY_INIT
+    yield
 
 
 @pytest.fixture(autouse=True)

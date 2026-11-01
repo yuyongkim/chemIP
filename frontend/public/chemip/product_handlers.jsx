@@ -1,47 +1,78 @@
 // Product · Handling companies — PRTR 배출·이동량 신고 사업장, 사고 이력.
-// Rendered at the bottom of the chemical detail page; fetches lazily on scroll.
+// Rendered at the bottom of the chemical detail page; fetches lazily on scroll (useInView, use_in_view.jsx).
+// 수치 표기: product_format.jsx(fmtKg). 문구: PRODUCT_LABELS.handlers. 스타일: product_detail.css.
 
 const HANDLER_PREVIEW = 10;
 
-function fmtKg(kg) {
-  const n = Number(kg || 0);
-  if (!isFinite(n) || n === 0) return "0";
-  if (n >= 1000) return `${(n / 1000).toLocaleString("ko-KR", { maximumFractionDigits: 1 })}t`;
-  return `${n.toLocaleString("ko-KR", { maximumFractionDigits: 1 })}kg`;
+function HandlerStats({ companyCount, releaseKg, transferKg, year }) {
+  const S = PRODUCT_LABELS.handlers.stats;
+  const cells = [
+    [S.sites, companyCount.toLocaleString("ko-KR")], [S.release, fmtKg(releaseKg)],
+    [S.transfer, fmtKg(transferKg)], [S.year, year || "—"],
+  ];
+  return (
+    <div className="chem-hdr pd-lower-stats">
+      <div className="stats-mini pd-full">
+        {cells.map(([s, v]) => (
+          <div key={s.m}>
+            <div className="m">{s.m}</div>
+            <div className="v tnum">{v}</div>
+            <div className="muted pd-stat-sub">{s.sub}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
-// Fetch only once the section is near the viewport — a PRTR cache miss falls
-// back to a live portal probe, so we do not pay for it on every page view.
-function useInView(ref, force = false) {
-  const [inView, setInView] = React.useState(force);
-  React.useEffect(() => {
-    if (force) { setInView(true); return; }
-    if (inView) return;
-    const el = ref.current;
-    if (!el) return;
-    if (typeof IntersectionObserver === "undefined") { setInView(true); return; }
-    const io = new IntersectionObserver(entries => {
-      if (entries.some(e => e.isIntersecting)) { setInView(true); io.disconnect(); }
-    }, { rootMargin: "300px" });
-    io.observe(el);
-    return () => io.disconnect();
-  }, [inView, force]);
-  return inView;
+function HandlerSidePanels({ accidents, gyeonggi }) {
+  const HL = PRODUCT_LABELS.handlers;
+  if (!(accidents.length > 0 || gyeonggi.length > 0)) return null;
+  return (
+    <div className="layout-2col pd-side-panels">
+      {accidents.length > 0 && (
+        <div className="panel">
+          <h3><b>{HL.accidents}</b> <span className="muted">{HL.accidentCount(accidents.length)}</span></h3>
+          <div className="body">
+            {accidents.slice(0, 8).map((a, i) => (
+              <div key={a.data_no || i} className="row pd-row-top">
+                <div className="k">{a.date || "—"}</div>
+                <div className="v pd-v-sm">
+                  {a.place || a.area || "—"}{a.type && <span className="muted pd-plain"> · {a.type}</span>}
+                  {a.address && <div className="muted pd-plain">{a.address}</div>}
+                  {a.summary && <div className="muted pd-plain">{a.summary}</div>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {gyeonggi.length > 0 && (
+        <div className="panel">
+          <h3><b>{HL.gyeonggi}</b> <span className="muted">{HL.gyeonggiCount(gyeonggi.length)}</span></h3>
+          <div className="body">
+            {gyeonggi.slice(0, 8).map((g, i) => (
+              <div key={i} className="row pd-row-top">
+                <div className="k" title={g.company_name}>{(g.company_name || "—").slice(0, 12)}</div>
+                <div className="v pd-v-sm">
+                  {g.road_address || g.lot_address || g.sigun || "—"}
+                  {g.materials_text && <div className="muted pd-plain">{g.materials_text.slice(0, 80)}</div>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function HandlersPanel({ selected, anchor = "" }) {
   const anchorRef = React.useRef(null);
-  const targeted = anchor === "handlers";      // ?anchor=handlers — the paper's deep link
+  const targeted = anchor === "handlers";      // ?anchor=handlers — the paper's deep link (스크롤은 section_anchor.jsx)
   const inView = useInView(anchorRef, targeted);
   const [expanded, setExpanded] = useState(false);
   const { data, loading, error } = useHandlers(selected, inView);
-
-  // A deep-linked visit should land on the panel, not at the top of the page.
-  React.useEffect(() => {
-    if (!targeted || !anchorRef.current) return;
-    const t = setTimeout(() => anchorRef.current?.scrollIntoView({ block: "start" }), 400);
-    return () => clearTimeout(t);
-  }, [targeted, selected?.chem_id]);
 
   const sources = data?.sources || {};
   const summary = sources.prtr_summary?.data || null;
@@ -67,55 +98,33 @@ function HandlersPanel({ selected, anchor = "" }) {
     : HL.none;
 
   return (
-    <section ref={anchorRef} id="handlers" style={{ marginTop: 28 }}>
+    <section ref={anchorRef} id="handlers" className="pd-lower">
       <SectionHeading t={HL.heading} meta={`${HL.sourceNote} · ${statusText}`} />
 
-      {companyCount > 0 && (
-        <div className="chem-hdr" style={{ marginBottom: 14 }}>
-          <div className="stats-mini" style={{ width: "100%" }}>
-            <div>
-              <div className="m">{HL.stats.sites.m}</div>
-              <div className="v tnum">{companyCount.toLocaleString("ko-KR")}</div>
-              <div className="muted" style={{ fontSize: 11 }}>{HL.stats.sites.sub}</div>
-            </div>
-            <div>
-              <div className="m">{HL.stats.release.m}</div>
-              <div className="v tnum">{fmtKg(releaseKg)}</div>
-              <div className="muted" style={{ fontSize: 11 }}>{HL.stats.release.sub}</div>
-            </div>
-            <div>
-              <div className="m">{HL.stats.transfer.m}</div>
-              <div className="v tnum">{fmtKg(transferKg)}</div>
-              <div className="muted" style={{ fontSize: 11 }}>{HL.stats.transfer.sub}</div>
-            </div>
-            <div>
-              <div className="m">{HL.stats.year.m}</div>
-              <div className="v tnum">{year || "—"}</div>
-              <div className="muted" style={{ fontSize: 11 }}>{HL.stats.year.sub}</div>
-            </div>
-          </div>
-        </div>
+      {companyCount > 0 && <HandlerStats companyCount={companyCount} releaseKg={releaseKg} transferKg={transferKg} year={year} />}
+      {facilityTotal > 0 && selected?.cas_no && (
+        <div className="pd-more-row"><a className="ui-link-btn" href={prtrMapHref(selected.cas_no)}>{PRTR_MAP_LABELS.handlersLink} →</a></div>
       )}
 
       <table className="pat-table">
         <thead>
           <tr>
-            <th style={{ width: 44 }}>#</th>
+            <th className="pd-th-num">#</th>
             <th>{HL.company}</th>
-            <th className="handler-addr">소재지</th>
-            <th style={{ textAlign: "right" }}>배출</th>
-            <th style={{ textAlign: "right" }}>이동</th>
-            <th style={{ textAlign: "right" }}>합계</th>
+            <th className="handler-addr">{HL.cols.address}</th>
+            <th className="pd-num">{HL.cols.release}</th>
+            <th className="pd-num">{HL.cols.transfer}</th>
+            <th className="pd-num">{HL.cols.total}</th>
           </tr>
         </thead>
         <tbody>
           {rows.length === 0 && (
             <tr>
-              <td colSpan="6" style={{ textAlign: "center", color: "var(--fg-muted)", padding: 24 }}>
-                {!inView ? "아래로 스크롤하면 조회합니다."
-                  : loading ? "PRTR 조회 중…"
-                  : error ? `조회 실패: ${error}`
-                  : "이 물질에 대한 PRTR 배출·이동량 신고 사업장이 없습니다."}
+              <td colSpan="6" className="pd-table-empty">
+                {!inView ? HL.empty.scroll
+                  : loading ? HL.empty.loading
+                  : error ? HL.empty.failed(error)
+                  : HL.empty.none}
               </td>
             </tr>
           )}
@@ -126,13 +135,12 @@ function HandlersPanel({ selected, anchor = "" }) {
                 <b>{f.company_name || "—"}</b>
                 <div className="handler-addr-inline muted">{f.address || "—"}</div>
               </td>
-              <td className="handler-addr muted" style={{ fontSize: 12 }}>{f.address || "—"}</td>
-              <td className="tnum" style={{ textAlign: "right", fontSize: 12 }}>{fmtKg(f.total_release_kg)}</td>
-              <td className="tnum" style={{ textAlign: "right", fontSize: 12 }}>{fmtKg(f.total_transfer_kg)}</td>
-              <td style={{ textAlign: "right" }}>
-                <div className="tnum" style={{ fontSize: 12, fontWeight: 600 }}>{fmtKg(f.reported_total_kg)}</div>
-                <div style={{ height: 3, borderRadius: 2, marginTop: 3, background: "var(--accent)", opacity: 0.75,
-                  width: `${Math.max(4, (Number(f.reported_total_kg || 0) / maxTotal) * 100)}%`, marginLeft: "auto" }} />
+              <td className="handler-addr muted pd-td-sm">{f.address || "—"}</td>
+              <td className="tnum pd-num pd-td-sm">{fmtKg(f.total_release_kg)}</td>
+              <td className="tnum pd-num pd-td-sm">{fmtKg(f.total_transfer_kg)}</td>
+              <td className="pd-num">
+                <div className="tnum pd-total">{fmtKg(f.reported_total_kg)}</div>
+                <div className="pd-total-bar" style={{ "--w": `${Math.max(4, (Number(f.reported_total_kg || 0) / maxTotal) * 100)}%` }} />
               </td>
             </tr>
           ))}
@@ -140,57 +148,21 @@ function HandlersPanel({ selected, anchor = "" }) {
       </table>
 
       {facilities.length > HANDLER_PREVIEW && (
-        <div style={{ marginTop: 10, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
-          <span className="muted mono" style={{ fontSize: 11 }}>
-            상위 {Math.min(facilities.length, expanded ? facilities.length : HANDLER_PREVIEW)}
-            {facilityTotal > facilities.length ? ` / 신고 ${facilityTotal.toLocaleString("ko-KR")}곳` : ""}
-            {" · 배출+이동 합계 기준 정렬"}
+        <div className="pd-more-row">
+          <span className="muted mono pd-meta">
+            {HL.topN(Math.min(facilities.length, expanded ? facilities.length : HANDLER_PREVIEW))}
+            {facilityTotal > facilities.length ? HL.reported(facilityTotal.toLocaleString("ko-KR")) : ""}
+            {HL.sortNote}
           </span>
           <button className="btn" onClick={() => setExpanded(v => !v)}>
-            {expanded ? "접기" : `${facilities.length}곳 모두 보기`}
+            {expanded ? HL.collapse : HL.showAll(facilities.length)}
           </button>
         </div>
       )}
 
-      {(accidents.length > 0 || gyeonggi.length > 0) && (
-        <div className="layout-2col" style={{ marginTop: 18 }}>
-          {accidents.length > 0 && (
-            <div className="panel">
-              <h3><b>화학사고 이력</b> <span className="muted">{accidents.length}건</span></h3>
-              <div className="body">
-                {accidents.slice(0, 8).map((a, i) => (
-                  <div key={a.data_no || i} className="row" style={{ alignItems: "flex-start" }}>
-                    <div className="k">{a.date || "—"}</div>
-                    <div className="v" style={{ fontSize: 12 }}>
-                      {a.place || a.area || "—"}{a.type && <span className="muted" style={{ fontWeight: 400 }}> · {a.type}</span>}
-                      {a.address && <div className="muted" style={{ fontWeight: 400 }}>{a.address}</div>}
-                      {a.summary && <div className="muted" style={{ fontWeight: 400 }}>{a.summary}</div>}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-          {gyeonggi.length > 0 && (
-            <div className="panel">
-              <h3><b>경기도 위험물 취급</b> <span className="muted">{gyeonggi.length}곳</span></h3>
-              <div className="body">
-                {gyeonggi.slice(0, 8).map((g, i) => (
-                  <div key={i} className="row" style={{ alignItems: "flex-start" }}>
-                    <div className="k" title={g.company_name}>{(g.company_name || "—").slice(0, 12)}</div>
-                    <div className="v" style={{ fontSize: 12 }}>
-                      {g.road_address || g.lot_address || g.sigun || "—"}
-                      {g.materials_text && <div className="muted" style={{ fontWeight: 400 }}>{g.materials_text.slice(0, 80)}</div>}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
+      <HandlerSidePanels accidents={accidents} gyeonggi={gyeonggi} />
     </section>
   );
 }
 
-Object.assign(window, { HandlersPanel, fmtKg, useInView });
+Object.assign(window, { HandlersPanel });

@@ -1,0 +1,53 @@
+{
+  "_about": "Where the search synonym file (synonyms.jsonl) takes its names from. tier decides the ranking bonus (ranking.json 'synonym_tier_bonus'): 'registry' = an official registry or legal name of that CAS, 'synonym' = a listed synonym / trade, index or industry label. KISCHEM is 'synonym' tier: its rows sometimes carry the parent substance's name on a related CAS (활성탄 on 16291-96-6, Warfarin on its enantiomers); a confirmed wrong row is dropped by synonym_blocklist.json. derived_from 'pubchem' marks names that come from PubChem: on a tie of tier another source's citation is kept, and the benchmark counts IUPAC hits that only PubChem gives separately (circularity guard). Built by scripts/search_synonyms/build_synonyms.py; terminology.db is read-only.",
+  "db_sources": [
+    {"code": "ncis_eng", "table": "ncis_substance", "column": "name_eng", "tier": "registry",
+     "ref": "NCIS 화학물질정보 (data.go.kr B552584 ncissbstn) 영문명"},
+    {"code": "ncis_kor", "table": "ncis_substance", "column": "name_kor", "tier": "registry",
+     "ref": "NCIS 화학물질정보 국문명"},
+    {"code": "ncis_eng2", "table": "ncis_substance", "column": "name2_eng", "tier": "synonym",
+     "ref": "NCIS 화학물질정보 영문 이명"},
+    {"code": "ncis_kor2", "table": "ncis_substance", "column": "name2_kor", "tier": "synonym",
+     "ref": "NCIS 화학물질정보 국문 이명"},
+    {"code": "kreach_en", "table": "kreach_chemicals", "column": "name_en", "tier": "registry",
+     "ref": "K-REACH 기존화학물질 영문명 (kreach_chemicals)"},
+    {"code": "kischem_ko", "table": "kischem_safety", "column": "chem_ko", "tier": "synonym",
+     "ref": "화학물질안전원 KISCHEM 국문명", "strip_suffix": ",? *원소$"},
+    {"code": "kischem_en", "table": "kischem_safety", "column": "chem_en", "tier": "synonym",
+     "ref": "화학물질안전원 KISCHEM 영문명", "strip_suffix": ",? *elemental$"},
+    {"code": "echa_iupac", "table": "chemical_terms", "column": "name", "where": "source = 'ECHA'",
+     "extract": "paren_after_name_en", "skip_if": ";", "tier": "synonym",
+     "ref": "ECHA 등록물질 목록의 IUPAC 명 (chemical_terms source=ECHA, 이름 뒤 괄호; 성분 여럿을 적은 행은 제외)",
+     "url": "https://echa.europa.eu/information-on-chemicals/registered-substances"},
+    {"code": "echa_clp", "table": "intl_regulatory", "column": "chemical_name", "where": "source = 'ECHA'",
+     "skip_if": "\\[\\d+\\]", "tier": "synonym",
+     "ref": "ECHA CLP 부속서 VI 조화분류 물질명 (intl_regulatory source=ECHA; 이성질체 여럿을 [n]으로 묶은 행은 제외)",
+     "url": "https://echa.europa.eu/information-on-chemicals/annex-vi-to-clp"},
+    {"code": "epa_names", "table": "intl_regulatory", "column": "chemical_name", "where": "source LIKE 'EPA%'",
+     "tier": "synonym", "ref": "US EPA 목록 물질명 (intl_regulatory source=EPA*; CAS index 명 포함)"},
+    {"code": "msds_en", "table": "msds_english", "column": "name_en", "tier": "synonym", "derived_from": "pubchem",
+     "ref": "msds_english 영문명 (PubChem compound Title, scripts/bulk_pubchem_ghs.py)"}
+  ],
+  "law_lists": {
+    "dir": "backend/data/trade_controls/kr_lists",
+    "file_glob": "KR_*.json",
+    "skip_files": ["KR_PRODUCT_unverified.json"],
+    "match_methods": ["law_cas"],
+    "skip_roles": ["isomer_listed_in_parentheses"],
+    "name_fields": ["name_ko", "name_en"],
+    "tier": "registry",
+    "group_tier": "synonym",
+    "group_suffix": "#group",
+    "code_prefix": "law:",
+    "_about": "law.go.kr 별표 물질명. CAS 가 법령 원문에 적힌 항목(match_method law_cas)만 쓴다: 이름으로 CAS 를 짝지은 항목은 DB 이름을 다시 넣는 것이라 빼고, 이성질체를 괄호로 묶은 대표 행도 뺀다. 목록마다 출처 코드 law:<list_id>(법령·별표·URL). 한 목록이 같은 이름에 CAS 를 둘 이상 적으면(크롬산 아연, 황화니켈류, 사붕소산 나트륨) 그 이름은 물질군 이름이므로 law:<list_id>#group, group_tier 로 낮춘다."
+  },
+  "curated": [
+    {"file": "curated_synonyms.json"},
+    {"file": "element_names.json"},
+    {"file": "pubchem_synonyms.json", "optional": true}
+  ],
+  "blocklist": "synonym_blocklist.json",
+  "max_name_chars": 80,
+  "split": ";",
+  "strip_chars": " ·"
+}

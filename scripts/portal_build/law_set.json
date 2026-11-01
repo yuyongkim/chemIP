@@ -1,0 +1,944 @@
+{
+ "_about": [
+  "ChemIP 법령 말뭉치 대상 목록 (scripts/portal_build/law_corpus.py 가 읽는다).",
+  "kind: law = 법령(lawSearch target=law), admrul = 행정규칙(target=admrul). 이름 비교는 띄어쓰기·가운뎃점 무시.",
+  "origin: core = 핵심 화학안전 법령군(법률+시행령+시행규칙), referenced = ChemIP 화면·데이터가 law.go.kr 링크로 인용(law_refs.py --write 가 추가).",
+  "refs = 그 링크가 있는 파일, list_ids = 그 법령·고시를 원문으로 하는 국내 목록(reg_changes 의 list_id).",
+  "중대재해 처벌 등에 관한 법률은 시행규칙이 없다(lawSearch 2026-10-31 확인: 법률·시행령 2건뿐)."
+ ],
+ "laws": [
+  {
+   "name": "화학물질관리법",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "화학물질관리법",
+   "refs": [
+    "backend/data/trade_controls/kr_permits_env.json",
+    "backend/data/trade_controls/kr_rules.json",
+    "frontend/public/chemip/glossary_reg.jsx"
+   ]
+  },
+  {
+   "name": "화학물질관리법 시행령",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "화학물질관리법",
+   "refs": [
+    "backend/data/trade_controls/kr_rules.json"
+   ]
+  },
+  {
+   "name": "화학물질관리법 시행규칙",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "화학물질관리법",
+   "refs": [
+    "backend/data/trade_controls/kr_permits_env.json",
+    "backend/data/trade_controls/kr_rules.json"
+   ]
+  },
+  {
+   "name": "화학물질의 등록 및 평가 등에 관한 법률",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "화학물질의 등록 및 평가 등에 관한 법률",
+   "refs": [
+    "backend/data/trade_controls/kr_rules.json",
+    "frontend/public/chemip/glossary_reg.jsx"
+   ]
+  },
+  {
+   "name": "화학물질의 등록 및 평가 등에 관한 법률 시행령",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "화학물질의 등록 및 평가 등에 관한 법률",
+   "refs": [
+    "backend/data/trade_controls/kr_rules.json"
+   ]
+  },
+  {
+   "name": "화학물질의 등록 및 평가 등에 관한 법률 시행규칙",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "화학물질의 등록 및 평가 등에 관한 법률",
+   "refs": [
+    "backend/data/trade_controls/kr_rules.json"
+   ]
+  },
+  {
+   "name": "산업안전보건법",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "산업안전보건법",
+   "refs": [
+    "frontend/public/chemip/apl_psm_data.jsx",
+    "frontend/public/chemip/glossary_ih.jsx",
+    "frontend/public/chemip/glossary_psm.jsx",
+    "frontend/public/chemip/glossary_reg.jsx"
+   ]
+  },
+  {
+   "name": "산업안전보건법 시행령",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "산업안전보건법",
+   "refs": [
+    "frontend/public/chemip/apl_psm_data.jsx"
+   ]
+  },
+  {
+   "name": "산업안전보건법 시행규칙",
+   "kind": "law",
+   "origin": [
+    "core"
+   ],
+   "family": "산업안전보건법"
+  },
+  {
+   "name": "위험물안전관리법",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "위험물안전관리법",
+   "refs": [
+    "frontend/public/chemip/apl_hazmat_data.jsx",
+    "frontend/public/chemip/glossary_hazmat.jsx"
+   ]
+  },
+  {
+   "name": "위험물안전관리법 시행령",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "위험물안전관리법",
+   "refs": [
+    "frontend/public/chemip/apl_hazmat_data.jsx",
+    "frontend/public/chemip/glossary_hazmat.jsx"
+   ]
+  },
+  {
+   "name": "위험물안전관리법 시행규칙",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "위험물안전관리법",
+   "refs": [
+    "frontend/public/chemip/apl_hazmat_data.jsx",
+    "frontend/public/chemip/glossary_hazmat.jsx",
+    "frontend/public/chemip/safety_rules_data.jsx"
+   ]
+  },
+  {
+   "name": "고압가스 안전관리법",
+   "kind": "law",
+   "origin": [
+    "core"
+   ],
+   "family": "고압가스 안전관리법"
+  },
+  {
+   "name": "고압가스 안전관리법 시행령",
+   "kind": "law",
+   "origin": [
+    "core"
+   ],
+   "family": "고압가스 안전관리법"
+  },
+  {
+   "name": "고압가스 안전관리법 시행규칙",
+   "kind": "law",
+   "origin": [
+    "core"
+   ],
+   "family": "고압가스 안전관리법"
+  },
+  {
+   "name": "생활화학제품 및 살생물제의 안전관리에 관한 법률",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "생활화학제품 및 살생물제의 안전관리에 관한 법률",
+   "refs": [
+    "backend/data/trade_controls/kr_permits_product.json"
+   ]
+  },
+  {
+   "name": "생활화학제품 및 살생물제의 안전관리에 관한 법률 시행령",
+   "kind": "law",
+   "origin": [
+    "core"
+   ],
+   "family": "생활화학제품 및 살생물제의 안전관리에 관한 법률"
+  },
+  {
+   "name": "생활화학제품 및 살생물제의 안전관리에 관한 법률 시행규칙",
+   "kind": "law",
+   "origin": [
+    "core"
+   ],
+   "family": "생활화학제품 및 살생물제의 안전관리에 관한 법률"
+  },
+  {
+   "name": "대기환경보전법",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "대기환경보전법",
+   "refs": [
+    "backend/data/trade_controls/kr_permits_env.json"
+   ]
+  },
+  {
+   "name": "대기환경보전법 시행령",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "대기환경보전법",
+   "refs": [
+    "backend/data/trade_controls/kr_permits_env.json"
+   ]
+  },
+  {
+   "name": "대기환경보전법 시행규칙",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "대기환경보전법",
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_CLEAN_AIR_HAZARDOUS_MONITORING.json",
+    "backend/data/trade_controls/kr_lists/KR_CLEAN_AIR_POLLUTANTS.json",
+    "backend/data/trade_controls/kr_lists/KR_CLEAN_AIR_SPECIFIC_HAP.json",
+    "backend/data/trade_controls/kr_permits_env.json"
+   ],
+   "list_ids": [
+    "KR_CLEAN_AIR_HAZARDOUS_MONITORING",
+    "KR_CLEAN_AIR_POLLUTANTS",
+    "KR_CLEAN_AIR_SPECIFIC_HAP"
+   ]
+  },
+  {
+   "name": "물환경보전법",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "물환경보전법",
+   "refs": [
+    "backend/data/trade_controls/kr_permits_env.json"
+   ]
+  },
+  {
+   "name": "물환경보전법 시행령",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "물환경보전법",
+   "refs": [
+    "backend/data/trade_controls/kr_permits_env.json"
+   ]
+  },
+  {
+   "name": "물환경보전법 시행규칙",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "물환경보전법",
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_WATER_POLLUTANTS.json",
+    "backend/data/trade_controls/kr_lists/KR_WATER_SPECIFIC_HAZARDOUS.json",
+    "backend/data/trade_controls/kr_permits_env.json"
+   ],
+   "list_ids": [
+    "KR_WATER_POLLUTANTS",
+    "KR_WATER_SPECIFIC_HAZARDOUS"
+   ]
+  },
+  {
+   "name": "폐기물관리법",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "폐기물관리법",
+   "refs": [
+    "backend/data/trade_controls/kr_permits_env.json"
+   ]
+  },
+  {
+   "name": "폐기물관리법 시행령",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "폐기물관리법",
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_WASTE_DESIGNATED_TYPES.json"
+   ],
+   "list_ids": [
+    "KR_WASTE_DESIGNATED_TYPES"
+   ]
+  },
+  {
+   "name": "폐기물관리법 시행규칙",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "폐기물관리법",
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_WASTE_HALOGENATED_SOLVENTS.json",
+    "backend/data/trade_controls/kr_lists/KR_WASTE_HAZARDOUS_CONSTITUENTS.json"
+   ],
+   "list_ids": [
+    "KR_WASTE_HALOGENATED_SOLVENTS",
+    "KR_WASTE_HAZARDOUS_CONSTITUENTS"
+   ]
+  },
+  {
+   "name": "중대재해 처벌 등에 관한 법률",
+   "kind": "law",
+   "origin": [
+    "core",
+    "referenced"
+   ],
+   "family": "중대재해 처벌 등에 관한 법률",
+   "refs": [
+    "frontend/public/chemip/glossary_psm.jsx"
+   ]
+  },
+  {
+   "name": "중대재해 처벌 등에 관한 법률 시행령",
+   "kind": "law",
+   "origin": [
+    "core"
+   ],
+   "family": "중대재해 처벌 등에 관한 법률"
+  },
+  {
+   "name": "관세법제226조에따른세관장확인물품및확인방법지정고시",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_rules.json",
+    "frontend/public/chemip/sources_data.jsx"
+   ]
+  },
+  {
+   "name": "농약등및원제의취급제한기준",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_PESTICIDE_SPECIAL_MANAGED.json",
+    "backend/data/trade_controls/kr_permits_product.json"
+   ],
+   "list_ids": [
+    "KR_PESTICIDE_SPECIAL_MANAGED"
+   ]
+  },
+  {
+   "name": "농약및원제의등록기준",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_PESTICIDE_ADI.json",
+    "backend/data/trade_controls/kr_lists/KR_PESTICIDE_REGISTRATION_RESTRICTED.json",
+    "backend/data/trade_controls/kr_permits_product.json"
+   ],
+   "list_ids": [
+    "KR_PESTICIDE_ADI",
+    "KR_PESTICIDE_REGISTRATION_RESTRICTED"
+   ]
+  },
+  {
+   "name": "농약의수출입승인기준",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_PESTICIDE_PIC_ANNEX3.json",
+    "backend/data/trade_controls/kr_permits_product.json"
+   ],
+   "list_ids": [
+    "KR_PESTICIDE_PIC_ANNEX3"
+   ]
+  },
+  {
+   "name": "승인유예대상기존살생물물질의지정",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_CPBSA_BIOCIDE_EXISTING_DEFERRED.json"
+   ],
+   "list_ids": [
+    "KR_CPBSA_BIOCIDE_EXISTING_DEFERRED"
+   ]
+  },
+  {
+   "name": "안전확인대상생활화학제품지정및안전·표시기준",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_CPBSA_CONTENT_LIMITS.json",
+    "backend/data/trade_controls/kr_lists/KR_CPBSA_PRESERVATIVES.json",
+    "backend/data/trade_controls/kr_lists/KR_CPBSA_PROHIBITED.json"
+   ],
+   "list_ids": [
+    "KR_CPBSA_CONTENT_LIMITS",
+    "KR_CPBSA_PRESERVATIVES",
+    "KR_CPBSA_PROHIBITED"
+   ]
+  },
+  {
+   "name": "어린이제품공통안전기준",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_CHILD_COMMON_SAFETY_CHEMICALS.json"
+   ],
+   "list_ids": [
+    "KR_CHILD_COMMON_SAFETY_CHEMICALS"
+   ]
+  },
+  {
+   "name": "위해성이낮은살생물물질",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_CPBSA_BIOCIDE_LOW_RISK.json"
+   ],
+   "list_ids": [
+    "KR_CPBSA_BIOCIDE_LOW_RISK"
+   ]
+  },
+  {
+   "name": "위험물선박운송기준",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_TRANSPORT_SHIP_DGL.json"
+   ],
+   "list_ids": [
+    "KR_TRANSPORT_SHIP_DGL"
+   ]
+  },
+  {
+   "name": "유해화학물질의규정수량에관한규정",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "frontend/public/chemip/apl_cca_data.jsx",
+    "scripts/portal_build/hazchem_quantity.py"
+   ]
+  },
+  {
+   "name": "잔류성오염물질의종류및특정면제에관한규정",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_POPS_SUBSTANCES.json"
+   ],
+   "list_ids": [
+    "KR_POPS_SUBSTANCES"
+   ]
+  },
+  {
+   "name": "화장품안전기준등에관한규정",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_COSMETIC_PROHIBITED.json",
+    "backend/data/trade_controls/kr_lists/KR_COSMETIC_RESTRICTED.json",
+    "backend/data/trade_controls/kr_permits_product.json"
+   ],
+   "list_ids": [
+    "KR_COSMETIC_PROHIBITED",
+    "KR_COSMETIC_RESTRICTED"
+   ]
+  },
+  {
+   "name": "화학물질배출저감계획서의작성등에관한규정",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_CHEM_EMISSION_REDUCTION_PLAN.json"
+   ],
+   "list_ids": [
+    "KR_CHEM_EMISSION_REDUCTION_PLAN"
+   ]
+  },
+  {
+   "name": "화학물질의배출량조사및산정계수에관한규정",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_CHEM_PRTR.json",
+    "backend/data/trade_controls/kr_permits_env.json"
+   ],
+   "list_ids": [
+    "KR_CHEM_PRTR"
+   ]
+  },
+  {
+   "name": "휘발성유기화합물지정고시",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_CLEAN_AIR_VOC.json"
+   ],
+   "list_ids": [
+    "KR_CLEAN_AIR_VOC"
+   ]
+  },
+  {
+   "name": "관세법",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_rules.json"
+   ]
+  },
+  {
+   "name": "농약관리법",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_permits_product.json"
+   ]
+  },
+  {
+   "name": "먹는물수질기준및검사등에관한규칙",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_DRINKING_WATER_STANDARDS.json"
+   ],
+   "list_ids": [
+    "KR_DRINKING_WATER_STANDARDS"
+   ]
+  },
+  {
+   "name": "산업안전보건기준에관한규칙",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "frontend/public/chemip/glossary_fire.jsx",
+    "frontend/public/chemip/glossary_psm.jsx"
+   ]
+  },
+  {
+   "name": "선박안전법",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_permits_product.json"
+   ]
+  },
+  {
+   "name": "선박에서의오염방지에관한규칙",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_TRANSPORT_MARINE_NLS.json"
+   ],
+   "list_ids": [
+    "KR_TRANSPORT_MARINE_NLS"
+   ]
+  },
+  {
+   "name": "실내공기질관리법시행규칙",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_INDOOR_AIR_POLLUTANTS.json"
+   ],
+   "list_ids": [
+    "KR_INDOOR_AIR_POLLUTANTS"
+   ]
+  },
+  {
+   "name": "악취방지법",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_permits_env.json"
+   ]
+  },
+  {
+   "name": "악취방지법시행규칙",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_ODOR_DESIGNATED.json"
+   ],
+   "list_ids": [
+    "KR_ODOR_DESIGNATED"
+   ]
+  },
+  {
+   "name": "어린이제품안전특별법",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_permits_product.json"
+   ]
+  },
+  {
+   "name": "오존층보호등을위한특정물질의관리에관한법률",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_permits_env.json",
+    "backend/data/trade_controls/kr_rules.json"
+   ]
+  },
+  {
+   "name": "오존층보호등을위한특정물질의관리에관한법률시행규칙",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_rules.json"
+   ]
+  },
+  {
+   "name": "오존층보호등을위한특정물질의관리에관한법률시행령",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_OZONE_CONTROLLED_SUBSTANCES.json"
+   ],
+   "list_ids": [
+    "KR_OZONE_CONTROLLED_SUBSTANCES"
+   ]
+  },
+  {
+   "name": "위험물선박운송및저장규칙",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_permits_product.json"
+   ]
+  },
+  {
+   "name": "잔류성오염물질관리법",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_permits_product.json",
+    "backend/data/trade_controls/kr_rules.json"
+   ]
+  },
+  {
+   "name": "잔류성오염물질관리법시행규칙",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_rules.json"
+   ]
+  },
+  {
+   "name": "전기ㆍ전자제품및자동차의자원순환에관한법률",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_permits_product.json"
+   ]
+  },
+  {
+   "name": "전기ㆍ전자제품및자동차의자원순환에관한법률시행령",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_ELV_EEE_HAZARDOUS_SUBSTANCES.json",
+    "backend/data/trade_controls/kr_permits_product.json"
+   ],
+   "list_ids": [
+    "KR_ELV_EEE_HAZARDOUS_SUBSTANCES"
+   ]
+  },
+  {
+   "name": "토양환경보전법",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_permits_env.json"
+   ]
+  },
+  {
+   "name": "토양환경보전법시행규칙",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_SOIL_POLLUTANTS.json"
+   ],
+   "list_ids": [
+    "KR_SOIL_POLLUTANTS"
+   ]
+  },
+  {
+   "name": "항공안전법",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_permits_product.json"
+   ]
+  },
+  {
+   "name": "해양환경관리법",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_permits_product.json"
+   ]
+  },
+  {
+   "name": "화장품법",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_permits_product.json"
+   ]
+  },
+  {
+   "name": "환경오염시설의통합관리에관한법률",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_permits_env.json"
+   ]
+  },
+  {
+   "name": "환경오염시설의통합관리에관한법률시행규칙",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_permits_env.json"
+   ]
+  },
+  {
+   "name": "환경오염시설의통합관리에관한법률시행령",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_IPPC_CHARGE_POLLUTANTS.json"
+   ],
+   "list_ids": [
+    "KR_IPPC_CHARGE_POLLUTANTS"
+   ]
+  },
+  {
+   "name": "화재의 예방 및 안전관리에 관한 법률",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_FIRE_SPECIAL_COMBUSTIBLES.json"
+   ],
+   "list_ids": [
+    "KR_FIRE_SPECIAL_COMBUSTIBLES"
+   ]
+  },
+  {
+   "name": "화재의 예방 및 안전관리에 관한 법률 시행령",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_FIRE_SPECIAL_COMBUSTIBLES.json"
+   ],
+   "list_ids": [
+    "KR_FIRE_SPECIAL_COMBUSTIBLES"
+   ]
+  },
+  {
+   "name": "먹는물관리법",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_DRINKING_WATER_STANDARDS.json"
+   ],
+   "list_ids": [
+    "KR_DRINKING_WATER_STANDARDS"
+   ]
+  },
+  {
+   "name": "실내공기질 관리법",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_INDOOR_AIR_POLLUTANTS.json"
+   ],
+   "list_ids": [
+    "KR_INDOOR_AIR_POLLUTANTS"
+   ]
+  },
+  {
+   "name": "농약관리법 시행령",
+   "kind": "law",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_permits_product.json"
+   ]
+  },
+  {
+   "name": "화학물질 및 물리적 인자의 노출기준",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_OSH_OEL.json"
+   ],
+   "list_ids": [
+    "KR_OSH_OEL"
+   ]
+  },
+  {
+   "name": "화학물질의 분류·표시 및 물질안전보건자료에 관한 기준",
+   "kind": "admrul",
+   "origin": [
+    "referenced"
+   ],
+   "refs": [
+    "backend/data/trade_controls/kr_lists/KR_OSH_MSDS_NO_TRADE_SECRET.json"
+   ],
+   "list_ids": [
+    "KR_OSH_MSDS_NO_TRADE_SECRET"
+   ]
+  }
+ ]
+}

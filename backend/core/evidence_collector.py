@@ -10,12 +10,15 @@ import logging
 import re
 import xml.etree.ElementTree as ET
 
-from backend.api.global_patent_adapter import GlobalPatentAdapter
 from backend.api.patent_fetcher import PatentFetcher
 from backend.api import kipris_policy
+from backend.core import patent_mapping
 from backend.core.terminology_db import TerminologyDB
 
 logger = logging.getLogger(__name__)
+
+PATENT_MAPPING_EVIDENCE_TYPE = "patent_mapping"
+PATENT_MAPPING_TYPE_LABEL = "Patent mapping"
 
 
 def parse_msds_section_points(raw_xml: str, max_points: int = 5) -> list[str]:
@@ -66,7 +69,7 @@ def select_patent_query(request_name: str, meta: dict) -> str:
     return ""
 
 
-def build_patent_highlights(chem_id: str, patent_query: str) -> list[dict]:
+def build_patent_highlights(chem_id: str, patent_query: str, cas_no: str = "") -> list[dict]:
     highlights: list[dict] = []
 
     # KIPRIS_IN_AI=false: KIPRIS Plus results are not used as AI evidence (약관 제19조).
@@ -95,31 +98,22 @@ def build_patent_highlights(chem_id: str, patent_query: str) -> list[dict]:
         except Exception:
             logger.exception("Failed to collect KIPRIS patent evidence for '%s'", patent_query)
 
+    # Substance → patent mapping (scripts/patent_export): newest titles only, no abstract/snippet text
+    # (licence of the Lens.org-derived source is unconfirmed). Replaces the noisy global_patent_index.db rows.
+    cas = cas_no if patent_mapping.CAS_RE.match(cas_no or "") else chem_id
     try:
-        local_count = 0
-        global_results = GlobalPatentAdapter().search_patents_by_chem_id(chem_id, limit=6, offset=0)
-        for item in global_results:
-            if str(item.get("category", "") or "") == "exclusion":
-                continue
-            title = str(item.get("title", "") or "").strip()
-            if not title:
-                continue
-            jurisdiction = str(item.get("jurisdiction", "") or "").strip()
-            category = str(item.get("category", "") or "").strip()
-            snippet = str(item.get("snippet", "") or "").replace("\n", " ").strip()
-            snippet_parts = [part for part in [jurisdiction, category, snippet[:160]] if part]
+        for item in patent_mapping.recent_titles(patent_mapping.read_index(cas), limit=3):
+            meta_bits = [str(x) for x in (item["jurisdiction"], item["year"]) if x]
             highlights.append({
-                "type": "local_patent",
-                "type_label": "Local Patent",
-                "id": str(item.get("patent_id", "") or "").strip(),
-                "title": title,
-                "snippet": " | ".join(snippet_parts)[:240],
+                "type": PATENT_MAPPING_EVIDENCE_TYPE,
+                "type_label": PATENT_MAPPING_TYPE_LABEL,
+                "id": item["patent_id"],
+                "title": item["title"],
+                "snippet": " | ".join(meta_bits),
+                "url": item.get("link", ""),
             })
-            local_count += 1
-            if local_count >= 3:
-                break
     except Exception:
-        logger.exception("Failed to collect local patent evidence for '%s'", chem_id)
+        logger.exception("Failed to collect patent mapping evidence for '%s'", cas)
 
     return highlights[:6]
 

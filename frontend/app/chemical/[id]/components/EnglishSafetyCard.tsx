@@ -1,3 +1,7 @@
+import Link from 'next/link';
+
+import GhsStatementList from '@/components/GhsStatementList';
+
 import type { EnglishSafety } from '../types';
 
 interface EnglishSafetyCardProps {
@@ -23,25 +27,15 @@ export default function EnglishSafetyCard({ safety }: EnglishSafetyCardProps) {
         </div>
       </div>
       {safety.hazard_statements.length > 0 && (
-        <div className="mb-4">
-          <h3 className="text-sm font-semibold text-blue-900 mb-2">Hazard Statements ({safety.hazard_statements.length})</h3>
-          <ul className="list-disc list-inside text-sm text-gray-800 space-y-1 max-h-64 overflow-auto bg-white rounded-lg p-3 border border-blue-100">
-            {safety.hazard_statements.map((line, idx) => (
-              <li key={`hz-${idx}`}>{line}</li>
-            ))}
-          </ul>
-        </div>
+        <GhsStatementList title="Hazard Statements" lines={safety.hazard_statements} />
       )}
       {safety.precautionary_statements.length > 0 && (
-        <div>
-          <h3 className="text-sm font-semibold text-blue-900 mb-2">Precautionary Statements ({safety.precautionary_statements.length})</h3>
-          <ul className="list-disc list-inside text-sm text-gray-800 space-y-1 max-h-64 overflow-auto bg-white rounded-lg p-3 border border-blue-100">
-            {safety.precautionary_statements.map((line, idx) => (
-              <li key={`pc-${idx}`}>{line}</li>
-            ))}
-          </ul>
-        </div>
+        <GhsStatementList title="Precautionary Statements" lines={safety.precautionary_statements} />
       )}
+      <p className="mt-3 text-xs text-gray-500">
+        출처: PubChem GHS Classification (ECHA C&amp;L 신고 등 제출기관별 집계) ·{' '}
+        <Link href="/ghs" className="text-blue-700 hover:underline">GHS 코드 사전</Link>
+      </p>
     </div>
   );
 }

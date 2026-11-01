@@ -1,4 +1,4 @@
-// 요청 게시판 · 목록 — 분류·상태 거르기, 쪽 넘기기, 글 한 줄씩. 데이터는 useFeedbackList(api.jsx).
+// 요청 게시판 · 목록 — 분류·상태 거르기, 쪽 넘기기, 글 한 줄씩. 데이터는 useFeedbackList(api_feedback.jsx).
 
 const FB_PAGE_SIZE = 20;
 
@@ -9,7 +9,7 @@ function FeedbackFilterSelect({ label, value, options, onChange }) {
       <span className="muted">{label}</span>
       <select className="fb-select" value={value} onChange={e => onChange(e.target.value)}>
         <option value="">{L.filterAll}</option>
-        {(options || []).map(o => <option key={o} value={o}>{o}</option>)}
+        {(options || []).map(o => <option key={o} value={o}>{fbValueName(o)}</option>)}
       </select>
     </label>
   );
@@ -51,13 +51,13 @@ function FeedbackList({ meta, nonce, onOpen }) {
             {data.items.map(it => (
               <tr key={it.id} onClick={() => onOpen(it.id)} tabIndex={0} onKeyDown={e => { if (e.key === "Enter") onOpen(it.id); }}>
                 <td className="mono tnum fb-col-id">{it.id}</td>
-                <td className="fb-col-cat"><Badge>{it.category}</Badge></td>
+                <td className="fb-col-cat"><Badge>{fbValueName(it.category)}</Badge></td>
                 <td className="fb-title-cell">
                   {it.title}
                   {it.cas && <span className="mono fb-cas"> · {it.cas}</span>}
                   {it.admin_reply && <span className="fb-replied"> · {L.detail.reply}</span>}
                 </td>
-                <td className="fb-col-status"><Badge tone={fbStatusTone(it.status)}>{it.status}</Badge></td>
+                <td className="fb-col-status"><Badge tone={fbStatusTone(it.status)}>{fbValueName(it.status)}</Badge></td>
                 <td className="mono tnum fb-col-date">{fbDate(it.created_at)}</td>
               </tr>
             ))}

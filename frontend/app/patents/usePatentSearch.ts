@@ -1,11 +1,28 @@
-﻿import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { fetchJsonSafe, getErrorMessage } from '@/lib/http';
 
-import type { Patent, SearchResponse } from './types';
+import type { ChemicalResolution, ChemicalSearchItem, Patent, SearchResponse } from './types';
 
 interface UsePatentSearchOptions {
   limit?: number;
+}
+
+function normalizeValue(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9가-힣]+/g, '');
+}
+
+function shouldAttachLocalDb(keyword: string, chemical: ChemicalSearchItem | null): chemical is ChemicalSearchItem {
+  if (!chemical) return false;
+
+  const queryNorm = normalizeValue(keyword);
+  if (!queryNorm || queryNorm.length < 2) return false;
+
+  const candidates = [chemical.chem_id, chemical.cas_no, chemical.name, chemical.name_en]
+    .filter((value): value is string => typeof value === 'string' && value.trim().length > 0)
+    .map((value) => normalizeValue(value));
+
+  return candidates.some((candidate) => candidate === queryNorm || candidate.includes(queryNorm) || queryNorm.includes(candidate));
 }
 
 export function usePatentSearch({ limit = 20 }: UsePatentSearchOptions = {}) {
@@ -13,6 +30,10 @@ export function usePatentSearch({ limit = 20 }: UsePatentSearchOptions = {}) {
 
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Patent[]>([]);
+  const [globalResults, setGlobalResults] = useState<Patent[]>([]);
+  const [usptoResults, setUsptoResults] = useState<Patent[]>([]);
+  const [resolvedChemical, setResolvedChemical] = useState<ChemicalResolution | null>(null);
+  const [warnings, setWarnings] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searched, setSearched] = useState(false);
@@ -22,27 +43,95 @@ export function usePatentSearch({ limit = 20 }: UsePatentSearchOptions = {}) {
 
   const doSearch = useCallback(
     async (keyword: string, page: number) => {
-      if (!keyword.trim()) return;
+      const trimmedKeyword = keyword.trim();
+      if (!trimmedKeyword) return;
 
-      setQuery(keyword);
+      setQuery(trimmedKeyword);
       setLoading(true);
       setError(null);
+      setWarnings([]);
       setSearched(true);
 
       try {
-        const result = await fetchJsonSafe<SearchResponse>(`/api/patents?q=${encodeURIComponent(keyword)}&page=${page}&limit=${limit}`);
-        if (!result.ok || !result.data) {
-          throw new Error(getErrorMessage(result, `Server error (${result.status})`));
+        const localLimit = Math.min(limit, 12);
+        const [patentResponse, chemicalResponse] = await Promise.all([
+          fetchJsonSafe<SearchResponse>(`/api/patents?q=${encodeURIComponent(trimmedKeyword)}&page=${page}&limit=${limit}`),
+          fetchJsonSafe<{ items?: ChemicalSearchItem[] }>(`/api/chemicals?q=${encodeURIComponent(trimmedKeyword)}&page=1&limit=1`),
+        ]);
+
+        const nextWarnings: string[] = [];
+
+        if (patentResponse.ok && patentResponse.data) {
+          setResults(patentResponse.data.results || []);
+          setTotal(patentResponse.data.total || 0);
+          setTotalPages(patentResponse.data.total_pages || 0);
+          setCurrentPage(patentResponse.data.page || 1);
+        } else {
+          nextWarnings.push(`KIPRIS: ${getErrorMessage(patentResponse, `Server error (${patentResponse.status})`)}`);
+          setResults([]);
+          setTotal(0);
+          setTotalPages(0);
+          setCurrentPage(page);
         }
 
-        setResults(result.data.results || []);
-        setTotal(result.data.total || 0);
-        setTotalPages(result.data.total_pages || 0);
-        setCurrentPage(result.data.page || 1);
+        const chemical =
+          chemicalResponse.ok && chemicalResponse.data && Array.isArray(chemicalResponse.data.items)
+            ? (chemicalResponse.data.items[0] ?? null)
+            : null;
+
+        let nextGlobalResults: Patent[] = [];
+        let nextUsptoResults: Patent[] = [];
+
+        if (shouldAttachLocalDb(trimmedKeyword, chemical)) {
+          const nextResolvedChemical: ChemicalResolution = {
+            chem_id: chemical.chem_id,
+            name: chemical.name,
+            name_en: chemical.name_en,
+            cas_no: chemical.cas_no,
+            source: chemical.source,
+          };
+          setResolvedChemical(nextResolvedChemical);
+
+          const [globalResponse, usptoResponse] = await Promise.all([
+            fetchJsonSafe<{ results?: Patent[] }>(`/api/patents/global/${encodeURIComponent(chemical.chem_id)}?page=1&limit=${localLimit}`),
+            fetchJsonSafe<{ results?: Patent[] }>(`/api/patents/uspto/${encodeURIComponent(chemical.chem_id)}?page=1&limit=${localLimit}`),
+          ]);
+
+          if (globalResponse.ok && globalResponse.data) {
+            nextGlobalResults = globalResponse.data.results || [];
+          } else {
+            nextWarnings.push(`Global DB: ${getErrorMessage(globalResponse, `Server error (${globalResponse.status})`)}`);
+          }
+
+          if (usptoResponse.ok && usptoResponse.data) {
+            nextUsptoResults = usptoResponse.data.results || [];
+          } else {
+            nextWarnings.push(`USPTO DB: ${getErrorMessage(usptoResponse, `Server error (${usptoResponse.status})`)}`);
+          }
+        } else {
+          setResolvedChemical(null);
+        }
+
+        setGlobalResults(nextGlobalResults);
+        setUsptoResults(nextUsptoResults);
+        setWarnings(nextWarnings);
+
+        const hasAnyResults =
+          (patentResponse.data?.results?.length ?? 0) > 0 ||
+          nextGlobalResults.length > 0 ||
+          nextUsptoResults.length > 0;
+
+        if (!hasAnyResults && nextWarnings.length > 0) {
+          setError('특허 검색 중 일부 소스 연결에 실패했습니다. 백엔드 상태를 확인해 주세요.');
+        }
       } catch (err) {
         console.error(err);
         setError('A patent search error occurred. Please check the backend connection status.');
         setResults([]);
+        setGlobalResults([]);
+        setUsptoResults([]);
+        setResolvedChemical(null);
+        setWarnings([]);
         setTotal(0);
         setTotalPages(0);
       } finally {
@@ -95,6 +184,10 @@ export function usePatentSearch({ limit = 20 }: UsePatentSearchOptions = {}) {
   return {
     query,
     results,
+    globalResults,
+    usptoResults,
+    resolvedChemical,
+    warnings,
     loading,
     error,
     searched,

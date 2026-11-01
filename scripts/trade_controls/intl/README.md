@@ -23,6 +23,8 @@ S:\chemip_trade_controls_venv\Scripts\python.exe -I scripts\trade_controls\colle
 | `build.py` | 파서 결과 + 메타데이터 → 출력 JSON, 건수·체크디지트 검증 |
 | `pipeline.py` | `sources/*.json` 을 돌며 파서 호출 → 저장 (출처 추가 시 수정 불필요) |
 | `parse_echa.py` | ECHA CHEM API: SVHC 후보물질, REACH 부속서 XIV·XVII, POPs 규정 (그룹 구성 물질 포함) |
+| `parse_echa_reach.py` | ECHA CHEM: REACH 등록 현황(EC 번호·활성 등록 수·등록 유형·NONS·톤수 구간·첫 등록일·최근 갱신일). ECHA 법적 고지상 DB 전체·상당 부분 복제 금지라 `sources/eu_echa_reach.json` 의 CAS 묶음(검증 4종·SEO 대표 216종·국내 PSM)만, 상한 300종. 날짜별 원본 폴더 |
+| `parse_eu_dwd.py` | EU 먹는물 지침 (EU) 2020/2184 부속서 I 제B부 화학 항목 기준값(EUR-Lex Cellar). CAS 는 원문에 없어 `sources/eu_dwd.json` 대응표 + 공식 명칭 목록(TSCA·AIIC·DSL·intl_regulatory) 확인분만, 나머지는 family |
 | `parse_eu_pic.py` | EU PIC 규정 649/2012 통합본(Cellar): 부속서 I 제1·2·3부, 부속서 V |
 | `parse_tsca.py` | EPA TSCA Inventory(비CBI), §12(b) 수출통보 목록, §6 위해관리 대상(Inventory R 플래그 + 12(b) §6 행) |
 | `parse_cn_hazchem.py` | 중국 危险化学品目录(2015版) .doc(조각 테이블 직접 해석) + 2026年第3号 추가 5종 |

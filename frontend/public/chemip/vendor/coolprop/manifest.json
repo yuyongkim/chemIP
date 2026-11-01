@@ -1,0 +1,18 @@
+{
+  "name": "CoolProp",
+  "version": "8.0.0",
+  "gitrevision": "ae81610e7d23efc57f9d051c8e70a4d66e87537f",
+  "licence": "MIT (LICENSE in this folder, from https://github.com/CoolProp/CoolProp/blob/v8.0.0/LICENSE)",
+  "copyright": "Copyright (c) 2012-2018 Ian H. Bell and other CoolProp developers",
+  "citation": "Bell, I.H., Wronski, J., Quoilin, S., Lemort, V. (2014). Pure and Pseudo-pure Fluid Thermophysical Property Evaluation and the Open-Source Thermophysical Property Library CoolProp. Ind. Eng. Chem. Res. 53(6), 2498-2508. doi:10.1021/ie4033999",
+  "source": "Official CoolProp release build, unmodified: https://sourceforge.net/projects/coolprop/files/CoolProp/8.0.0/Javascript/",
+  "downloaded": "2026-10-31",
+  "build": "Emscripten ES module (export default async factory Module(); wasm located next to coolprop.js via import.meta.url). Embind API: PropsSI, Props1SI, HAPropsSI, get_global_param_string, get_fluid_param_string, AbstractState",
+  "loaded_by": "calc_fluid_engine.jsx (dynamic import, only when the fluid_props calculator is opened)",
+  "files": {
+    "coolprop.js": { "bytes": 167060, "sha256": "ebd02f5721abc10fee3e6560b0d96c1a17b8ae1f01bc144a4f9a1af8cf1e3217", "sha1": "4cbf8e9c09cb30bf57a1f281ef5a10912597d235", "sha1_matches_sourceforge": true },
+    "coolprop.wasm": { "bytes": 9196512, "sha256": "28a83d839ab69c7e6ea480298955ce223b6507dc6ffb83349dd31f1540867307", "sha1": "e4c3ffc0317b537a50908c7f61e6f91bb9f660a0", "sha1_matches_sourceforge": true, "gzip9_bytes": 4302587, "brotli_bytes": 3381975 }
+  },
+  "extra_files": { "package.json": "{\"type\": \"module\"} so Node tests import coolprop.js as ESM; unused by browsers", "manifest.json": "this file" },
+  "fluids": 136
+}

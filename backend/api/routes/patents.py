@@ -1,9 +1,11 @@
 from fastapi import APIRouter, HTTPException, Query
+from fastapi.responses import JSONResponse
 from backend.api.patent_fetcher import PatentFetcher
 from backend.api.uspto_adapter import UsptoAdapter
 from backend.api.global_patent_adapter import GlobalPatentAdapter
 from backend.api.kipris_adapter import KiprisAdapter
 from backend.api import kipris_policy
+from backend.config.settings import settings
 
 router = APIRouter()
 
@@ -95,6 +97,23 @@ def get_kipris_patent_detail(application_number: str):
         raise HTTPException(status_code=404, detail="KIPRIS patent detail not found")
     return detail
 
+# Legacy local-index routes (data/global_patent_index.db, data/uspto_index.db): rows are keyed by wrong chem_ids and
+# are mostly junk terms, so they are retired. 410 Gone with a pointer to the substance → patent mapping, unless the
+# internal flag LEGACY_PATENT_INDEX_ROUTES=true is set. Local file paths are never returned (the adapters drop them).
+LEGACY_GONE_BODY = {
+    "code": "GONE",
+    "message": "This endpoint is retired. Use the substance → patent mapping by CAS number.",
+    "replacement": "/data/v1/pat/{cas}/index.json",
+    "replacement_jurisdiction": "/data/v1/pat/{cas}/{JUR}.json",
+}
+
+
+def _legacy_gone() -> JSONResponse | None:
+    if settings.LEGACY_PATENT_INDEX_ROUTES:
+        return None
+    return JSONResponse(LEGACY_GONE_BODY, status_code=410)
+
+
 @router.get("/uspto/{chem_id}")
 def search_uspto(
     chem_id: str,
@@ -102,12 +121,16 @@ def search_uspto(
     limit: int = Query(100, ge=1, le=500),
 ):
     """
-    Search local USPTO index by chemical ID
+    Legacy: local USPTO index by chemical ID (410 unless LEGACY_PATENT_INDEX_ROUTES=true)
     """
+    gone = _legacy_gone()
+    if gone:
+        return gone
     adapter = UsptoAdapter()
     offset = (page - 1) * limit
     results = adapter.search_patents_by_chem_id(chem_id, limit=limit, offset=offset)
     return {"chem_id": chem_id, "results": results, "page": page, "limit": limit}
+
 
 @router.get("/global/{chem_id}")
 def search_global_patents(
@@ -116,13 +139,16 @@ def search_global_patents(
     limit: int = Query(100, ge=1, le=500)
 ):
     """
-    Search global patent index (USPTO, EPO, WIPO, etc.) by chemical ID
+    Legacy: global patent index by chemical ID (410 unless LEGACY_PATENT_INDEX_ROUTES=true)
     """
+    gone = _legacy_gone()
+    if gone:
+        return gone
     adapter = GlobalPatentAdapter()
     offset = (page - 1) * limit
     results = adapter.search_patents_by_chem_id(chem_id, limit=limit, offset=offset)
     return {
-        "chem_id": chem_id, 
+        "chem_id": chem_id,
         "results": results,
         "page": page,
         "limit": limit

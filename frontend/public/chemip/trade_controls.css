@@ -2,18 +2,18 @@
    색·글꼴·모서리는 tokens.css 변수만 쓴다. 간격은 --unit(4px) 배수. 공용 UI(.ui-*)는 ui_common.jsx 가 쓴다. */
 
 /* ── 공용 UI (ui_common.jsx) ── */
-.ui-empty { font-size: 12px; color: var(--fg-muted); }
+.ui-empty { font-size: calc(12px * var(--fs)); color: var(--fg-muted); }
 .ui-empty.error { color: var(--hazard); }
-.ui-empty.card-like { padding: calc(var(--unit) * 5); border: 1px solid var(--border); border-radius: var(--r-3); background: var(--bg-elevated); font-size: 13px; margin-bottom: calc(var(--unit) * 3); }
-.ui-source-link { font-size: 11px; margin-left: calc(var(--unit) * 1.5); color: var(--accent-ink); white-space: nowrap; }
+.ui-empty.card-like { padding: calc(var(--unit) * 5); border: 1px solid var(--border); border-radius: var(--r-3); background: var(--bg-elevated); font-size: calc(13px * var(--fs)); margin-bottom: calc(var(--unit) * 3); }
+.ui-source-link { font-size: calc(11px * var(--fs)); margin-left: calc(var(--unit) * 1.5); color: var(--accent-ink); white-space: nowrap; }
 .ui-source-link:hover { text-decoration: underline; }
-.ui-badge { font-size: 10px; }
+.ui-badge { font-size: calc(10px * var(--fs)); }
 .ui-section { margin-top: calc(var(--unit) * 3.5); }
 /* 패널 머리(app.css .panel h3)는 영문 대문자용 자간이라 한국어 보조 글자에는 본문 글꼴·기본 자간을 쓴다 */
 .ui-section > h3 { flex-wrap: wrap; gap: calc(var(--unit) * 1) calc(var(--unit) * 3); }
-.ui-section > h3 > .muted { font-family: var(--font-body); font-size: 12px; letter-spacing: normal; text-transform: none; }
-.ui-hint { font-size: 11px; color: var(--fg-muted); }
-.ui-link-btn { padding: 0; font-size: 11px; color: var(--accent-ink); text-decoration: underline; text-underline-offset: 2px; }
+.ui-section > h3 > .muted { font-family: var(--font-body); font-size: calc(12px * var(--fs)); letter-spacing: normal; text-transform: none; }
+.ui-hint { font-size: calc(11px * var(--fs)); color: var(--fg-muted); }
+.ui-link-btn { padding: 0; font-size: calc(11px * var(--fs)); color: var(--accent-ink); text-decoration: underline; text-underline-offset: 2px; }
 .ui-link-btn:hover { color: var(--fg); }
 .ui-collapse > .ui-collapse-sum { list-style: none; cursor: pointer; display: flex; gap: calc(var(--unit) * 2); align-items: flex-start; }
 .ui-collapse > .ui-collapse-sum::-webkit-details-marker { display: none; }
@@ -28,11 +28,11 @@
 /* ── 탭 머리 ── */
 .tc-tab { margin-top: calc(var(--unit) * 4); }
 .tc-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: calc(var(--unit) * 2.5); margin-bottom: calc(var(--unit) * 1.5); }
-.tc-title { font-family: var(--font-display); font-size: 18px; margin: 0; letter-spacing: -0.01em; }
-.tc-subtitle { font-family: var(--font-display); font-size: 15px; margin: 0; color: var(--fg); }
+.tc-title { font-family: var(--font-display); font-size: calc(18px * var(--fs)); margin: 0; letter-spacing: -0.01em; }
+.tc-subtitle { font-family: var(--font-display); font-size: calc(15px * var(--fs)); margin: 0; color: var(--fg); }
 .tc-block { margin-top: calc(var(--unit) * 7); }
 .tc-block:first-of-type { margin-top: calc(var(--unit) * 2); }
-.tc-phrase { font-size: 13px; color: var(--fg-muted); margin-bottom: var(--unit); }
+.tc-phrase { font-size: calc(13px * var(--fs)); color: var(--fg-muted); margin-bottom: var(--unit); }
 .tc-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: calc(var(--unit) * 5); align-items: start; }
 @media (max-width: 900px) { .tc-grid { grid-template-columns: minmax(0, 1fr); } }
 
@@ -44,7 +44,7 @@
   background: color-mix(in oklch, var(--bg) 92%, transparent); backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--border);
 }
-.tc-updating { font-size: 12px; color: var(--fg-muted); }
+.tc-updating { font-size: calc(12px * var(--fs)); color: var(--fg-muted); }
 .tc-body { transition: opacity .15s; }
 .tc-body.is-stale { opacity: .55; pointer-events: none; }
 @media (max-width: 900px) {
@@ -63,28 +63,28 @@
 }
 .tc-sum-card:hover { border-color: var(--border-strong); background: var(--bg-sunken); }
 .tc-sum-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.tc-sum-label { font-size: 11px; color: var(--fg-muted); font-weight: 500; }
-.tc-sum-value { font-family: var(--font-display); font-size: 18px; font-weight: 600; letter-spacing: -0.01em; color: var(--fg-muted); overflow-wrap: anywhere; }
-.tc-sum-sub { font-size: 11px; color: var(--fg-muted); line-height: 1.4; overflow-wrap: anywhere; }
+.tc-sum-label { font-size: calc(11px * var(--fs)); color: var(--fg-muted); font-weight: 500; }
+.tc-sum-value { font-family: var(--font-display); font-size: calc(18px * var(--fs)); font-weight: 600; letter-spacing: -0.01em; color: var(--fg-muted); overflow-wrap: anywhere; }
+.tc-sum-sub { font-size: calc(11px * var(--fs)); color: var(--fg-muted); line-height: 1.4; overflow-wrap: anywhere; }
 .tc-sum-card.on .tc-sum-value { color: var(--fg); }
 .tc-sum-card.alert { border-color: var(--hazard); background: var(--hazard-soft); }
 .tc-sum-card.alert .tc-sum-value, .tc-sum-card.alert .tc-sum-sub { color: var(--hazard-ink); }
 
 
 .tc-bar { display: flex; gap: calc(var(--unit) * 2.5); align-items: center; flex-wrap: wrap; }
-.tc-select-label { display: inline-flex; gap: calc(var(--unit) * 1.5); align-items: center; font-size: 12px; }
-.tc-select { padding: calc(var(--unit) * 1.25) calc(var(--unit) * 2); border: 1px solid var(--border); border-radius: var(--r-2); background: var(--bg-elevated); font-size: 12px; }
+.tc-select-label { display: inline-flex; gap: calc(var(--unit) * 1.5); align-items: center; font-size: calc(12px * var(--fs)); }
+.tc-select { padding: calc(var(--unit) * 1.25) calc(var(--unit) * 2); border: 1px solid var(--border); border-radius: var(--r-2); background: var(--bg-elevated); font-size: calc(12px * var(--fs)); }
 
 /* ── 항목(의무·인허가·목록) ── */
-.tc-item { font-size: 12px; padding: calc(var(--unit) * 3) 0; border-top: 1px dashed var(--border); overflow-wrap: anywhere; }
+.tc-item { font-size: calc(12px * var(--fs)); padding: calc(var(--unit) * 3) 0; border-top: 1px dashed var(--border); overflow-wrap: anywhere; }
 .tc-item:first-child { border-top: none; padding-top: 0; }
 .tc-item-head { display: flex; gap: calc(var(--unit) * 2); align-items: baseline; justify-content: space-between; flex-wrap: wrap; }
-.tc-item-title { font-size: 13px; font-weight: 600; }
+.tc-item-title { font-size: calc(13px * var(--fs)); font-weight: 600; }
 .tc-field { display: grid; grid-template-columns: calc(var(--unit) * 16) 1fr; gap: calc(var(--unit) * 2); margin-top: var(--unit); }
 .tc-field-k { color: var(--fg-muted); }
 .tc-quote { margin-top: calc(var(--unit) * 1.5); padding-left: calc(var(--unit) * 2.5); border-left: 2px solid var(--border); line-height: 1.5; color: var(--fg-muted); }
 .tc-tags { display: flex; gap: calc(var(--unit) * 1.5); flex-wrap: wrap; margin-top: calc(var(--unit) * 1.5); align-items: center; }
-.tc-meta { font-family: var(--font-mono); font-size: 10px; color: var(--fg-muted); }
+.tc-meta { font-family: var(--font-mono); font-size: calc(10px * var(--fs)); color: var(--fg-muted); }
 .tc-line { margin-top: calc(var(--unit) * 0.75); }
 .tc-muted { color: var(--fg-muted); }
 
@@ -94,12 +94,12 @@
 .tc-law > .ui-collapse-sum { padding: calc(var(--unit) * 2.5) 0; }
 .tc-law:first-child > .ui-collapse-sum { padding-top: 0; }
 .tc-law-sum { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: calc(var(--unit) * 0.5) calc(var(--unit) * 2); align-items: baseline; min-width: 0; }
-.tc-law-name { font-family: var(--font-display); font-size: 14px; font-weight: 600; color: var(--fg); overflow-wrap: anywhere; }
-.tc-law-count { font-size: 12px; color: var(--fg-muted); white-space: nowrap; }
-.tc-law-peek { grid-column: 1 / -1; font-size: 12px; color: var(--fg-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tc-law-name { font-family: var(--font-display); font-size: calc(14px * var(--fs)); font-weight: 600; color: var(--fg); overflow-wrap: anywhere; }
+.tc-law-count { font-size: calc(12px * var(--fs)); color: var(--fg-muted); white-space: nowrap; }
+.tc-law-peek { grid-column: 1 / -1; font-size: calc(12px * var(--fs)); color: var(--fg-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .tc-law[open] .tc-law-peek { display: none; }
 .tc-law-kinds { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--unit); }
-.tc-law-names { grid-column: 1 / -1; display: flex; flex-direction: column; gap: calc(var(--unit) * 0.5); margin-top: calc(var(--unit) * 0.5); font-size: 13px; color: var(--fg); }
+.tc-law-names { grid-column: 1 / -1; display: flex; flex-direction: column; gap: calc(var(--unit) * 0.5); margin-top: calc(var(--unit) * 0.5); font-size: calc(13px * var(--fs)); color: var(--fg); }
 .tc-law-name-item::before { content: "· "; color: var(--fg-muted); }
 .tc-law[open] .tc-law-names { display: none; }
 .tc-law > .ui-collapse-body { padding: 0 0 calc(var(--unit) * 3) calc(var(--unit) * 4.5); }
@@ -108,18 +108,18 @@
 .tc-bullets li + li { margin-top: var(--unit); }
 .tc-tags-inline { display: inline-flex; flex-wrap: wrap; gap: var(--unit); }
 .tc-quotes { margin-top: calc(var(--unit) * 2); }
-.tc-quotes > .ui-collapse-sum, .tc-more > .ui-collapse-sum { font-size: 12px; color: var(--accent-ink); }
+.tc-quotes > .ui-collapse-sum, .tc-more > .ui-collapse-sum { font-size: calc(12px * var(--fs)); color: var(--accent-ink); }
 .tc-more { margin-top: var(--unit); }
 
 /* ── KOTRA · 출처 ── */
-.tc-subblock { margin-top: calc(var(--unit) * 3); padding-top: calc(var(--unit) * 2.5); border-top: 1px solid var(--border); font-size: 12px; }
+.tc-subblock { margin-top: calc(var(--unit) * 3); padding-top: calc(var(--unit) * 2.5); border-top: 1px solid var(--border); font-size: calc(12px * var(--fs)); }
 .tc-sources { margin-top: calc(var(--unit) * 3.5); display: flex; flex-wrap: wrap; gap: calc(var(--unit) * 1.5); align-items: center; }
 .tc-sources > .ui-hint { width: 100%; margin-top: var(--unit); }
 
 /* ── 좁은 화면: 라벨을 값 위로 ── */
 @media (max-width: 480px) {
   .tc-field { grid-template-columns: minmax(0, 1fr); gap: 0; }
-  .tc-field-k { font-size: 11px; }
+  .tc-field-k { font-size: calc(11px * var(--fs)); }
   .tc-law > .ui-collapse-body { padding-left: calc(var(--unit) * 2); }
   .tc-bar { width: 100%; }
   .tc-select-label { flex: 1 1 auto; min-width: 0; }

@@ -1,7 +1,7 @@
 // Trade controls · 상대국 법령 목록 — intl_lists/ memberships (EU REACH·PIC·POPs, US TSCA, CN 危险化学品 …).
 // Used inside DestinationSection: dest.intl_lists when a country is picked, data.intl_lists (all countries) otherwise.
 
-function IntlListsBlock({ lists, showCountry = false }) {
+function IntlListsBlock({ lists, showCountry = false, terms }) {
   const S = TRADE_LABELS.sections.intlLists;
   const items = lists || [];
   return (
@@ -18,12 +18,7 @@ function IntlListsBlock({ lists, showCountry = false }) {
             <span className="tc-meta">{[l.list_id, l.source_version].filter(Boolean).join(" · ")}</span>
           </div>
           {l.absent && <div className="tc-line"><Badge tone="hazard">{S.absent}</Badge> {l.absence_note}</div>}
-          {[...(l.entries || []), ...(l.family_entries || [])].map((e, i) => (
-            <div key={i} className="tc-line">
-              <span>{tcEntryName(e)}</span>
-              {e.detail && <span className="tc-muted"> · {e.detail}</span>}
-            </div>
-          ))}
+          {[...(l.entries || []), ...(l.family_entries || [])].map((e, i) => <TcEntryLine key={i} entry={e} terms={terms} />)}
           {l.obligation_for_kr_exporter && (
             <div className="tc-field"><span className="tc-field-k">{S.obligation}</span><span>{l.obligation_for_kr_exporter}</span></div>
           )}

@@ -2,10 +2,10 @@
 
 :root {
   /* Type scale */
-  --font-display: "Inter Tight", "Pretendard Variable", system-ui, sans-serif;
-  --font-body: "IBM Plex Sans", "Pretendard Variable", system-ui, sans-serif;
+  --font-display: "Pretendard GOV Variable", system-ui, sans-serif;
+  --font-body: "Pretendard GOV Variable", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-  --font-serif: "Instrument Serif", "Pretendard Variable", serif;
+  --font-serif: "Instrument Serif", "Pretendard GOV Variable", serif;
 
   /* Palette — neutrals (cool off-white base) */
   --bg: oklch(0.992 0.004 240);
@@ -20,8 +20,15 @@
   --border-strong: oklch(0.82 0.008 250);
   --grid: oklch(0.94 0.005 250);
 
+  /* Accent choices (Tweaks panel). 한 곳에서 정의 — 아래 [data-accent] 와 설정 패널 색 견본이 함께 쓴다 */
+  --accent-blue: oklch(0.52 0.18 250);
+  --accent-indigo: oklch(0.52 0.18 275);
+  --accent-teal: oklch(0.58 0.14 195);
+  --accent-copper: oklch(0.60 0.14 48);
+  --accent-mono: oklch(0.28 0.01 250);
+
   /* Accents */
-  --accent: oklch(0.52 0.18 250);          /* signal blue */
+  --accent: var(--accent-blue);            /* signal blue */
   --accent-soft: oklch(0.94 0.04 250);
   --accent-ink: oklch(0.32 0.14 250);
   --safe: oklch(0.62 0.15 145);            /* lab green */
@@ -38,6 +45,8 @@
   --warn-ink: oklch(0.42 0.10 70);
   --info-ink: oklch(0.38 0.10 230);
   --on-accent: oklch(1 0 0);               /* 진한 accent 바탕 위 글자 */
+  /* 계산기 그래프 계열 색(calc_chart*.jsx, 순서 고정 — 색약 구분 검증한 범주 팔레트 순서). 어두운 테마는 따로 */
+  --chart-1: #2a78d6; --chart-2: #eb6834; --chart-3: #1baf7a; --chart-4: #eda100; --chart-5: #e87ba4; --chart-6: #6250d6;
 
   /* Radii & elevation */
   --r-0: 0px;
@@ -45,6 +54,8 @@
   --r-2: 4px;
   --r-3: 8px;
   --r-4: 14px;
+  --figure-bg: oklch(1 0 0); /* 흰 바탕 원본 그림(논문 그림)을 받치는 틀. 어두운 화면에서도 흰색 */
+  --paper-ink: oklch(0.16 0 0); /* 종이에 찍는 표지(GHS 경고표지) 글자·테두리. 어두운 화면 미리 보기에서도 검정 */
   --shadow-1: 0 1px 0 oklch(0.90 0.008 250 / .6), 0 1px 2px oklch(0.18 0.01 250 / .04);
   --shadow-2: 0 1px 0 oklch(0.90 0.008 250 / .6), 0 8px 24px -8px oklch(0.18 0.01 250 / .10);
 
@@ -52,10 +63,15 @@
   --unit: 4px;
   --density: 1;   /* scales paddings/row heights */
 
+  /* Type scale — 모든 CSS 의 font-size 는 calc(Npx * var(--fs)). 글자 크기 설정(data-fs)·좁은 화면이 이 값만 바꾼다 */
+  --fs: 1.07;
+  --lh-body: 1.6;
+
   /* Layout */
   --max-w: 1440px;
   --rail: 88px;
   --topbar-h: 52px;   /* 상단 바(.topbar) 높이 — sticky 위치 계산용 */
+  --pd-side-gap: 72px; /* 상세 탭 옆 칸 sticky 여백 — 상단 바 아래 조작 줄(.cmd 56px) + 16px */
   --cmdbar-h: 56px;   /* 제품 화면 명령 줄(.cmd) 높이 */
 }
 
@@ -82,15 +98,16 @@
   --hazard-ink: oklch(0.84 0.10 30);
   --warn-ink: oklch(0.86 0.10 85);
   --info-ink: oklch(0.84 0.08 220);
+  --chart-1: #3987e5; --chart-2: #d95926; --chart-3: #199e70; --chart-4: #c98500; --chart-5: #d55181; --chart-6: #9085e9;
   --shadow-1: 0 1px 0 oklch(0 0 0 / .4);
   --shadow-2: 0 8px 24px -8px oklch(0 0 0 / .5);
 }
 
 /* Accent hue tweak — mono/indigo/teal/copper */
-:root[data-accent="indigo"] { --accent: oklch(0.52 0.18 275); --accent-ink: oklch(0.32 0.14 275); --accent-soft: oklch(0.94 0.04 275); }
-:root[data-accent="teal"]   { --accent: oklch(0.58 0.14 195); --accent-ink: oklch(0.34 0.10 195); --accent-soft: oklch(0.94 0.04 195); }
-:root[data-accent="copper"] { --accent: oklch(0.60 0.14 48);  --accent-ink: oklch(0.36 0.12 48);  --accent-soft: oklch(0.95 0.04 48);  }
-:root[data-accent="mono"]   { --accent: oklch(0.28 0.01 250); --accent-ink: oklch(0.18 0.01 250); --accent-soft: oklch(0.92 0.003 250); }
+:root[data-accent="indigo"] { --accent: var(--accent-indigo); --accent-ink: oklch(0.32 0.14 275); --accent-soft: oklch(0.94 0.04 275); }
+:root[data-accent="teal"]   { --accent: var(--accent-teal); --accent-ink: oklch(0.34 0.10 195); --accent-soft: oklch(0.94 0.04 195); }
+:root[data-accent="copper"] { --accent: var(--accent-copper); --accent-ink: oklch(0.36 0.12 48);  --accent-soft: oklch(0.95 0.04 48);  }
+:root[data-accent="mono"]   { --accent: var(--accent-mono); --accent-ink: oklch(0.18 0.01 250); --accent-soft: oklch(0.92 0.003 250); }
 
 /* 어두운 테마에서는 accent 변형도 글자색(ink)을 밝게 둔다 */
 :root[data-theme="dark"][data-accent] {
@@ -99,9 +116,18 @@
 }
 
 /* Type tweaks */
-:root[data-type="serif"]   { --font-display: "Instrument Serif", "Pretendard Variable", serif; }
-:root[data-type="mono"]    { --font-display: "IBM Plex Mono", "Pretendard Variable", monospace; }
-:root[data-type="korean"]  { --font-display: "Pretendard Variable", system-ui, sans-serif; --font-body: "Pretendard Variable", system-ui, sans-serif; }
+:root[data-type="serif"]   { --font-display: "Instrument Serif", "Pretendard GOV Variable", serif; }
+:root[data-type="mono"]    { --font-display: "IBM Plex Mono", "Pretendard GOV Variable", monospace; }
+:root[data-type="korean"]  { --font-display: "Pretendard GOV Variable", system-ui, sans-serif; --font-body: "Pretendard GOV Variable", system-ui, sans-serif; }
+
+/* 글자 크기 tweak(tweaks.jsx "fs") — 좁은 화면은 한 단계 크게 시작한다 */
+:root[data-fs="sm"] { --fs: 1; --lh-body: 1.5; }
+:root[data-fs="lg"] { --fs: 1.17; --lh-body: 1.65; }
+@media (max-width: 560px) {
+  :root { --fs: 1.12; --lh-body: 1.65; }
+  :root[data-fs="sm"] { --fs: 1.04; --lh-body: 1.55; }
+  :root[data-fs="lg"] { --fs: 1.22; --lh-body: 1.7; }
+}
 
 /* Density tweaks */
 :root[data-density="comfy"]   { --density: 1.25; }

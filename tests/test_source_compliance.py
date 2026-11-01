@@ -128,6 +128,10 @@ AI_MODULES = [
     "backend/core/evidence_collector.py",
     "backend/core/report_builder.py",
     "backend/api/routes/ai.py",
+    "backend/api/routes/ai_assist.py",
+    "backend/core/ai_context.py",
+    "backend/core/ai_prompts.py",
+    "backend/core/llm_report.py",
     "backend/core/llm_client.py",
 ]
 
@@ -184,12 +188,8 @@ def test_kipris_excluded_from_ai_evidence_when_flag_off(monkeypatch):
         def __init__(self, *_, **__):
             raise AssertionError("KIPRIS must not be queried for AI evidence")
 
-    class NoLocal:
-        def search_patents_by_chem_id(self, *_, **__):
-            return []
-
     monkeypatch.setattr(evidence_collector, "PatentFetcher", Boom)
-    monkeypatch.setattr(evidence_collector, "GlobalPatentAdapter", NoLocal)
+    monkeypatch.setattr(evidence_collector.patent_mapping, "read_index", lambda _cas: None)
     highlights = evidence_collector.build_patent_highlights("001008", "benzene")
     assert all(h["type"] != "kipris_patent" for h in highlights)
 

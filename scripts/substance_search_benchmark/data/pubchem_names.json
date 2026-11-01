@@ -1,0 +1,1647 @@
+{
+ "_fetched": "2026-10-28",
+ "_source": "PubChem PUG REST compound/name/<CAS>/property/IUPACName,Title",
+ "names": {
+  "100-21-0": {
+   "cid": 7489,
+   "iupac": "terephthalic acid",
+   "title": "Terephthalic Acid"
+  },
+  "100-41-4": {
+   "cid": 7500,
+   "iupac": "ethylbenzene",
+   "title": "Ethylbenzene"
+  },
+  "100-42-5": {
+   "cid": 7501,
+   "iupac": "styrene",
+   "title": "Styrene"
+  },
+  "100-44-7": {
+   "cid": 7503,
+   "iupac": "chloromethylbenzene",
+   "title": "Benzyl Chloride"
+  },
+  "100-51-6": {
+   "cid": 244,
+   "iupac": "phenylmethanol",
+   "title": "Benzyl Alcohol"
+  },
+  "100-52-7": {
+   "cid": 240,
+   "iupac": "benzaldehyde",
+   "title": "Benzaldehyde"
+  },
+  "100-97-0": {
+   "cid": 4101,
+   "iupac": "1,3,5,7-tetrazatricyclo[3.3.1.13,7]decane",
+   "title": "Hexamethylenetetramine"
+  },
+  "10025-78-2": {
+   "cid": 24811,
+   "iupac": "trichlorosilane",
+   "title": "Trichlorosilane"
+  },
+  "10025-87-3": {
+   "cid": 24813,
+   "iupac": "phosphoryl trichloride",
+   "title": "Phosphorus oxychloride"
+  },
+  "10026-04-7": {
+   "cid": 24816,
+   "iupac": "tetrachlorosilane",
+   "title": "Silicon tetrachloride"
+  },
+  "10043-01-3": {
+   "cid": 24850,
+   "iupac": "dialuminum;trisulfate",
+   "title": "Aluminum Sulfate"
+  },
+  "10043-35-3": {
+   "cid": 7628,
+   "iupac": "boric acid",
+   "title": "Boric Acid"
+  },
+  "10043-52-4": {
+   "cid": 5284359,
+   "iupac": "calcium dichloride",
+   "title": "Calcium Chloride"
+  },
+  "10049-04-4": {
+   "cid": 24870,
+   "iupac": "",
+   "title": "Chlorine Dioxide"
+  },
+  "101-68-8": {
+   "cid": 7570,
+   "iupac": "1-isocyanato-4-[(4-isocyanatophenyl)methyl]benzene",
+   "title": "Diphenylmethane diisocyanate"
+  },
+  "10102-43-9": {
+   "cid": 145068,
+   "iupac": "nitric oxide",
+   "title": "Nitric Oxide"
+  },
+  "10102-44-0": {
+   "cid": 3032552,
+   "iupac": "",
+   "title": "Nitrogen Dioxide"
+  },
+  "10108-64-2": {
+   "cid": 24947,
+   "iupac": "dichlorocadmium",
+   "title": "Cadmium Chloride"
+  },
+  "10294-34-5": {
+   "cid": 25135,
+   "iupac": "trichloroborane",
+   "title": "Boron Trichloride"
+  },
+  "10361-37-2": {
+   "cid": 25204,
+   "iupac": "barium(2+) dichloride",
+   "title": "Barium chloride"
+  },
+  "10377-60-3": {
+   "cid": 25212,
+   "iupac": "magnesium dinitrate",
+   "title": "Magnesium nitrate"
+  },
+  "105-57-7": {
+   "cid": 7765,
+   "iupac": "1,1-diethoxyethane",
+   "title": "Acetal"
+  },
+  "105-60-2": {
+   "cid": 7768,
+   "iupac": "azepan-2-one",
+   "title": "Caprolactam"
+  },
+  "106-24-1": {
+   "cid": 637566,
+   "iupac": "(2E)-3,7-dimethylocta-2,6-dien-1-ol",
+   "title": "Geraniol"
+  },
+  "106-42-3": {
+   "cid": 7809,
+   "iupac": "1,4-xylene",
+   "title": "P-Xylene"
+  },
+  "106-51-4": {
+   "cid": 4650,
+   "iupac": "cyclohexa-2,5-diene-1,4-dione",
+   "title": "Quinone"
+  },
+  "106-89-8": {
+   "cid": 7835,
+   "iupac": "2-(chloromethyl)oxirane",
+   "title": "Epichlorohydrin"
+  },
+  "106-94-5": {
+   "cid": 7840,
+   "iupac": "1-bromopropane",
+   "title": "1-Bromopropane"
+  },
+  "106-97-8": {
+   "cid": 7843,
+   "iupac": "butane",
+   "title": "Butane"
+  },
+  "106-99-0": {
+   "cid": 7845,
+   "iupac": "buta-1,3-diene",
+   "title": "1,3-Butadiene"
+  },
+  "107-02-8": {
+   "cid": 7847,
+   "iupac": "prop-2-enal",
+   "title": "Acrolein"
+  },
+  "107-05-1": {
+   "cid": 7850,
+   "iupac": "3-chloroprop-1-ene",
+   "title": "Allyl chloride"
+  },
+  "107-06-2": {
+   "cid": 11,
+   "iupac": "1,2-dichloroethane",
+   "title": "1,2-Dichloroethane"
+  },
+  "107-11-9": {
+   "cid": 7853,
+   "iupac": "prop-2-en-1-amine",
+   "title": "Allylamine"
+  },
+  "107-13-1": {
+   "cid": 7855,
+   "iupac": "prop-2-enenitrile",
+   "title": "Acrylonitrile"
+  },
+  "107-15-3": {
+   "cid": 3301,
+   "iupac": "ethane-1,2-diamine",
+   "title": "Ethylenediamine"
+  },
+  "107-18-6": {
+   "cid": 7858,
+   "iupac": "prop-2-en-1-ol",
+   "title": "Allyl Alcohol"
+  },
+  "107-21-1": {
+   "cid": 174,
+   "iupac": "ethane-1,2-diol",
+   "title": "Ethylene Glycol"
+  },
+  "107-43-7": {
+   "cid": 247,
+   "iupac": "2-(trimethylazaniumyl)acetate",
+   "title": "Betaine"
+  },
+  "107-44-8": {
+   "cid": 7871,
+   "iupac": "2-[fluoro(methyl)phosphoryl]oxypropane",
+   "title": "Sarin"
+  },
+  "107-46-0": {
+   "cid": 24764,
+   "iupac": "trimethyl(trimethylsilyloxy)silane",
+   "title": "Hexamethyldisiloxane"
+  },
+  "107-89-1": {
+   "cid": 7897,
+   "iupac": "3-hydroxybutanal",
+   "title": "3-Hydroxybutanal"
+  },
+  "108-05-4": {
+   "cid": 7904,
+   "iupac": "ethenyl acetate",
+   "title": "Vinyl Acetate"
+  },
+  "108-10-1": {
+   "cid": 7909,
+   "iupac": "4-methylpentan-2-one",
+   "title": "Methyl Isobutyl Ketone"
+  },
+  "108-31-6": {
+   "cid": 7923,
+   "iupac": "furan-2,5-dione",
+   "title": "Maleic Anhydride"
+  },
+  "108-38-3": {
+   "cid": 7929,
+   "iupac": "1,3-xylene",
+   "title": "M-Xylene"
+  },
+  "108-39-4": {
+   "cid": 342,
+   "iupac": "3-methylphenol",
+   "title": "M-Cresol"
+  },
+  "108-78-1": {
+   "cid": 7955,
+   "iupac": "1,3,5-triazine-2,4,6-triamine",
+   "title": "Melamine"
+  },
+  "108-88-3": {
+   "cid": 1140,
+   "iupac": "toluene",
+   "title": "Toluene"
+  },
+  "108-90-7": {
+   "cid": 7964,
+   "iupac": "chlorobenzene",
+   "title": "Chlorobenzene"
+  },
+  "108-94-1": {
+   "cid": 7967,
+   "iupac": "cyclohexanone",
+   "title": "Cyclohexanone"
+  },
+  "108-95-2": {
+   "cid": 996,
+   "iupac": "phenol",
+   "title": "Phenol"
+  },
+  "109-66-0": {
+   "cid": 8003,
+   "iupac": "pentane",
+   "title": "Pentane"
+  },
+  "109-73-9": {
+   "cid": 8007,
+   "iupac": "butan-1-amine",
+   "title": "Butylamine"
+  },
+  "109-86-4": {
+   "cid": 8019,
+   "iupac": "2-methoxyethanol",
+   "title": "2-Methoxyethanol"
+  },
+  "109-92-2": {
+   "cid": 8023,
+   "iupac": "ethenoxyethane",
+   "title": "Ethyl vinyl ether"
+  },
+  "109-99-9": {
+   "cid": 8028,
+   "iupac": "oxolane",
+   "title": "Tetrahydrofuran"
+  },
+  "110-49-6": {
+   "cid": 8054,
+   "iupac": "2-methoxyethyl acetate",
+   "title": "Ethylene glycol monomethyl ether acetate"
+  },
+  "110-54-3": {
+   "cid": 8058,
+   "iupac": "hexane",
+   "title": "Hexane"
+  },
+  "110-80-5": {
+   "cid": 8076,
+   "iupac": "2-ethoxyethanol",
+   "title": "Glycol monoethyl ether"
+  },
+  "110-82-7": {
+   "cid": 8078,
+   "iupac": "cyclohexane",
+   "title": "Cyclohexane"
+  },
+  "110-86-1": {
+   "cid": 1049,
+   "iupac": "pyridine",
+   "title": "Pyridine"
+  },
+  "110-89-4": {
+   "cid": 8082,
+   "iupac": "piperidine",
+   "title": "Piperidine"
+  },
+  "111-15-9": {
+   "cid": 8095,
+   "iupac": "2-ethoxyethyl acetate",
+   "title": "Glycol monoethyl ether acetate"
+  },
+  "115-07-1": {
+   "cid": 8252,
+   "iupac": "prop-1-ene",
+   "title": "Propylene"
+  },
+  "115-11-7": {
+   "cid": 8255,
+   "iupac": "2-methylprop-1-ene",
+   "title": "Isobutylene"
+  },
+  "115-21-9": {
+   "cid": 8260,
+   "iupac": "trichloro(ethyl)silane",
+   "title": "Trichloroethylsilane"
+  },
+  "116-14-3": {
+   "cid": 8301,
+   "iupac": "1,1,2,2-tetrafluoroethene",
+   "title": "Tetrafluoroethylene"
+  },
+  "119-90-4": {
+   "cid": 8411,
+   "iupac": "4-(4-amino-3-methoxyphenyl)-2-methoxyaniline",
+   "title": "Dianisidine"
+  },
+  "119-93-7": {
+   "cid": 8413,
+   "iupac": "4-(4-amino-3-methylphenyl)-2-methylaniline",
+   "title": "o-Tolidine"
+  },
+  "120-12-7": {
+   "cid": 8418,
+   "iupac": "anthracene",
+   "title": "Anthracene"
+  },
+  "120-61-6": {
+   "cid": 8441,
+   "iupac": "dimethyl benzene-1,4-dicarboxylate",
+   "title": "Dimethyl terephthalate"
+  },
+  "120-80-9": {
+   "cid": 289,
+   "iupac": "benzene-1,2-diol",
+   "title": "Catechol"
+  },
+  "12035-72-2": {
+   "cid": 25199732,
+   "iupac": "nickel;sulfanylidenenickel",
+   "title": "NICKEL SULFIDE (Ni3S2)"
+  },
+  "121-44-8": {
+   "cid": 8471,
+   "iupac": "N,N-diethylethanamine",
+   "title": "Triethylamine"
+  },
+  "121-54-0": {
+   "cid": 8478,
+   "iupac": "benzyl-dimethyl-[2-[2-[4-(2,4,4-trimethylpentan-2-yl)phenoxy]ethoxy]ethyl]azanium chloride",
+   "title": "Benzethonium Chloride"
+  },
+  "12179-04-3": {
+   "cid": 86341921,
+   "iupac": "disodium;[oxido(oxoboranyloxy)boranyl]oxy-oxoboranyloxyborinate;pentahydrate",
+   "title": "Sodium tetraborate pentahydrate"
+  },
+  "123-31-9": {
+   "cid": 785,
+   "iupac": "benzene-1,4-diol",
+   "title": "Hydroquinone"
+  },
+  "123-35-3": {
+   "cid": 31253,
+   "iupac": "7-methyl-3-methylideneocta-1,6-diene",
+   "title": "Myrcene"
+  },
+  "123-86-4": {
+   "cid": 31272,
+   "iupac": "butyl acetate",
+   "title": "Butyl Acetate"
+  },
+  "123-91-1": {
+   "cid": 31275,
+   "iupac": "1,4-dioxane",
+   "title": "1,4-Dioxane"
+  },
+  "124-38-9": {
+   "cid": 280,
+   "iupac": "carbon dioxide",
+   "title": "Carbon Dioxide"
+  },
+  "127-18-4": {
+   "cid": 31373,
+   "iupac": "1,1,2,2-tetrachloroethene",
+   "title": "Tetrachloroethylene"
+  },
+  "127-19-5": {
+   "cid": 31374,
+   "iupac": "N,N-dimethylacetamide",
+   "title": "Dimethylacetamide"
+  },
+  "127-91-3": {
+   "cid": 14896,
+   "iupac": "6,6-dimethyl-2-methylidenebicyclo[3.1.1]heptane",
+   "title": "Beta-Pinene"
+  },
+  "130-95-0": {
+   "cid": 3034034,
+   "iupac": "(R)-[(2S,4S,5R)-5-ethenyl-1-azabicyclo[2.2.2]octan-2-yl]-(6-methoxyquinolin-4-yl)methanol",
+   "title": "Quinine"
+  },
+  "1302-78-9": {
+   "status": 404
+  },
+  "1303-86-2": {
+   "cid": 11073337,
+   "iupac": "2,4,5-trioxa-1,3-diborabicyclo[1.1.1]pentane",
+   "title": "Boron oxide (B2O3)"
+  },
+  "1304-28-5": {
+   "cid": 62392,
+   "iupac": "oxobarium",
+   "title": "Barium oxide"
+  },
+  "1306-23-6": {
+   "cid": 14783,
+   "iupac": "sulfanylidenecadmium",
+   "title": "Cadmium Sulfide"
+  },
+  "1308-04-9": {
+   "cid": 10176285,
+   "iupac": "bis(cobalt(3+));tris(oxygen(2-))",
+   "title": "Cobalt oxide (Co2O3)"
+  },
+  "1309-60-0": {
+   "cid": 14793,
+   "iupac": "dioxolead",
+   "title": "Lead dioxide"
+  },
+  "1309-64-4": {
+   "cid": 14794,
+   "iupac": "bis(antimony(3+));tris(oxygen(2-))",
+   "title": "Antimony Trioxide"
+  },
+  "1310-58-3": {
+   "cid": 14797,
+   "iupac": "potassium hydroxide",
+   "title": "Potassium Hydroxide"
+  },
+  "1310-73-2": {
+   "cid": 14798,
+   "iupac": "sodium hydroxide",
+   "title": "Sodium Hydroxide"
+  },
+  "1313-60-6": {
+   "cid": 14803,
+   "iupac": "disodium;peroxide",
+   "title": "Sodium peroxide"
+  },
+  "1314-20-1": {
+   "cid": 14808,
+   "iupac": "dioxothorium",
+   "title": "THORIUM OXIDE (ThO2)"
+  },
+  "1314-84-7": {
+   "cid": 25113606,
+   "iupac": "trizinc bis(phosphorus(3-))",
+   "title": "Zinc Phosphide"
+  },
+  "1314-98-3": {
+   "cid": 9833931,
+   "iupac": "zinc sulfide",
+   "title": "Zinc Sulfide"
+  },
+  "1318-02-1": {
+   "status": 404
+  },
+  "1319-77-3": {
+   "status": 404
+  },
+  "1330-20-7": {
+   "status": 404
+  },
+  "1330-43-4": {
+   "cid": 10219853,
+   "iupac": "disodium;3,7-dioxido-2,4,6,8,9-pentaoxa-1,3,5,7-tetraborabicyclo[3.3.1]nonane",
+   "title": "Sodium Tetraborate"
+  },
+  "1332-21-4": {
+   "status": 404
+  },
+  "1332-37-2": {
+   "cid": 123289,
+   "iupac": "dioxoiron",
+   "title": "Iron oxide"
+  },
+  "1333-74-0": {
+   "cid": 783,
+   "iupac": "molecular hydrogen",
+   "title": "Hydrogen"
+  },
+  "1333-86-4": {
+   "cid": 5462310,
+   "iupac": "methane",
+   "title": "Carbon"
+  },
+  "1336-21-6": {
+   "cid": 14923,
+   "iupac": "azanium hydroxide",
+   "title": "Ammonium Hydroxide"
+  },
+  "1338-23-4": {
+   "cid": 3672772,
+   "iupac": "2-hydroperoxy-2-(2-hydroperoxybutan-2-ylperoxy)butane",
+   "title": "Methyl ethyl ketone peroxide"
+  },
+  "134-32-7": {
+   "cid": 8640,
+   "iupac": "naphthalen-1-amine",
+   "title": "1-Naphthylamine"
+  },
+  "1344-28-1": {
+   "cid": 9989226,
+   "iupac": "dialuminum;tris(oxygen(2-))",
+   "title": "Alumina"
+  },
+  "13463-39-3": {
+   "cid": 26039,
+   "iupac": "carbon monoxide;nickel",
+   "title": "Nickel tetracarbonyl"
+  },
+  "13463-40-6": {
+   "cid": 26040,
+   "iupac": "formaldehyde;iron",
+   "title": "Iron pentacarbonyl"
+  },
+  "13530-65-9": {
+   "cid": 26089,
+   "iupac": "zinc dioxido(dioxo)chromium",
+   "title": "Zinc Chromate"
+  },
+  "138-86-3": {
+   "cid": 22311,
+   "iupac": "1-methyl-4-prop-1-en-2-ylcyclohexene",
+   "title": "1-Methyl-4-Prop-1-En-2-Ylcyclohexene"
+  },
+  "141-43-5": {
+   "cid": 700,
+   "iupac": "2-aminoethanol",
+   "title": "Ethanolamine"
+  },
+  "141-78-6": {
+   "cid": 8857,
+   "iupac": "ethyl acetate",
+   "title": "Ethyl Acetate"
+  },
+  "143-07-7": {
+   "cid": 3893,
+   "iupac": "dodecanoic acid",
+   "title": "Lauric Acid"
+  },
+  "143-33-9": {
+   "cid": 8929,
+   "iupac": "sodium cyanide",
+   "title": "Sodium Cyanide"
+  },
+  "144-62-7": {
+   "cid": 971,
+   "iupac": "oxalic acid",
+   "title": "Oxalic Acid"
+  },
+  "148-24-3": {
+   "cid": 1923,
+   "iupac": "quinolin-8-ol",
+   "title": "8-Hydroxyquinoline"
+  },
+  "149-91-7": {
+   "cid": 370,
+   "iupac": "3,4,5-trihydroxybenzoic acid",
+   "title": "Gallic Acid"
+  },
+  "150-68-5": {
+   "cid": 8800,
+   "iupac": "3-(4-chlorophenyl)-1,1-dimethylurea",
+   "title": "Monuron"
+  },
+  "151-56-4": {
+   "cid": 9033,
+   "iupac": "aziridine",
+   "title": "Aziridine"
+  },
+  "1590-87-0": {
+   "cid": 74123,
+   "iupac": "silylsilane",
+   "title": "Disilane"
+  },
+  "16065-83-1": {
+   "cid": 27668,
+   "iupac": "chromium(3+)",
+   "title": "Chromic Cation"
+  },
+  "16812-54-7": {
+   "cid": 28094,
+   "iupac": "sulfanylidenenickel",
+   "title": "Nickel sulfide (NiS)"
+  },
+  "17194-00-2": {
+   "cid": 6093286,
+   "iupac": "barium(2+) dihydroxide",
+   "title": "Barium hydroxide"
+  },
+  "1912-24-9": {
+   "cid": 2256,
+   "iupac": "6-chloro-4-N-ethyl-2-N-propan-2-yl-1,3,5-triazine-2,4-diamine",
+   "title": "Atrazine"
+  },
+  "19287-45-7": {
+   "cid": 12544637,
+   "iupac": "borane",
+   "title": "CID 12544637"
+  },
+  "20816-12-0": {
+   "cid": 30318,
+   "iupac": "tetraoxoosmium",
+   "title": "Osmium Tetroxide"
+  },
+  "24304-00-5": {
+   "cid": 90455,
+   "iupac": "azanylidynealumane",
+   "title": "Aluminum nitride"
+  },
+  "24937-78-8": {
+   "status": 404
+  },
+  "25321-14-6": {
+   "status": 404
+  },
+  "260-94-6": {
+   "cid": 9215,
+   "iupac": "acridine",
+   "title": "Acridine"
+  },
+  "299-42-3": {
+   "cid": 9294,
+   "iupac": "(1R,2S)-2-(methylamino)-1-phenylpropan-1-ol",
+   "title": "Ephedrine"
+  },
+  "302-01-2": {
+   "cid": 9321,
+   "iupac": "hydrazine",
+   "title": "Hydrazine"
+  },
+  "35367-38-5": {
+   "cid": 37123,
+   "iupac": "N-[(4-chlorophenyl)carbamoyl]-2,6-difluorobenzamide",
+   "title": "Diflubenzuron"
+  },
+  "3811-04-9": {
+   "cid": 6426889,
+   "iupac": "potassium chlorate",
+   "title": "Potassium Chlorate"
+  },
+  "396-01-0": {
+   "cid": 5546,
+   "iupac": "6-phenylpteridine-2,4,7-triamine",
+   "title": "Triamterene"
+  },
+  "4098-71-9": {
+   "cid": 169132,
+   "iupac": "5-isocyanato-1-(isocyanatomethyl)-1,3,3-trimethylcyclohexane",
+   "title": "Isophorone diisocyanate"
+  },
+  "4109-96-0": {
+   "cid": 61330,
+   "iupac": "dichlorosilane",
+   "title": "Dichlorosilane"
+  },
+  "458-37-7": {
+   "cid": 969516,
+   "iupac": "(1E,6E)-1,7-bis(4-hydroxy-3-methoxyphenyl)hepta-1,6-diene-3,5-dione",
+   "title": "Curcumin"
+  },
+  "471-34-1": {
+   "cid": 10112,
+   "iupac": "calcium carbonate",
+   "title": "Calcium Carbonate"
+  },
+  "497-19-8": {
+   "cid": 10340,
+   "iupac": "disodium;carbonate",
+   "title": "Sodium Carbonate"
+  },
+  "50-00-0": {
+   "cid": 712,
+   "iupac": "formaldehyde",
+   "title": "Formaldehyde"
+  },
+  "50-06-6": {
+   "cid": 4763,
+   "iupac": "5-ethyl-5-phenyl-1,3-diazinane-2,4,6-trione",
+   "title": "Phenobarbital"
+  },
+  "50-21-5": {
+   "cid": 612,
+   "iupac": "2-hydroxypropanoic acid",
+   "title": "Lactic Acid"
+  },
+  "50-28-2": {
+   "cid": 5757,
+   "iupac": "(8R,9S,13S,14S,17S)-13-methyl-6,7,8,9,11,12,14,15,16,17-decahydrocyclopenta[a]phenanthrene-3,17-diol",
+   "title": "Estradiol"
+  },
+  "50-32-8": {
+   "cid": 2336,
+   "iupac": "benzo[a]pyrene",
+   "title": "Benzo[a]pyrene"
+  },
+  "50-35-1": {
+   "cid": 5426,
+   "iupac": "2-(2,6-dioxopiperidin-3-yl)isoindole-1,3-dione",
+   "title": "Thalidomide"
+  },
+  "506-77-4": {
+   "cid": 10477,
+   "iupac": "carbononitridic chloride",
+   "title": "Cyanogen Chloride"
+  },
+  "51-55-8": {
+   "cid": 174174,
+   "iupac": "[(1S,5R)-8-methyl-8-azabicyclo[3.2.1]octan-3-yl] 3-hydroxy-2-phenylpropanoate",
+   "title": "Npc209773"
+  },
+  "513-77-9": {
+   "cid": 10563,
+   "iupac": "barium(2+) carbonate",
+   "title": "Barium Carbonate"
+  },
+  "52-86-8": {
+   "cid": 3559,
+   "iupac": "4-[4-(4-chlorophenyl)-4-hydroxypiperidin-1-yl]-1-(4-fluorophenyl)butan-1-one",
+   "title": "Haloperidol"
+  },
+  "527-07-1": {
+   "cid": 23672301,
+   "iupac": "sodium (2R,3S,4R,5R)-2,3,4,5,6-pentahydroxyhexanoate",
+   "title": "Sodium Gluconate"
+  },
+  "532-32-1": {
+   "cid": 517055,
+   "iupac": "sodium benzoate",
+   "title": "Sodium Benzoate"
+  },
+  "55-18-5": {
+   "cid": 5921,
+   "iupac": "N,N-diethylnitrous amide",
+   "title": "N-Nitrosodiethylamine"
+  },
+  "55-56-1": {
+   "cid": 9552079,
+   "iupac": "(1E)-2-[6-[[amino-[(E)-[amino-(4-chloroanilino)methylidene]amino]methylidene]amino]hexyl]-1-[amino-(4-chloroanilino)methylidene]guanidine",
+   "title": "Chlorhexidine"
+  },
+  "556-52-5": {
+   "cid": 11164,
+   "iupac": "oxiran-2-ylmethanol",
+   "title": "Glycidol"
+  },
+  "56-23-5": {
+   "cid": 5943,
+   "iupac": "tetrachloromethane",
+   "title": "Carbon Tetrachloride"
+  },
+  "56-81-5": {
+   "cid": 753,
+   "iupac": "propane-1,2,3-triol",
+   "title": "Glycerol"
+  },
+  "569-61-9": {
+   "cid": 11292,
+   "iupac": "4-[(4-aminophenyl)-(4-iminocyclohexa-2,5-dien-1-ylidene)methyl]aniline;hydrochloride",
+   "title": "Pararosaniline Hydrochloride"
+  },
+  "57-13-6": {
+   "cid": 1176,
+   "iupac": "urea",
+   "title": "Urea"
+  },
+  "57-55-6": {
+   "cid": 1030,
+   "iupac": "propane-1,2-diol",
+   "title": "Propylene Glycol"
+  },
+  "57-92-1": {
+   "cid": 19649,
+   "iupac": "2-[(1R,2R,3S,4R,5R,6S)-3-(diaminomethylideneamino)-4-[(2R,3R,4R,5S)-3-[(2S,3S,4S,5R,6S)-4,5-dihydroxy-6-(hydroxymethyl)-3-(methylamino)oxan-2-yl]oxy-4-formyl-4-hydroxy-5-methyloxolan-2-yl]oxy-2,5,6-trihydroxycyclohexyl]guanidine",
+   "title": "Streptomycin"
+  },
+  "584-84-9": {
+   "cid": 11443,
+   "iupac": "2,4-diisocyanato-1-methylbenzene",
+   "title": "Toluene 2,4-Diisocyanate"
+  },
+  "59-05-2": {
+   "cid": 126941,
+   "iupac": "(2S)-2-[[4-[(2,4-diaminopteridin-6-yl)methyl-methylamino]benzoyl]amino]pentanedioic acid",
+   "title": "Methotrexate"
+  },
+  "60-00-4": {
+   "cid": 6049,
+   "iupac": "2-[2-[bis(carboxymethyl)amino]ethyl-(carboxymethyl)amino]acetic acid",
+   "title": "Ethylenediaminetetraacetic Acid"
+  },
+  "60-29-7": {
+   "cid": 3283,
+   "iupac": "ethoxyethane",
+   "title": "Diethyl Ether"
+  },
+  "60-34-4": {
+   "cid": 6061,
+   "iupac": "methylhydrazine",
+   "title": "Methylhydrazine"
+  },
+  "60-35-5": {
+   "cid": 178,
+   "iupac": "acetamide",
+   "title": "Acetamide"
+  },
+  "60-56-0": {
+   "cid": 1349907,
+   "iupac": "3-methyl-1H-imidazole-2-thione",
+   "title": "Methimazole"
+  },
+  "62-53-3": {
+   "cid": 6115,
+   "iupac": "aniline",
+   "title": "Aniline"
+  },
+  "630-08-0": {
+   "cid": 281,
+   "iupac": "carbon monoxide",
+   "title": "Carbon Monoxide"
+  },
+  "64-17-5": {
+   "cid": 702,
+   "iupac": "ethanol",
+   "title": "Ethanol"
+  },
+  "64-18-6": {
+   "cid": 284,
+   "iupac": "formic acid",
+   "title": "Formic Acid"
+  },
+  "64-19-7": {
+   "cid": 176,
+   "iupac": "acetic acid",
+   "title": "Acetic Acid"
+  },
+  "64365-11-3": {
+   "cid": 5462310,
+   "iupac": "methane",
+   "title": "Carbon"
+  },
+  "6484-52-2": {
+   "cid": 22985,
+   "iupac": "azanium nitrate",
+   "title": "Ammonium nitrate"
+  },
+  "65-85-0": {
+   "cid": 243,
+   "iupac": "benzoic acid",
+   "title": "Benzoic Acid"
+  },
+  "65277-42-1": {
+   "cid": 47576,
+   "iupac": "1-[4-[4-[[(2S,4R)-2-(2,4-dichlorophenyl)-2-(imidazol-1-ylmethyl)-1,3-dioxolan-4-yl]methoxy]phenyl]piperazin-1-yl]ethanone",
+   "title": "Ketoconazole"
+  },
+  "65996-93-2": {
+   "status": 404
+  },
+  "67-56-1": {
+   "cid": 887,
+   "iupac": "methanol",
+   "title": "Methanol"
+  },
+  "67-63-0": {
+   "cid": 3776,
+   "iupac": "propan-2-ol",
+   "title": "Isopropanol"
+  },
+  "67-64-1": {
+   "cid": 180,
+   "iupac": "propan-2-one",
+   "title": "Acetone"
+  },
+  "67-66-3": {
+   "cid": 6212,
+   "iupac": "chloroform",
+   "title": "Chloroform"
+  },
+  "67-68-5": {
+   "cid": 679,
+   "iupac": "methylsulfinylmethane",
+   "title": "Dimethyl Sulfoxide"
+  },
+  "68-12-2": {
+   "cid": 6228,
+   "iupac": "N,N-dimethylformamide",
+   "title": "Dimethylformamide"
+  },
+  "68424-85-1": {
+   "status": 404
+  },
+  "685-63-2": {
+   "cid": 69636,
+   "iupac": "1,1,2,3,4,4-hexafluorobuta-1,3-diene",
+   "title": "Hexafluoro-1,3-butadiene"
+  },
+  "69-72-7": {
+   "cid": 338,
+   "iupac": "2-hydroxybenzoic acid",
+   "title": "Salicylic Acid"
+  },
+  "71-36-3": {
+   "cid": 263,
+   "iupac": "butan-1-ol",
+   "title": "1-Butanol"
+  },
+  "71-43-2": {
+   "cid": 241,
+   "iupac": "benzene",
+   "title": "Benzene"
+  },
+  "71-55-6": {
+   "cid": 6278,
+   "iupac": "1,1,1-trichloroethane",
+   "title": "1,1,1-Trichloroethane"
+  },
+  "74-82-8": {
+   "cid": 297,
+   "iupac": "methane",
+   "title": "Methane"
+  },
+  "74-83-9": {
+   "cid": 6323,
+   "iupac": "bromomethane",
+   "title": "Methyl Bromide"
+  },
+  "74-84-0": {
+   "cid": 6324,
+   "iupac": "ethane",
+   "title": "Ethane"
+  },
+  "74-85-1": {
+   "cid": 6325,
+   "iupac": "ethene",
+   "title": "Ethylene"
+  },
+  "74-86-2": {
+   "cid": 6326,
+   "iupac": "acetylene",
+   "title": "Acetylene"
+  },
+  "74-87-3": {
+   "cid": 6327,
+   "iupac": "chloromethane",
+   "title": "Methyl Chloride"
+  },
+  "74-89-5": {
+   "cid": 6329,
+   "iupac": "methanamine",
+   "title": "Methylamine"
+  },
+  "74-90-8": {
+   "cid": 768,
+   "iupac": "formonitrile",
+   "title": "Hydrogen Cyanide"
+  },
+  "74-98-6": {
+   "cid": 6334,
+   "iupac": "propane",
+   "title": "Propane"
+  },
+  "7439-92-1": {
+   "cid": 5352425,
+   "iupac": "lead",
+   "title": "Lead"
+  },
+  "7439-97-6": {
+   "cid": 23931,
+   "iupac": "mercury",
+   "title": "Mercury"
+  },
+  "7440-02-0": {
+   "cid": 935,
+   "iupac": "nickel",
+   "title": "Nickel"
+  },
+  "7440-16-6": {
+   "cid": 23948,
+   "iupac": "rhodium",
+   "title": "Rhodium"
+  },
+  "7440-23-5": {
+   "cid": 5360545,
+   "iupac": "sodium",
+   "title": "Sodium"
+  },
+  "7440-37-1": {
+   "cid": 23968,
+   "iupac": "argon",
+   "title": "Argon"
+  },
+  "7440-38-2": {
+   "cid": 5359596,
+   "iupac": "arsenic",
+   "title": "Arsenic"
+  },
+  "7440-41-7": {
+   "cid": 5460467,
+   "iupac": "beryllium",
+   "title": "Beryllium"
+  },
+  "7440-43-9": {
+   "cid": 23973,
+   "iupac": "cadmium",
+   "title": "Cadmium"
+  },
+  "7440-47-3": {
+   "cid": 23976,
+   "iupac": "chromium",
+   "title": "Chromium"
+  },
+  "7440-55-3": {
+   "cid": 5360835,
+   "iupac": "gallium",
+   "title": "Gallium"
+  },
+  "7440-59-7": {
+   "cid": 23987,
+   "iupac": "helium",
+   "title": "Helium"
+  },
+  "7440-61-1": {
+   "cid": 23989,
+   "iupac": "uranium",
+   "title": "Uranium"
+  },
+  "7440-62-2": {
+   "cid": 23990,
+   "iupac": "vanadium",
+   "title": "Vanadium"
+  },
+  "7446-08-4": {
+   "cid": 24007,
+   "iupac": "selenium dioxide",
+   "title": "Selenium Dioxide"
+  },
+  "7446-09-5": {
+   "cid": 1119,
+   "iupac": "sulfur dioxide",
+   "title": "Sulfur Dioxide"
+  },
+  "75-01-4": {
+   "cid": 6338,
+   "iupac": "chloroethene",
+   "title": "Vinyl Chloride"
+  },
+  "75-04-7": {
+   "cid": 6341,
+   "iupac": "ethanamine",
+   "title": "Ethylamine"
+  },
+  "75-05-8": {
+   "cid": 6342,
+   "iupac": "acetonitrile",
+   "title": "Acetonitrile"
+  },
+  "75-07-0": {
+   "cid": 177,
+   "iupac": "acetaldehyde",
+   "title": "Acetaldehyde"
+  },
+  "75-09-2": {
+   "cid": 6344,
+   "iupac": "dichloromethane",
+   "title": "Dichloromethane"
+  },
+  "75-12-7": {
+   "cid": 713,
+   "iupac": "formamide",
+   "title": "Formamide"
+  },
+  "75-15-0": {
+   "cid": 6348,
+   "iupac": "methanedithione",
+   "title": "Carbon Disulfide"
+  },
+  "75-21-8": {
+   "cid": 6354,
+   "iupac": "oxirane",
+   "title": "Ethylene Oxide"
+  },
+  "75-26-3": {
+   "cid": 6358,
+   "iupac": "2-bromopropane",
+   "title": "2-Bromopropane"
+  },
+  "75-28-5": {
+   "cid": 6360,
+   "iupac": "2-methylpropane",
+   "title": "Isobutane"
+  },
+  "75-35-4": {
+   "cid": 6366,
+   "iupac": "1,1-dichloroethene",
+   "title": "Vinylidene chloride"
+  },
+  "75-44-5": {
+   "cid": 6371,
+   "iupac": "carbonyl dichloride",
+   "title": "Phosgene"
+  },
+  "75-50-3": {
+   "cid": 1146,
+   "iupac": "N,N-dimethylmethanamine",
+   "title": "Trimethylamine"
+  },
+  "75-52-5": {
+   "cid": 6375,
+   "iupac": "nitromethane",
+   "title": "Nitromethane"
+  },
+  "75-54-7": {
+   "cid": 6376,
+   "iupac": "dichloro(methyl)silane",
+   "title": "Methyldichlorosilane"
+  },
+  "75-55-8": {
+   "cid": 6377,
+   "iupac": "2-methylaziridine",
+   "title": "2-Methylaziridine"
+  },
+  "75-56-9": {
+   "cid": 6378,
+   "iupac": "2-methyloxirane",
+   "title": "Propylene Oxide"
+  },
+  "75-76-3": {
+   "cid": 6396,
+   "iupac": "tetramethylsilane",
+   "title": "Tetramethylsilane"
+  },
+  "75-79-6": {
+   "cid": 6399,
+   "iupac": "trichloro(methyl)silane",
+   "title": "Trichloromethylsilane"
+  },
+  "75-94-5": {
+   "cid": 6413,
+   "iupac": "trichloro(ethenyl)silane",
+   "title": "Vinyltrichlorosilane"
+  },
+  "7550-45-0": {
+   "cid": 24193,
+   "iupac": "tetrachlorotitanium",
+   "title": "Titanium Tetrachloride"
+  },
+  "76-06-2": {
+   "cid": 6423,
+   "iupac": "trichloro(nitro)methane",
+   "title": "Chloropicrin"
+  },
+  "76-44-8": {
+   "cid": 3589,
+   "iupac": "1,5,7,8,9,10,10-heptachlorotricyclo[5.2.1.02,6]deca-3,8-diene",
+   "title": "Heptachlor"
+  },
+  "7631-99-4": {
+   "cid": 24268,
+   "iupac": "sodium nitrate",
+   "title": "Sodium Nitrate"
+  },
+  "7632-00-0": {
+   "cid": 23668193,
+   "iupac": "sodium nitrite",
+   "title": "Sodium Nitrite"
+  },
+  "7637-07-2": {
+   "cid": 6356,
+   "iupac": "trifluoroborane",
+   "title": "Boron trifluoride"
+  },
+  "7647-01-0": {
+   "cid": 313,
+   "iupac": "chlorane",
+   "title": "Hydrochloric Acid"
+  },
+  "7647-14-5": {
+   "cid": 5234,
+   "iupac": "sodium chloride",
+   "title": "Sodium Chloride"
+  },
+  "7647-15-6": {
+   "cid": 253881,
+   "iupac": "sodium bromide",
+   "title": "Sodium Bromide"
+  },
+  "7664-38-2": {
+   "cid": 1004,
+   "iupac": "phosphoric acid",
+   "title": "Phosphoric Acid"
+  },
+  "7664-39-3": {
+   "cid": 14917,
+   "iupac": "fluorane",
+   "title": "Hydrofluoric Acid"
+  },
+  "7664-41-7": {
+   "cid": 222,
+   "iupac": "azane",
+   "title": "Ammonia"
+  },
+  "7664-93-9": {
+   "cid": 1118,
+   "iupac": "sulfuric acid",
+   "title": "Sulfuric Acid"
+  },
+  "7681-52-9": {
+   "cid": 23665760,
+   "iupac": "sodium hypochlorite",
+   "title": "Sodium Hypochlorite"
+  },
+  "7697-37-2": {
+   "cid": 944,
+   "iupac": "nitric acid",
+   "title": "Nitric Acid"
+  },
+  "77-09-8": {
+   "cid": 4764,
+   "iupac": "3,3-bis(4-hydroxyphenyl)-2-benzofuran-1-one",
+   "title": "Phenolphthalein"
+  },
+  "77-78-1": {
+   "cid": 6497,
+   "iupac": "dimethyl sulfate",
+   "title": "Dimethyl Sulfate"
+  },
+  "77-92-9": {
+   "cid": 311,
+   "iupac": "2-hydroxypropane-1,2,3-tricarboxylic acid",
+   "title": "Citric Acid"
+  },
+  "7704-34-9": {
+   "cid": 5362487,
+   "iupac": "sulfane",
+   "title": "Sulfur"
+  },
+  "7719-09-7": {
+   "cid": 24386,
+   "iupac": "thionyl dichloride",
+   "title": "Thionyl Chloride"
+  },
+  "7719-12-2": {
+   "cid": 24387,
+   "iupac": "trichlorophosphane",
+   "title": "Phosphorus trichloride"
+  },
+  "7722-64-7": {
+   "cid": 516875,
+   "iupac": "potassium permanganate",
+   "title": "Potassium Permanganate"
+  },
+  "7722-84-1": {
+   "cid": 784,
+   "iupac": "hydrogen peroxide",
+   "title": "Hydrogen Peroxide"
+  },
+  "7726-95-6": {
+   "cid": 24408,
+   "iupac": "molecular bromine",
+   "title": "Bromine"
+  },
+  "7727-37-9": {
+   "cid": 947,
+   "iupac": "molecular nitrogen",
+   "title": "Nitrogen"
+  },
+  "7727-43-7": {
+   "cid": 24414,
+   "iupac": "barium(2+) sulfate",
+   "title": "Barium Sulfate"
+  },
+  "7733-02-0": {
+   "cid": 24424,
+   "iupac": "zinc sulfate",
+   "title": "Zinc Sulfate"
+  },
+  "7757-79-1": {
+   "cid": 24434,
+   "iupac": "potassium nitrate",
+   "title": "Potassium Nitrate"
+  },
+  "7757-83-7": {
+   "cid": 24437,
+   "iupac": "disodium;sulfite",
+   "title": "Sodium Sulfite"
+  },
+  "7758-99-8": {
+   "cid": 24463,
+   "iupac": "copper;sulfate;pentahydrate",
+   "title": "Copper sulfate pentahydrate"
+  },
+  "7761-88-8": {
+   "cid": 24470,
+   "iupac": "silver nitrate",
+   "title": "Silver Nitrate"
+  },
+  "7772-98-7": {
+   "cid": 24477,
+   "iupac": "disodium;dioxido-oxo-sulfanylidene-lambda6-sulfane",
+   "title": "Sodium Thiosulfate"
+  },
+  "7775-09-9": {
+   "cid": 516902,
+   "iupac": "sodium chlorate",
+   "title": "Sodium Chlorate"
+  },
+  "7778-50-9": {
+   "cid": 24502,
+   "iupac": "dipotassium;oxido-(oxido(dioxo)chromio)oxy-dioxochromium",
+   "title": "Potassium Dichromate"
+  },
+  "7778-74-7": {
+   "cid": 516900,
+   "iupac": "potassium perchlorate",
+   "title": "Potassium Perchlorate"
+  },
+  "7782-39-0": {
+   "cid": 24523,
+   "iupac": "",
+   "title": "Deuterium"
+  },
+  "7782-41-4": {
+   "cid": 24524,
+   "iupac": "molecular fluorine",
+   "title": "Fluorine"
+  },
+  "7782-44-7": {
+   "cid": 977,
+   "iupac": "molecular oxygen",
+   "title": "Oxygen"
+  },
+  "7782-50-5": {
+   "cid": 24526,
+   "iupac": "molecular chlorine",
+   "title": "Chlorine"
+  },
+  "7782-65-2": {
+   "cid": 23984,
+   "iupac": "germane",
+   "title": "Germanium tetrahydride"
+  },
+  "7782-99-2": {
+   "cid": 1100,
+   "iupac": "sulfurous acid",
+   "title": "Sulfurous Acid"
+  },
+  "7783-06-4": {
+   "cid": 402,
+   "iupac": "sulfane",
+   "title": "Hydrogen Sulfide"
+  },
+  "7783-07-5": {
+   "cid": 533,
+   "iupac": "selane",
+   "title": "Hydrogen selenide"
+  },
+  "7783-08-6": {
+   "cid": 1089,
+   "iupac": "selenic acid",
+   "title": "Selenic Acid"
+  },
+  "7783-61-1": {
+   "cid": 24556,
+   "iupac": "tetrafluorosilane",
+   "title": "Silicon tetrafluoride"
+  },
+  "7784-42-1": {
+   "cid": 23969,
+   "iupac": "arsane",
+   "title": "Arsine"
+  },
+  "7786-30-3": {
+   "cid": 5360315,
+   "iupac": "magnesium dichloride",
+   "title": "Magnesium Chloride"
+  },
+  "7789-30-2": {
+   "cid": 24606,
+   "iupac": "pentafluoro-lambda5-bromane",
+   "title": "Bromine pentafluoride"
+  },
+  "7790-94-5": {
+   "cid": 24638,
+   "iupac": "sulfurochloridic acid",
+   "title": "Chlorosulfonic acid"
+  },
+  "78-79-5": {
+   "cid": 6557,
+   "iupac": "2-methylbuta-1,3-diene",
+   "title": "Isoprene"
+  },
+  "78-87-5": {
+   "cid": 6564,
+   "iupac": "1,2-dichloropropane",
+   "title": "1,2-Dichloropropane"
+  },
+  "78-93-3": {
+   "cid": 6569,
+   "iupac": "butan-2-one",
+   "title": "Methyl Ethyl Ketone"
+  },
+  "78-94-4": {
+   "cid": 6570,
+   "iupac": "but-3-en-2-one",
+   "title": "Methyl vinyl ketone"
+  },
+  "7803-51-2": {
+   "cid": 24404,
+   "iupac": "phosphane",
+   "title": "Phosphine"
+  },
+  "7803-62-5": {
+   "cid": 23953,
+   "iupac": "silane",
+   "title": "Silane"
+  },
+  "79-01-6": {
+   "cid": 6575,
+   "iupac": "1,1,2-trichloroethene",
+   "title": "Trichloroethylene"
+  },
+  "79-06-1": {
+   "cid": 6579,
+   "iupac": "prop-2-enamide",
+   "title": "Acrylamide"
+  },
+  "79-09-4": {
+   "cid": 1032,
+   "iupac": "propanoic acid",
+   "title": "Propionic Acid"
+  },
+  "79-10-7": {
+   "cid": 6581,
+   "iupac": "prop-2-enoic acid",
+   "title": "Acrylic Acid"
+  },
+  "79-11-8": {
+   "cid": 300,
+   "iupac": "2-chloroacetic acid",
+   "title": "Chloroacetic Acid"
+  },
+  "80-05-7": {
+   "cid": 6623,
+   "iupac": "4-[2-(4-hydroxyphenyl)propan-2-yl]phenol",
+   "title": "Bisphenol A"
+  },
+  "80-62-6": {
+   "cid": 6658,
+   "iupac": "methyl 2-methylprop-2-enoate",
+   "title": "Methyl Methacrylate"
+  },
+  "8000-28-0": {
+   "status": 404
+  },
+  "8006-61-9": {
+   "status": 404
+  },
+  "8007-45-2": {
+   "status": 404
+  },
+  "8014-95-7": {
+   "cid": 24681,
+   "iupac": "sulfuric acid;sulfur trioxide",
+   "title": "Fuming sulfuric acid"
+  },
+  "8015-86-9": {
+   "status": 404
+  },
+  "8052-41-3": {
+   "status": 404
+  },
+  "8052-42-4": {
+   "status": 404
+  },
+  "81-81-2": {
+   "cid": 54678486,
+   "iupac": "4-hydroxy-3-(3-oxo-1-phenylbutyl)chromen-2-one",
+   "title": "Warfarin"
+  },
+  "811-97-2": {
+   "cid": 13129,
+   "iupac": "1,1,1,2-tetrafluoroethane",
+   "title": "1,1,1,2-Tetrafluoroethane"
+  },
+  "814-68-6": {
+   "cid": 13140,
+   "iupac": "prop-2-enoyl chloride",
+   "title": "Acryloyl chloride"
+  },
+  "83-32-9": {
+   "cid": 6734,
+   "iupac": "1,2-dihydroacenaphthylene",
+   "title": "Acenaphthene"
+  },
+  "84-74-2": {
+   "cid": 3026,
+   "iupac": "dibutyl benzene-1,2-dicarboxylate",
+   "title": "Dibutyl Phthalate"
+  },
+  "84-80-0": {
+   "cid": 5284607,
+   "iupac": "2-methyl-3-[(E,7R,11R)-3,7,11,15-tetramethylhexadec-2-enyl]naphthalene-1,4-dione",
+   "title": "Phylloquinone"
+  },
+  "85-44-9": {
+   "cid": 6811,
+   "iupac": "2-benzofuran-1,3-dione",
+   "title": "Phthalic Anhydride"
+  },
+  "872-50-4": {
+   "cid": 13387,
+   "iupac": "1-methylpyrrolidin-2-one",
+   "title": "N-methyl-2-pyrrolidone"
+  },
+  "88-72-2": {
+   "cid": 6944,
+   "iupac": "1-methyl-2-nitrobenzene",
+   "title": "2-Nitrotoluene"
+  },
+  "90-15-3": {
+   "cid": 7005,
+   "iupac": "naphthalen-1-ol",
+   "title": "1-Naphthol"
+  },
+  "9002-86-2": {
+   "status": 404
+  },
+  "9002-88-4": {
+   "status": 404
+  },
+  "9003-07-0": {
+   "status": 404
+  },
+  "9003-17-2": {
+   "status": 404
+  },
+  "9003-53-6": {
+   "status": 404
+  },
+  "9003-56-9": {
+   "status": 404
+  },
+  "9004-70-0": {
+   "status": 404
+  },
+  "91-20-3": {
+   "cid": 931,
+   "iupac": "naphthalene",
+   "title": "Naphthalene"
+  },
+  "91-94-1": {
+   "cid": 7070,
+   "iupac": "4-(4-amino-3-chlorophenyl)-2-chloroaniline",
+   "title": "3,3'-Dichlorobenzidine"
+  },
+  "93-14-1": {
+   "cid": 3516,
+   "iupac": "3-(2-methoxyphenoxy)propane-1,2-diol",
+   "title": "Guaifenesin"
+  },
+  "95-47-6": {
+   "cid": 7237,
+   "iupac": "1,2-xylene",
+   "title": "O-Xylene"
+  },
+  "96-18-4": {
+   "cid": 7285,
+   "iupac": "1,2,3-trichloropropane",
+   "title": "1,2,3-Trichloropropane"
+  },
+  "96-33-3": {
+   "cid": 7294,
+   "iupac": "methyl prop-2-enoate",
+   "title": "Methyl Acrylate"
+  },
+  "96-41-3": {
+   "cid": 7298,
+   "iupac": "cyclopentanol",
+   "title": "Cyclopentanol"
+  },
+  "98-07-7": {
+   "cid": 7367,
+   "iupac": "trichloromethylbenzene",
+   "title": "Benzotrichloride"
+  },
+  "98-82-8": {
+   "cid": 7406,
+   "iupac": "cumene",
+   "title": "Cumene"
+  },
+  "98-95-3": {
+   "cid": 7416,
+   "iupac": "nitrobenzene",
+   "title": "Nitrobenzene"
+  },
+  "99-99-0": {
+   "cid": 7473,
+   "iupac": "1-methyl-4-nitrobenzene",
+   "title": "4-Nitrotoluene"
+  }
+ }
+}

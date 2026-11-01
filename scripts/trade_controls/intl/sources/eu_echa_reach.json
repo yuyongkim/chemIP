@@ -1,0 +1,33 @@
+{
+  "parser": "parse_echa_reach",
+  "downloads": {
+    "api": "https://chem.echa.europa.eu/api-substance/v1/substance?searchText={CAS} ; /api-substance/v1/substance/{rmlId} ; /api-dossier-list/v1/dossier?rmlId={rmlId}&legislation=REACH&registrationStatuses=Active"
+  },
+  "lists": {
+    "registered": {
+      "file": "EU_REACH_REGISTERED.json",
+      "list_id": "EU_REACH_REGISTERED",
+      "jurisdiction": "EU",
+      "law": "REACH Regulation (EC) No 1907/2006",
+      "title": "EU REACH 등록물질 — 활성 등록 현황(ECHA CHEM)",
+      "directions": ["import"],
+      "obligation_for_kr_exporter": "EU 안에서 물질을 연간 1톤 이상 제조·수입하려면 EU 제조자·수입자 또는 한국 제조사가 지정한 EU 유일대리인(Only Representative, 제8조)이 등록해야 한다(제6조, 등록 없으면 시장 출시 불가 — 제5조). 이 목록의 '등록됨'은 누군가 이 물질을 등록했다는 뜻이며, 귀사 공급망의 등록을 대신하지 않는다: 수입자(또는 유일대리인)마다 자기 등록(공동제출 참여)이 필요하다. 중간체 등록(제17·18조)은 엄격 통제 조건의 중간체 용도에만 유효하다.",
+      "legal_basis": "Regulation (EC) No 1907/2006 (REACH) Art. 5, 6, 8, 10, 11, 17, 18, 24 (NONS), Annex VI–X",
+      "source_url": "https://chem.echa.europa.eu/",
+      "license": "Source: European Chemicals Agency, https://echa.europa.eu/ — ECHA legal notice 5.1.1: 출처 표시·내용 무변경 조건으로 상업·비상업 재사용 허용. 단 데이터베이스 전체·상당 부분 복제와 체계적 자동 수집은 금지(사전 서면 허가 필요)이므로, 이 파일은 ChemIP 대표 물질만 하나씩 조회해 묶어 둔 일부다. 그 밖의 물질은 사용자가 물질 화면을 열 때 그 CAS 하나만 ECHA CHEM 에서 조회해 보인다(GET /api/reach/<CAS>, 캐시; 미리 긁어 오지 않음). CAS 정보는 ACS 소유(ECHA 고지 5.1.2) — 여기 CAS 는 ChemIP 가 가진 CAS 로 ECHA 를 조회한 것이다. 법적 효력 없음, 참고용.",
+      "source_version": "",
+      "max_substances": 300,
+      "pause_seconds": 1.0,
+      "cas_sets": [
+        {"note": "검증 대상 4종", "cas": ["74-85-1", "71-43-2", "50-00-0", "117-81-7"]},
+        {"note": "SEO 대표 물질(위키 등재급 216종)", "file": "frontend/lib/chemip-seed.ts", "regex": "cas:\\s*\"(\\d{2,7}-\\d{2}-\\d)\""},
+        {"note": "국내 PSM 대상(산업안전보건법 시행령 별표 13)", "intl_regulatory": "KR_OSHA_PSM"}
+      ],
+      "notes": [
+        "ECHA 는 등록물질 전체 공개 내려받기 파일을 제공하지 않는다(옛 'Registered substances' 화면은 2025-12-18 폐지, data.europa.eu 에 등록물질 데이터셋 없음 — 2026-11-01 확인).",
+        "전체 CAS 로 넓히려면 ECHA 의 사전 서면 허가가 필요하다(ECHA 연락처 페이지의 정보 요청 양식).",
+        "목록에 없다고 해서 미등록이라는 뜻이 아니다: 조회하지 않은 물질일 수 있다(absence_note 없음)."
+      ]
+    }
+  }
+}

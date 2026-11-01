@@ -1,0 +1,65 @@
+// Properties vs temperature, English wording (TP_LABELS_EN, same shape as TP_LABELS_KO) → TP_LABELS.
+
+const TP_LABELS_EN = {
+  heading: { ko: "Properties vs temperature", en: "Properties vs temperature" },
+  sourceNote: "ChemSep · NASA CEA · Wikidata · CoolProp",
+  count: (n) => `${Number(n || 0).toLocaleString("en-US")} correlations`,
+  none: "No temperature-dependent property data with an open licence is available for this substance.",
+  propLabel: "Property",
+  props: {
+    psat: "Vapour pressure",
+    rho_l: "Liquid density",
+    cp: "Heat capacity Cp",
+    hvap: "Heat of vaporization ΔHvap",
+    mu: "Viscosity",
+    k: "Thermal conductivity",
+    sigma: "Surface tension",
+  },
+  curves: {
+    psat: "Vapour pressure",
+    psat_antoine: "Vapour pressure (Antoine)",
+    rho_l: "Liquid density",
+    cp_ig: "Ideal-gas Cp",
+    cp_l: "Liquid Cp",
+    hvap: "Heat of vaporization",
+    mu_l: "Liquid viscosity",
+    mu_g: "Gas viscosity (low pressure)",
+    k_l: "Liquid thermal conductivity",
+    k_g: "Gas thermal conductivity (low pressure)",
+    sigma: "Surface tension",
+    h_ig: "Ideal-gas H°(T) − H°(298.15 K)",
+    s_ig: "Ideal-gas S°(T), 1 bar",
+  },
+  units: {
+    K: "K", C: "°C", kPa: "kPa", kmol_m3: "kmol/m³", kg_m3: "kg/m³", J_molK: "J/(mol·K)", kJ_kgK: "kJ/(kg·K)",
+    kJ_mol: "kJ/mol", kJ_kg: "kJ/kg", mPas: "mPa·s", W_mK: "W/(m·K)", mN_m: "mN/m", Pa: "Pa", m3_mol: "cm³/mol", none: "",
+  },
+  unit: { label: "Units", molar: "K · molar basis", mass: "°C · mass basis" },
+  unitNoMw: "No molar mass, so only molar-basis units are shown.",
+  tLabel: "Temperature",
+  tHint: (lo, hi, u) => `Values are computed only inside the fitted range ${lo}–${hi} ${u}.`,
+  tBad: "Enter the temperature as a number (above 0 K).",
+  pointTitle: "Values at the chosen temperature",
+  cols: { prop: "Property", value: "Value", unit: "Unit", range: "Fitted range", src: "Source" },
+  outOfRange: "out of range",
+  constTitle: "Critical and reference constants",
+  consts: {
+    Tc: "Critical temperature Tc", Pc: "Critical pressure Pc", Vc: "Critical volume Vc", Zc: "Critical compressibility Zc", omega: "Acentric factor ω",
+    Tb: "Normal boiling point Tb", Tm: "Melting point Tm", Tt: "Triple-point temperature", Pt: "Triple-point pressure", MW: "Molar mass",
+    Hf_ig: "Enthalpy of formation ΔHf° (gas, 298.15 K)", Hf_l: "Enthalpy of formation ΔHf° (liquid, 298.15 K)", Gf_ig: "Gibbs energy of formation ΔGf° (gas)", S_ig: "Standard entropy S° (gas)",
+  },
+  sources: { chemsep_lite: "ChemSep", nasa_cea: "NASA CEA", wikidata: "Wikidata", coolprop_heos: "CoolProp" },
+  sourceTitle: (s) => [s.name, s.license, s.citation, s.note].filter(Boolean).join(" — "),
+  chartAria: (prop, name) => `${prop} of ${name || "the substance"} against temperature`,
+  tb: "Tb",
+  atm: "1 atm",
+  point: "Chosen T",
+  disclaimer: "Values come from published correlations inside their fitted ranges; they are not measurements. Check the original data and measured values before design or safety decisions.",
+  exportedAt: (d) => `Data as of ${d}.`,
+  licence: "Licence and citation",
+  calcAntoine: "Open the vapour-pressure calculator with these Antoine constants",
+};
+
+const TP_LABELS = langPick(TP_LABELS_KO, TP_LABELS_EN);
+
+Object.assign(window, { TP_LABELS_EN, TP_LABELS });

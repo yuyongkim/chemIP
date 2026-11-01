@@ -1,0 +1,6432 @@
+{
+ "meta": {
+  "when": "2026-10-28T15:58:07",
+  "target": "backend",
+  "cases": 232,
+  "queries": 911,
+  "seconds": 380.9
+ },
+ "summary": {
+  "ko": {
+   "n": 232,
+   "rank1": 204,
+   "topk": 207,
+   "rank1_rate": 0.8793,
+   "topk_rate": 0.8922
+  },
+  "en": {
+   "n": 232,
+   "rank1": 196,
+   "topk": 210,
+   "rank1_rate": 0.8448,
+   "topk_rate": 0.9052
+  },
+  "iupac": {
+   "n": 134,
+   "rank1": 10,
+   "topk": 12,
+   "rank1_rate": 0.0746,
+   "topk_rate": 0.0896
+  },
+  "cas": {
+   "n": 232,
+   "rank1": 232,
+   "topk": 232,
+   "rank1_rate": 1.0,
+   "topk_rate": 1.0
+  },
+  "alias": {
+   "n": 81,
+   "rank1": 27,
+   "topk": 28,
+   "rank1_rate": 0.3333,
+   "topk_rate": 0.3457
+  },
+  "all": {
+   "n": 911,
+   "rank1": 669,
+   "topk": 689,
+   "rank1_rate": 0.7344,
+   "topk_rate": 0.7563
+  }
+ },
+ "rows": [
+  {
+   "type": "ko",
+   "q": "테레프탈산",
+   "cas": "100-21-0",
+   "rank": null,
+   "top1": "128781-91-9 ·사이클로헥세인다이메탄올/테레프탈산/메틸에틸리덴"
+  },
+  {
+   "type": "en",
+   "q": "Terephthalic acid",
+   "cas": "100-21-0",
+   "rank": 1,
+   "top1": "100-21-0 TEREPHTHALIC ACID"
+  },
+  {
+   "type": "cas",
+   "q": "100-21-0",
+   "cas": "100-21-0",
+   "rank": 1,
+   "top1": "100-21-0 TEREPHTHALIC ACID"
+  },
+  {
+   "type": "ko",
+   "q": "에틸벤젠",
+   "cas": "100-41-4",
+   "rank": 1,
+   "top1": "100-41-4 에틸벤젠 (Ethylbenzene)"
+  },
+  {
+   "type": "en",
+   "q": "Ethylbenzene",
+   "cas": "100-41-4",
+   "rank": 1,
+   "top1": "100-41-4 에틸벤젠 (Ethylbenzene)"
+  },
+  {
+   "type": "cas",
+   "q": "100-41-4",
+   "cas": "100-41-4",
+   "rank": 1,
+   "top1": "100-41-4 에틸벤젠 (Ethylbenzene)"
+  },
+  {
+   "type": "ko",
+   "q": "스티렌",
+   "cas": "100-42-5",
+   "rank": 1,
+   "top1": "100-42-5 스티렌 ( 관용명 : Vinyl benzene ) (스티렌 ( 관용명 : 비닐 벤젠 ))"
+  },
+  {
+   "type": "en",
+   "q": "Styrene",
+   "cas": "100-42-5",
+   "rank": 1,
+   "top1": "100-42-5 스티렌 ( 관용명 : Vinyl benzene ) (스티렌 ( 관용명 : 비닐 벤젠 ))"
+  },
+  {
+   "type": "cas",
+   "q": "100-42-5",
+   "cas": "100-42-5",
+   "rank": 1,
+   "top1": "100-42-5 스티렌 ( 관용명 : Vinyl benzene ) (스티렌 ( 관용명 : 비닐 벤젠 ))"
+  },
+  {
+   "type": "alias",
+   "q": "styrene monomer",
+   "cas": "100-42-5",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "alias",
+   "q": "스티렌모노머",
+   "cas": "100-42-5",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "ko",
+   "q": "벤질 알코올",
+   "cas": "100-51-6",
+   "rank": 1,
+   "top1": "100-51-6 벤질 알코올 ( 관용명 : BENZENEMETHANOL ) (Benzyl alcohol)"
+  },
+  {
+   "type": "en",
+   "q": "Benzyl Alcohol",
+   "cas": "100-51-6",
+   "rank": 1,
+   "top1": "100-51-6 벤질 알코올 ( 관용명 : BENZENEMETHANOL ) (Benzyl alcohol)"
+  },
+  {
+   "type": "iupac",
+   "q": "phenylmethanol",
+   "cas": "100-51-6",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "100-51-6",
+   "cas": "100-51-6",
+   "rank": 1,
+   "top1": "100-51-6 벤질 알코올 ( 관용명 : BENZENEMETHANOL ) (Benzyl alcohol)"
+  },
+  {
+   "type": "ko",
+   "q": "벤즈알데히드",
+   "cas": "100-52-7",
+   "rank": 1,
+   "top1": "100-52-7 BENZALDEHYDE"
+  },
+  {
+   "type": "en",
+   "q": "Benzaldehyde",
+   "cas": "100-52-7",
+   "rank": 1,
+   "top1": "100-52-7 BENZALDEHYDE"
+  },
+  {
+   "type": "cas",
+   "q": "100-52-7",
+   "cas": "100-52-7",
+   "rank": 1,
+   "top1": "100-52-7 BENZALDEHYDE"
+  },
+  {
+   "type": "ko",
+   "q": "황산 알루미늄",
+   "cas": "10043-01-3",
+   "rank": 1,
+   "top1": "10043-01-3 황산 알루미늄 (ALUMINUM SULFATE)"
+  },
+  {
+   "type": "en",
+   "q": "Aluminum Sulfate",
+   "cas": "10043-01-3",
+   "rank": 1,
+   "top1": "10043-01-3 황산 알루미늄 (ALUMINUM SULFATE)"
+  },
+  {
+   "type": "iupac",
+   "q": "dialuminum;trisulfate",
+   "cas": "10043-01-3",
+   "rank": null,
+   "top1": "12252-33-4 Calcium [orthosilicato(4-)]dioxodialuminate(2-) (dialuminum;calcium;oxygen(2-);silicate)"
+  },
+  {
+   "type": "cas",
+   "q": "10043-01-3",
+   "cas": "10043-01-3",
+   "rank": 1,
+   "top1": "10043-01-3 황산 알루미늄 (ALUMINUM SULFATE)"
+  },
+  {
+   "type": "ko",
+   "q": "붕산",
+   "cas": "10043-35-3",
+   "rank": 1,
+   "top1": "10043-35-3 BORIC ACID"
+  },
+  {
+   "type": "en",
+   "q": "Boric Acid",
+   "cas": "10043-35-3",
+   "rank": 3,
+   "top1": "42220-19-9 Boric acid (H3BO3), reaction products with glycerol (boric acid; propane-1,2,3-triol)"
+  },
+  {
+   "type": "cas",
+   "q": "10043-35-3",
+   "cas": "10043-35-3",
+   "rank": 1,
+   "top1": "10043-35-3 BORIC ACID"
+  },
+  {
+   "type": "ko",
+   "q": "염화칼슘",
+   "cas": "10043-52-4",
+   "rank": 1,
+   "top1": "10043-52-4 염화 칼슘(CALCIUM CHLORIDE)"
+  },
+  {
+   "type": "en",
+   "q": "Calcium Chloride",
+   "cas": "10043-52-4",
+   "rank": 3,
+   "top1": "10035-04-8 Calcium chloride(CaCl2), dihydrate"
+  },
+  {
+   "type": "iupac",
+   "q": "calcium dichloride",
+   "cas": "10043-52-4",
+   "rank": null,
+   "top1": "87903-38-6 2,4-Diaminobenzenesulfonic acid calcium salt (2:1) polymer with 1,3-benzene-diamine, 1,3-benzenedicarbonyl dichloride and 1,4-benzenedicarbonyl dichloride, benzoyl chloride-capped"
+  },
+  {
+   "type": "cas",
+   "q": "10043-52-4",
+   "cas": "10043-52-4",
+   "rank": 1,
+   "top1": "10043-52-4 염화 칼슘(CALCIUM CHLORIDE)"
+  },
+  {
+   "type": "ko",
+   "q": "메틸렌디페닐디이소시아네이트(MDI)",
+   "cas": "101-68-8",
+   "rank": 1,
+   "top1": "101-68-8 4,4&#39;-메틸렌 디(비스)페닐 디이소시아네이트"
+  },
+  {
+   "type": "en",
+   "q": "Diphenylmethane diisocyanate",
+   "cas": "101-68-8",
+   "rank": 2,
+   "top1": "26447-40-5 메틸렌 디(비스)페닐 디이소시아네이트 (Mixed Methylenediphenyl diisocyanate)"
+  },
+  {
+   "type": "iupac",
+   "q": "1-isocyanato-4-[(4-isocyanatophenyl)methyl]benzene",
+   "cas": "101-68-8",
+   "rank": null,
+   "top1": "132435-08-6 Hexanedioic acid, polymer with 1,2-ethanediol, 1,1'-methylenebis(4-isocyanatobenzene), 1-isocyanato-2-[(4-isocyanatophenyl)methyl]benzene and 2,2'-oxybis(ethanol)"
+  },
+  {
+   "type": "cas",
+   "q": "101-68-8",
+   "cas": "101-68-8",
+   "rank": 1,
+   "top1": "101-68-8 4,4&#39;-메틸렌 디(비스)페닐 디이소시아네이트"
+  },
+  {
+   "type": "ko",
+   "q": "이산화질소",
+   "cas": "10102-44-0",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "en",
+   "q": "Nitrogen dioxide",
+   "cas": "10102-44-0",
+   "rank": 1,
+   "top1": "10102-44-0 Nitrogen dioxide (nitrite)"
+  },
+  {
+   "type": "cas",
+   "q": "10102-44-0",
+   "cas": "10102-44-0",
+   "rank": 1,
+   "top1": "10102-44-0 Nitrogen dioxide (nitrite)"
+  },
+  {
+   "type": "ko",
+   "q": "염화 카드뮴",
+   "cas": "10108-64-2",
+   "rank": 1,
+   "top1": "10108-64-2 염화 카드뮴"
+  },
+  {
+   "type": "en",
+   "q": "Cadmium Chloride",
+   "cas": "10108-64-2",
+   "rank": 1,
+   "top1": "10108-64-2 염화 카드뮴"
+  },
+  {
+   "type": "iupac",
+   "q": "dichlorocadmium",
+   "cas": "10108-64-2",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "10108-64-2",
+   "cas": "10108-64-2",
+   "rank": 1,
+   "top1": "10108-64-2 염화 카드뮴"
+  },
+  {
+   "type": "ko",
+   "q": "염화 바륨",
+   "cas": "10361-37-2",
+   "rank": 1,
+   "top1": "10361-37-2 염화 바륨"
+  },
+  {
+   "type": "en",
+   "q": "Barium chloride",
+   "cas": "10361-37-2",
+   "rank": 1,
+   "top1": "10361-37-2 염화 바륨"
+  },
+  {
+   "type": "iupac",
+   "q": "barium(2+) dichloride",
+   "cas": "10361-37-2",
+   "rank": null,
+   "top1": "68585-48-8 Sulfuric acid nickel(2+) salt (1:1), reaction products with nickel and nickel oxide (NiO)"
+  },
+  {
+   "type": "cas",
+   "q": "10361-37-2",
+   "cas": "10361-37-2",
+   "rank": 1,
+   "top1": "10361-37-2 염화 바륨"
+  },
+  {
+   "type": "ko",
+   "q": "질산 마그네슘",
+   "cas": "10377-60-3",
+   "rank": 1,
+   "top1": "10377-60-3 질산 마그네슘 (MAGNESIUM NITRATE)"
+  },
+  {
+   "type": "en",
+   "q": "Magnesium nitrate",
+   "cas": "10377-60-3",
+   "rank": 1,
+   "top1": "10377-60-3 질산 마그네슘 (MAGNESIUM NITRATE)"
+  },
+  {
+   "type": "iupac",
+   "q": "magnesium dinitrate",
+   "cas": "10377-60-3",
+   "rank": null,
+   "top1": "10213-15-7 magnesium dinitrate hexahydrate (magnesium nitrate dodecahydrate)"
+  },
+  {
+   "type": "cas",
+   "q": "10377-60-3",
+   "cas": "10377-60-3",
+   "rank": 1,
+   "top1": "10377-60-3 질산 마그네슘 (MAGNESIUM NITRATE)"
+  },
+  {
+   "type": "ko",
+   "q": "아세탈",
+   "cas": "105-57-7",
+   "rank": 1,
+   "top1": "105-57-7 아세탈 ( 관용명 : 아세트알데하이드디에틸아세트알(ACETALDEHYDEDIETHYLACETAL); )"
+  },
+  {
+   "type": "en",
+   "q": "Acetal",
+   "cas": "105-57-7",
+   "rank": 1,
+   "top1": "105-57-7 아세탈 ( 관용명 : 아세트알데하이드디에틸아세트알(ACETALDEHYDEDIETHYLACETAL); )"
+  },
+  {
+   "type": "iupac",
+   "q": "1,1-diethoxyethane",
+   "cas": "105-57-7",
+   "rank": null,
+   "top1": "30846-29-8 1,1-Diethoxyethane homopolymer"
+  },
+  {
+   "type": "cas",
+   "q": "105-57-7",
+   "cas": "105-57-7",
+   "rank": 1,
+   "top1": "105-57-7 아세탈 ( 관용명 : 아세트알데하이드디에틸아세트알(ACETALDEHYDEDIETHYLACETAL); )"
+  },
+  {
+   "type": "ko",
+   "q": "카프로락탐",
+   "cas": "105-60-2",
+   "rank": 1,
+   "top1": "105-60-2 카프로락탐 (Caprolactum)"
+  },
+  {
+   "type": "en",
+   "q": "Caprolactam",
+   "cas": "105-60-2",
+   "rank": 1,
+   "top1": "105-60-2 카프로락탐 (Caprolactum)"
+  },
+  {
+   "type": "iupac",
+   "q": "azepan-2-one",
+   "cas": "105-60-2",
+   "rank": null,
+   "top1": "1709-14-4 3,3-DICHLORO-AZEPAN-2-ONE (3,3-dichloroazepan-2-one)"
+  },
+  {
+   "type": "cas",
+   "q": "105-60-2",
+   "cas": "105-60-2",
+   "rank": 1,
+   "top1": "105-60-2 카프로락탐 (Caprolactum)"
+  },
+  {
+   "type": "ko",
+   "q": "게라니올",
+   "cas": "106-24-1",
+   "rank": 1,
+   "top1": "106-24-1 게라니올 ( 관용명 : 3,7-다이메틸-트랜스-2,6-옥타디엔-1-올(3,7-DIMETHYL-TRANS-2,6-OCTADIEN-1-OL); ) (GERANIOL)"
+  },
+  {
+   "type": "en",
+   "q": "Geraniol",
+   "cas": "106-24-1",
+   "rank": 1,
+   "top1": "106-24-1 게라니올 ( 관용명 : 3,7-다이메틸-트랜스-2,6-옥타디엔-1-올(3,7-DIMETHYL-TRANS-2,6-OCTADIEN-1-OL); ) (GERANIOL)"
+  },
+  {
+   "type": "iupac",
+   "q": "(2E)-3,7-dimethylocta-2,6-dien-1-ol",
+   "cas": "106-24-1",
+   "rank": null,
+   "top1": "85187-42-4 Cobalt(II) fumarate (λ²-cobalt(2+) (2E)-but-2-enedioate)"
+  },
+  {
+   "type": "cas",
+   "q": "106-24-1",
+   "cas": "106-24-1",
+   "rank": 1,
+   "top1": "106-24-1 게라니올 ( 관용명 : 3,7-다이메틸-트랜스-2,6-옥타디엔-1-올(3,7-DIMETHYL-TRANS-2,6-OCTADIEN-1-OL); ) (GERANIOL)"
+  },
+  {
+   "type": "ko",
+   "q": "p-자일렌",
+   "cas": "106-42-3",
+   "rank": null,
+   "top1": "13540-50-6 벤질-p-자일렌"
+  },
+  {
+   "type": "en",
+   "q": "p-Xylene",
+   "cas": "106-42-3",
+   "rank": 1,
+   "top1": "106-42-3 p-크실렌 ( 관용명 : p-디메틸벤젠 )"
+  },
+  {
+   "type": "iupac",
+   "q": "1,4-xylene",
+   "cas": "106-42-3",
+   "rank": null,
+   "top1": "118943-26-3 5-Methoxy-2-(3-(chlorosulfonyl)propoxy)-1,4-xylene dichloride"
+  },
+  {
+   "type": "cas",
+   "q": "106-42-3",
+   "cas": "106-42-3",
+   "rank": 1,
+   "top1": "106-42-3 p-크실렌 ( 관용명 : p-디메틸벤젠 )"
+  },
+  {
+   "type": "alias",
+   "q": "para-xylene",
+   "cas": "106-42-3",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "alias",
+   "q": "파라자일렌",
+   "cas": "106-42-3",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "ko",
+   "q": "퀴논",
+   "cas": "106-51-4",
+   "rank": 1,
+   "top1": "106-51-4 퀴논 ( 관용명 : 파라-벤조퀴논 )"
+  },
+  {
+   "type": "en",
+   "q": "Quinone",
+   "cas": "106-51-4",
+   "rank": 1,
+   "top1": "106-51-4 퀴논 ( 관용명 : 파라-벤조퀴논 )"
+  },
+  {
+   "type": "iupac",
+   "q": "cyclohexa-2,5-diene-1,4-dione",
+   "cas": "106-51-4",
+   "rank": null,
+   "top1": "1988-11-0 2,6-bis(propan-2-yl)cyclohexa-2,5-diene-1,4-dione"
+  },
+  {
+   "type": "cas",
+   "q": "106-51-4",
+   "cas": "106-51-4",
+   "rank": 1,
+   "top1": "106-51-4 퀴논 ( 관용명 : 파라-벤조퀴논 )"
+  },
+  {
+   "type": "ko",
+   "q": "에피클로로히드린",
+   "cas": "106-89-8",
+   "rank": 1,
+   "top1": "106-89-8 에피클로로히드린 ( 관용명 : 에피클로로하이드린 )"
+  },
+  {
+   "type": "en",
+   "q": "Epichlorohydrin",
+   "cas": "106-89-8",
+   "rank": 1,
+   "top1": "106-89-8 에피클로로히드린 ( 관용명 : 에피클로로하이드린 )"
+  },
+  {
+   "type": "iupac",
+   "q": "2-(chloromethyl)oxirane",
+   "cas": "106-89-8",
+   "rank": null,
+   "top1": "141394-10-7 (2S)-2-(2-chlorophenyl)oxirane"
+  },
+  {
+   "type": "cas",
+   "q": "106-89-8",
+   "cas": "106-89-8",
+   "rank": 1,
+   "top1": "106-89-8 에피클로로히드린 ( 관용명 : 에피클로로하이드린 )"
+  },
+  {
+   "type": "ko",
+   "q": "부탄",
+   "cas": "106-97-8",
+   "rank": null,
+   "top1": "9018-04-6 1,4-부탄디올, 중합체 ,함유 알파-히드로-오메가-하이드록시폴리(옥시-1,4- 부탄디일)와 1,1''-메틸렌비... ( 관용명 : 아이소시안 산, 메틸렌-p-페닐렌 에스터, 중합체 ,함유 1,4- 부탄디올 과 )"
+  },
+  {
+   "type": "en",
+   "q": "Butane",
+   "cas": "106-97-8",
+   "rank": 1,
+   "top1": "106-97-8 Butane"
+  },
+  {
+   "type": "cas",
+   "q": "106-97-8",
+   "cas": "106-97-8",
+   "rank": 1,
+   "top1": "106-97-8 Butane"
+  },
+  {
+   "type": "alias",
+   "q": "n-butane",
+   "cas": "106-97-8",
+   "rank": null,
+   "top1": "5150-93-6 n-Butyl succinate"
+  },
+  {
+   "type": "ko",
+   "q": "1,3-부타디엔",
+   "cas": "106-99-0",
+   "rank": 1,
+   "top1": "106-99-0 1,3-부타디엔 (1,3-Butadiene)"
+  },
+  {
+   "type": "en",
+   "q": "1,3-Butadiene",
+   "cas": "106-99-0",
+   "rank": 1,
+   "top1": "106-99-0 1,3-부타디엔 (1,3-Butadiene)"
+  },
+  {
+   "type": "iupac",
+   "q": "buta-1,3-diene",
+   "cas": "106-99-0",
+   "rank": null,
+   "top1": "23691-13-6 2-(bromomethyl)buta-1,3-diene"
+  },
+  {
+   "type": "cas",
+   "q": "106-99-0",
+   "cas": "106-99-0",
+   "rank": 1,
+   "top1": "106-99-0 1,3-부타디엔 (1,3-Butadiene)"
+  },
+  {
+   "type": "alias",
+   "q": "butadiene",
+   "cas": "106-99-0",
+   "rank": 1,
+   "top1": "106-99-0 1,3-부타디엔 (1,3-Butadiene)"
+  },
+  {
+   "type": "alias",
+   "q": "부타디엔",
+   "cas": "106-99-0",
+   "rank": 6,
+   "top1": "31567-90-5 1,3-부타디엔 신디오태틱 단일중합체"
+  },
+  {
+   "type": "ko",
+   "q": "염화 알릴",
+   "cas": "107-05-1",
+   "rank": 1,
+   "top1": "107-05-1 염화 알릴 ( 관용명 : 알릴 클로라이드 ) (Allyl chloride)"
+  },
+  {
+   "type": "en",
+   "q": "Allyl chloride",
+   "cas": "107-05-1",
+   "rank": 1,
+   "top1": "107-05-1 염화 알릴 ( 관용명 : 알릴 클로라이드 ) (Allyl chloride)"
+  },
+  {
+   "type": "iupac",
+   "q": "3-chloroprop-1-ene",
+   "cas": "107-05-1",
+   "rank": null,
+   "top1": "36809-66-2 3-chloroprop-1-ene-2-sulfonyl chloride"
+  },
+  {
+   "type": "cas",
+   "q": "107-05-1",
+   "cas": "107-05-1",
+   "rank": 1,
+   "top1": "107-05-1 염화 알릴 ( 관용명 : 알릴 클로라이드 ) (Allyl chloride)"
+  },
+  {
+   "type": "ko",
+   "q": "1,2-디클로로에탄",
+   "cas": "107-06-2",
+   "rank": 1,
+   "top1": "107-06-2 1,2-dichloroethane"
+  },
+  {
+   "type": "en",
+   "q": "1,2-Dichloroethane",
+   "cas": "107-06-2",
+   "rank": 1,
+   "top1": "107-06-2 1,2-dichloroethane"
+  },
+  {
+   "type": "cas",
+   "q": "107-06-2",
+   "cas": "107-06-2",
+   "rank": 1,
+   "top1": "107-06-2 1,2-dichloroethane"
+  },
+  {
+   "type": "alias",
+   "q": "ethylene dichloride",
+   "cas": "107-06-2",
+   "rank": null,
+   "top1": "96416-91-0 Epichlorohydrin, N-(2-aminoethyl)-1,3-propanediamine, ethylene dichloride polymer, formate"
+  },
+  {
+   "type": "alias",
+   "q": "EDC",
+   "cas": "107-06-2",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "ko",
+   "q": "알릴아민",
+   "cas": "107-11-9",
+   "rank": 1,
+   "top1": "107-11-9 알릴아민 (ALLYLAMINE)"
+  },
+  {
+   "type": "en",
+   "q": "Allylamine",
+   "cas": "107-11-9",
+   "rank": 1,
+   "top1": "107-11-9 알릴아민 (ALLYLAMINE)"
+  },
+  {
+   "type": "iupac",
+   "q": "prop-2-en-1-amine",
+   "cas": "107-11-9",
+   "rank": null,
+   "top1": "56123-06-9 2-(aminomethyl)prop-2-en-1-amine"
+  },
+  {
+   "type": "cas",
+   "q": "107-11-9",
+   "cas": "107-11-9",
+   "rank": 1,
+   "top1": "107-11-9 알릴아민 (ALLYLAMINE)"
+  },
+  {
+   "type": "ko",
+   "q": "아크릴로니트릴",
+   "cas": "107-13-1",
+   "rank": 1,
+   "top1": "107-13-1 아크릴로니트릴 (Acrylonitrile)"
+  },
+  {
+   "type": "en",
+   "q": "Acrylonitrile",
+   "cas": "107-13-1",
+   "rank": 1,
+   "top1": "107-13-1 아크릴로니트릴 (Acrylonitrile)"
+  },
+  {
+   "type": "iupac",
+   "q": "prop-2-enenitrile",
+   "cas": "107-13-1",
+   "rank": null,
+   "top1": "17200-53-2 2-(Bromomethyl)acrylonitrile (2-(bromomethyl)prop-2-enenitrile)"
+  },
+  {
+   "type": "cas",
+   "q": "107-13-1",
+   "cas": "107-13-1",
+   "rank": 1,
+   "top1": "107-13-1 아크릴로니트릴 (Acrylonitrile)"
+  },
+  {
+   "type": "ko",
+   "q": "에틸렌글리콜",
+   "cas": "107-21-1",
+   "rank": 1,
+   "top1": "107-21-1 Ethane-1,2-diol (ethane-1,2-diol)"
+  },
+  {
+   "type": "en",
+   "q": "Ethylene glycol",
+   "cas": "107-21-1",
+   "rank": null,
+   "top1": "104700-12-1 Ethylene glycol (13C2H6O2)"
+  },
+  {
+   "type": "iupac",
+   "q": "ethane-1,2-diol",
+   "cas": "107-21-1",
+   "rank": 1,
+   "top1": "107-21-1 Ethane-1,2-diol (ethane-1,2-diol)"
+  },
+  {
+   "type": "cas",
+   "q": "107-21-1",
+   "cas": "107-21-1",
+   "rank": 1,
+   "top1": "107-21-1 Ethane-1,2-diol (ethane-1,2-diol)"
+  },
+  {
+   "type": "alias",
+   "q": "monoethylene glycol",
+   "cas": "107-21-1",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "ko",
+   "q": "베타인",
+   "cas": "107-43-7",
+   "rank": 1,
+   "top1": "107-43-7 베타인 ( 관용명 : 메탄아미니움, 1-카르복시-N,N,N-트리메틸-, 수산화물,(METHANAMINIUM, ) (BETAINE)"
+  },
+  {
+   "type": "en",
+   "q": "Betaine",
+   "cas": "107-43-7",
+   "rank": 1,
+   "top1": "107-43-7 베타인 ( 관용명 : 메탄아미니움, 1-카르복시-N,N,N-트리메틸-, 수산화물,(METHANAMINIUM, ) (BETAINE)"
+  },
+  {
+   "type": "iupac",
+   "q": "2-(trimethylazaniumyl)acetate",
+   "cas": "107-43-7",
+   "rank": null,
+   "top1": "65956-64-1 2-(trimethylammonio)ethyl cholest-5-en-3β-yl hydrogen phosphate ((1R,3aS,3bS,7S,9aR,9bS,11aR)-9a,11a-dimethyl-1-[(2R)-6-methylheptan-2-yl]-1H,2H,3H,3aH,3bH,4H,6H,7H,8H,9H,9aH,9bH,10H,11H,11aH-cyclopenta[a]phenanthren-7-yl 2-(trimethylazaniumyl)ethyl phosphate)"
+  },
+  {
+   "type": "cas",
+   "q": "107-43-7",
+   "cas": "107-43-7",
+   "rank": 1,
+   "top1": "107-43-7 베타인 ( 관용명 : 메탄아미니움, 1-카르복시-N,N,N-트리메틸-, 수산화물,(METHANAMINIUM, ) (BETAINE)"
+  },
+  {
+   "type": "ko",
+   "q": "알돌",
+   "cas": "107-89-1",
+   "rank": 1,
+   "top1": "107-89-1 알돌 ( 관용명 : 3-하이드록시뷰틸알데하이드(3-HYDROXYBUTYRALDEHYDE); ) (ALDOL)"
+  },
+  {
+   "type": "en",
+   "q": "3-Hydroxybutanal",
+   "cas": "107-89-1",
+   "rank": 1,
+   "top1": "107-89-1 알돌 ( 관용명 : 3-하이드록시뷰틸알데하이드(3-HYDROXYBUTYRALDEHYDE); ) (ALDOL)"
+  },
+  {
+   "type": "cas",
+   "q": "107-89-1",
+   "cas": "107-89-1",
+   "rank": 1,
+   "top1": "107-89-1 알돌 ( 관용명 : 3-하이드록시뷰틸알데하이드(3-HYDROXYBUTYRALDEHYDE); ) (ALDOL)"
+  },
+  {
+   "type": "ko",
+   "q": "아세트산비닐",
+   "cas": "108-05-4",
+   "rank": 1,
+   "top1": "108-05-4 비닐 아세테이트 (Vinyl acetate)"
+  },
+  {
+   "type": "en",
+   "q": "Vinyl acetate",
+   "cas": "108-05-4",
+   "rank": 1,
+   "top1": "108-05-4 비닐 아세테이트 (Vinyl acetate)"
+  },
+  {
+   "type": "iupac",
+   "q": "ethenyl acetate",
+   "cas": "108-05-4",
+   "rank": null,
+   "top1": "25213-24-5 에텐일 아세트산염, 중합체 WITH 에텐올(ETHENYL ACETATE, POLYMER WITH ETHENO..."
+  },
+  {
+   "type": "cas",
+   "q": "108-05-4",
+   "cas": "108-05-4",
+   "rank": 1,
+   "top1": "108-05-4 비닐 아세테이트 (Vinyl acetate)"
+  },
+  {
+   "type": "alias",
+   "q": "초산비닐",
+   "cas": "108-05-4",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "alias",
+   "q": "vinyl acetate monomer",
+   "cas": "108-05-4",
+   "rank": null,
+   "top1": "1035263-66-1 Polymer of ethylene with one or more monomers: 1-butene, propylene, 5-ethylidene-2-norbornene, methyl methacrylate, 1-hexene, 2-acrylic acid, A based acrylic epoxy ester, 1-octene, vinyl acetate, carbon monoxide, maleic anhydride, acrylic isobutyl, butyl (but-1-ene;ethene;hex-1-ene)"
+  },
+  {
+   "type": "ko",
+   "q": "메틸이소부틸케톤",
+   "cas": "108-10-1",
+   "rank": 1,
+   "top1": "108-10-1 4-methylpentan-2-one"
+  },
+  {
+   "type": "en",
+   "q": "Methyl isobutyl ketone",
+   "cas": "108-10-1",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "iupac",
+   "q": "4-methylpentan-2-one",
+   "cas": "108-10-1",
+   "rank": 1,
+   "top1": "108-10-1 4-methylpentan-2-one"
+  },
+  {
+   "type": "cas",
+   "q": "108-10-1",
+   "cas": "108-10-1",
+   "rank": 1,
+   "top1": "108-10-1 4-methylpentan-2-one"
+  },
+  {
+   "type": "alias",
+   "q": "MIBK",
+   "cas": "108-10-1",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "ko",
+   "q": "무수말레산",
+   "cas": "108-31-6",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "en",
+   "q": "Maleic anhydride",
+   "cas": "108-31-6",
+   "rank": 1,
+   "top1": "108-31-6 말레산 언하이드라이드 (Maleic anhydride)"
+  },
+  {
+   "type": "iupac",
+   "q": "furan-2,5-dione",
+   "cas": "108-31-6",
+   "rank": null,
+   "top1": "7539-12-0 3-allyl(dihydro)furan-2,5-dione"
+  },
+  {
+   "type": "cas",
+   "q": "108-31-6",
+   "cas": "108-31-6",
+   "rank": 1,
+   "top1": "108-31-6 말레산 언하이드라이드 (Maleic anhydride)"
+  },
+  {
+   "type": "ko",
+   "q": "m-자일렌",
+   "cas": "108-38-3",
+   "rank": null,
+   "top1": "3634-83-1 m-자일렌 다이아이소사이아네이트 (m-Xylene diisocyanate)"
+  },
+  {
+   "type": "en",
+   "q": "m-Xylene",
+   "cas": "108-38-3",
+   "rank": 1,
+   "top1": "108-38-3 m-크실렌 ( 관용명 : m-디메틸벤젠 )"
+  },
+  {
+   "type": "iupac",
+   "q": "1,3-xylene",
+   "cas": "108-38-3",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "108-38-3",
+   "cas": "108-38-3",
+   "rank": 1,
+   "top1": "108-38-3 m-크실렌 ( 관용명 : m-디메틸벤젠 )"
+  },
+  {
+   "type": "alias",
+   "q": "meta-xylene",
+   "cas": "108-38-3",
+   "rank": null,
+   "top1": "189896-62-6 Fatty acids, (C=18)-unsatd., dimers polymers with ethylenediamine and meta-xylenediamine"
+  },
+  {
+   "type": "alias",
+   "q": "메타자일렌",
+   "cas": "108-38-3",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "ko",
+   "q": "멜라민",
+   "cas": "108-78-1",
+   "rank": 1,
+   "top1": "108-78-1 멜라민 ( 관용명 : 1,3,5-트리아진-2,4,6-트리아민(1,3,5-TRIAZINE-2,4,6-TRIAMINE); )"
+  },
+  {
+   "type": "en",
+   "q": "Melamine",
+   "cas": "108-78-1",
+   "rank": 1,
+   "top1": "108-78-1 멜라민 ( 관용명 : 1,3,5-트리아진-2,4,6-트리아민(1,3,5-TRIAZINE-2,4,6-TRIAMINE); )"
+  },
+  {
+   "type": "iupac",
+   "q": "1,3,5-triazine-2,4,6-triamine",
+   "cas": "108-78-1",
+   "rank": 10,
+   "top1": "72578-58-6 Formic acid, compound with 1,3,5-triazine-2,4,6-triamine (1,3,5-triazine-2,4,6-triamine; formic acid)"
+  },
+  {
+   "type": "cas",
+   "q": "108-78-1",
+   "cas": "108-78-1",
+   "rank": 1,
+   "top1": "108-78-1 멜라민 ( 관용명 : 1,3,5-트리아진-2,4,6-트리아민(1,3,5-TRIAZINE-2,4,6-TRIAMINE); )"
+  },
+  {
+   "type": "ko",
+   "q": "톨루엔",
+   "cas": "108-88-3",
+   "rank": 1,
+   "top1": "108-88-3 톨루엔 (Toluene)"
+  },
+  {
+   "type": "en",
+   "q": "Toluene",
+   "cas": "108-88-3",
+   "rank": 1,
+   "top1": "108-88-3 톨루엔 (Toluene)"
+  },
+  {
+   "type": "cas",
+   "q": "108-88-3",
+   "cas": "108-88-3",
+   "rank": 1,
+   "top1": "108-88-3 톨루엔 (Toluene)"
+  },
+  {
+   "type": "alias",
+   "q": "methylbenzene",
+   "cas": "108-88-3",
+   "rank": null,
+   "top1": "75300-78-6 Ethanol, 2,2'-iminobis-, compds. with sulfonated 1,1'-oxybis[methylbenzene]"
+  },
+  {
+   "type": "ko",
+   "q": "클로로벤젠",
+   "cas": "108-90-7",
+   "rank": 1,
+   "top1": "108-90-7 클로로벤젠 (Chlorobenzene)"
+  },
+  {
+   "type": "en",
+   "q": "Chlorobenzene",
+   "cas": "108-90-7",
+   "rank": 1,
+   "top1": "108-90-7 클로로벤젠 (Chlorobenzene)"
+  },
+  {
+   "type": "cas",
+   "q": "108-90-7",
+   "cas": "108-90-7",
+   "rank": 1,
+   "top1": "108-90-7 클로로벤젠 (Chlorobenzene)"
+  },
+  {
+   "type": "ko",
+   "q": "시클로헥사논",
+   "cas": "108-94-1",
+   "rank": 1,
+   "top1": "108-94-1 시클로헥사논 (Cyclohexanone)"
+  },
+  {
+   "type": "en",
+   "q": "Cyclohexanone",
+   "cas": "108-94-1",
+   "rank": 1,
+   "top1": "108-94-1 시클로헥사논 (Cyclohexanone)"
+  },
+  {
+   "type": "cas",
+   "q": "108-94-1",
+   "cas": "108-94-1",
+   "rank": 1,
+   "top1": "108-94-1 시클로헥사논 (Cyclohexanone)"
+  },
+  {
+   "type": "ko",
+   "q": "페놀",
+   "cas": "108-95-2",
+   "rank": 2,
+   "top1": "67924-34-9 4-(1,1-다이메틸에틸)페놀(클로로메틸)옥시란-4,4''-(1-메틸에틸리덴)비스(페놀) 중합체"
+  },
+  {
+   "type": "en",
+   "q": "Phenol",
+   "cas": "108-95-2",
+   "rank": 1,
+   "top1": "108-95-2 Phenol (phenol)"
+  },
+  {
+   "type": "cas",
+   "q": "108-95-2",
+   "cas": "108-95-2",
+   "rank": 1,
+   "top1": "108-95-2 Phenol (phenol)"
+  },
+  {
+   "type": "alias",
+   "q": "carbolic acid",
+   "cas": "108-95-2",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "ko",
+   "q": "펜탄",
+   "cas": "109-66-0",
+   "rank": 1,
+   "top1": "109-66-0 Pentane"
+  },
+  {
+   "type": "en",
+   "q": "Pentane",
+   "cas": "109-66-0",
+   "rank": 1,
+   "top1": "109-66-0 Pentane"
+  },
+  {
+   "type": "cas",
+   "q": "109-66-0",
+   "cas": "109-66-0",
+   "rank": 1,
+   "top1": "109-66-0 Pentane"
+  },
+  {
+   "type": "ko",
+   "q": "테트라하이드로퓨란",
+   "cas": "109-99-9",
+   "rank": null,
+   "top1": "89686-69-1 2,2-아이소프로필리딘비스(테트라하이드로퓨란)"
+  },
+  {
+   "type": "en",
+   "q": "Tetrahydrofuran",
+   "cas": "109-99-9",
+   "rank": 1,
+   "top1": "109-99-9 테트라하이드로푸란 (Tetrahydrofuran)"
+  },
+  {
+   "type": "iupac",
+   "q": "oxolane",
+   "cas": "109-99-9",
+   "rank": null,
+   "top1": "98071-96-6 oxolane-3-thiol"
+  },
+  {
+   "type": "cas",
+   "q": "109-99-9",
+   "cas": "109-99-9",
+   "rank": 1,
+   "top1": "109-99-9 테트라하이드로푸란 (Tetrahydrofuran)"
+  },
+  {
+   "type": "alias",
+   "q": "THF",
+   "cas": "109-99-9",
+   "rank": null,
+   "top1": "13597-30-3 Thorium fluoride oxide (ThF2O)"
+  },
+  {
+   "type": "alias",
+   "q": "테트라하이드로푸란",
+   "cas": "109-99-9",
+   "rank": 1,
+   "top1": "109-99-9 테트라하이드로푸란 (Tetrahydrofuran)"
+  },
+  {
+   "type": "ko",
+   "q": "헥산",
+   "cas": "110-54-3",
+   "rank": 1,
+   "top1": "110-54-3 n-Hexane"
+  },
+  {
+   "type": "en",
+   "q": "Hexane",
+   "cas": "110-54-3",
+   "rank": 1,
+   "top1": "110-54-3 n-Hexane"
+  },
+  {
+   "type": "cas",
+   "q": "110-54-3",
+   "cas": "110-54-3",
+   "rank": 1,
+   "top1": "110-54-3 n-Hexane"
+  },
+  {
+   "type": "alias",
+   "q": "n-hexane",
+   "cas": "110-54-3",
+   "rank": 1,
+   "top1": "110-54-3 n-Hexane"
+  },
+  {
+   "type": "alias",
+   "q": "노르말헥산",
+   "cas": "110-54-3",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "ko",
+   "q": "2-에톡시에탄올",
+   "cas": "110-80-5",
+   "rank": 1,
+   "top1": "110-80-5 2-ethoxyethanol (2-ethoxyethan-1-ol)"
+  },
+  {
+   "type": "en",
+   "q": "Glycol monoethyl ether",
+   "cas": "110-80-5",
+   "rank": null,
+   "top1": "111-15-9 2-에톡시에틸아세테이트 (2-Ethoxyethyl acetate)"
+  },
+  {
+   "type": "iupac",
+   "q": "2-ethoxyethanol",
+   "cas": "110-80-5",
+   "rank": 1,
+   "top1": "110-80-5 2-ethoxyethanol (2-ethoxyethan-1-ol)"
+  },
+  {
+   "type": "cas",
+   "q": "110-80-5",
+   "cas": "110-80-5",
+   "rank": 1,
+   "top1": "110-80-5 2-ethoxyethanol (2-ethoxyethan-1-ol)"
+  },
+  {
+   "type": "ko",
+   "q": "사이클로헥산",
+   "cas": "110-82-7",
+   "rank": 1,
+   "top1": "110-82-7 Cyclohexane"
+  },
+  {
+   "type": "en",
+   "q": "Cyclohexane",
+   "cas": "110-82-7",
+   "rank": 1,
+   "top1": "110-82-7 Cyclohexane"
+  },
+  {
+   "type": "cas",
+   "q": "110-82-7",
+   "cas": "110-82-7",
+   "rank": 1,
+   "top1": "110-82-7 Cyclohexane"
+  },
+  {
+   "type": "alias",
+   "q": "시클로헥산",
+   "cas": "110-82-7",
+   "rank": null,
+   "top1": "154279-60-4 4,4-메틸렌비스[N-(1-메틸프로필) 시클로헥산아민"
+  },
+  {
+   "type": "ko",
+   "q": "피리딘",
+   "cas": "110-86-1",
+   "rank": 1,
+   "top1": "110-86-1 Pyridine (pyridine)"
+  },
+  {
+   "type": "en",
+   "q": "Pyridine",
+   "cas": "110-86-1",
+   "rank": 1,
+   "top1": "110-86-1 Pyridine (pyridine)"
+  },
+  {
+   "type": "cas",
+   "q": "110-86-1",
+   "cas": "110-86-1",
+   "rank": 1,
+   "top1": "110-86-1 Pyridine (pyridine)"
+  },
+  {
+   "type": "ko",
+   "q": "피페리딘",
+   "cas": "110-89-4",
+   "rank": 1,
+   "top1": "110-89-4 피페리딘 ( 관용명 : 헥사히드로피리딘(HEXAHYDROPYRIDINE); )"
+  },
+  {
+   "type": "en",
+   "q": "Piperidine",
+   "cas": "110-89-4",
+   "rank": 1,
+   "top1": "110-89-4 피페리딘 ( 관용명 : 헥사히드로피리딘(HEXAHYDROPYRIDINE); )"
+  },
+  {
+   "type": "cas",
+   "q": "110-89-4",
+   "cas": "110-89-4",
+   "rank": 1,
+   "top1": "110-89-4 피페리딘 ( 관용명 : 헥사히드로피리딘(HEXAHYDROPYRIDINE); )"
+  },
+  {
+   "type": "ko",
+   "q": "프로필렌",
+   "cas": "115-07-1",
+   "rank": 1,
+   "top1": "115-07-1 Propene (prop-1-ene)"
+  },
+  {
+   "type": "en",
+   "q": "Propylene",
+   "cas": "115-07-1",
+   "rank": null,
+   "top1": "78-90-0 프로필렌다이아민 (Propylenediamine)"
+  },
+  {
+   "type": "iupac",
+   "q": "prop-1-ene",
+   "cas": "115-07-1",
+   "rank": 2,
+   "top1": "29160-13-2 1-Butene, polymer with 1-propene (but-1-ene;prop-1-ene)"
+  },
+  {
+   "type": "cas",
+   "q": "115-07-1",
+   "cas": "115-07-1",
+   "rank": 1,
+   "top1": "115-07-1 Propene (prop-1-ene)"
+  },
+  {
+   "type": "alias",
+   "q": "propene",
+   "cas": "115-07-1",
+   "rank": 1,
+   "top1": "115-07-1 Propene (prop-1-ene)"
+  },
+  {
+   "type": "alias",
+   "q": "프로펜",
+   "cas": "115-07-1",
+   "rank": null,
+   "top1": "25586-20-3 뷰틸2-프로펜산과 에텐일벤젠 함유 2-프로펜산 중합체"
+  },
+  {
+   "type": "ko",
+   "q": "이소부틸렌",
+   "cas": "115-11-7",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "en",
+   "q": "Isobutylene",
+   "cas": "115-11-7",
+   "rank": 1,
+   "top1": "115-11-7 아이소부텐"
+  },
+  {
+   "type": "iupac",
+   "q": "2-methylprop-1-ene",
+   "cas": "115-11-7",
+   "rank": null,
+   "top1": "70969-61-8 Benzene, ethenyl-, polymer with 2-methyl-1-propene and 1,3-pentadiene (2-methylprop-1-ene;(3E)-penta-1,3-diene;styrene)"
+  },
+  {
+   "type": "cas",
+   "q": "115-11-7",
+   "cas": "115-11-7",
+   "rank": 1,
+   "top1": "115-11-7 아이소부텐"
+  },
+  {
+   "type": "alias",
+   "q": "isobutene",
+   "cas": "115-11-7",
+   "rank": null,
+   "top1": "95465-89-7 Hydrocarbons, C4, 1,3-butadiene- and isobutene-free"
+  },
+  {
+   "type": "ko",
+   "q": "안트라센",
+   "cas": "120-12-7",
+   "rank": 1,
+   "top1": "120-12-7 안트라센 ( 관용명 : 파라나프탈렌(PARANAPHTHALENE); ) (ANTHRACENE)"
+  },
+  {
+   "type": "en",
+   "q": "Anthracene",
+   "cas": "120-12-7",
+   "rank": 1,
+   "top1": "120-12-7 안트라센 ( 관용명 : 파라나프탈렌(PARANAPHTHALENE); ) (ANTHRACENE)"
+  },
+  {
+   "type": "cas",
+   "q": "120-12-7",
+   "cas": "120-12-7",
+   "rank": 1,
+   "top1": "120-12-7 안트라센 ( 관용명 : 파라나프탈렌(PARANAPHTHALENE); ) (ANTHRACENE)"
+  },
+  {
+   "type": "ko",
+   "q": "카테콜",
+   "cas": "120-80-9",
+   "rank": 1,
+   "top1": "120-80-9 카테콜 (Catechol)"
+  },
+  {
+   "type": "en",
+   "q": "Catechol",
+   "cas": "120-80-9",
+   "rank": 1,
+   "top1": "120-80-9 카테콜 (Catechol)"
+  },
+  {
+   "type": "iupac",
+   "q": "benzene-1,2-diol",
+   "cas": "120-80-9",
+   "rank": null,
+   "top1": "50309-53-0 4-[2-(dimethylamino)ethyl]benzene-1,2-diol hydrobromide"
+  },
+  {
+   "type": "cas",
+   "q": "120-80-9",
+   "cas": "120-80-9",
+   "rank": 1,
+   "top1": "120-80-9 카테콜 (Catechol)"
+  },
+  {
+   "type": "ko",
+   "q": "트리에틸아민",
+   "cas": "121-44-8",
+   "rank": 1,
+   "top1": "121-44-8 트리에틸아민 (Triethylamine)"
+  },
+  {
+   "type": "en",
+   "q": "Triethylamine",
+   "cas": "121-44-8",
+   "rank": 1,
+   "top1": "121-44-8 트리에틸아민 (Triethylamine)"
+  },
+  {
+   "type": "iupac",
+   "q": "N,N-diethylethanamine",
+   "cas": "121-44-8",
+   "rank": null,
+   "top1": "29061-63-0 Dodecylbenzenesulfonic acid compd. with N,N-diethylethanamine (1:1)"
+  },
+  {
+   "type": "cas",
+   "q": "121-44-8",
+   "cas": "121-44-8",
+   "rank": 1,
+   "top1": "121-44-8 트리에틸아민 (Triethylamine)"
+  },
+  {
+   "type": "ko",
+   "q": "염화 벤제토늄",
+   "cas": "121-54-0",
+   "rank": 1,
+   "top1": "121-54-0 염화 벤제토늄 ( 관용명 : N,N-다이메틸-N-(2-(2-(4-(1,1,3,3-테트라메틸뷰틸)펜옥시)에톡시) )"
+  },
+  {
+   "type": "en",
+   "q": "Benzethonium Chloride",
+   "cas": "121-54-0",
+   "rank": 1,
+   "top1": "121-54-0 염화 벤제토늄 ( 관용명 : N,N-다이메틸-N-(2-(2-(4-(1,1,3,3-테트라메틸뷰틸)펜옥시)에톡시) )"
+  },
+  {
+   "type": "iupac",
+   "q": "benzyl-dimethyl-[2-[2-[4-(2,4,4-trimethylpentan-2-yl)phenoxy]ethoxy]ethyl]azanium chloride",
+   "cas": "121-54-0",
+   "rank": null,
+   "top1": "2315-61-9 2-[2-[4-(1,1,3,3-tetramethylbutyl)phenoxy]ethoxy]ethanol, 2-{2-[4-(2,4,4-trimethylpentan-2-yl)phenoxy]ethoxy}ethanol"
+  },
+  {
+   "type": "cas",
+   "q": "121-54-0",
+   "cas": "121-54-0",
+   "rank": 1,
+   "top1": "121-54-0 염화 벤제토늄 ( 관용명 : N,N-다이메틸-N-(2-(2-(4-(1,1,3,3-테트라메틸뷰틸)펜옥시)에톡시) )"
+  },
+  {
+   "type": "ko",
+   "q": "하이드로퀴논",
+   "cas": "123-31-9",
+   "rank": 1,
+   "top1": "123-31-9 디하이드록시벤젠 ( 관용명 : Dihydroybenzene ) (디하이드록시벤젠 ( 관용명 : Dihydroxybenzene )) (디하이드록시벤젠 ( 관용명 : Dihydroxy benzene ))"
+  },
+  {
+   "type": "en",
+   "q": "Hydroquinone",
+   "cas": "123-31-9",
+   "rank": 1,
+   "top1": "123-31-9 디하이드록시벤젠 ( 관용명 : Dihydroybenzene ) (디하이드록시벤젠 ( 관용명 : Dihydroxybenzene )) (디하이드록시벤젠 ( 관용명 : Dihydroxy benzene ))"
+  },
+  {
+   "type": "iupac",
+   "q": "benzene-1,4-diol",
+   "cas": "123-31-9",
+   "rank": null,
+   "top1": "50564-14-2 2-(dimethylamino)benzene-1,4-diol"
+  },
+  {
+   "type": "cas",
+   "q": "123-31-9",
+   "cas": "123-31-9",
+   "rank": 1,
+   "top1": "123-31-9 디하이드록시벤젠 ( 관용명 : Dihydroybenzene ) (디하이드록시벤젠 ( 관용명 : Dihydroxybenzene )) (디하이드록시벤젠 ( 관용명 : Dihydroxy benzene ))"
+  },
+  {
+   "type": "ko",
+   "q": "머신",
+   "cas": "123-35-3",
+   "rank": 1,
+   "top1": "123-35-3 머신 ( 관용명 : 베타-머신(BETA-MYRCENE); )"
+  },
+  {
+   "type": "en",
+   "q": "Myrcene",
+   "cas": "123-35-3",
+   "rank": 1,
+   "top1": "123-35-3 머신 ( 관용명 : 베타-머신(BETA-MYRCENE); )"
+  },
+  {
+   "type": "iupac",
+   "q": "7-methyl-3-methylideneocta-1,6-diene",
+   "cas": "123-35-3",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "123-35-3",
+   "cas": "123-35-3",
+   "rank": 1,
+   "top1": "123-35-3 머신 ( 관용명 : 베타-머신(BETA-MYRCENE); )"
+  },
+  {
+   "type": "ko",
+   "q": "부틸아세테이트",
+   "cas": "123-86-4",
+   "rank": 1,
+   "top1": "123-86-4 n-Butyl acetate"
+  },
+  {
+   "type": "en",
+   "q": "Butyl Acetate",
+   "cas": "123-86-4",
+   "rank": 1,
+   "top1": "123-86-4 n-Butyl acetate"
+  },
+  {
+   "type": "cas",
+   "q": "123-86-4",
+   "cas": "123-86-4",
+   "rank": 1,
+   "top1": "123-86-4 n-Butyl acetate"
+  },
+  {
+   "type": "ko",
+   "q": "1,4-디옥산",
+   "cas": "123-91-1",
+   "rank": 1,
+   "top1": "123-91-1 Dioxane(Diethyl dioxide)"
+  },
+  {
+   "type": "en",
+   "q": "1,4-Dioxane",
+   "cas": "123-91-1",
+   "rank": null,
+   "top1": "502-97-6 1,4-Dioxane-2,5-dione"
+  },
+  {
+   "type": "cas",
+   "q": "123-91-1",
+   "cas": "123-91-1",
+   "rank": 1,
+   "top1": "123-91-1 Dioxane(Diethyl dioxide)"
+  },
+  {
+   "type": "ko",
+   "q": "이산화탄소",
+   "cas": "124-38-9",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "en",
+   "q": "Carbon dioxide",
+   "cas": "124-38-9",
+   "rank": 1,
+   "top1": "124-38-9 Carbon dioxide"
+  },
+  {
+   "type": "cas",
+   "q": "124-38-9",
+   "cas": "124-38-9",
+   "rank": 1,
+   "top1": "124-38-9 Carbon dioxide"
+  },
+  {
+   "type": "ko",
+   "q": "테트라클로로에틸렌",
+   "cas": "127-18-4",
+   "rank": 1,
+   "top1": "127-18-4 퍼클로로에틸렌 ( 관용명 : 테트라클로로에틸렌 )"
+  },
+  {
+   "type": "en",
+   "q": "Tetrachloroethylene",
+   "cas": "127-18-4",
+   "rank": 1,
+   "top1": "127-18-4 퍼클로로에틸렌 ( 관용명 : 테트라클로로에틸렌 )"
+  },
+  {
+   "type": "iupac",
+   "q": "1,1,2,2-tetrachloroethene",
+   "cas": "127-18-4",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "127-18-4",
+   "cas": "127-18-4",
+   "rank": 1,
+   "top1": "127-18-4 퍼클로로에틸렌 ( 관용명 : 테트라클로로에틸렌 )"
+  },
+  {
+   "type": "alias",
+   "q": "perchloroethylene",
+   "cas": "127-18-4",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "alias",
+   "q": "퍼클로로에틸렌",
+   "cas": "127-18-4",
+   "rank": 1,
+   "top1": "127-18-4 퍼클로로에틸렌 ( 관용명 : 테트라클로로에틸렌 )"
+  },
+  {
+   "type": "ko",
+   "q": "베타-피넨",
+   "cas": "127-91-3",
+   "rank": 1,
+   "top1": "127-91-3 베타-피넨 ( 관용명 : 6,6-다이메틸-2-메틸렌바이사이클로(3.1.1)헵탄(6,6-DIMETHYL-2-METHYLENEBICYCLO(3. ) (BETA-PINENE)"
+  },
+  {
+   "type": "en",
+   "q": "Beta-Pinene",
+   "cas": "127-91-3",
+   "rank": 1,
+   "top1": "127-91-3 베타-피넨 ( 관용명 : 6,6-다이메틸-2-메틸렌바이사이클로(3.1.1)헵탄(6,6-DIMETHYL-2-METHYLENEBICYCLO(3. ) (BETA-PINENE)"
+  },
+  {
+   "type": "iupac",
+   "q": "6,6-dimethyl-2-methylidenebicyclo[3.1.1]heptane",
+   "cas": "127-91-3",
+   "rank": 18,
+   "top1": "31393-98-3 2,6,6-트리메틸바이사이클로(3.1.1)헵트-2-엔-6,6-다이메틸-2-메틸렌 바이사이클로(3.1.1)헵탄 공중..."
+  },
+  {
+   "type": "cas",
+   "q": "127-91-3",
+   "cas": "127-91-3",
+   "rank": 1,
+   "top1": "127-91-3 베타-피넨 ( 관용명 : 6,6-다이메틸-2-메틸렌바이사이클로(3.1.1)헵탄(6,6-DIMETHYL-2-METHYLENEBICYCLO(3. ) (BETA-PINENE)"
+  },
+  {
+   "type": "ko",
+   "q": "퀴닌",
+   "cas": "130-95-0",
+   "rank": 1,
+   "top1": "130-95-0 퀴닌 ( 관용명 : 신코난-9-올, 6&#39;-메톡시-, (8 알파,9R)-(CINCHONAN-9-OL, 6&#39;-METHOXY-, (8 )"
+  },
+  {
+   "type": "en",
+   "q": "Quinine",
+   "cas": "130-95-0",
+   "rank": 1,
+   "top1": "130-95-0 퀴닌 ( 관용명 : 신코난-9-올, 6&#39;-메톡시-, (8 알파,9R)-(CINCHONAN-9-OL, 6&#39;-METHOXY-, (8 )"
+  },
+  {
+   "type": "iupac",
+   "q": "(R)-[(2S,4S,5R)-5-ethenyl-1-azabicyclo[2.2.2]octan-2-yl]-(6-methoxyquinolin-4-yl)methanol",
+   "cas": "130-95-0",
+   "rank": null,
+   "top1": "83-75-0 Ethyl quinine carbonate ([(R)-[(2S,4S,5R)-5-ethenyl-1-azabicyclo[2.2.2]oct-2-yl](6-methoxyquinolin-4-yl) methyl ethyl carbonate)"
+  },
+  {
+   "type": "cas",
+   "q": "130-95-0",
+   "cas": "130-95-0",
+   "rank": 1,
+   "top1": "130-95-0 퀴닌 ( 관용명 : 신코난-9-올, 6&#39;-메톡시-, (8 알파,9R)-(CINCHONAN-9-OL, 6&#39;-METHOXY-, (8 )"
+  },
+  {
+   "type": "ko",
+   "q": "벤토나이트",
+   "cas": "1302-78-9",
+   "rank": 1,
+   "top1": "1302-78-9 벤토나이트(BENTONITE)"
+  },
+  {
+   "type": "en",
+   "q": "Bentonite",
+   "cas": "1302-78-9",
+   "rank": 2,
+   "top1": "1318-93-0 몬트몰릴로나이트(MONTMORILLONITE)"
+  },
+  {
+   "type": "cas",
+   "q": "1302-78-9",
+   "cas": "1302-78-9",
+   "rank": 1,
+   "top1": "1302-78-9 벤토나이트(BENTONITE)"
+  },
+  {
+   "type": "ko",
+   "q": "산화 바륨",
+   "cas": "1304-28-5",
+   "rank": 1,
+   "top1": "1304-28-5 산화 바륨 ( 관용명 : BARIUM MONOXIDE )"
+  },
+  {
+   "type": "en",
+   "q": "Barium oxide",
+   "cas": "1304-28-5",
+   "rank": 1,
+   "top1": "1304-28-5 산화 바륨 ( 관용명 : BARIUM MONOXIDE )"
+  },
+  {
+   "type": "iupac",
+   "q": "oxobarium",
+   "cas": "1304-28-5",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "1304-28-5",
+   "cas": "1304-28-5",
+   "rank": 1,
+   "top1": "1304-28-5 산화 바륨 ( 관용명 : BARIUM MONOXIDE )"
+  },
+  {
+   "type": "ko",
+   "q": "황화 카드뮴",
+   "cas": "1306-23-6",
+   "rank": 1,
+   "top1": "1306-23-6 황화 카드뮴 ( 관용명 : AURORA YELLOW )"
+  },
+  {
+   "type": "en",
+   "q": "Cadmium Sulfide",
+   "cas": "1306-23-6",
+   "rank": 1,
+   "top1": "1306-23-6 황화 카드뮴 ( 관용명 : AURORA YELLOW )"
+  },
+  {
+   "type": "iupac",
+   "q": "sulfanylidenecadmium",
+   "cas": "1306-23-6",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "1306-23-6",
+   "cas": "1306-23-6",
+   "rank": 1,
+   "top1": "1306-23-6 황화 카드뮴 ( 관용명 : AURORA YELLOW )"
+  },
+  {
+   "type": "ko",
+   "q": "코발트",
+   "cas": "1308-04-9",
+   "rank": 1,
+   "top1": "1308-04-9 코발트 (III) 산화물(COBALT (III) OXIDE)"
+  },
+  {
+   "type": "en",
+   "q": "Cobalt oxide (Co2O3)",
+   "cas": "1308-04-9",
+   "rank": 15,
+   "top1": "1308-06-1 코발트 산화물(COBALT OXIDE)"
+  },
+  {
+   "type": "iupac",
+   "q": "bis(cobalt(3+));tris(oxygen(2-))",
+   "cas": "1308-04-9",
+   "rank": null,
+   "top1": "62647-83-0 Cobalt carbonate hydroxide (cobalt(3+);carbonate;hydroxide)"
+  },
+  {
+   "type": "cas",
+   "q": "1308-04-9",
+   "cas": "1308-04-9",
+   "rank": 1,
+   "top1": "1308-04-9 코발트 (III) 산화물(COBALT (III) OXIDE)"
+  },
+  {
+   "type": "ko",
+   "q": "이산화 납",
+   "cas": "1309-60-0",
+   "rank": 1,
+   "top1": "1309-60-0 이산화 납 ( 관용명 : LEAD OXIDE )"
+  },
+  {
+   "type": "en",
+   "q": "Lead dioxide",
+   "cas": "1309-60-0",
+   "rank": null,
+   "top1": "12034-30-9 Lead disodium dioxide"
+  },
+  {
+   "type": "iupac",
+   "q": "dioxolead",
+   "cas": "1309-60-0",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "1309-60-0",
+   "cas": "1309-60-0",
+   "rank": 1,
+   "top1": "1309-60-0 이산화 납 ( 관용명 : LEAD OXIDE )"
+  },
+  {
+   "type": "ko",
+   "q": "수산화칼륨",
+   "cas": "1310-58-3",
+   "rank": 1,
+   "top1": "1310-58-3 Potassium hydroxide"
+  },
+  {
+   "type": "en",
+   "q": "Potassium hydroxide",
+   "cas": "1310-58-3",
+   "rank": 1,
+   "top1": "1310-58-3 Potassium hydroxide"
+  },
+  {
+   "type": "cas",
+   "q": "1310-58-3",
+   "cas": "1310-58-3",
+   "rank": 1,
+   "top1": "1310-58-3 Potassium hydroxide"
+  },
+  {
+   "type": "alias",
+   "q": "caustic potash",
+   "cas": "1310-58-3",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "ko",
+   "q": "수산화나트륨",
+   "cas": "1310-73-2",
+   "rank": 1,
+   "top1": "1310-73-2 수산화나트륨"
+  },
+  {
+   "type": "en",
+   "q": "Sodium hydroxide",
+   "cas": "1310-73-2",
+   "rank": 1,
+   "top1": "1310-73-2 수산화나트륨"
+  },
+  {
+   "type": "cas",
+   "q": "1310-73-2",
+   "cas": "1310-73-2",
+   "rank": 1,
+   "top1": "1310-73-2 수산화나트륨"
+  },
+  {
+   "type": "alias",
+   "q": "caustic soda",
+   "cas": "1310-73-2",
+   "rank": null,
+   "top1": "1474044-76-2 UNIQUE NAME FOR Butanol, reaction products with naphthalene, sulfonated, sodium salts (Reaction product of naphthalene, butanol, sulfonated and neutralized by caustic soda)"
+  },
+  {
+   "type": "alias",
+   "q": "가성소다",
+   "cas": "1310-73-2",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "ko",
+   "q": "과산화 나트륨",
+   "cas": "1313-60-6",
+   "rank": 1,
+   "top1": "1313-60-6 과산화 나트륨"
+  },
+  {
+   "type": "en",
+   "q": "Sodium peroxide",
+   "cas": "1313-60-6",
+   "rank": 1,
+   "top1": "1313-60-6 과산화 나트륨"
+  },
+  {
+   "type": "iupac",
+   "q": "disodium;peroxide",
+   "cas": "1313-60-6",
+   "rank": null,
+   "top1": "71872-95-2 5-sulphoisophthalic acid, ammonium sodium salt (azanium;disodium;5-sulfonatobenzene-1,3-dicarboxylate)"
+  },
+  {
+   "type": "cas",
+   "q": "1313-60-6",
+   "cas": "1313-60-6",
+   "rank": 1,
+   "top1": "1313-60-6 과산화 나트륨"
+  },
+  {
+   "type": "ko",
+   "q": "이산화 토륨",
+   "cas": "1314-20-1",
+   "rank": 1,
+   "top1": "1314-20-1 이산화 토륨 ( 관용명 : 토리아(THORIA); )"
+  },
+  {
+   "type": "en",
+   "q": "THORIUM OXIDE (ThO2)",
+   "cas": "1314-20-1",
+   "rank": 1,
+   "top1": "1314-20-1 이산화 토륨 ( 관용명 : 토리아(THORIA); )"
+  },
+  {
+   "type": "iupac",
+   "q": "dioxothorium",
+   "cas": "1314-20-1",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "1314-20-1",
+   "cas": "1314-20-1",
+   "rank": 1,
+   "top1": "1314-20-1 이산화 토륨 ( 관용명 : 토리아(THORIA); )"
+  },
+  {
+   "type": "ko",
+   "q": "황화 아연",
+   "cas": "1314-98-3",
+   "rank": 1,
+   "top1": "1314-98-3 황화 아연"
+  },
+  {
+   "type": "en",
+   "q": "Zinc Sulfide",
+   "cas": "1314-98-3",
+   "rank": 1,
+   "top1": "1314-98-3 황화 아연"
+  },
+  {
+   "type": "cas",
+   "q": "1314-98-3",
+   "cas": "1314-98-3",
+   "rank": 1,
+   "top1": "1314-98-3 황화 아연"
+  },
+  {
+   "type": "ko",
+   "q": "제올라이트",
+   "cas": "1318-02-1",
+   "rank": 1,
+   "top1": "1318-02-1 제올라이트"
+  },
+  {
+   "type": "en",
+   "q": "Zeolites",
+   "cas": "1318-02-1",
+   "rank": null,
+   "top1": "68989-22-0 제올라이트(ZEOLITES) ( 관용명 : 에타칼(ETHACAL); )"
+  },
+  {
+   "type": "cas",
+   "q": "1318-02-1",
+   "cas": "1318-02-1",
+   "rank": 1,
+   "top1": "1318-02-1 제올라이트"
+  },
+  {
+   "type": "ko",
+   "q": "크레졸",
+   "cas": "1319-77-3",
+   "rank": 1,
+   "top1": "1319-77-3 Cresol, all isomers"
+  },
+  {
+   "type": "en",
+   "q": "Cresol",
+   "cas": "1319-77-3",
+   "rank": 3,
+   "top1": "2835-99-6 4-Amino-m-cresol"
+  },
+  {
+   "type": "cas",
+   "q": "1319-77-3",
+   "cas": "1319-77-3",
+   "rank": 1,
+   "top1": "1319-77-3 Cresol, all isomers"
+  },
+  {
+   "type": "ko",
+   "q": "자일렌",
+   "cas": "1330-20-7",
+   "rank": null,
+   "top1": "81-15-2 머스크 자일렌"
+  },
+  {
+   "type": "en",
+   "q": "Xylene",
+   "cas": "1330-20-7",
+   "rank": null,
+   "top1": "40766-31-2 (1-phenylethyl)xylene"
+  },
+  {
+   "type": "cas",
+   "q": "1330-20-7",
+   "cas": "1330-20-7",
+   "rank": 1,
+   "top1": "1330-20-7 크실렌 ( 관용명 : 디메틸벤젠(오쏘,메타,파라-이성체) ) (크실렌 ( 관용명 : 크실렌(오르토, 메타, 파라이성체) ))"
+  },
+  {
+   "type": "alias",
+   "q": "크실렌",
+   "cas": "1330-20-7",
+   "rank": 1,
+   "top1": "1330-20-7 크실렌 ( 관용명 : 디메틸벤젠(오쏘,메타,파라-이성체) ) (크실렌 ( 관용명 : 크실렌(오르토, 메타, 파라이성체) ))"
+  },
+  {
+   "type": "alias",
+   "q": "xylenes",
+   "cas": "1330-20-7",
+   "rank": null,
+   "top1": "26447-10-9 크실렌설폰산 암모늄(AMMONIUM XYLENESULFONATE) ( 관용명 : 벤젠설폰산, 다이메틸-, 암모늄 염(BENZENESULFONIC ACID, DIMETHYL-, AMMONIUM )"
+  },
+  {
+   "type": "alias",
+   "q": "mixed xylenes",
+   "cas": "1330-20-7",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "alias",
+   "q": "크실렌",
+   "cas": "1330-20-7",
+   "rank": 1,
+   "top1": "1330-20-7 크실렌 ( 관용명 : 디메틸벤젠(오쏘,메타,파라-이성체) ) (크실렌 ( 관용명 : 크실렌(오르토, 메타, 파라이성체) ))"
+  },
+  {
+   "type": "ko",
+   "q": "석면",
+   "cas": "1332-21-4",
+   "rank": 1,
+   "top1": "1332-21-4 석면(ASBESTOS)"
+  },
+  {
+   "type": "en",
+   "q": "Asbestos",
+   "cas": "1332-21-4",
+   "rank": 3,
+   "top1": "132207-32-0 ASBESTOS"
+  },
+  {
+   "type": "cas",
+   "q": "1332-21-4",
+   "cas": "1332-21-4",
+   "rank": 1,
+   "top1": "1332-21-4 석면(ASBESTOS)"
+  },
+  {
+   "type": "ko",
+   "q": "산화 철",
+   "cas": "1332-37-2",
+   "rank": 1,
+   "top1": "1332-37-2 산화 철(IRON OXIDE) ( 관용명 : BURNT SIEN나(BURNT SIENNA); )"
+  },
+  {
+   "type": "en",
+   "q": "Iron oxide",
+   "cas": "1332-37-2",
+   "rank": 1,
+   "top1": "1332-37-2 산화 철(IRON OXIDE) ( 관용명 : BURNT SIEN나(BURNT SIENNA); )"
+  },
+  {
+   "type": "iupac",
+   "q": "dioxoiron",
+   "cas": "1332-37-2",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "1332-37-2",
+   "cas": "1332-37-2",
+   "rank": 1,
+   "top1": "1332-37-2 산화 철(IRON OXIDE) ( 관용명 : BURNT SIEN나(BURNT SIENNA); )"
+  },
+  {
+   "type": "ko",
+   "q": "수소",
+   "cas": "1333-74-0",
+   "rank": 1,
+   "top1": "1333-74-0 수소 ( 관용명 : HYDROGEN GAS )"
+  },
+  {
+   "type": "en",
+   "q": "Hydrogen",
+   "cas": "1333-74-0",
+   "rank": null,
+   "top1": "74-90-8 Hydrogen cyanide"
+  },
+  {
+   "type": "iupac",
+   "q": "molecular hydrogen",
+   "cas": "1333-74-0",
+   "rank": null,
+   "top1": "86024-59-1 Trisodium hydrogen [2-[[α-[[3-[[4-chloro-6-[ethyl[4-[[2-(sulphooxy)ethyl]sulphonyl]phenyl]amino]-1,3,5-triazin-2-yl]amino]-2-hydroxy-5-sulphophenyl]azo]benzyl]azo]-4-sulphobenzoato(6-)]cuprate(4-) (trisodium hydrogen [2-[[α-[[3-[[4-chloro-6-[ethyl[4-[[2-(sulphooxy)ethyl]sulphonyl]phenyl]amino]-1,3,5-triazin-2-yl]amino]-2-hydroxy-5-sulphophenyl]azo]benzyl]azo]-4-sulphobenzoato(6-)]cuprate(4-) Molecular Formula : C33H24ClCuN9O15S4.H.3Na)"
+  },
+  {
+   "type": "cas",
+   "q": "1333-74-0",
+   "cas": "1333-74-0",
+   "rank": 1,
+   "top1": "1333-74-0 수소 ( 관용명 : HYDROGEN GAS )"
+  },
+  {
+   "type": "ko",
+   "q": "산화 알루미늄",
+   "cas": "1344-28-1",
+   "rank": 1,
+   "top1": "1344-28-1 산화 알루미늄 ( 관용명 : 알파-알루미나 ) (Aluminum oxide)"
+  },
+  {
+   "type": "en",
+   "q": "Alumina",
+   "cas": "1344-28-1",
+   "rank": 1,
+   "top1": "1344-28-1 산화 알루미늄 ( 관용명 : 알파-알루미나 ) (Aluminum oxide)"
+  },
+  {
+   "type": "iupac",
+   "q": "dialuminum;tris(oxygen(2-))",
+   "cas": "1344-28-1",
+   "rank": null,
+   "top1": "12704-02-8 Ammonium phosphotungstenate, trihydrate (triazanium;oxygen(2-);tungsten;trihydroxide;tetraphosphate)"
+  },
+  {
+   "type": "cas",
+   "q": "1344-28-1",
+   "cas": "1344-28-1",
+   "rank": 1,
+   "top1": "1344-28-1 산화 알루미늄 ( 관용명 : 알파-알루미나 ) (Aluminum oxide)"
+  },
+  {
+   "type": "ko",
+   "q": "리모넨",
+   "cas": "138-86-3",
+   "rank": 1,
+   "top1": "138-86-3 리모넨 ( 관용명 : 1-메틸-4-(1-메틸에텐일) 사이클로헥센(1-METHYL-4-(1-METHYLETHENYL) )"
+  },
+  {
+   "type": "en",
+   "q": "1-Methyl-4-Prop-1-En-2-Ylcyclohexene",
+   "cas": "138-86-3",
+   "rank": 2,
+   "top1": "7705-14-8 사이클로헥센, 1-메틸-4(1-메틸 에텐일)-(+/-)-"
+  },
+  {
+   "type": "cas",
+   "q": "138-86-3",
+   "cas": "138-86-3",
+   "rank": 1,
+   "top1": "138-86-3 리모넨 ( 관용명 : 1-메틸-4-(1-메틸에텐일) 사이클로헥센(1-METHYL-4-(1-METHYLETHENYL) )"
+  },
+  {
+   "type": "ko",
+   "q": "에탄올아민",
+   "cas": "141-43-5",
+   "rank": 1,
+   "top1": "141-43-5 에탄올아민 (Ethanolamine)"
+  },
+  {
+   "type": "en",
+   "q": "Ethanolamine",
+   "cas": "141-43-5",
+   "rank": 1,
+   "top1": "141-43-5 에탄올아민 (Ethanolamine)"
+  },
+  {
+   "type": "iupac",
+   "q": "2-aminoethanol",
+   "cas": "141-43-5",
+   "rank": null,
+   "top1": "4620-70-6 2-(1,1-Dimethylethyl)aminoethanol"
+  },
+  {
+   "type": "cas",
+   "q": "141-43-5",
+   "cas": "141-43-5",
+   "rank": 1,
+   "top1": "141-43-5 에탄올아민 (Ethanolamine)"
+  },
+  {
+   "type": "ko",
+   "q": "아세트산에틸",
+   "cas": "141-78-6",
+   "rank": 1,
+   "top1": "141-78-6 초산 에틸 ( 관용명 : 아세트산에틸 ) (초산 에틸 ( 관용명 : 아세트산 에틸 )) (Ethyl acetate)"
+  },
+  {
+   "type": "en",
+   "q": "Ethyl acetate",
+   "cas": "141-78-6",
+   "rank": 1,
+   "top1": "141-78-6 초산 에틸 ( 관용명 : 아세트산에틸 ) (초산 에틸 ( 관용명 : 아세트산 에틸 )) (Ethyl acetate)"
+  },
+  {
+   "type": "cas",
+   "q": "141-78-6",
+   "cas": "141-78-6",
+   "rank": 1,
+   "top1": "141-78-6 초산 에틸 ( 관용명 : 아세트산에틸 ) (초산 에틸 ( 관용명 : 아세트산 에틸 )) (Ethyl acetate)"
+  },
+  {
+   "type": "alias",
+   "q": "초산에틸",
+   "cas": "141-78-6",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "alias",
+   "q": "에틸아세테이트",
+   "cas": "141-78-6",
+   "rank": 1,
+   "top1": "141-78-6 초산 에틸 ( 관용명 : 아세트산에틸 ) (초산 에틸 ( 관용명 : 아세트산 에틸 )) (Ethyl acetate)"
+  },
+  {
+   "type": "ko",
+   "q": "라우르산",
+   "cas": "143-07-7",
+   "rank": 1,
+   "top1": "143-07-7 라우르산 (LAURIC ACID)"
+  },
+  {
+   "type": "en",
+   "q": "Lauric Acid",
+   "cas": "143-07-7",
+   "rank": 1,
+   "top1": "143-07-7 라우르산 (LAURIC ACID)"
+  },
+  {
+   "type": "iupac",
+   "q": "dodecanoic acid",
+   "cas": "143-07-7",
+   "rank": null,
+   "top1": "106-18-3 Dodecanoic acid butyl ester"
+  },
+  {
+   "type": "cas",
+   "q": "143-07-7",
+   "cas": "143-07-7",
+   "rank": 1,
+   "top1": "143-07-7 라우르산 (LAURIC ACID)"
+  },
+  {
+   "type": "ko",
+   "q": "옥살산",
+   "cas": "144-62-7",
+   "rank": 1,
+   "top1": "144-62-7 Oxalic acid"
+  },
+  {
+   "type": "en",
+   "q": "Oxalic Acid",
+   "cas": "144-62-7",
+   "rank": 1,
+   "top1": "144-62-7 Oxalic acid"
+  },
+  {
+   "type": "cas",
+   "q": "144-62-7",
+   "cas": "144-62-7",
+   "rank": 1,
+   "top1": "144-62-7 Oxalic acid"
+  },
+  {
+   "type": "ko",
+   "q": "8-하이드록시퀴놀린",
+   "cas": "148-24-3",
+   "rank": 1,
+   "top1": "148-24-3 8-하이드록시퀴놀린"
+  },
+  {
+   "type": "en",
+   "q": "8-Hydroxyquinoline",
+   "cas": "148-24-3",
+   "rank": 1,
+   "top1": "148-24-3 8-하이드록시퀴놀린"
+  },
+  {
+   "type": "iupac",
+   "q": "quinolin-8-ol",
+   "cas": "148-24-3",
+   "rank": null,
+   "top1": "2439-07-8 Salicylic acid, compound with quinolin-8-ol (1:1) (2-hydroxybenzoic acid; quinolin-8-ol)"
+  },
+  {
+   "type": "cas",
+   "q": "148-24-3",
+   "cas": "148-24-3",
+   "rank": 1,
+   "top1": "148-24-3 8-하이드록시퀴놀린"
+  },
+  {
+   "type": "ko",
+   "q": "갈산",
+   "cas": "149-91-7",
+   "rank": 1,
+   "top1": "149-91-7 갈산 ( 관용명 : 3,4,5-트리하이드록시벤조 산(3,4,5-TRIHYDROXYBENZOIC ACID); ) (GALLIC ACID)"
+  },
+  {
+   "type": "en",
+   "q": "Gallic Acid",
+   "cas": "149-91-7",
+   "rank": 1,
+   "top1": "149-91-7 갈산 ( 관용명 : 3,4,5-트리하이드록시벤조 산(3,4,5-TRIHYDROXYBENZOIC ACID); ) (GALLIC ACID)"
+  },
+  {
+   "type": "iupac",
+   "q": "3,4,5-trihydroxybenzoic acid",
+   "cas": "149-91-7",
+   "rank": 1,
+   "top1": "149-91-7 갈산 ( 관용명 : 3,4,5-트리하이드록시벤조 산(3,4,5-TRIHYDROXYBENZOIC ACID); ) (GALLIC ACID)"
+  },
+  {
+   "type": "cas",
+   "q": "149-91-7",
+   "cas": "149-91-7",
+   "rank": 1,
+   "top1": "149-91-7 갈산 ( 관용명 : 3,4,5-트리하이드록시벤조 산(3,4,5-TRIHYDROXYBENZOIC ACID); ) (GALLIC ACID)"
+  },
+  {
+   "type": "ko",
+   "q": "모누론",
+   "cas": "150-68-5",
+   "rank": 1,
+   "top1": "150-68-5 모누론 ( 관용명 : 우레아, N'-(4-클로로페닐)-N,N-디메틸-(UREA, )"
+  },
+  {
+   "type": "en",
+   "q": "Monuron",
+   "cas": "150-68-5",
+   "rank": 1,
+   "top1": "150-68-5 모누론 ( 관용명 : 우레아, N'-(4-클로로페닐)-N,N-디메틸-(UREA, )"
+  },
+  {
+   "type": "iupac",
+   "q": "3-(4-chlorophenyl)-1,1-dimethylurea",
+   "cas": "150-68-5",
+   "rank": null,
+   "top1": "92577-55-4 3-(2,5-DIMETHOXYPHENYL)-1,1-DIMETHYLUREA (1-(2,5-dimethoxyphenyl)-3,3-dimethylurea)"
+  },
+  {
+   "type": "cas",
+   "q": "150-68-5",
+   "cas": "150-68-5",
+   "rank": 1,
+   "top1": "150-68-5 모누론 ( 관용명 : 우레아, N'-(4-클로로페닐)-N,N-디메틸-(UREA, )"
+  },
+  {
+   "type": "ko",
+   "q": "크롬",
+   "cas": "16065-83-1",
+   "rank": 1,
+   "top1": "16065-83-1 크롬(III)(CHROMIUM(III)) ( 관용명 : 크롬 이온 (3가)(CHROMIUM, ION (Cr3+)); )"
+  },
+  {
+   "type": "en",
+   "q": "Chromic Cation",
+   "cas": "16065-83-1",
+   "rank": 1,
+   "top1": "16065-83-1 크롬(III)(CHROMIUM(III)) ( 관용명 : 크롬 이온 (3가)(CHROMIUM, ION (Cr3+)); )"
+  },
+  {
+   "type": "iupac",
+   "q": "chromium(3+)",
+   "cas": "16065-83-1",
+   "rank": 16,
+   "top1": "84000-95-3 Sulphuric acid, ammonium chromium sodium salt (azanium;sodium;chromium(3+);sulfuric acid)"
+  },
+  {
+   "type": "cas",
+   "q": "16065-83-1",
+   "cas": "16065-83-1",
+   "rank": 1,
+   "top1": "16065-83-1 크롬(III)(CHROMIUM(III)) ( 관용명 : 크롬 이온 (3가)(CHROMIUM, ION (Cr3+)); )"
+  },
+  {
+   "type": "ko",
+   "q": "수산화 바륨",
+   "cas": "17194-00-2",
+   "rank": 1,
+   "top1": "17194-00-2 수산화 바륨"
+  },
+  {
+   "type": "en",
+   "q": "Barium hydroxide",
+   "cas": "17194-00-2",
+   "rank": 1,
+   "top1": "17194-00-2 수산화 바륨"
+  },
+  {
+   "type": "iupac",
+   "q": "barium(2+) dihydroxide",
+   "cas": "17194-00-2",
+   "rank": null,
+   "top1": "68585-48-8 Sulfuric acid nickel(2+) salt (1:1), reaction products with nickel and nickel oxide (NiO)"
+  },
+  {
+   "type": "cas",
+   "q": "17194-00-2",
+   "cas": "17194-00-2",
+   "rank": 1,
+   "top1": "17194-00-2 수산화 바륨"
+  },
+  {
+   "type": "ko",
+   "q": "아트라진",
+   "cas": "1912-24-9",
+   "rank": 1,
+   "top1": "1912-24-9 아트라진 (Atrazine)"
+  },
+  {
+   "type": "en",
+   "q": "Atrazine",
+   "cas": "1912-24-9",
+   "rank": 1,
+   "top1": "1912-24-9 아트라진 (Atrazine)"
+  },
+  {
+   "type": "iupac",
+   "q": "6-chloro-4-N-ethyl-2-N-propan-2-yl-1,3,5-triazine-2,4-diamine",
+   "cas": "1912-24-9",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "1912-24-9",
+   "cas": "1912-24-9",
+   "rank": 1,
+   "top1": "1912-24-9 아트라진 (Atrazine)"
+  },
+  {
+   "type": "ko",
+   "q": "사산화 오스뮴",
+   "cas": "20816-12-0",
+   "rank": 1,
+   "top1": "20816-12-0 사산화 오스뮴"
+  },
+  {
+   "type": "en",
+   "q": "Osmium Tetroxide",
+   "cas": "20816-12-0",
+   "rank": 1,
+   "top1": "20816-12-0 사산화 오스뮴"
+  },
+  {
+   "type": "iupac",
+   "q": "tetraoxoosmium",
+   "cas": "20816-12-0",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "20816-12-0",
+   "cas": "20816-12-0",
+   "rank": 1,
+   "top1": "20816-12-0 사산화 오스뮴"
+  },
+  {
+   "type": "ko",
+   "q": "질화 알루미늄",
+   "cas": "24304-00-5",
+   "rank": 1,
+   "top1": "24304-00-5 질화 알루미늄(ALUMINUM NITRIDE)"
+  },
+  {
+   "type": "en",
+   "q": "Aluminum nitride",
+   "cas": "24304-00-5",
+   "rank": 2,
+   "top1": "71243-74-8 Aluminum nitride (AlN), solid soln. with silicon carbide (SiC) (aluminum;azane;methane;silicon)"
+  },
+  {
+   "type": "iupac",
+   "q": "azanylidynealumane",
+   "cas": "24304-00-5",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "24304-00-5",
+   "cas": "24304-00-5",
+   "rank": 1,
+   "top1": "24304-00-5 질화 알루미늄(ALUMINUM NITRIDE)"
+  },
+  {
+   "type": "ko",
+   "q": "아크리딘",
+   "cas": "260-94-6",
+   "rank": 1,
+   "top1": "260-94-6 아크리딘 ( 관용명 : 9-아자안트라센(9-AZAANTHRACENE); ) (ACRIDINE)"
+  },
+  {
+   "type": "en",
+   "q": "Acridine",
+   "cas": "260-94-6",
+   "rank": 1,
+   "top1": "260-94-6 아크리딘 ( 관용명 : 9-아자안트라센(9-AZAANTHRACENE); ) (ACRIDINE)"
+  },
+  {
+   "type": "cas",
+   "q": "260-94-6",
+   "cas": "260-94-6",
+   "rank": 1,
+   "top1": "260-94-6 아크리딘 ( 관용명 : 9-아자안트라센(9-AZAANTHRACENE); ) (ACRIDINE)"
+  },
+  {
+   "type": "ko",
+   "q": "에페드린",
+   "cas": "299-42-3",
+   "rank": 1,
+   "top1": "299-42-3 에페드린 ( 관용명 : 벤젠메탄올, 알파-(1-(메틸아미노)에틸)-, (R-(R*,S*))-(BENZENEMETHANOL, )"
+  },
+  {
+   "type": "en",
+   "q": "Ephedrine",
+   "cas": "299-42-3",
+   "rank": 1,
+   "top1": "299-42-3 에페드린 ( 관용명 : 벤젠메탄올, 알파-(1-(메틸아미노)에틸)-, (R-(R*,S*))-(BENZENEMETHANOL, )"
+  },
+  {
+   "type": "iupac",
+   "q": "(1R,2S)-2-(methylamino)-1-phenylpropan-1-ol",
+   "cas": "299-42-3",
+   "rank": null,
+   "top1": "62933-57-7 (1R,2S)-1-(2-amino-4-oxo-3,4-dihydropteridin-6-yl)propane-1,2-diyl diacetate ((1R,2S)-1-(acetyloxy)-1-(2-amino-4-oxo-3,4-dihydropteridin-6-yl)propan-2-yl acetate)"
+  },
+  {
+   "type": "cas",
+   "q": "299-42-3",
+   "cas": "299-42-3",
+   "rank": 1,
+   "top1": "299-42-3 에페드린 ( 관용명 : 벤젠메탄올, 알파-(1-(메틸아미노)에틸)-, (R-(R*,S*))-(BENZENEMETHANOL, )"
+  },
+  {
+   "type": "ko",
+   "q": "하이드라진",
+   "cas": "302-01-2",
+   "rank": 1,
+   "top1": "302-01-2 히드라진 ( 관용명 : 하이드라진 ) (Hydrazine)"
+  },
+  {
+   "type": "en",
+   "q": "Hydrazine",
+   "cas": "302-01-2",
+   "rank": 1,
+   "top1": "302-01-2 히드라진 ( 관용명 : 하이드라진 ) (Hydrazine)"
+  },
+  {
+   "type": "cas",
+   "q": "302-01-2",
+   "cas": "302-01-2",
+   "rank": 1,
+   "top1": "302-01-2 히드라진 ( 관용명 : 하이드라진 ) (Hydrazine)"
+  },
+  {
+   "type": "ko",
+   "q": "디플루벤주론",
+   "cas": "35367-38-5",
+   "rank": 1,
+   "top1": "35367-38-5 디플루벤주론(DIFLUBENZURON) ( 관용명 : 벤즈아마이드, N-(((4-클로로페닐)아미노)카보닐)-2,6-디플루오로(BENZAMIDE, )"
+  },
+  {
+   "type": "en",
+   "q": "Diflubenzuron",
+   "cas": "35367-38-5",
+   "rank": 1,
+   "top1": "35367-38-5 디플루벤주론(DIFLUBENZURON) ( 관용명 : 벤즈아마이드, N-(((4-클로로페닐)아미노)카보닐)-2,6-디플루오로(BENZAMIDE, )"
+  },
+  {
+   "type": "iupac",
+   "q": "N-[(4-chlorophenyl)carbamoyl]-2,6-difluorobenzamide",
+   "cas": "35367-38-5",
+   "rank": null,
+   "top1": "1073-69-4 (4-클로로페닐)하이드라진 ((4-chlorophenyl)hydrazine)"
+  },
+  {
+   "type": "cas",
+   "q": "35367-38-5",
+   "cas": "35367-38-5",
+   "rank": 1,
+   "top1": "35367-38-5 디플루벤주론(DIFLUBENZURON) ( 관용명 : 벤즈아마이드, N-(((4-클로로페닐)아미노)카보닐)-2,6-디플루오로(BENZAMIDE, )"
+  },
+  {
+   "type": "ko",
+   "q": "트리암테렌",
+   "cas": "396-01-0",
+   "rank": 1,
+   "top1": "396-01-0 트리암테렌 ( 관용명 : 2,4,7-프테리딘트라이아민, 6-페닐-(2,4,7-PTERIDINETRIAMINE, 6-PHENYL-) ) (TRIAMTERENE)"
+  },
+  {
+   "type": "en",
+   "q": "Triamterene",
+   "cas": "396-01-0",
+   "rank": 1,
+   "top1": "396-01-0 트리암테렌 ( 관용명 : 2,4,7-프테리딘트라이아민, 6-페닐-(2,4,7-PTERIDINETRIAMINE, 6-PHENYL-) ) (TRIAMTERENE)"
+  },
+  {
+   "type": "iupac",
+   "q": "6-phenylpteridine-2,4,7-triamine",
+   "cas": "396-01-0",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "396-01-0",
+   "cas": "396-01-0",
+   "rank": 1,
+   "top1": "396-01-0 트리암테렌 ( 관용명 : 2,4,7-프테리딘트라이아민, 6-페닐-(2,4,7-PTERIDINETRIAMINE, 6-PHENYL-) ) (TRIAMTERENE)"
+  },
+  {
+   "type": "ko",
+   "q": "커큐민",
+   "cas": "458-37-7",
+   "rank": 1,
+   "top1": "458-37-7 커큐민 ( 관용명 : 1,6-헵타디엔-3,5-디온, )"
+  },
+  {
+   "type": "en",
+   "q": "Curcumin",
+   "cas": "458-37-7",
+   "rank": 1,
+   "top1": "458-37-7 커큐민 ( 관용명 : 1,6-헵타디엔-3,5-디온, )"
+  },
+  {
+   "type": "iupac",
+   "q": "(1E,6E)-1,7-bis(4-hydroxy-3-methoxyphenyl)hepta-1,6-diene-3,5-dione",
+   "cas": "458-37-7",
+   "rank": null,
+   "top1": "59670-55-2 ACETIC (4-HYDROXY-3-METHOXYBENZYLIDENE)HYDRAZIDE (N'-[(E)-(4-hydroxy-3-methoxyphenyl)methylidene]acetohydrazide)"
+  },
+  {
+   "type": "cas",
+   "q": "458-37-7",
+   "cas": "458-37-7",
+   "rank": 1,
+   "top1": "458-37-7 커큐민 ( 관용명 : 1,6-헵타디엔-3,5-디온, )"
+  },
+  {
+   "type": "ko",
+   "q": "탄산칼슘",
+   "cas": "471-34-1",
+   "rank": 1,
+   "top1": "471-34-1 CALCIUM CARBONATE"
+  },
+  {
+   "type": "en",
+   "q": "Calcium Carbonate",
+   "cas": "471-34-1",
+   "rank": 2,
+   "top1": "13397-26-7 CALCITE"
+  },
+  {
+   "type": "cas",
+   "q": "471-34-1",
+   "cas": "471-34-1",
+   "rank": 1,
+   "top1": "471-34-1 CALCIUM CARBONATE"
+  },
+  {
+   "type": "ko",
+   "q": "탄산나트륨",
+   "cas": "497-19-8",
+   "rank": 1,
+   "top1": "497-19-8 탄산 나트륨 (SODIUM CARBONATE)"
+  },
+  {
+   "type": "en",
+   "q": "Sodium Carbonate",
+   "cas": "497-19-8",
+   "rank": 1,
+   "top1": "497-19-8 탄산 나트륨 (SODIUM CARBONATE)"
+  },
+  {
+   "type": "iupac",
+   "q": "disodium;carbonate",
+   "cas": "497-19-8",
+   "rank": null,
+   "top1": "71872-95-2 5-sulphoisophthalic acid, ammonium sodium salt (azanium;disodium;5-sulfonatobenzene-1,3-dicarboxylate)"
+  },
+  {
+   "type": "cas",
+   "q": "497-19-8",
+   "cas": "497-19-8",
+   "rank": 1,
+   "top1": "497-19-8 탄산 나트륨 (SODIUM CARBONATE)"
+  },
+  {
+   "type": "ko",
+   "q": "포름알데히드",
+   "cas": "50-00-0",
+   "rank": 1,
+   "top1": "50-00-0 포름알데히드 ( 관용명 : 폼알데하이드 ) (포름알데히드 ( 관용명 : 포름알데하이드 )) (포름알데히드 ( 관용명 : Formalin ))"
+  },
+  {
+   "type": "en",
+   "q": "Formaldehyde",
+   "cas": "50-00-0",
+   "rank": 1,
+   "top1": "50-00-0 포름알데히드 ( 관용명 : 폼알데하이드 ) (포름알데히드 ( 관용명 : 포름알데하이드 )) (포름알데히드 ( 관용명 : Formalin ))"
+  },
+  {
+   "type": "cas",
+   "q": "50-00-0",
+   "cas": "50-00-0",
+   "rank": 1,
+   "top1": "50-00-0 포름알데히드 ( 관용명 : 폼알데하이드 ) (포름알데히드 ( 관용명 : 포름알데하이드 )) (포름알데히드 ( 관용명 : Formalin ))"
+  },
+  {
+   "type": "ko",
+   "q": "페노바르비탈",
+   "cas": "50-06-6",
+   "rank": 1,
+   "top1": "50-06-6 페노바르비탈 (PHENOBARBITAL)"
+  },
+  {
+   "type": "en",
+   "q": "Phenobarbital",
+   "cas": "50-06-6",
+   "rank": 1,
+   "top1": "50-06-6 페노바르비탈 (PHENOBARBITAL)"
+  },
+  {
+   "type": "iupac",
+   "q": "5-ethyl-5-phenyl-1,3-diazinane-2,4,6-trione",
+   "cas": "50-06-6",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "50-06-6",
+   "cas": "50-06-6",
+   "rank": 1,
+   "top1": "50-06-6 페노바르비탈 (PHENOBARBITAL)"
+  },
+  {
+   "type": "ko",
+   "q": "젖산",
+   "cas": "50-21-5",
+   "rank": 1,
+   "top1": "50-21-5 젖산(LACTIC ACID) ( 관용명 : 아세톤 산(ACETONIC ACID); )"
+  },
+  {
+   "type": "en",
+   "q": "Lactic Acid",
+   "cas": "50-21-5",
+   "rank": 1,
+   "top1": "50-21-5 젖산(LACTIC ACID) ( 관용명 : 아세톤 산(ACETONIC ACID); )"
+  },
+  {
+   "type": "iupac",
+   "q": "2-hydroxypropanoic acid",
+   "cas": "50-21-5",
+   "rank": null,
+   "top1": "1837-57-6 Ethacridine lactate (2-Hydroxypropanoic acid; 7-ethoxyacridine-3,9-diamine)"
+  },
+  {
+   "type": "cas",
+   "q": "50-21-5",
+   "cas": "50-21-5",
+   "rank": 1,
+   "top1": "50-21-5 젖산(LACTIC ACID) ( 관용명 : 아세톤 산(ACETONIC ACID); )"
+  },
+  {
+   "type": "ko",
+   "q": "에스트라디올",
+   "cas": "50-28-2",
+   "rank": 1,
+   "top1": "50-28-2 에스트라디올 ( 관용명 : 에스트라-1,3,5(10)-트리엔-3,17-디올,(17베타)-(ESTRA-1,3,5(10)-TRIENE-3,17-D ) (ESTRADIOL)"
+  },
+  {
+   "type": "en",
+   "q": "Estradiol",
+   "cas": "50-28-2",
+   "rank": 1,
+   "top1": "50-28-2 에스트라디올 ( 관용명 : 에스트라-1,3,5(10)-트리엔-3,17-디올,(17베타)-(ESTRA-1,3,5(10)-TRIENE-3,17-D ) (ESTRADIOL)"
+  },
+  {
+   "type": "iupac",
+   "q": "(8R,9S,13S,14S,17S)-13-methyl-6,7,8,9,11,12,14,15,16,17-decahydrocyclopenta[a]phenanthrene-3,17-diol",
+   "cas": "50-28-2",
+   "rank": null,
+   "top1": "4891-15-0 Estra-1,3,5(10)-triene-3,17β-diol 3-[bis(2-chloroethyl)carbamate] 17-(dihydrogen phosphate) ([(8R,9S,13S,14S,17S)-13-methyl-17-phosphonooxy-6,7,8,9,11,12,14,15,16,17-decahydrocyclopenta[a]phenanthren-3-yl] N,N-bis(2-chloroethyl)carbamate)"
+  },
+  {
+   "type": "cas",
+   "q": "50-28-2",
+   "cas": "50-28-2",
+   "rank": 1,
+   "top1": "50-28-2 에스트라디올 ( 관용명 : 에스트라-1,3,5(10)-트리엔-3,17-디올,(17베타)-(ESTRA-1,3,5(10)-TRIENE-3,17-D ) (ESTRADIOL)"
+  },
+  {
+   "type": "ko",
+   "q": "탈리도마이드",
+   "cas": "50-35-1",
+   "rank": 1,
+   "top1": "50-35-1 탈리도마이드 ( 관용명 : 알파-(N-프탈이미도)글루탈이미드(ALPHA-(N-PHTHALIMIDO)GLUTARIMIDE); )"
+  },
+  {
+   "type": "en",
+   "q": "Thalidomide",
+   "cas": "50-35-1",
+   "rank": 1,
+   "top1": "50-35-1 탈리도마이드 ( 관용명 : 알파-(N-프탈이미도)글루탈이미드(ALPHA-(N-PHTHALIMIDO)GLUTARIMIDE); )"
+  },
+  {
+   "type": "iupac",
+   "q": "2-(2,6-dioxopiperidin-3-yl)isoindole-1,3-dione",
+   "cas": "50-35-1",
+   "rank": null,
+   "top1": "351005-49-7 2-(3-METHYL-1,4-DIOXO-1,4-DIHYDRO-NAPHTHALEN-2-YLMETHYL)-ISOINDOLE-1,3-DIONE (2-[(3-methyl-1,4-dioxo-1,4-dihydronaphthalen-2-yl)methyl]-2,3-dihydro-1H-isoindole-1,3-dione)"
+  },
+  {
+   "type": "cas",
+   "q": "50-35-1",
+   "cas": "50-35-1",
+   "rank": 1,
+   "top1": "50-35-1 탈리도마이드 ( 관용명 : 알파-(N-프탈이미도)글루탈이미드(ALPHA-(N-PHTHALIMIDO)GLUTARIMIDE); )"
+  },
+  {
+   "type": "ko",
+   "q": "아트로핀",
+   "cas": "51-55-8",
+   "rank": 1,
+   "top1": "51-55-8 아트로핀 (ATROPINE)"
+  },
+  {
+   "type": "en",
+   "q": "Npc209773",
+   "cas": "51-55-8",
+   "rank": 1,
+   "top1": "51-55-8 아트로핀 (ATROPINE)"
+  },
+  {
+   "type": "iupac",
+   "q": "[(1S,5R)-8-methyl-8-azabicyclo[3.2.1]octan-3-yl] 3-hydroxy-2-phenylpropanoate",
+   "cas": "51-55-8",
+   "rank": null,
+   "top1": "24691-18-7 trans-3,3,5-trimethylcyclohexyl acetate ((1S,5R)-3,3,5-trimethylcyclohexyl acetate)"
+  },
+  {
+   "type": "cas",
+   "q": "51-55-8",
+   "cas": "51-55-8",
+   "rank": 1,
+   "top1": "51-55-8 아트로핀 (ATROPINE)"
+  },
+  {
+   "type": "ko",
+   "q": "탄산 바륨",
+   "cas": "513-77-9",
+   "rank": 1,
+   "top1": "513-77-9 탄산 바륨 (BARIUM CARBONATE)"
+  },
+  {
+   "type": "en",
+   "q": "Barium Carbonate",
+   "cas": "513-77-9",
+   "rank": 1,
+   "top1": "513-77-9 탄산 바륨 (BARIUM CARBONATE)"
+  },
+  {
+   "type": "iupac",
+   "q": "barium(2+) carbonate",
+   "cas": "513-77-9",
+   "rank": 1,
+   "top1": "513-77-9 탄산 바륨 (BARIUM CARBONATE)"
+  },
+  {
+   "type": "cas",
+   "q": "513-77-9",
+   "cas": "513-77-9",
+   "rank": 1,
+   "top1": "513-77-9 탄산 바륨 (BARIUM CARBONATE)"
+  },
+  {
+   "type": "ko",
+   "q": "할로페리돌",
+   "cas": "52-86-8",
+   "rank": 1,
+   "top1": "52-86-8 할로페리돌 ( 관용명 : 1-부탄온, 4-(4-(4-클로로페닐)-4-하이드록시-1-피페리디닐)- ) (HALOPERIDOL)"
+  },
+  {
+   "type": "en",
+   "q": "Haloperidol",
+   "cas": "52-86-8",
+   "rank": 1,
+   "top1": "52-86-8 할로페리돌 ( 관용명 : 1-부탄온, 4-(4-(4-클로로페닐)-4-하이드록시-1-피페리디닐)- ) (HALOPERIDOL)"
+  },
+  {
+   "type": "iupac",
+   "q": "4-[4-(4-chlorophenyl)-4-hydroxypiperidin-1-yl]-1-(4-fluorophenyl)butan-1-one",
+   "cas": "52-86-8",
+   "rank": null,
+   "top1": "39512-49-7 4-(4-클로로페닐)-4-하이드록시피페리딘(4-(4-CHLOROPHENYL)-4-HYDROXYPIPERIDIN..."
+  },
+  {
+   "type": "cas",
+   "q": "52-86-8",
+   "cas": "52-86-8",
+   "rank": 1,
+   "top1": "52-86-8 할로페리돌 ( 관용명 : 1-부탄온, 4-(4-(4-클로로페닐)-4-하이드록시-1-피페리디닐)- ) (HALOPERIDOL)"
+  },
+  {
+   "type": "ko",
+   "q": "글루콘산 나트륨",
+   "cas": "527-07-1",
+   "rank": 1,
+   "top1": "527-07-1 글루콘산 나트륨 (SODIUM GLUCONATE)"
+  },
+  {
+   "type": "en",
+   "q": "Sodium Gluconate",
+   "cas": "527-07-1",
+   "rank": 1,
+   "top1": "527-07-1 글루콘산 나트륨 (SODIUM GLUCONATE)"
+  },
+  {
+   "type": "iupac",
+   "q": "sodium (2R,3S,4R,5R)-2,3,4,5,6-pentahydroxyhexanoate",
+   "cas": "527-07-1",
+   "rank": null,
+   "top1": "60816-70-8 Lithium D-gluconate (lithium(1+) (2R,3S,4R,5R)-2,3,4,5,6-pentahydroxyhexanoate)"
+  },
+  {
+   "type": "cas",
+   "q": "527-07-1",
+   "cas": "527-07-1",
+   "rank": 1,
+   "top1": "527-07-1 글루콘산 나트륨 (SODIUM GLUCONATE)"
+  },
+  {
+   "type": "ko",
+   "q": "벤조산 나트륨",
+   "cas": "532-32-1",
+   "rank": 1,
+   "top1": "532-32-1 벤조산 나트륨 (SODIUM BENZOATE)"
+  },
+  {
+   "type": "en",
+   "q": "Sodium Benzoate",
+   "cas": "532-32-1",
+   "rank": 1,
+   "top1": "532-32-1 벤조산 나트륨 (SODIUM BENZOATE)"
+  },
+  {
+   "type": "cas",
+   "q": "532-32-1",
+   "cas": "532-32-1",
+   "rank": 1,
+   "top1": "532-32-1 벤조산 나트륨 (SODIUM BENZOATE)"
+  },
+  {
+   "type": "ko",
+   "q": "N-나이트로소다이에틸아민",
+   "cas": "55-18-5",
+   "rank": 1,
+   "top1": "55-18-5 N-나이트로소다이에틸아민 (N-NITROSODIETHYLAMINE)"
+  },
+  {
+   "type": "en",
+   "q": "N-Nitrosodiethylamine",
+   "cas": "55-18-5",
+   "rank": 1,
+   "top1": "55-18-5 N-나이트로소다이에틸아민 (N-NITROSODIETHYLAMINE)"
+  },
+  {
+   "type": "iupac",
+   "q": "N,N-diethylnitrous amide",
+   "cas": "55-18-5",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "55-18-5",
+   "cas": "55-18-5",
+   "rank": 1,
+   "top1": "55-18-5 N-나이트로소다이에틸아민 (N-NITROSODIETHYLAMINE)"
+  },
+  {
+   "type": "ko",
+   "q": "클로르헥시딘",
+   "cas": "55-56-1",
+   "rank": 1,
+   "top1": "55-56-1 클로르헥시딘 ( 관용명 : 비스(P-클로로페닐디구아니도)헥산(BIS(P-CHLOROPHENYLDIGUANIDO)HEXANE); )"
+  },
+  {
+   "type": "en",
+   "q": "Chlorhexidine",
+   "cas": "55-56-1",
+   "rank": 1,
+   "top1": "55-56-1 클로르헥시딘 ( 관용명 : 비스(P-클로로페닐디구아니도)헥산(BIS(P-CHLOROPHENYLDIGUANIDO)HEXANE); )"
+  },
+  {
+   "type": "iupac",
+   "q": "(1E)-2-[6-[[amino-[(E)-[amino-(4-chloroanilino)methylidene]amino]methylidene]amino]hexyl]-1-[amino-(4-chloroanilino)methylidene]guanidine",
+   "cas": "55-56-1",
+   "rank": null,
+   "top1": "98821-29-5 (1E)-prop-1-ene-1-sulfonyl chloride"
+  },
+  {
+   "type": "cas",
+   "q": "55-56-1",
+   "cas": "55-56-1",
+   "rank": 1,
+   "top1": "55-56-1 클로르헥시딘 ( 관용명 : 비스(P-클로로페닐디구아니도)헥산(BIS(P-CHLOROPHENYLDIGUANIDO)HEXANE); )"
+  },
+  {
+   "type": "ko",
+   "q": "사염화탄소",
+   "cas": "56-23-5",
+   "rank": 1,
+   "top1": "56-23-5 사염화탄소 ( 관용명 : 테트라클로로메탄 ) (Carbon tetrachloride)"
+  },
+  {
+   "type": "en",
+   "q": "Carbon Tetrachloride",
+   "cas": "56-23-5",
+   "rank": 1,
+   "top1": "56-23-5 사염화탄소 ( 관용명 : 테트라클로로메탄 ) (Carbon tetrachloride)"
+  },
+  {
+   "type": "iupac",
+   "q": "tetrachloromethane",
+   "cas": "56-23-5",
+   "rank": null,
+   "top1": "8065-25-6 Sulfuric acid copper(2+) salt (1:1), mixture with arsenic acid (H3AsO4) copper(2+) salt, (S)-3-(1-methyl-2-pyrrolidinyl)pyridine and tetrachloromethane"
+  },
+  {
+   "type": "cas",
+   "q": "56-23-5",
+   "cas": "56-23-5",
+   "rank": 1,
+   "top1": "56-23-5 사염화탄소 ( 관용명 : 테트라클로로메탄 ) (Carbon tetrachloride)"
+  },
+  {
+   "type": "ko",
+   "q": "글리세롤",
+   "cas": "56-81-5",
+   "rank": 1,
+   "top1": "56-81-5 Glycerol (propane-1,2,3-triol)"
+  },
+  {
+   "type": "en",
+   "q": "Glycerol",
+   "cas": "56-81-5",
+   "rank": 1,
+   "top1": "56-81-5 Glycerol (propane-1,2,3-triol)"
+  },
+  {
+   "type": "iupac",
+   "q": "propane-1,2,3-triol",
+   "cas": "56-81-5",
+   "rank": 2,
+   "top1": "85187-41-3 Copper(2+) glycerol phosphate (tricopper;propane-1,2,3-triol;diphosphate)"
+  },
+  {
+   "type": "cas",
+   "q": "56-81-5",
+   "cas": "56-81-5",
+   "rank": 1,
+   "top1": "56-81-5 Glycerol (propane-1,2,3-triol)"
+  },
+  {
+   "type": "ko",
+   "q": "마젠타",
+   "cas": "569-61-9",
+   "rank": 2,
+   "top1": "632-99-5 마젠타(Magenta1)"
+  },
+  {
+   "type": "en",
+   "q": "Pararosaniline Hydrochloride",
+   "cas": "569-61-9",
+   "rank": 1,
+   "top1": "569-61-9 마젠타(C.I. Basic Red 9) ( 관용명 : 파라로사닐린(PARAROSANILINE); )"
+  },
+  {
+   "type": "iupac",
+   "q": "4-[(4-aminophenyl)-(4-iminocyclohexa-2,5-dien-1-ylidene)methyl]aniline;hydrochloride",
+   "cas": "569-61-9",
+   "rank": null,
+   "top1": "6283-24-5 4-aminophenylmercury acetate ((4-aminophenyl)mercuryylium acetate)"
+  },
+  {
+   "type": "cas",
+   "q": "569-61-9",
+   "cas": "569-61-9",
+   "rank": 1,
+   "top1": "569-61-9 마젠타(C.I. Basic Red 9) ( 관용명 : 파라로사닐린(PARAROSANILINE); )"
+  },
+  {
+   "type": "ko",
+   "q": "요소",
+   "cas": "57-13-6",
+   "rank": 1,
+   "top1": "57-13-6 요소 ( 관용명 : 카바미드(CARBAMIDE); ) (UREA)"
+  },
+  {
+   "type": "en",
+   "q": "Urea",
+   "cas": "57-13-6",
+   "rank": 1,
+   "top1": "57-13-6 요소 ( 관용명 : 카바미드(CARBAMIDE); ) (UREA)"
+  },
+  {
+   "type": "cas",
+   "q": "57-13-6",
+   "cas": "57-13-6",
+   "rank": 1,
+   "top1": "57-13-6 요소 ( 관용명 : 카바미드(CARBAMIDE); ) (UREA)"
+  },
+  {
+   "type": "ko",
+   "q": "프로필렌글리콜",
+   "cas": "57-55-6",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "en",
+   "q": "Propylene glycol",
+   "cas": "57-55-6",
+   "rank": null,
+   "top1": "52496-08-9 Poly(propylene glycol) diacrylate (poly(propylene glycol) diacrylate)"
+  },
+  {
+   "type": "iupac",
+   "q": "propane-1,2-diol",
+   "cas": "57-55-6",
+   "rank": 1,
+   "top1": "57-55-6 Propane-1,2-diol (propane-1,2-diol)"
+  },
+  {
+   "type": "cas",
+   "q": "57-55-6",
+   "cas": "57-55-6",
+   "rank": 1,
+   "top1": "57-55-6 Propane-1,2-diol (propane-1,2-diol)"
+  },
+  {
+   "type": "ko",
+   "q": "스트렙토마이신",
+   "cas": "57-92-1",
+   "rank": 1,
+   "top1": "57-92-1 스트렙토마이신 ( 관용명 : 아그레프트(AGREPT); )"
+  },
+  {
+   "type": "en",
+   "q": "Streptomycin",
+   "cas": "57-92-1",
+   "rank": 1,
+   "top1": "57-92-1 스트렙토마이신 ( 관용명 : 아그레프트(AGREPT); )"
+  },
+  {
+   "type": "iupac",
+   "q": "2-[(1R,2R,3S,4R,5R,6S)-3-(diaminomethylideneamino)-4-[(2R,3R,4R,5S)-3-[(2S,3S,4S,5R,6S)-4,5-dihydroxy-6-(hydroxymethyl)-3-(methylamino)oxan-2-yl]oxy-4-formyl-4-hydroxy-5-methyloxolan-2-yl]oxy-2,5,6-trihydroxycyclohexyl]guanidine",
+   "cas": "57-92-1",
+   "rank": null,
+   "top1": "6556-11-2 Inositol nicotinate ((1R,2R,3S,4R,5r,6S)-2,3,4,5,6-pentakis(pyridine-3-carbonyloxy)cyclohexyl pyridine-3-carboxylate)"
+  },
+  {
+   "type": "cas",
+   "q": "57-92-1",
+   "cas": "57-92-1",
+   "rank": 1,
+   "top1": "57-92-1 스트렙토마이신 ( 관용명 : 아그레프트(AGREPT); )"
+  },
+  {
+   "type": "ko",
+   "q": "톨루엔디이소시아네이트(TDI)",
+   "cas": "584-84-9",
+   "rank": 1,
+   "top1": "584-84-9 톨루엔-2,4-디이소시아네이트 (Toluene-2,4-diisocyanate(TDI))"
+  },
+  {
+   "type": "en",
+   "q": "Toluene 2,4-Diisocyanate",
+   "cas": "584-84-9",
+   "rank": 1,
+   "top1": "584-84-9 톨루엔-2,4-디이소시아네이트 (Toluene-2,4-diisocyanate(TDI))"
+  },
+  {
+   "type": "iupac",
+   "q": "2,4-diisocyanato-1-methylbenzene",
+   "cas": "584-84-9",
+   "rank": null,
+   "top1": "26426-91-5 2,4-Diisocyanato-1-methylbenzene polymer with 1,6-diisocyanatohexane; 2,4-Diisocyanato-1-methylbenzene-1,6-diisocyanatohexane copolymer"
+  },
+  {
+   "type": "cas",
+   "q": "584-84-9",
+   "cas": "584-84-9",
+   "rank": 1,
+   "top1": "584-84-9 톨루엔-2,4-디이소시아네이트 (Toluene-2,4-diisocyanate(TDI))"
+  },
+  {
+   "type": "ko",
+   "q": "메토트렉세이트",
+   "cas": "59-05-2",
+   "rank": 1,
+   "top1": "59-05-2 메토트렉세이트 ( 관용명 : 아메토프테린(AMETHOPTERIN); ) (METHOTREXATE)"
+  },
+  {
+   "type": "en",
+   "q": "Methotrexate",
+   "cas": "59-05-2",
+   "rank": 1,
+   "top1": "59-05-2 메토트렉세이트 ( 관용명 : 아메토프테린(AMETHOPTERIN); ) (METHOTREXATE)"
+  },
+  {
+   "type": "iupac",
+   "q": "(2S)-2-[[4-[(2,4-diaminopteridin-6-yl)methyl-methylamino]benzoyl]amino]pentanedioic acid",
+   "cas": "59-05-2",
+   "rank": null,
+   "top1": "34079-31-7 (2S)-2-카바모일피롤리딘-1-카르복\n실산  벤질"
+  },
+  {
+   "type": "cas",
+   "q": "59-05-2",
+   "cas": "59-05-2",
+   "rank": 1,
+   "top1": "59-05-2 메토트렉세이트 ( 관용명 : 아메토프테린(AMETHOPTERIN); ) (METHOTREXATE)"
+  },
+  {
+   "type": "ko",
+   "q": "에틸렌다이아민테트라아세트산",
+   "cas": "60-00-4",
+   "rank": 1,
+   "top1": "60-00-4 에틸렌다이아민테트라아세트산 (Edetic acid)"
+  },
+  {
+   "type": "en",
+   "q": "Ethylenediaminetetraacetic Acid",
+   "cas": "60-00-4",
+   "rank": 1,
+   "top1": "60-00-4 에틸렌다이아민테트라아세트산 (Edetic acid)"
+  },
+  {
+   "type": "iupac",
+   "q": "2-[2-[bis(carboxymethyl)amino]ethyl-(carboxymethyl)amino]acetic acid",
+   "cas": "60-00-4",
+   "rank": null,
+   "top1": "14240-00-7 Potassium (ethylenediaminetetraacetato)cobaltate(III) (potassium;2-[2-[bis(carboxymethyl)amino]ethyl-(carboxymethyl)amino]acetic acid;cobalt)"
+  },
+  {
+   "type": "cas",
+   "q": "60-00-4",
+   "cas": "60-00-4",
+   "rank": 1,
+   "top1": "60-00-4 에틸렌다이아민테트라아세트산 (Edetic acid)"
+  },
+  {
+   "type": "ko",
+   "q": "디에틸에테르",
+   "cas": "60-29-7",
+   "rank": 1,
+   "top1": "60-29-7 ·다이에틸 에테르"
+  },
+  {
+   "type": "en",
+   "q": "Diethyl Ether",
+   "cas": "60-29-7",
+   "rank": 1,
+   "top1": "60-29-7 ·다이에틸 에테르"
+  },
+  {
+   "type": "iupac",
+   "q": "ethoxyethane",
+   "cas": "60-29-7",
+   "rank": null,
+   "top1": "623-46-1 1,2-Dichloro-2-ethoxyethane"
+  },
+  {
+   "type": "cas",
+   "q": "60-29-7",
+   "cas": "60-29-7",
+   "rank": 1,
+   "top1": "60-29-7 ·다이에틸 에테르"
+  },
+  {
+   "type": "ko",
+   "q": "아세트아마이드",
+   "cas": "60-35-5",
+   "rank": 1,
+   "top1": "60-35-5 아세트아마이드 (ACETAMIDE)"
+  },
+  {
+   "type": "en",
+   "q": "Acetamide",
+   "cas": "60-35-5",
+   "rank": 1,
+   "top1": "60-35-5 아세트아마이드 (ACETAMIDE)"
+  },
+  {
+   "type": "cas",
+   "q": "60-35-5",
+   "cas": "60-35-5",
+   "rank": 1,
+   "top1": "60-35-5 아세트아마이드 (ACETAMIDE)"
+  },
+  {
+   "type": "ko",
+   "q": "메티마졸",
+   "cas": "60-56-0",
+   "rank": 1,
+   "top1": "60-56-0 메티마졸 ( 관용명 : 메티아마졸(METHIAMAZOLE); ) (METHIMAZOLE)"
+  },
+  {
+   "type": "en",
+   "q": "Methimazole",
+   "cas": "60-56-0",
+   "rank": 1,
+   "top1": "60-56-0 메티마졸 ( 관용명 : 메티아마졸(METHIAMAZOLE); ) (METHIMAZOLE)"
+  },
+  {
+   "type": "iupac",
+   "q": "3-methyl-1H-imidazole-2-thione",
+   "cas": "60-56-0",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "60-56-0",
+   "cas": "60-56-0",
+   "rank": 1,
+   "top1": "60-56-0 메티마졸 ( 관용명 : 메티아마졸(METHIAMAZOLE); ) (METHIMAZOLE)"
+  },
+  {
+   "type": "ko",
+   "q": "아닐린",
+   "cas": "62-53-3",
+   "rank": 1,
+   "top1": "62-53-3 아닐린 ( 관용명 : 아미노벤젠 ) (Aniline)"
+  },
+  {
+   "type": "en",
+   "q": "Aniline",
+   "cas": "62-53-3",
+   "rank": 1,
+   "top1": "62-53-3 아닐린 ( 관용명 : 아미노벤젠 ) (Aniline)"
+  },
+  {
+   "type": "cas",
+   "q": "62-53-3",
+   "cas": "62-53-3",
+   "rank": 1,
+   "top1": "62-53-3 아닐린 ( 관용명 : 아미노벤젠 ) (Aniline)"
+  },
+  {
+   "type": "ko",
+   "q": "일산화탄소",
+   "cas": "630-08-0",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "en",
+   "q": "Carbon monoxide",
+   "cas": "630-08-0",
+   "rank": 1,
+   "top1": "630-08-0 Carbon monoxide (methanidylidyneoxidanium)"
+  },
+  {
+   "type": "cas",
+   "q": "630-08-0",
+   "cas": "630-08-0",
+   "rank": 1,
+   "top1": "630-08-0 Carbon monoxide (methanidylidyneoxidanium)"
+  },
+  {
+   "type": "ko",
+   "q": "에탄올",
+   "cas": "64-17-5",
+   "rank": 1,
+   "top1": "64-17-5 Ethanol"
+  },
+  {
+   "type": "en",
+   "q": "Ethanol",
+   "cas": "64-17-5",
+   "rank": 1,
+   "top1": "64-17-5 Ethanol"
+  },
+  {
+   "type": "cas",
+   "q": "64-17-5",
+   "cas": "64-17-5",
+   "rank": 1,
+   "top1": "64-17-5 Ethanol"
+  },
+  {
+   "type": "alias",
+   "q": "ethyl alcohol",
+   "cas": "64-17-5",
+   "rank": null,
+   "top1": "5349-60-0 α-ethyl-p-methoxybenzyl alcohol"
+  },
+  {
+   "type": "alias",
+   "q": "에틸알코올",
+   "cas": "64-17-5",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "ko",
+   "q": "포름산",
+   "cas": "64-18-6",
+   "rank": 1,
+   "top1": "64-18-6 Formic acid"
+  },
+  {
+   "type": "en",
+   "q": "Formic Acid",
+   "cas": "64-18-6",
+   "rank": 1,
+   "top1": "64-18-6 Formic acid"
+  },
+  {
+   "type": "cas",
+   "q": "64-18-6",
+   "cas": "64-18-6",
+   "rank": 1,
+   "top1": "64-18-6 Formic acid"
+  },
+  {
+   "type": "ko",
+   "q": "아세트산",
+   "cas": "64-19-7",
+   "rank": 1,
+   "top1": "64-19-7 Acetic acid"
+  },
+  {
+   "type": "en",
+   "q": "Acetic acid",
+   "cas": "64-19-7",
+   "rank": 1,
+   "top1": "64-19-7 Acetic acid"
+  },
+  {
+   "type": "cas",
+   "q": "64-19-7",
+   "cas": "64-19-7",
+   "rank": 1,
+   "top1": "64-19-7 Acetic acid"
+  },
+  {
+   "type": "alias",
+   "q": "초산",
+   "cas": "64-19-7",
+   "rank": null,
+   "top1": "141-78-6 초산 에틸 ( 관용명 : 아세트산에틸 ) (초산 에틸 ( 관용명 : 아세트산 에틸 )) (Ethyl acetate)"
+  },
+  {
+   "type": "ko",
+   "q": "활성탄",
+   "cas": "64365-11-3",
+   "rank": 1,
+   "top1": "64365-11-3 활성탄(ACTIVATED CHARCOAL)"
+  },
+  {
+   "type": "en",
+   "q": "Carbon",
+   "cas": "64365-11-3",
+   "rank": null,
+   "top1": "7782-40-3 다이아몬드"
+  },
+  {
+   "type": "iupac",
+   "q": "methane",
+   "cas": "64365-11-3",
+   "rank": null,
+   "top1": "8006-14-2 천연 가스(NATURAL GAS)"
+  },
+  {
+   "type": "cas",
+   "q": "64365-11-3",
+   "cas": "64365-11-3",
+   "rank": 1,
+   "top1": "64365-11-3 활성탄(ACTIVATED CHARCOAL)"
+  },
+  {
+   "type": "ko",
+   "q": "벤조산",
+   "cas": "65-85-0",
+   "rank": 1,
+   "top1": "65-85-0 벤조 산 ( 관용명 : 벤젠카복실산(BENZENECARBOXYLIC ACID); ) (BENZOIC ACID)"
+  },
+  {
+   "type": "en",
+   "q": "Benzoic Acid",
+   "cas": "65-85-0",
+   "rank": 1,
+   "top1": "65-85-0 벤조 산 ( 관용명 : 벤젠카복실산(BENZENECARBOXYLIC ACID); ) (BENZOIC ACID)"
+  },
+  {
+   "type": "cas",
+   "q": "65-85-0",
+   "cas": "65-85-0",
+   "rank": 1,
+   "top1": "65-85-0 벤조 산 ( 관용명 : 벤젠카복실산(BENZENECARBOXYLIC ACID); ) (BENZOIC ACID)"
+  },
+  {
+   "type": "ko",
+   "q": "케토코나졸",
+   "cas": "65277-42-1",
+   "rank": 1,
+   "top1": "65277-42-1 케토코나졸(KETOCONAZOLE)"
+  },
+  {
+   "type": "en",
+   "q": "Ketoconazole",
+   "cas": "65277-42-1",
+   "rank": 1,
+   "top1": "65277-42-1 케토코나졸(KETOCONAZOLE)"
+  },
+  {
+   "type": "iupac",
+   "q": "1-[4-[4-[[(2S,4R)-2-(2,4-dichlorophenyl)-2-(imidazol-1-ylmethyl)-1,3-dioxolan-4-yl]methoxy]phenyl]piperazin-1-yl]ethanone",
+   "cas": "65277-42-1",
+   "rank": null,
+   "top1": "99602-27-4 1,1-DICHLORO-2-(2,4-DICHLOROPHENYLAZO)ETHENE ((E)-(2,2-dichloroethenyl)(2,4-dichlorophenyl)diazene)"
+  },
+  {
+   "type": "cas",
+   "q": "65277-42-1",
+   "cas": "65277-42-1",
+   "rank": 1,
+   "top1": "65277-42-1 케토코나졸(KETOCONAZOLE)"
+  },
+  {
+   "type": "ko",
+   "q": "메탄올",
+   "cas": "67-56-1",
+   "rank": 1,
+   "top1": "67-56-1 Methyl alcohol"
+  },
+  {
+   "type": "en",
+   "q": "Methanol",
+   "cas": "67-56-1",
+   "rank": 1,
+   "top1": "67-56-1 Methyl alcohol"
+  },
+  {
+   "type": "cas",
+   "q": "67-56-1",
+   "cas": "67-56-1",
+   "rank": 1,
+   "top1": "67-56-1 Methyl alcohol"
+  },
+  {
+   "type": "alias",
+   "q": "methyl alcohol",
+   "cas": "67-56-1",
+   "rank": 1,
+   "top1": "67-56-1 Methyl alcohol"
+  },
+  {
+   "type": "alias",
+   "q": "메틸알코올",
+   "cas": "67-56-1",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "ko",
+   "q": "이소프로필알코올",
+   "cas": "67-63-0",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "en",
+   "q": "Isopropyl alcohol",
+   "cas": "67-63-0",
+   "rank": 1,
+   "top1": "67-63-0 Isopropyl alcohol"
+  },
+  {
+   "type": "iupac",
+   "q": "propan-2-ol",
+   "cas": "67-63-0",
+   "rank": null,
+   "top1": "128439-96-3 Titanate(3-), [P,P-dioctyl diphosphato(2-)-O'']bis[P,P-dioctyl diphosphato(2-)-O'',O''''](2-propanolato)-, trihydrogen, compd. with bis(2-ethylhexyl) phosphonate (1:1) (bis(2-ethylhexoxy)-oxophosphanium;[hydroxy(octoxy)phosphoryl] octyl hydrogen phosphate;propan-2-ol;titanium)"
+  },
+  {
+   "type": "cas",
+   "q": "67-63-0",
+   "cas": "67-63-0",
+   "rank": 1,
+   "top1": "67-63-0 Isopropyl alcohol"
+  },
+  {
+   "type": "alias",
+   "q": "IPA",
+   "cas": "67-63-0",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "alias",
+   "q": "isopropanol",
+   "cas": "67-63-0",
+   "rank": 1,
+   "top1": "67-63-0 Isopropyl alcohol"
+  },
+  {
+   "type": "alias",
+   "q": "2-propanol",
+   "cas": "67-63-0",
+   "rank": null,
+   "top1": "102-60-3 테트라키스(2-하이드록시프로필)에틸렌디아민 ( 관용명 : 2-프로판올, 1,1',1'',1'''-(1,2-에탄디일디나이트로)테트라키스-(2-PROPANOL, )"
+  },
+  {
+   "type": "alias",
+   "q": "이소프로판올",
+   "cas": "67-63-0",
+   "rank": 1,
+   "top1": "67-63-0 Isopropyl alcohol"
+  },
+  {
+   "type": "alias",
+   "q": "이소프로판올",
+   "cas": "67-63-0",
+   "rank": 1,
+   "top1": "67-63-0 Isopropyl alcohol"
+  },
+  {
+   "type": "ko",
+   "q": "아세톤",
+   "cas": "67-64-1",
+   "rank": 1,
+   "top1": "67-64-1 아세톤 (Acetone)"
+  },
+  {
+   "type": "en",
+   "q": "Acetone",
+   "cas": "67-64-1",
+   "rank": 1,
+   "top1": "67-64-1 아세톤 (Acetone)"
+  },
+  {
+   "type": "iupac",
+   "q": "propan-2-one",
+   "cas": "67-64-1",
+   "rank": null,
+   "top1": "7473-98-5 2-하이드록시-2-메틸-1-페닐-1-프로파논(2-HYDROXY-2-METHYL-1-PHENYL-1-PROPAN..."
+  },
+  {
+   "type": "cas",
+   "q": "67-64-1",
+   "cas": "67-64-1",
+   "rank": 1,
+   "top1": "67-64-1 아세톤 (Acetone)"
+  },
+  {
+   "type": "ko",
+   "q": "클로로포름",
+   "cas": "67-66-3",
+   "rank": 1,
+   "top1": "67-66-3 Chloroform (trichloromethane)"
+  },
+  {
+   "type": "en",
+   "q": "Chloroform",
+   "cas": "67-66-3",
+   "rank": 1,
+   "top1": "67-66-3 Chloroform (trichloromethane)"
+  },
+  {
+   "type": "cas",
+   "q": "67-66-3",
+   "cas": "67-66-3",
+   "rank": 1,
+   "top1": "67-66-3 Chloroform (trichloromethane)"
+  },
+  {
+   "type": "alias",
+   "q": "trichloromethane",
+   "cas": "67-66-3",
+   "rank": 1,
+   "top1": "67-66-3 Chloroform (trichloromethane)"
+  },
+  {
+   "type": "ko",
+   "q": "디메틸설폭사이드",
+   "cas": "67-68-5",
+   "rank": 1,
+   "top1": "67-68-5 다이메틸 설폭사이드"
+  },
+  {
+   "type": "en",
+   "q": "Dimethyl Sulfoxide",
+   "cas": "67-68-5",
+   "rank": 1,
+   "top1": "67-68-5 다이메틸 설폭사이드"
+  },
+  {
+   "type": "iupac",
+   "q": "methylsulfinylmethane",
+   "cas": "67-68-5",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "67-68-5",
+   "cas": "67-68-5",
+   "rank": 1,
+   "top1": "67-68-5 다이메틸 설폭사이드"
+  },
+  {
+   "type": "ko",
+   "q": "디메틸포름아미드",
+   "cas": "68-12-2",
+   "rank": 1,
+   "top1": "68-12-2 디메틸포름아미드 (Dimethylformamide)"
+  },
+  {
+   "type": "en",
+   "q": "Dimethylformamide",
+   "cas": "68-12-2",
+   "rank": 1,
+   "top1": "68-12-2 디메틸포름아미드 (Dimethylformamide)"
+  },
+  {
+   "type": "iupac",
+   "q": "N,N-dimethylformamide",
+   "cas": "68-12-2",
+   "rank": null,
+   "top1": "68258-70-8 Formic acid, compound with N,N-dimethylformamide (1:1) (N,N-dimethylformamide; formic acid)"
+  },
+  {
+   "type": "cas",
+   "q": "68-12-2",
+   "cas": "68-12-2",
+   "rank": 1,
+   "top1": "68-12-2 디메틸포름아미드 (Dimethylformamide)"
+  },
+  {
+   "type": "alias",
+   "q": "DMF",
+   "cas": "68-12-2",
+   "rank": null,
+   "top1": "2101242-86-6 Plumbate(1-), triiodo-, hydrogen, compd. with N,N-dimethylformamide and methanamine (1:1:1:1) (PbI2/MAI(1:1) - DMF Complex (99.99%, trace metals basis) [for Perovskite precursor])"
+  },
+  {
+   "type": "alias",
+   "q": "N,N-dimethylformamide",
+   "cas": "68-12-2",
+   "rank": null,
+   "top1": "68258-70-8 Formic acid, compound with N,N-dimethylformamide (1:1) (N,N-dimethylformamide; formic acid)"
+  },
+  {
+   "type": "ko",
+   "q": "염화 벤질",
+   "cas": "68424-85-1",
+   "rank": 1,
+   "top1": "68424-85-1 염화 벤질(C12-C16)알킬다이메틸암모늄(BENZYL(C12-C16)ALKYLDIMETHYLAMMONIUM ..."
+  },
+  {
+   "type": "en",
+   "q": "Quaternary ammonium compounds, benzylalkyl(C=12-16)dimethyl, chlorides",
+   "cas": "68424-85-1",
+   "rank": null,
+   "top1": "73296-89-6 Sulfuric acid monoalkyl(C=12-16) esters, sodium salts -"
+  },
+  {
+   "type": "cas",
+   "q": "68424-85-1",
+   "cas": "68424-85-1",
+   "rank": 1,
+   "top1": "68424-85-1 염화 벤질(C12-C16)알킬다이메틸암모늄(BENZYL(C12-C16)ALKYLDIMETHYLAMMONIUM ..."
+  },
+  {
+   "type": "ko",
+   "q": "살리실산",
+   "cas": "69-72-7",
+   "rank": 1,
+   "top1": "69-72-7 살리실산 ( 관용명 : O-카르복시페놀(O-CARBOXYPHENOL); ) (SALICYLIC ACID)"
+  },
+  {
+   "type": "en",
+   "q": "Salicylic Acid",
+   "cas": "69-72-7",
+   "rank": 1,
+   "top1": "69-72-7 살리실산 ( 관용명 : O-카르복시페놀(O-CARBOXYPHENOL); ) (SALICYLIC ACID)"
+  },
+  {
+   "type": "iupac",
+   "q": "2-hydroxybenzoic acid",
+   "cas": "69-72-7",
+   "rank": null,
+   "top1": "94233-32-6 Bis(2-hydroxybenzoato-O1,O2)-μ-oxodicopper (copper;2-hydroxybenzoic acid;hydrate)"
+  },
+  {
+   "type": "cas",
+   "q": "69-72-7",
+   "cas": "69-72-7",
+   "rank": 1,
+   "top1": "69-72-7 살리실산 ( 관용명 : O-카르복시페놀(O-CARBOXYPHENOL); ) (SALICYLIC ACID)"
+  },
+  {
+   "type": "ko",
+   "q": "부탄올",
+   "cas": "71-36-3",
+   "rank": null,
+   "top1": "15892-23-6 (+/-)-2-부탄올((+/-)-2-BUTANOL)"
+  },
+  {
+   "type": "en",
+   "q": "1-Butanol",
+   "cas": "71-36-3",
+   "rank": 1,
+   "top1": "71-36-3 n-Butyl alcohol"
+  },
+  {
+   "type": "iupac",
+   "q": "butan-1-ol",
+   "cas": "71-36-3",
+   "rank": null,
+   "top1": "4712-38-3 Butan-1-[2H]ol"
+  },
+  {
+   "type": "cas",
+   "q": "71-36-3",
+   "cas": "71-36-3",
+   "rank": 1,
+   "top1": "71-36-3 n-Butyl alcohol"
+  },
+  {
+   "type": "alias",
+   "q": "n-butanol",
+   "cas": "71-36-3",
+   "rank": 1,
+   "top1": "71-36-3 n-Butyl alcohol"
+  },
+  {
+   "type": "alias",
+   "q": "butyl alcohol",
+   "cas": "71-36-3",
+   "rank": 1,
+   "top1": "71-36-3 n-Butyl alcohol"
+  },
+  {
+   "type": "ko",
+   "q": "벤젠",
+   "cas": "71-43-2",
+   "rank": 1,
+   "top1": "71-43-2 벤젠 (Benzene)"
+  },
+  {
+   "type": "en",
+   "q": "Benzene",
+   "cas": "71-43-2",
+   "rank": 1,
+   "top1": "71-43-2 벤젠 (Benzene)"
+  },
+  {
+   "type": "cas",
+   "q": "71-43-2",
+   "cas": "71-43-2",
+   "rank": 1,
+   "top1": "71-43-2 벤젠 (Benzene)"
+  },
+  {
+   "type": "ko",
+   "q": "1,1,1-트리클로로에탄",
+   "cas": "71-55-6",
+   "rank": 1,
+   "top1": "71-55-6 1,1,1-trichloroethane"
+  },
+  {
+   "type": "en",
+   "q": "1,1,1-Trichloroethane",
+   "cas": "71-55-6",
+   "rank": 1,
+   "top1": "71-55-6 1,1,1-trichloroethane"
+  },
+  {
+   "type": "cas",
+   "q": "71-55-6",
+   "cas": "71-55-6",
+   "rank": 1,
+   "top1": "71-55-6 1,1,1-trichloroethane"
+  },
+  {
+   "type": "ko",
+   "q": "메탄",
+   "cas": "74-82-8",
+   "rank": null,
+   "top1": "3473-63-0 포름아미딘 아세트산 ( 관용명 : 메탄이미다이드, 모노아세트산(METHANIMIDAMIDE, MONOACETATE); )"
+  },
+  {
+   "type": "en",
+   "q": "Methane",
+   "cas": "74-82-8",
+   "rank": 2,
+   "top1": "8006-14-2 천연 가스(NATURAL GAS)"
+  },
+  {
+   "type": "cas",
+   "q": "74-82-8",
+   "cas": "74-82-8",
+   "rank": 1,
+   "top1": "74-82-8 METHANE"
+  },
+  {
+   "type": "ko",
+   "q": "브롬화메틸",
+   "cas": "74-83-9",
+   "rank": 1,
+   "top1": "74-83-9 Bromomethane (bromomethane)"
+  },
+  {
+   "type": "en",
+   "q": "Methyl Bromide",
+   "cas": "74-83-9",
+   "rank": null,
+   "top1": "75-16-1 Bromomethylmagnesium ( 관용명 : 메틸 마그네슘 브로마이드 )"
+  },
+  {
+   "type": "iupac",
+   "q": "bromomethane",
+   "cas": "74-83-9",
+   "rank": 1,
+   "top1": "74-83-9 Bromomethane (bromomethane)"
+  },
+  {
+   "type": "cas",
+   "q": "74-83-9",
+   "cas": "74-83-9",
+   "rank": 1,
+   "top1": "74-83-9 Bromomethane (bromomethane)"
+  },
+  {
+   "type": "ko",
+   "q": "에탄",
+   "cas": "74-84-0",
+   "rank": null,
+   "top1": "9016-88-0 1,2-에탄디올 및 .alpha.-hydro-.omega.-하이드록시폴리(옥시-1,2-에탄디일) 1,4-벤젠디카복실산 중합체"
+  },
+  {
+   "type": "en",
+   "q": "Ethane",
+   "cas": "74-84-0",
+   "rank": 1,
+   "top1": "74-84-0 Ethane"
+  },
+  {
+   "type": "cas",
+   "q": "74-84-0",
+   "cas": "74-84-0",
+   "rank": 1,
+   "top1": "74-84-0 Ethane"
+  },
+  {
+   "type": "ko",
+   "q": "에틸렌",
+   "cas": "74-85-1",
+   "rank": 1,
+   "top1": "74-85-1 에틸렌 ( 관용명 : ACETENE )"
+  },
+  {
+   "type": "en",
+   "q": "Ethylene",
+   "cas": "74-85-1",
+   "rank": null,
+   "top1": "87701-65-3 ethylene (ethene)"
+  },
+  {
+   "type": "iupac",
+   "q": "ethene",
+   "cas": "74-85-1",
+   "rank": null,
+   "top1": "1035263-66-1 Polymer of ethylene with one or more monomers: 1-butene, propylene, 5-ethylidene-2-norbornene, methyl methacrylate, 1-hexene, 2-acrylic acid, A based acrylic epoxy ester, 1-octene, vinyl acetate, carbon monoxide, maleic anhydride, acrylic isobutyl, butyl (but-1-ene;ethene;hex-1-ene)"
+  },
+  {
+   "type": "cas",
+   "q": "74-85-1",
+   "cas": "74-85-1",
+   "rank": 1,
+   "top1": "74-85-1 에틸렌 ( 관용명 : ACETENE )"
+  },
+  {
+   "type": "alias",
+   "q": "ethene",
+   "cas": "74-85-1",
+   "rank": null,
+   "top1": "1035263-66-1 Polymer of ethylene with one or more monomers: 1-butene, propylene, 5-ethylidene-2-norbornene, methyl methacrylate, 1-hexene, 2-acrylic acid, A based acrylic epoxy ester, 1-octene, vinyl acetate, carbon monoxide, maleic anhydride, acrylic isobutyl, butyl (but-1-ene;ethene;hex-1-ene)"
+  },
+  {
+   "type": "alias",
+   "q": "에텐",
+   "cas": "74-85-1",
+   "rank": null,
+   "top1": "69011-19-4 디에텐일벤젠, 중합체 ,함유 에텐일벤젠 AND 에텐일에틸- 벤젠, 클로로메틸화된, 트리메틸아민-콴터나이즈드(..."
+  },
+  {
+   "type": "ko",
+   "q": "아세틸렌",
+   "cas": "74-86-2",
+   "rank": 1,
+   "top1": "74-86-2 아세틸렌 (ACETYLENE)"
+  },
+  {
+   "type": "en",
+   "q": "Acetylene",
+   "cas": "74-86-2",
+   "rank": 1,
+   "top1": "74-86-2 아세틸렌 (ACETYLENE)"
+  },
+  {
+   "type": "cas",
+   "q": "74-86-2",
+   "cas": "74-86-2",
+   "rank": 1,
+   "top1": "74-86-2 아세틸렌 (ACETYLENE)"
+  },
+  {
+   "type": "alias",
+   "q": "ethyne",
+   "cas": "74-86-2",
+   "rank": null,
+   "top1": "63221-88-5 1-(4-Methoxyphenyl)-2-(4-ethylphenyl)ethyne"
+  },
+  {
+   "type": "ko",
+   "q": "염화메틸",
+   "cas": "74-87-3",
+   "rank": 1,
+   "top1": "74-87-3 메틸 클로라이드"
+  },
+  {
+   "type": "en",
+   "q": "Methyl Chloride",
+   "cas": "74-87-3",
+   "rank": 1,
+   "top1": "74-87-3 메틸 클로라이드"
+  },
+  {
+   "type": "iupac",
+   "q": "chloromethane",
+   "cas": "74-87-3",
+   "rank": null,
+   "top1": "542-88-1 Oxybis[chloromethane] (chloro(chloromethoxy)methane)"
+  },
+  {
+   "type": "cas",
+   "q": "74-87-3",
+   "cas": "74-87-3",
+   "rank": 1,
+   "top1": "74-87-3 메틸 클로라이드"
+  },
+  {
+   "type": "ko",
+   "q": "시안화수소",
+   "cas": "74-90-8",
+   "rank": 1,
+   "top1": "74-90-8 Hydrogen cyanide"
+  },
+  {
+   "type": "en",
+   "q": "Hydrogen cyanide",
+   "cas": "74-90-8",
+   "rank": 1,
+   "top1": "74-90-8 Hydrogen cyanide"
+  },
+  {
+   "type": "iupac",
+   "q": "formonitrile",
+   "cas": "74-90-8",
+   "rank": null,
+   "top1": "2179-79-5 (phenylselanyl)formonitrile"
+  },
+  {
+   "type": "cas",
+   "q": "74-90-8",
+   "cas": "74-90-8",
+   "rank": 1,
+   "top1": "74-90-8 Hydrogen cyanide"
+  },
+  {
+   "type": "ko",
+   "q": "프로판",
+   "cas": "74-98-6",
+   "rank": null,
+   "top1": "74398-71-3 12-옥시리아닐메톡시-9-옥타데칸오익-1,2,3-프로판트리일 에스테르, 호모중합체(12-OXIRYANYLME... ( 관용명 : 9-옥타데켄 산, 12-(옥시라닐메톡시)-, 1,2,3-프로판트리일 에스터, )"
+  },
+  {
+   "type": "en",
+   "q": "Propane",
+   "cas": "74-98-6",
+   "rank": 1,
+   "top1": "74-98-6 프로페인 ( 관용명 : 다이메틸메테인(Dimethylmethane) ) (PROPANE)"
+  },
+  {
+   "type": "cas",
+   "q": "74-98-6",
+   "cas": "74-98-6",
+   "rank": 1,
+   "top1": "74-98-6 프로페인 ( 관용명 : 다이메틸메테인(Dimethylmethane) ) (PROPANE)"
+  },
+  {
+   "type": "alias",
+   "q": "프로페인",
+   "cas": "74-98-6",
+   "rank": 1,
+   "top1": "74-98-6 프로페인 ( 관용명 : 다이메틸메테인(Dimethylmethane) ) (PROPANE)"
+  },
+  {
+   "type": "ko",
+   "q": "납",
+   "cas": "7439-92-1",
+   "rank": 3,
+   "top1": "35029-96-0 납(II) 메틸티올산염(LEAD(II) METHYLTHIOLATE) ( 관용명 : 비스(메틸티올아토)납(BIS(METHYLTHIOLATO)LEAD); )"
+  },
+  {
+   "type": "en",
+   "q": "Lead",
+   "cas": "7439-92-1",
+   "rank": 1,
+   "top1": "7439-92-1 Lead (lead)"
+  },
+  {
+   "type": "cas",
+   "q": "7439-92-1",
+   "cas": "7439-92-1",
+   "rank": 1,
+   "top1": "7439-92-1 Lead (lead)"
+  },
+  {
+   "type": "ko",
+   "q": "수은",
+   "cas": "7439-97-6",
+   "rank": 1,
+   "top1": "7439-97-6 Mercury (mercury)"
+  },
+  {
+   "type": "en",
+   "q": "Mercury",
+   "cas": "7439-97-6",
+   "rank": 1,
+   "top1": "7439-97-6 Mercury (mercury)"
+  },
+  {
+   "type": "cas",
+   "q": "7439-97-6",
+   "cas": "7439-97-6",
+   "rank": 1,
+   "top1": "7439-97-6 Mercury (mercury)"
+  },
+  {
+   "type": "ko",
+   "q": "니켈",
+   "cas": "7440-02-0",
+   "rank": 4,
+   "top1": "14055-02-8 니켈(II) 프탈로시아닌 ( 관용명 : 니켈, (29H,31H-프타로시아니나토(2-)-N29,N30,N31,N32)-, (SP-4-1)-(NICKEL, )"
+  },
+  {
+   "type": "en",
+   "q": "Nickel",
+   "cas": "7440-02-0",
+   "rank": 2,
+   "top1": "6018-94-6 니켈(2+) 옥살레이트 디하이드레이트 ( 관용명 : 니켈, 디아쿠아(에탄디오아토(2-)-O,O&#39;&#39;)-, (T-4)-(NICKEL, ) (NICKEL(2+) OXALATE DIHYDRATE)"
+  },
+  {
+   "type": "cas",
+   "q": "7440-02-0",
+   "cas": "7440-02-0",
+   "rank": 1,
+   "top1": "7440-02-0 Nickel"
+  },
+  {
+   "type": "ko",
+   "q": "로듐",
+   "cas": "7440-16-6",
+   "rank": 1,
+   "top1": "7440-16-6 로듐(금속,불가용성화합물)"
+  },
+  {
+   "type": "en",
+   "q": "Rhodium",
+   "cas": "7440-16-6",
+   "rank": 1,
+   "top1": "7440-16-6 로듐(금속,불가용성화합물)"
+  },
+  {
+   "type": "cas",
+   "q": "7440-16-6",
+   "cas": "7440-16-6",
+   "rank": 1,
+   "top1": "7440-16-6 로듐(금속,불가용성화합물)"
+  },
+  {
+   "type": "ko",
+   "q": "아르곤",
+   "cas": "7440-37-1",
+   "rank": 1,
+   "top1": "7440-37-1 아르곤 (ARGON)"
+  },
+  {
+   "type": "en",
+   "q": "Argon",
+   "cas": "7440-37-1",
+   "rank": 1,
+   "top1": "7440-37-1 아르곤 (ARGON)"
+  },
+  {
+   "type": "cas",
+   "q": "7440-37-1",
+   "cas": "7440-37-1",
+   "rank": 1,
+   "top1": "7440-37-1 아르곤 (ARGON)"
+  },
+  {
+   "type": "ko",
+   "q": "비소",
+   "cas": "7440-38-2",
+   "rank": 1,
+   "top1": "7440-38-2 Arsenic (arsenic)"
+  },
+  {
+   "type": "en",
+   "q": "Arsenic",
+   "cas": "7440-38-2",
+   "rank": 1,
+   "top1": "7440-38-2 Arsenic (arsenic)"
+  },
+  {
+   "type": "cas",
+   "q": "7440-38-2",
+   "cas": "7440-38-2",
+   "rank": 1,
+   "top1": "7440-38-2 Arsenic (arsenic)"
+  },
+  {
+   "type": "ko",
+   "q": "카드뮴",
+   "cas": "7440-43-9",
+   "rank": 1,
+   "top1": "7440-43-9 카드뮴"
+  },
+  {
+   "type": "en",
+   "q": "Cadmium",
+   "cas": "7440-43-9",
+   "rank": 1,
+   "top1": "7440-43-9 카드뮴"
+  },
+  {
+   "type": "cas",
+   "q": "7440-43-9",
+   "cas": "7440-43-9",
+   "rank": 1,
+   "top1": "7440-43-9 카드뮴"
+  },
+  {
+   "type": "ko",
+   "q": "크롬",
+   "cas": "7440-47-3",
+   "rank": 4,
+   "top1": "16065-83-1 크롬(III)(CHROMIUM(III)) ( 관용명 : 크롬 이온 (3가)(CHROMIUM, ION (Cr3+)); )"
+  },
+  {
+   "type": "en",
+   "q": "Chromium",
+   "cas": "7440-47-3",
+   "rank": 6,
+   "top1": "36221-65-5 크로뮴(3+) 소듐 디설페이트 ( 관용명 : Sulfuric acid, chromium(3+) sodium salt (2:1:1) )"
+  },
+  {
+   "type": "cas",
+   "q": "7440-47-3",
+   "cas": "7440-47-3",
+   "rank": 1,
+   "top1": "7440-47-3 Chromium (chromium)"
+  },
+  {
+   "type": "ko",
+   "q": "갈륨",
+   "cas": "7440-55-3",
+   "rank": 1,
+   "top1": "7440-55-3 갈륨(GALLIUM)"
+  },
+  {
+   "type": "en",
+   "q": "Gallium",
+   "cas": "7440-55-3",
+   "rank": 1,
+   "top1": "7440-55-3 갈륨(GALLIUM)"
+  },
+  {
+   "type": "cas",
+   "q": "7440-55-3",
+   "cas": "7440-55-3",
+   "rank": 1,
+   "top1": "7440-55-3 갈륨(GALLIUM)"
+  },
+  {
+   "type": "ko",
+   "q": "헬륨",
+   "cas": "7440-59-7",
+   "rank": 1,
+   "top1": "7440-59-7 헬륨 ( 관용명 : 헬륨 가스(HELIUM GAS) ) (헬륨 ( 관용명 : 원자 헬륨(ATOMIC HELIUM) ))"
+  },
+  {
+   "type": "en",
+   "q": "Helium",
+   "cas": "7440-59-7",
+   "rank": 1,
+   "top1": "7440-59-7 헬륨 ( 관용명 : 헬륨 가스(HELIUM GAS) ) (헬륨 ( 관용명 : 원자 헬륨(ATOMIC HELIUM) ))"
+  },
+  {
+   "type": "cas",
+   "q": "7440-59-7",
+   "cas": "7440-59-7",
+   "rank": 1,
+   "top1": "7440-59-7 헬륨 ( 관용명 : 헬륨 가스(HELIUM GAS) ) (헬륨 ( 관용명 : 원자 헬륨(ATOMIC HELIUM) ))"
+  },
+  {
+   "type": "ko",
+   "q": "우라늄",
+   "cas": "7440-61-1",
+   "rank": 1,
+   "top1": "7440-61-1 우라늄 (Uranium)"
+  },
+  {
+   "type": "en",
+   "q": "Uranium",
+   "cas": "7440-61-1",
+   "rank": 1,
+   "top1": "7440-61-1 우라늄 (Uranium)"
+  },
+  {
+   "type": "cas",
+   "q": "7440-61-1",
+   "cas": "7440-61-1",
+   "rank": 1,
+   "top1": "7440-61-1 우라늄 (Uranium)"
+  },
+  {
+   "type": "ko",
+   "q": "바나듐",
+   "cas": "7440-62-2",
+   "rank": 1,
+   "top1": "7440-62-2 바나듐(VANADIUM)"
+  },
+  {
+   "type": "en",
+   "q": "Vanadium",
+   "cas": "7440-62-2",
+   "rank": 1,
+   "top1": "7440-62-2 바나듐(VANADIUM)"
+  },
+  {
+   "type": "cas",
+   "q": "7440-62-2",
+   "cas": "7440-62-2",
+   "rank": 1,
+   "top1": "7440-62-2 바나듐(VANADIUM)"
+  },
+  {
+   "type": "ko",
+   "q": "이산화 셀레늄",
+   "cas": "7446-08-4",
+   "rank": 1,
+   "top1": "7446-08-4 이산화 셀레늄 ( 관용명 : 아셀렌 무수물(SELENIOUS ANHYDRIDE); )"
+  },
+  {
+   "type": "en",
+   "q": "Selenium Dioxide",
+   "cas": "7446-08-4",
+   "rank": 1,
+   "top1": "7446-08-4 이산화 셀레늄 ( 관용명 : 아셀렌 무수물(SELENIOUS ANHYDRIDE); )"
+  },
+  {
+   "type": "cas",
+   "q": "7446-08-4",
+   "cas": "7446-08-4",
+   "rank": 1,
+   "top1": "7446-08-4 이산화 셀레늄 ( 관용명 : 아셀렌 무수물(SELENIOUS ANHYDRIDE); )"
+  },
+  {
+   "type": "ko",
+   "q": "이산화황",
+   "cas": "7446-09-5",
+   "rank": 1,
+   "top1": "7446-09-5 이산화황 ( 관용명 : 아황산가스 )"
+  },
+  {
+   "type": "en",
+   "q": "Sulfur dioxide",
+   "cas": "7446-09-5",
+   "rank": 1,
+   "top1": "7446-09-5 이산화황 ( 관용명 : 아황산가스 )"
+  },
+  {
+   "type": "cas",
+   "q": "7446-09-5",
+   "cas": "7446-09-5",
+   "rank": 1,
+   "top1": "7446-09-5 이산화황 ( 관용명 : 아황산가스 )"
+  },
+  {
+   "type": "alias",
+   "q": "sulphur dioxide",
+   "cas": "7446-09-5",
+   "rank": null,
+   "top1": "1786-27-2 Hydroquinone, compound with sulphur dioxide ((oxo-λ⁴-sulfanylidene)oxidane; benzene-1,4-diol)"
+  },
+  {
+   "type": "alias",
+   "q": "아황산가스",
+   "cas": "7446-09-5",
+   "rank": 1,
+   "top1": "7446-09-5 이산화황 ( 관용명 : 아황산가스 )"
+  },
+  {
+   "type": "ko",
+   "q": "염화비닐",
+   "cas": "75-01-4",
+   "rank": 1,
+   "top1": "75-01-4 Chloroethylene (chloroethene)"
+  },
+  {
+   "type": "en",
+   "q": "Vinyl chloride",
+   "cas": "75-01-4",
+   "rank": null,
+   "top1": "9003-22-9 염화 비닐/아세트산 비닐 공중합체(VINYL CHLORIDE/VINYL ACETATE COPOLYMER)"
+  },
+  {
+   "type": "iupac",
+   "q": "chloroethene",
+   "cas": "75-01-4",
+   "rank": 1,
+   "top1": "75-01-4 Chloroethylene (chloroethene)"
+  },
+  {
+   "type": "cas",
+   "q": "75-01-4",
+   "cas": "75-01-4",
+   "rank": 1,
+   "top1": "75-01-4 Chloroethylene (chloroethene)"
+  },
+  {
+   "type": "alias",
+   "q": "vinyl chloride monomer",
+   "cas": "75-01-4",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "alias",
+   "q": "VCM",
+   "cas": "75-01-4",
+   "rank": null,
+   "top1": "96511-18-1 Copolymer VCM-VDC"
+  },
+  {
+   "type": "ko",
+   "q": "에틸아민",
+   "cas": "75-04-7",
+   "rank": 1,
+   "top1": "75-04-7 에틸아민 (Ethylamine)"
+  },
+  {
+   "type": "en",
+   "q": "Ethylamine",
+   "cas": "75-04-7",
+   "rank": 1,
+   "top1": "75-04-7 에틸아민 (Ethylamine)"
+  },
+  {
+   "type": "iupac",
+   "q": "ethanamine",
+   "cas": "75-04-7",
+   "rank": null,
+   "top1": "126-85-2 나이트로젠 머스타드 N-산화물 ( 관용명 : 에탄아민, 2-클로로-N-(2-클로로에틸)-N-메틸-, N-옥사이드(ETHANAMINE, ) (NITROGEN MUSTARD N-OXIDE)"
+  },
+  {
+   "type": "cas",
+   "q": "75-04-7",
+   "cas": "75-04-7",
+   "rank": 1,
+   "top1": "75-04-7 에틸아민 (Ethylamine)"
+  },
+  {
+   "type": "ko",
+   "q": "아세토니트릴",
+   "cas": "75-05-8",
+   "rank": 1,
+   "top1": "75-05-8 아세토니트릴 (Acetonitrile)"
+  },
+  {
+   "type": "en",
+   "q": "Acetonitrile",
+   "cas": "75-05-8",
+   "rank": 1,
+   "top1": "75-05-8 아세토니트릴 (Acetonitrile)"
+  },
+  {
+   "type": "cas",
+   "q": "75-05-8",
+   "cas": "75-05-8",
+   "rank": 1,
+   "top1": "75-05-8 아세토니트릴 (Acetonitrile)"
+  },
+  {
+   "type": "ko",
+   "q": "아세트알데히드",
+   "cas": "75-07-0",
+   "rank": 1,
+   "top1": "75-07-0 아세트알데히드 (Acetaldehyde)"
+  },
+  {
+   "type": "en",
+   "q": "Acetaldehyde",
+   "cas": "75-07-0",
+   "rank": 1,
+   "top1": "75-07-0 아세트알데히드 (Acetaldehyde)"
+  },
+  {
+   "type": "cas",
+   "q": "75-07-0",
+   "cas": "75-07-0",
+   "rank": 1,
+   "top1": "75-07-0 아세트알데히드 (Acetaldehyde)"
+  },
+  {
+   "type": "ko",
+   "q": "디클로로메탄",
+   "cas": "75-09-2",
+   "rank": 1,
+   "top1": "75-09-2 dichloromethane; methylene chloride (dichloromethane)"
+  },
+  {
+   "type": "en",
+   "q": "Dichloromethane",
+   "cas": "75-09-2",
+   "rank": 1,
+   "top1": "75-09-2 dichloromethane; methylene chloride (dichloromethane)"
+  },
+  {
+   "type": "cas",
+   "q": "75-09-2",
+   "cas": "75-09-2",
+   "rank": 1,
+   "top1": "75-09-2 dichloromethane; methylene chloride (dichloromethane)"
+  },
+  {
+   "type": "alias",
+   "q": "methylene chloride",
+   "cas": "75-09-2",
+   "rank": 1,
+   "top1": "75-09-2 dichloromethane; methylene chloride (dichloromethane)"
+  },
+  {
+   "type": "alias",
+   "q": "염화메틸렌",
+   "cas": "75-09-2",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "ko",
+   "q": "이황화탄소",
+   "cas": "75-15-0",
+   "rank": 1,
+   "top1": "75-15-0 Carbon disulfide"
+  },
+  {
+   "type": "en",
+   "q": "Carbon disulfide",
+   "cas": "75-15-0",
+   "rank": 1,
+   "top1": "75-15-0 Carbon disulfide"
+  },
+  {
+   "type": "iupac",
+   "q": "methanedithione",
+   "cas": "75-15-0",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "75-15-0",
+   "cas": "75-15-0",
+   "rank": 1,
+   "top1": "75-15-0 Carbon disulfide"
+  },
+  {
+   "type": "ko",
+   "q": "산화에틸렌",
+   "cas": "75-21-8",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "en",
+   "q": "Ethylene oxide",
+   "cas": "75-21-8",
+   "rank": 1,
+   "top1": "75-21-8 Ethylene oxide (oxirane)"
+  },
+  {
+   "type": "iupac",
+   "q": "oxirane",
+   "cas": "75-21-8",
+   "rank": 4,
+   "top1": "17557-23-2 네오펜틸 글리콜 디글리시딜 에테르 ( 관용명 : 옥시란, 2,2'-((2,2-다이메틸-1,3-프로판디일)비스(옥심틸렌))비스-(OXIRANE, )"
+  },
+  {
+   "type": "cas",
+   "q": "75-21-8",
+   "cas": "75-21-8",
+   "rank": 1,
+   "top1": "75-21-8 Ethylene oxide (oxirane)"
+  },
+  {
+   "type": "alias",
+   "q": "에틸렌옥사이드",
+   "cas": "75-21-8",
+   "rank": 1,
+   "top1": "75-21-8 Ethylene oxide (oxirane)"
+  },
+  {
+   "type": "alias",
+   "q": "에틸렌옥사이드",
+   "cas": "75-21-8",
+   "rank": 1,
+   "top1": "75-21-8 Ethylene oxide (oxirane)"
+  },
+  {
+   "type": "ko",
+   "q": "아이소뷰테인",
+   "cas": "75-28-5",
+   "rank": 1,
+   "top1": "75-28-5 아이소뷰테인 (ISOBUTANE)"
+  },
+  {
+   "type": "en",
+   "q": "Isobutane",
+   "cas": "75-28-5",
+   "rank": 1,
+   "top1": "75-28-5 아이소뷰테인 (ISOBUTANE)"
+  },
+  {
+   "type": "iupac",
+   "q": "2-methylpropane",
+   "cas": "75-28-5",
+   "rank": null,
+   "top1": "628-55-7 1,1'-oxybis[2-methylpropane] (2-methyl-1-(2-methylpropoxy)propane)"
+  },
+  {
+   "type": "cas",
+   "q": "75-28-5",
+   "cas": "75-28-5",
+   "rank": 1,
+   "top1": "75-28-5 아이소뷰테인 (ISOBUTANE)"
+  },
+  {
+   "type": "ko",
+   "q": "포스겐",
+   "cas": "75-44-5",
+   "rank": 1,
+   "top1": "75-44-5 포스겐 ( 관용명 : 카르보닐 클로라이드 ) (포스겐 ( 관용명 : Carbonyl chloride ))"
+  },
+  {
+   "type": "en",
+   "q": "Phosgene",
+   "cas": "75-44-5",
+   "rank": 1,
+   "top1": "75-44-5 포스겐 ( 관용명 : 카르보닐 클로라이드 ) (포스겐 ( 관용명 : Carbonyl chloride ))"
+  },
+  {
+   "type": "iupac",
+   "q": "carbonyl dichloride",
+   "cas": "75-44-5",
+   "rank": null,
+   "top1": "128286-13-5 2,4,6-triiodo-5-[[[2-(1-methylethyl)-1,3-dioxan-5-yl]carbonyl]amino]-1,3-Benzenedicarbonyl dichloride"
+  },
+  {
+   "type": "cas",
+   "q": "75-44-5",
+   "cas": "75-44-5",
+   "rank": 1,
+   "top1": "75-44-5 포스겐 ( 관용명 : 카르보닐 클로라이드 ) (포스겐 ( 관용명 : Carbonyl chloride ))"
+  },
+  {
+   "type": "ko",
+   "q": "산화프로필렌",
+   "cas": "75-56-9",
+   "rank": null,
+   "top1": "68610-97-9 디에탄올아민과 산화프로필렌이 있는 노닐페놀반응의 포름알데히드 폴리머"
+  },
+  {
+   "type": "en",
+   "q": "Propylene oxide",
+   "cas": "75-56-9",
+   "rank": 1,
+   "top1": "75-56-9 1,2-Epoxypropane"
+  },
+  {
+   "type": "iupac",
+   "q": "2-methyloxirane",
+   "cas": "75-56-9",
+   "rank": null,
+   "top1": "67815-87-6 CP polym. MDI, Amine, PG & PO (2,3-diisocyanatobicyclo[4.1.0]hepta-1(6),2,4-triene;ethane-1,2-diamine;2-methyloxirane;propane-1,2-diol)"
+  },
+  {
+   "type": "cas",
+   "q": "75-56-9",
+   "cas": "75-56-9",
+   "rank": 1,
+   "top1": "75-56-9 1,2-Epoxypropane"
+  },
+  {
+   "type": "alias",
+   "q": "프로필렌옥사이드",
+   "cas": "75-56-9",
+   "rank": 1,
+   "top1": "75-56-9 1,2-Epoxypropane"
+  },
+  {
+   "type": "alias",
+   "q": "프로필렌옥사이드",
+   "cas": "75-56-9",
+   "rank": 1,
+   "top1": "75-56-9 1,2-Epoxypropane"
+  },
+  {
+   "type": "ko",
+   "q": "사염화 티타늄",
+   "cas": "7550-45-0",
+   "rank": 1,
+   "top1": "7550-45-0 사염화 티타늄 ( 관용명 : 티타늄 클로라이드(TITANIUM CHLORIDE); ) (TITANIUM TETRACHLORIDE)"
+  },
+  {
+   "type": "en",
+   "q": "Titanium Tetrachloride",
+   "cas": "7550-45-0",
+   "rank": 1,
+   "top1": "7550-45-0 사염화 티타늄 ( 관용명 : 티타늄 클로라이드(TITANIUM CHLORIDE); ) (TITANIUM TETRACHLORIDE)"
+  },
+  {
+   "type": "iupac",
+   "q": "tetrachlorotitanium",
+   "cas": "7550-45-0",
+   "rank": null,
+   "top1": "68937-19-9 Ethanedioic acid, reaction products with barium chloride and titanium tetrachloride (barium(2+);oxalic acid;tetrachlorotitanium;dichloride)"
+  },
+  {
+   "type": "cas",
+   "q": "7550-45-0",
+   "cas": "7550-45-0",
+   "rank": 1,
+   "top1": "7550-45-0 사염화 티타늄 ( 관용명 : 티타늄 클로라이드(TITANIUM CHLORIDE); ) (TITANIUM TETRACHLORIDE)"
+  },
+  {
+   "type": "ko",
+   "q": "헵타클로르",
+   "cas": "76-44-8",
+   "rank": 1,
+   "top1": "76-44-8 헵타클로르 (Heptachlor)"
+  },
+  {
+   "type": "en",
+   "q": "Heptachlor",
+   "cas": "76-44-8",
+   "rank": 1,
+   "top1": "76-44-8 헵타클로르 (Heptachlor)"
+  },
+  {
+   "type": "iupac",
+   "q": "1,5,7,8,9,10,10-heptachlorotricyclo[5.2.1.02,6]deca-3,8-diene",
+   "cas": "76-44-8",
+   "rank": null,
+   "top1": "2500-83-6 Tricyclo[5.2.1.02,6]dec-4-en-8-yl acetate (tricyclo[5.2.1.0²,⁶]dec-4-en-8-yl acetate)"
+  },
+  {
+   "type": "cas",
+   "q": "76-44-8",
+   "cas": "76-44-8",
+   "rank": 1,
+   "top1": "76-44-8 헵타클로르 (Heptachlor)"
+  },
+  {
+   "type": "ko",
+   "q": "아질산 나트륨",
+   "cas": "7632-00-0",
+   "rank": 1,
+   "top1": "7632-00-0 아질산 나트륨"
+  },
+  {
+   "type": "en",
+   "q": "Sodium Nitrite",
+   "cas": "7632-00-0",
+   "rank": 1,
+   "top1": "7632-00-0 아질산 나트륨"
+  },
+  {
+   "type": "cas",
+   "q": "7632-00-0",
+   "cas": "7632-00-0",
+   "rank": 1,
+   "top1": "7632-00-0 아질산 나트륨"
+  },
+  {
+   "type": "ko",
+   "q": "염화수소",
+   "cas": "7647-01-0",
+   "rank": 1,
+   "top1": "7647-01-0 Hydrogen chloride (hydrogen chloride)"
+  },
+  {
+   "type": "en",
+   "q": "Hydrogen chloride",
+   "cas": "7647-01-0",
+   "rank": 1,
+   "top1": "7647-01-0 Hydrogen chloride (hydrogen chloride)"
+  },
+  {
+   "type": "iupac",
+   "q": "chlorane",
+   "cas": "7647-01-0",
+   "rank": null,
+   "top1": "16475-29-9 phenyl chloranesulfonate (phenyl sulfurochloridate)"
+  },
+  {
+   "type": "cas",
+   "q": "7647-01-0",
+   "cas": "7647-01-0",
+   "rank": 1,
+   "top1": "7647-01-0 Hydrogen chloride (hydrogen chloride)"
+  },
+  {
+   "type": "alias",
+   "q": "hydrochloric acid",
+   "cas": "7647-01-0",
+   "rank": null,
+   "top1": "14414-68-7 벤지딘 염산염 ( 관용명 : [1,1&#39;-바이페닐]-4,4&#39;-다이아민, 염산염 ) (벤지딘 염산염 ( 관용명 : [1,1&#39;-바이페닐]-4,4&#39;-다이아민, 염산염 (1:?) )) (Benzidine hydrochloric acid)"
+  },
+  {
+   "type": "alias",
+   "q": "염산",
+   "cas": "7647-01-0",
+   "rank": null,
+   "top1": "14414-68-7 벤지딘 염산염 ( 관용명 : [1,1&#39;-바이페닐]-4,4&#39;-다이아민, 염산염 ) (벤지딘 염산염 ( 관용명 : [1,1&#39;-바이페닐]-4,4&#39;-다이아민, 염산염 (1:?) )) (Benzidine hydrochloric acid)"
+  },
+  {
+   "type": "ko",
+   "q": "염화나트륨",
+   "cas": "7647-14-5",
+   "rank": 1,
+   "top1": "7647-14-5 염화 나트륨(SODIUM CHLORIDE)"
+  },
+  {
+   "type": "en",
+   "q": "Sodium Chloride",
+   "cas": "7647-14-5",
+   "rank": 1,
+   "top1": "7647-14-5 염화 나트륨(SODIUM CHLORIDE)"
+  },
+  {
+   "type": "cas",
+   "q": "7647-14-5",
+   "cas": "7647-14-5",
+   "rank": 1,
+   "top1": "7647-14-5 염화 나트륨(SODIUM CHLORIDE)"
+  },
+  {
+   "type": "ko",
+   "q": "브로민화 나트륨",
+   "cas": "7647-15-6",
+   "rank": 1,
+   "top1": "7647-15-6 브로민화 나트륨(SODIUM BROMIDE)"
+  },
+  {
+   "type": "en",
+   "q": "Sodium Bromide",
+   "cas": "7647-15-6",
+   "rank": 1,
+   "top1": "7647-15-6 브로민화 나트륨(SODIUM BROMIDE)"
+  },
+  {
+   "type": "cas",
+   "q": "7647-15-6",
+   "cas": "7647-15-6",
+   "rank": 1,
+   "top1": "7647-15-6 브로민화 나트륨(SODIUM BROMIDE)"
+  },
+  {
+   "type": "ko",
+   "q": "인산",
+   "cas": "7664-38-2",
+   "rank": 1,
+   "top1": "7664-38-2 Phosphoric acid"
+  },
+  {
+   "type": "en",
+   "q": "Phosphoric acid",
+   "cas": "7664-38-2",
+   "rank": 1,
+   "top1": "7664-38-2 Phosphoric acid"
+  },
+  {
+   "type": "cas",
+   "q": "7664-38-2",
+   "cas": "7664-38-2",
+   "rank": 1,
+   "top1": "7664-38-2 Phosphoric acid"
+  },
+  {
+   "type": "ko",
+   "q": "불화수소",
+   "cas": "7664-39-3",
+   "rank": 1,
+   "top1": "7664-39-3 Hydrogen fluoride (hydrogen fluoride)"
+  },
+  {
+   "type": "en",
+   "q": "Hydrogen fluoride",
+   "cas": "7664-39-3",
+   "rank": 1,
+   "top1": "7664-39-3 Hydrogen fluoride (hydrogen fluoride)"
+  },
+  {
+   "type": "iupac",
+   "q": "fluorane",
+   "cas": "7664-39-3",
+   "rank": null,
+   "top1": "330-00-7 phenyl fluoranesulfonate (phenyl sulfurofluoridate)"
+  },
+  {
+   "type": "cas",
+   "q": "7664-39-3",
+   "cas": "7664-39-3",
+   "rank": 1,
+   "top1": "7664-39-3 Hydrogen fluoride (hydrogen fluoride)"
+  },
+  {
+   "type": "alias",
+   "q": "hydrofluoric acid",
+   "cas": "7664-39-3",
+   "rank": 1,
+   "top1": "7664-39-3 Hydrogen fluoride (hydrogen fluoride)"
+  },
+  {
+   "type": "alias",
+   "q": "불산",
+   "cas": "7664-39-3",
+   "rank": 1,
+   "top1": "7664-39-3 Hydrogen fluoride (hydrogen fluoride)"
+  },
+  {
+   "type": "ko",
+   "q": "암모니아",
+   "cas": "7664-41-7",
+   "rank": 1,
+   "top1": "7664-41-7 암모니아 (Ammonia)"
+  },
+  {
+   "type": "en",
+   "q": "Ammonia",
+   "cas": "7664-41-7",
+   "rank": 1,
+   "top1": "7664-41-7 암모니아 (Ammonia)"
+  },
+  {
+   "type": "iupac",
+   "q": "azane",
+   "cas": "7664-41-7",
+   "rank": null,
+   "top1": "23087-46-9 Acetic acid, ammonium copper salt (acetic acid;azane;copper)"
+  },
+  {
+   "type": "cas",
+   "q": "7664-41-7",
+   "cas": "7664-41-7",
+   "rank": 1,
+   "top1": "7664-41-7 암모니아 (Ammonia)"
+  },
+  {
+   "type": "ko",
+   "q": "황산",
+   "cas": "7664-93-9",
+   "rank": 1,
+   "top1": "7664-93-9 황산"
+  },
+  {
+   "type": "en",
+   "q": "Sulfuric acid",
+   "cas": "7664-93-9",
+   "rank": 1,
+   "top1": "7664-93-9 황산"
+  },
+  {
+   "type": "cas",
+   "q": "7664-93-9",
+   "cas": "7664-93-9",
+   "rank": 1,
+   "top1": "7664-93-9 황산"
+  },
+  {
+   "type": "alias",
+   "q": "sulphuric acid",
+   "cas": "7664-93-9",
+   "rank": null,
+   "top1": "17855-14-0 Sulphuric acid, magnesium potassium salt (sulphuric acid, magnesium potassium salt)"
+  },
+  {
+   "type": "ko",
+   "q": "차아염소산나트륨",
+   "cas": "7681-52-9",
+   "rank": 1,
+   "top1": "7681-52-9 차아염소산 나트륨 ( 관용명 : 하이포아염산, 나트륨염 )"
+  },
+  {
+   "type": "en",
+   "q": "Sodium Hypochlorite",
+   "cas": "7681-52-9",
+   "rank": 1,
+   "top1": "7681-52-9 차아염소산 나트륨 ( 관용명 : 하이포아염산, 나트륨염 )"
+  },
+  {
+   "type": "cas",
+   "q": "7681-52-9",
+   "cas": "7681-52-9",
+   "rank": 1,
+   "top1": "7681-52-9 차아염소산 나트륨 ( 관용명 : 하이포아염산, 나트륨염 )"
+  },
+  {
+   "type": "ko",
+   "q": "질산",
+   "cas": "7697-37-2",
+   "rank": 1,
+   "top1": "7697-37-2 Nitric acid"
+  },
+  {
+   "type": "en",
+   "q": "Nitric acid",
+   "cas": "7697-37-2",
+   "rank": 1,
+   "top1": "7697-37-2 Nitric acid"
+  },
+  {
+   "type": "cas",
+   "q": "7697-37-2",
+   "cas": "7697-37-2",
+   "rank": 1,
+   "top1": "7697-37-2 Nitric acid"
+  },
+  {
+   "type": "ko",
+   "q": "페놀프탈레인",
+   "cas": "77-09-8",
+   "rank": 1,
+   "top1": "77-09-8 페놀프탈레인 ( 관용명 : 3,3-비스(P-하이드록시페닐)프탈라이드(3,3-BIS(P-HYDROXYPHENYL)PHTHALIDE); )"
+  },
+  {
+   "type": "en",
+   "q": "Phenolphthalein",
+   "cas": "77-09-8",
+   "rank": 1,
+   "top1": "77-09-8 페놀프탈레인 ( 관용명 : 3,3-비스(P-하이드록시페닐)프탈라이드(3,3-BIS(P-HYDROXYPHENYL)PHTHALIDE); )"
+  },
+  {
+   "type": "iupac",
+   "q": "3,3-bis(4-hydroxyphenyl)-2-benzofuran-1-one",
+   "cas": "77-09-8",
+   "rank": null,
+   "top1": "2420-17-9 5-(4-Hydroxyphenyl)hydantoin"
+  },
+  {
+   "type": "cas",
+   "q": "77-09-8",
+   "cas": "77-09-8",
+   "rank": 1,
+   "top1": "77-09-8 페놀프탈레인 ( 관용명 : 3,3-비스(P-하이드록시페닐)프탈라이드(3,3-BIS(P-HYDROXYPHENYL)PHTHALIDE); )"
+  },
+  {
+   "type": "ko",
+   "q": "시트르산",
+   "cas": "77-92-9",
+   "rank": 1,
+   "top1": "77-92-9 시트르산(CITRIC ACID) ( 관용명 : 2-하이드록시-1,2,3-프로페인트라이카복실산(2-Hydroxy-1,2,3-propanetricarboxylic acid) )"
+  },
+  {
+   "type": "en",
+   "q": "Citric Acid",
+   "cas": "77-92-9",
+   "rank": 1,
+   "top1": "77-92-9 시트르산(CITRIC ACID) ( 관용명 : 2-하이드록시-1,2,3-프로페인트라이카복실산(2-Hydroxy-1,2,3-propanetricarboxylic acid) )"
+  },
+  {
+   "type": "iupac",
+   "q": "2-hydroxypropane-1,2,3-tricarboxylic acid",
+   "cas": "77-92-9",
+   "rank": null,
+   "top1": "93776-58-0 Cobalt bis[citrato(3-)]di-μ-oxodioxodimolybdate(2-) (cobalt;dioxomolybdenum;2-hydroxypropane-1,2,3-tricarboxylic acid)"
+  },
+  {
+   "type": "cas",
+   "q": "77-92-9",
+   "cas": "77-92-9",
+   "rank": 1,
+   "top1": "77-92-9 시트르산(CITRIC ACID) ( 관용명 : 2-하이드록시-1,2,3-프로페인트라이카복실산(2-Hydroxy-1,2,3-propanetricarboxylic acid) )"
+  },
+  {
+   "type": "ko",
+   "q": "황",
+   "cas": "7704-34-9",
+   "rank": 1,
+   "top1": "7704-34-9 Sulfur (sulfur)"
+  },
+  {
+   "type": "en",
+   "q": "Sulfur",
+   "cas": "7704-34-9",
+   "rank": 1,
+   "top1": "7704-34-9 Sulfur (sulfur)"
+  },
+  {
+   "type": "iupac",
+   "q": "sulfane",
+   "cas": "7704-34-9",
+   "rank": null,
+   "top1": "68411-02-9 Ethanol, 2-amino-, reaction products with copper sulfide (CuS) and sulfur (copper;2-aminoethanol;sulfane;sulfide)"
+  },
+  {
+   "type": "cas",
+   "q": "7704-34-9",
+   "cas": "7704-34-9",
+   "rank": 1,
+   "top1": "7704-34-9 Sulfur (sulfur)"
+  },
+  {
+   "type": "ko",
+   "q": "과망간산칼륨",
+   "cas": "7722-64-7",
+   "rank": 1,
+   "top1": "7722-64-7 Potassium permanganate (potassium manganesoylolate)"
+  },
+  {
+   "type": "en",
+   "q": "Potassium Permanganate",
+   "cas": "7722-64-7",
+   "rank": 1,
+   "top1": "7722-64-7 Potassium permanganate (potassium manganesoylolate)"
+  },
+  {
+   "type": "cas",
+   "q": "7722-64-7",
+   "cas": "7722-64-7",
+   "rank": 1,
+   "top1": "7722-64-7 Potassium permanganate (potassium manganesoylolate)"
+  },
+  {
+   "type": "ko",
+   "q": "과산화수소",
+   "cas": "7722-84-1",
+   "rank": 1,
+   "top1": "7722-84-1 ·과산화수소"
+  },
+  {
+   "type": "en",
+   "q": "Hydrogen peroxide",
+   "cas": "7722-84-1",
+   "rank": 1,
+   "top1": "7722-84-1 ·과산화수소"
+  },
+  {
+   "type": "cas",
+   "q": "7722-84-1",
+   "cas": "7722-84-1",
+   "rank": 1,
+   "top1": "7722-84-1 ·과산화수소"
+  },
+  {
+   "type": "ko",
+   "q": "질소",
+   "cas": "7727-37-9",
+   "rank": null,
+   "top1": "10544-72-6 질소 사산화물"
+  },
+  {
+   "type": "en",
+   "q": "Nitrogen",
+   "cas": "7727-37-9",
+   "rank": 1,
+   "top1": "7727-37-9 Nitrogen (dinitrogen)"
+  },
+  {
+   "type": "iupac",
+   "q": "molecular nitrogen",
+   "cas": "7727-37-9",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "7727-37-9",
+   "cas": "7727-37-9",
+   "rank": 1,
+   "top1": "7727-37-9 Nitrogen (dinitrogen)"
+  },
+  {
+   "type": "ko",
+   "q": "황산 바륨",
+   "cas": "7727-43-7",
+   "rank": 1,
+   "top1": "7727-43-7 황산 바륨 ( 관용명 : 황산, 바륨 염 (1:1)(SULFURIC ACID, BARIUM SALT (1:1)); ) (BARIUM SULFATE)"
+  },
+  {
+   "type": "en",
+   "q": "Barium Sulfate",
+   "cas": "7727-43-7",
+   "rank": 1,
+   "top1": "7727-43-7 황산 바륨 ( 관용명 : 황산, 바륨 염 (1:1)(SULFURIC ACID, BARIUM SALT (1:1)); ) (BARIUM SULFATE)"
+  },
+  {
+   "type": "iupac",
+   "q": "barium(2+) sulfate",
+   "cas": "7727-43-7",
+   "rank": 1,
+   "top1": "7727-43-7 황산 바륨 ( 관용명 : 황산, 바륨 염 (1:1)(SULFURIC ACID, BARIUM SALT (1:1)); ) (BARIUM SULFATE)"
+  },
+  {
+   "type": "cas",
+   "q": "7727-43-7",
+   "cas": "7727-43-7",
+   "rank": 1,
+   "top1": "7727-43-7 황산 바륨 ( 관용명 : 황산, 바륨 염 (1:1)(SULFURIC ACID, BARIUM SALT (1:1)); ) (BARIUM SULFATE)"
+  },
+  {
+   "type": "ko",
+   "q": "황산 아연",
+   "cas": "7733-02-0",
+   "rank": 1,
+   "top1": "7733-02-0 황산 아연 ( 관용명 : SULFURIC ACID, ZINC SALT (1:1) )"
+  },
+  {
+   "type": "en",
+   "q": "Zinc Sulfate",
+   "cas": "7733-02-0",
+   "rank": 1,
+   "top1": "7733-02-0 황산 아연 ( 관용명 : SULFURIC ACID, ZINC SALT (1:1) )"
+  },
+  {
+   "type": "cas",
+   "q": "7733-02-0",
+   "cas": "7733-02-0",
+   "rank": 1,
+   "top1": "7733-02-0 황산 아연 ( 관용명 : SULFURIC ACID, ZINC SALT (1:1) )"
+  },
+  {
+   "type": "ko",
+   "q": "아황산 나트륨",
+   "cas": "7757-83-7",
+   "rank": 1,
+   "top1": "7757-83-7 아황산 나트륨(SODIUM SULFITE)"
+  },
+  {
+   "type": "en",
+   "q": "Sodium Sulfite",
+   "cas": "7757-83-7",
+   "rank": 1,
+   "top1": "7757-83-7 아황산 나트륨(SODIUM SULFITE)"
+  },
+  {
+   "type": "iupac",
+   "q": "disodium;sulfite",
+   "cas": "7757-83-7",
+   "rank": null,
+   "top1": "71872-95-2 5-sulphoisophthalic acid, ammonium sodium salt (azanium;disodium;5-sulfonatobenzene-1,3-dicarboxylate)"
+  },
+  {
+   "type": "cas",
+   "q": "7757-83-7",
+   "cas": "7757-83-7",
+   "rank": 1,
+   "top1": "7757-83-7 아황산 나트륨(SODIUM SULFITE)"
+  },
+  {
+   "type": "ko",
+   "q": "황산 구리",
+   "cas": "7758-99-8",
+   "rank": 1,
+   "top1": "7758-99-8 황산 구리(II), 오수화물"
+  },
+  {
+   "type": "en",
+   "q": "Copper sulfate pentahydrate",
+   "cas": "7758-99-8",
+   "rank": 1,
+   "top1": "7758-99-8 황산 구리(II), 오수화물"
+  },
+  {
+   "type": "iupac",
+   "q": "copper;sulfate;pentahydrate",
+   "cas": "7758-99-8",
+   "rank": 11,
+   "top1": "13395-16-9 아세틸아세톤산 구리(COPPER ACETYLACETONATE) ( 관용명 : 구리, 비스(2,4-펜탄디오나도-O,O'')-, (SP-4-1)-(COPPER, )"
+  },
+  {
+   "type": "cas",
+   "q": "7758-99-8",
+   "cas": "7758-99-8",
+   "rank": 1,
+   "top1": "7758-99-8 황산 구리(II), 오수화물"
+  },
+  {
+   "type": "ko",
+   "q": "질산 은",
+   "cas": "7761-88-8",
+   "rank": 1,
+   "top1": "7761-88-8 질산 은 ( 관용명 : LAPIS INFERNALIS )"
+  },
+  {
+   "type": "en",
+   "q": "Silver Nitrate",
+   "cas": "7761-88-8",
+   "rank": null,
+   "top1": "23606-32-8 Diammine silver(1+) nitrate"
+  },
+  {
+   "type": "cas",
+   "q": "7761-88-8",
+   "cas": "7761-88-8",
+   "rank": 1,
+   "top1": "7761-88-8 질산 은 ( 관용명 : LAPIS INFERNALIS )"
+  },
+  {
+   "type": "ko",
+   "q": "싸이오황산 나트륨",
+   "cas": "7772-98-7",
+   "rank": 1,
+   "top1": "7772-98-7 싸이오황산 나트륨(SODIUM THIOSULFATE) ( 관용명 : 싸이오황산 (H2S2O3), 이나트륨 염(THIOSULFURIC ACID (H2S2O3), DISODIUM SALT); )"
+  },
+  {
+   "type": "en",
+   "q": "Sodium Thiosulfate",
+   "cas": "7772-98-7",
+   "rank": 1,
+   "top1": "7772-98-7 싸이오황산 나트륨(SODIUM THIOSULFATE) ( 관용명 : 싸이오황산 (H2S2O3), 이나트륨 염(THIOSULFURIC ACID (H2S2O3), DISODIUM SALT); )"
+  },
+  {
+   "type": "iupac",
+   "q": "disodium;dioxido-oxo-sulfanylidene-lambda6-sulfane",
+   "cas": "7772-98-7",
+   "rank": null,
+   "top1": "71872-95-2 5-sulphoisophthalic acid, ammonium sodium salt (azanium;disodium;5-sulfonatobenzene-1,3-dicarboxylate)"
+  },
+  {
+   "type": "cas",
+   "q": "7772-98-7",
+   "cas": "7772-98-7",
+   "rank": 1,
+   "top1": "7772-98-7 싸이오황산 나트륨(SODIUM THIOSULFATE) ( 관용명 : 싸이오황산 (H2S2O3), 이나트륨 염(THIOSULFURIC ACID (H2S2O3), DISODIUM SALT); )"
+  },
+  {
+   "type": "ko",
+   "q": "중크롬산칼륨",
+   "cas": "7778-50-9",
+   "rank": 1,
+   "top1": "7778-50-9 Potassium dichromate"
+  },
+  {
+   "type": "en",
+   "q": "Potassium Dichromate",
+   "cas": "7778-50-9",
+   "rank": 1,
+   "top1": "7778-50-9 Potassium dichromate"
+  },
+  {
+   "type": "iupac",
+   "q": "dipotassium;oxido-(oxido(dioxo)chromio)oxy-dioxochromium",
+   "cas": "7778-50-9",
+   "rank": null,
+   "top1": "68784-60-1 Chromic acid (H2Cr2O7), disodium salt, reaction products with [1R-[1α(R*),2β,4aβ,8aα]]-α-ethenyldecahydro-2-hydroxy-α,2,5,5,8a-pentamethyl-1-naphthalenepropanol, hydrogenated (disodium;(1R,2R,4aS,8aS)-1-[(3R)-3-hydroxy-3-methylpent-4-enyl]-2,5,5,8a-tetramethyl-3,4,4a,6,7,8-hexahydro-1H-naphthalen-2-ol;oxido-(oxido(dioxo)chromio)oxy-dioxochromium)"
+  },
+  {
+   "type": "cas",
+   "q": "7778-50-9",
+   "cas": "7778-50-9",
+   "rank": 1,
+   "top1": "7778-50-9 Potassium dichromate"
+  },
+  {
+   "type": "ko",
+   "q": "중수소",
+   "cas": "7782-39-0",
+   "rank": 1,
+   "top1": "7782-39-0 중수소(DEUTERIUM) ( 관용명 : 듀테리움 분자(DEUTERIUM MOLECULE); )"
+  },
+  {
+   "type": "en",
+   "q": "Deuterium",
+   "cas": "7782-39-0",
+   "rank": 1,
+   "top1": "7782-39-0 중수소(DEUTERIUM) ( 관용명 : 듀테리움 분자(DEUTERIUM MOLECULE); )"
+  },
+  {
+   "type": "cas",
+   "q": "7782-39-0",
+   "cas": "7782-39-0",
+   "rank": 1,
+   "top1": "7782-39-0 중수소(DEUTERIUM) ( 관용명 : 듀테리움 분자(DEUTERIUM MOLECULE); )"
+  },
+  {
+   "type": "ko",
+   "q": "산소",
+   "cas": "7782-44-7",
+   "rank": 1,
+   "top1": "7782-44-7 산소 ( 관용명 : 산소, 압축가스(Oxygen, compressed [UN1072] [Nonflammable gas]) ) (산소 ( 관용명 : 산소, 냉동액화가스(Oxygen, refrigerated liquid (cryogenic liquid) [UN1073] [Nonflammable gas]) ))"
+  },
+  {
+   "type": "en",
+   "q": "Oxygen",
+   "cas": "7782-44-7",
+   "rank": 1,
+   "top1": "7782-44-7 산소 ( 관용명 : 산소, 압축가스(Oxygen, compressed [UN1072] [Nonflammable gas]) ) (산소 ( 관용명 : 산소, 냉동액화가스(Oxygen, refrigerated liquid (cryogenic liquid) [UN1073] [Nonflammable gas]) ))"
+  },
+  {
+   "type": "iupac",
+   "q": "molecular oxygen",
+   "cas": "7782-44-7",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "7782-44-7",
+   "cas": "7782-44-7",
+   "rank": 1,
+   "top1": "7782-44-7 산소 ( 관용명 : 산소, 압축가스(Oxygen, compressed [UN1072] [Nonflammable gas]) ) (산소 ( 관용명 : 산소, 냉동액화가스(Oxygen, refrigerated liquid (cryogenic liquid) [UN1073] [Nonflammable gas]) ))"
+  },
+  {
+   "type": "ko",
+   "q": "염소",
+   "cas": "7782-50-5",
+   "rank": 1,
+   "top1": "7782-50-5 Chlorine (dichlorine)"
+  },
+  {
+   "type": "en",
+   "q": "Chlorine",
+   "cas": "7782-50-5",
+   "rank": 1,
+   "top1": "7782-50-5 Chlorine (dichlorine)"
+  },
+  {
+   "type": "iupac",
+   "q": "molecular chlorine",
+   "cas": "7782-50-5",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "7782-50-5",
+   "cas": "7782-50-5",
+   "rank": 1,
+   "top1": "7782-50-5 Chlorine (dichlorine)"
+  },
+  {
+   "type": "ko",
+   "q": "아황산",
+   "cas": "7782-99-2",
+   "rank": 1,
+   "top1": "7782-99-2 아황산(SULFUROUS ACID)"
+  },
+  {
+   "type": "en",
+   "q": "Sulfurous Acid",
+   "cas": "7782-99-2",
+   "rank": 1,
+   "top1": "7782-99-2 아황산(SULFUROUS ACID)"
+  },
+  {
+   "type": "cas",
+   "q": "7782-99-2",
+   "cas": "7782-99-2",
+   "rank": 1,
+   "top1": "7782-99-2 아황산(SULFUROUS ACID)"
+  },
+  {
+   "type": "ko",
+   "q": "황화수소",
+   "cas": "7783-06-4",
+   "rank": 1,
+   "top1": "7783-06-4 Hydrogen sulphide (dihydrogen sulfanediide)"
+  },
+  {
+   "type": "en",
+   "q": "Hydrogen sulfide",
+   "cas": "7783-06-4",
+   "rank": null,
+   "top1": "140650-84-6 sodium hydrogen sulfide monohydrate"
+  },
+  {
+   "type": "iupac",
+   "q": "sulfane",
+   "cas": "7783-06-4",
+   "rank": 4,
+   "top1": "68411-02-9 Ethanol, 2-amino-, reaction products with copper sulfide (CuS) and sulfur (copper;2-aminoethanol;sulfane;sulfide)"
+  },
+  {
+   "type": "cas",
+   "q": "7783-06-4",
+   "cas": "7783-06-4",
+   "rank": 1,
+   "top1": "7783-06-4 Hydrogen sulphide (dihydrogen sulfanediide)"
+  },
+  {
+   "type": "alias",
+   "q": "hydrogen sulphide",
+   "cas": "7783-06-4",
+   "rank": 1,
+   "top1": "7783-06-4 Hydrogen sulphide (dihydrogen sulfanediide)"
+  },
+  {
+   "type": "ko",
+   "q": "셀레늄산",
+   "cas": "7783-08-6",
+   "rank": 1,
+   "top1": "7783-08-6 셀레늄산(셀렌산)(SELENIC ACID)"
+  },
+  {
+   "type": "en",
+   "q": "Selenic Acid",
+   "cas": "7783-08-6",
+   "rank": 2,
+   "top1": "10112-94-4 ·셀렌산(H2SeO4), 모노소듐염"
+  },
+  {
+   "type": "cas",
+   "q": "7783-08-6",
+   "cas": "7783-08-6",
+   "rank": 1,
+   "top1": "7783-08-6 셀레늄산(셀렌산)(SELENIC ACID)"
+  },
+  {
+   "type": "ko",
+   "q": "염화 마그네슘",
+   "cas": "7786-30-3",
+   "rank": 1,
+   "top1": "7786-30-3 염화 마그네슘 (MAGNESIUM CHLORIDE)"
+  },
+  {
+   "type": "en",
+   "q": "Magnesium Chloride",
+   "cas": "7786-30-3",
+   "rank": 1,
+   "top1": "7786-30-3 염화 마그네슘 (MAGNESIUM CHLORIDE)"
+  },
+  {
+   "type": "iupac",
+   "q": "magnesium dichloride",
+   "cas": "7786-30-3",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "7786-30-3",
+   "cas": "7786-30-3",
+   "rank": 1,
+   "top1": "7786-30-3 염화 마그네슘 (MAGNESIUM CHLORIDE)"
+  },
+  {
+   "type": "ko",
+   "q": "이소프렌",
+   "cas": "78-79-5",
+   "rank": 1,
+   "top1": "78-79-5 이소프렌(2-메틸-1,3-부타디엔)"
+  },
+  {
+   "type": "en",
+   "q": "Isoprene",
+   "cas": "78-79-5",
+   "rank": 2,
+   "top1": "9006-04-6 자연산 고무 ( 관용명 : 나프카 크리스탈곰(NAFKA KRISTALGOM); ) (NATURAL RUBBER)"
+  },
+  {
+   "type": "iupac",
+   "q": "2-methylbuta-1,3-diene",
+   "cas": "78-79-5",
+   "rank": null,
+   "top1": "73049-87-3 Aluminum, tris(2-methylpropyl)-, reaction products with isoprene (2-methylbuta-1,3-diene;tris(2-methylpropyl)alumane)"
+  },
+  {
+   "type": "cas",
+   "q": "78-79-5",
+   "cas": "78-79-5",
+   "rank": 1,
+   "top1": "78-79-5 이소프렌(2-메틸-1,3-부타디엔)"
+  },
+  {
+   "type": "ko",
+   "q": "메틸에틸케톤",
+   "cas": "78-93-3",
+   "rank": 1,
+   "top1": "78-93-3 메틸 에틸 케톤 ( 관용명 : 2-부타논 ) (메틸 에틸 케톤 ( 관용명 : 2-Butanone ))"
+  },
+  {
+   "type": "en",
+   "q": "Methyl ethyl ketone",
+   "cas": "78-93-3",
+   "rank": 1,
+   "top1": "78-93-3 메틸 에틸 케톤 ( 관용명 : 2-부타논 ) (메틸 에틸 케톤 ( 관용명 : 2-Butanone ))"
+  },
+  {
+   "type": "iupac",
+   "q": "butan-2-one",
+   "cas": "78-93-3",
+   "rank": null,
+   "top1": "83817-72-5 O,O'-(메톡시메틸실릴렌)디옥심 2-부타논(O,O'-(METHOXYMETHYLSILYLENE)DIOXIME..."
+  },
+  {
+   "type": "cas",
+   "q": "78-93-3",
+   "cas": "78-93-3",
+   "rank": 1,
+   "top1": "78-93-3 메틸 에틸 케톤 ( 관용명 : 2-부타논 ) (메틸 에틸 케톤 ( 관용명 : 2-Butanone ))"
+  },
+  {
+   "type": "alias",
+   "q": "MEK",
+   "cas": "78-93-3",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "alias",
+   "q": "2-butanone",
+   "cas": "78-93-3",
+   "rank": 2,
+   "top1": "38083-17-9 클림바졸(CLIMBAZOLE) ( 관용명 : 2-부탄온, 1-(4-클로로페녹시)-1-(1H-이미다졸-1-일)-3,3-다이메틸-(2-BUTANONE, )"
+  },
+  {
+   "type": "ko",
+   "q": "실레인",
+   "cas": "7803-62-5",
+   "rank": 1,
+   "top1": "7803-62-5 실레인 ( 관용명 : 실리콘 테트라하이드라이드 ) (Silane)"
+  },
+  {
+   "type": "en",
+   "q": "Silane",
+   "cas": "7803-62-5",
+   "rank": 1,
+   "top1": "7803-62-5 실레인 ( 관용명 : 실리콘 테트라하이드라이드 ) (Silane)"
+  },
+  {
+   "type": "cas",
+   "q": "7803-62-5",
+   "cas": "7803-62-5",
+   "rank": 1,
+   "top1": "7803-62-5 실레인 ( 관용명 : 실리콘 테트라하이드라이드 ) (Silane)"
+  },
+  {
+   "type": "ko",
+   "q": "트리클로로에틸렌",
+   "cas": "79-01-6",
+   "rank": 1,
+   "top1": "79-01-6 Trichloroethylene (1,1,2-trichloroethene)"
+  },
+  {
+   "type": "en",
+   "q": "Trichloroethylene",
+   "cas": "79-01-6",
+   "rank": 1,
+   "top1": "79-01-6 Trichloroethylene (1,1,2-trichloroethene)"
+  },
+  {
+   "type": "iupac",
+   "q": "1,1,2-trichloroethene",
+   "cas": "79-01-6",
+   "rank": 1,
+   "top1": "79-01-6 Trichloroethylene (1,1,2-trichloroethene)"
+  },
+  {
+   "type": "cas",
+   "q": "79-01-6",
+   "cas": "79-01-6",
+   "rank": 1,
+   "top1": "79-01-6 Trichloroethylene (1,1,2-trichloroethene)"
+  },
+  {
+   "type": "alias",
+   "q": "TCE",
+   "cas": "79-01-6",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "ko",
+   "q": "프로피온산",
+   "cas": "79-09-4",
+   "rank": 1,
+   "top1": "79-09-4 Propionic acid"
+  },
+  {
+   "type": "en",
+   "q": "Propionic Acid",
+   "cas": "79-09-4",
+   "rank": 1,
+   "top1": "79-09-4 Propionic acid"
+  },
+  {
+   "type": "iupac",
+   "q": "propanoic acid",
+   "cas": "79-09-4",
+   "rank": null,
+   "top1": "93-72-1 실벡스 ( 관용명 : 프로파노 산, 2-(2,4,5-트리클로로펜옥시)-(PROPANOIC ACID, )"
+  },
+  {
+   "type": "cas",
+   "q": "79-09-4",
+   "cas": "79-09-4",
+   "rank": 1,
+   "top1": "79-09-4 Propionic acid"
+  },
+  {
+   "type": "ko",
+   "q": "아크릴산",
+   "cas": "79-10-7",
+   "rank": 1,
+   "top1": "79-10-7 아크릴산 (Acrylic acid)"
+  },
+  {
+   "type": "en",
+   "q": "Acrylic acid",
+   "cas": "79-10-7",
+   "rank": 1,
+   "top1": "79-10-7 아크릴산 (Acrylic acid)"
+  },
+  {
+   "type": "iupac",
+   "q": "prop-2-enoic acid",
+   "cas": "79-10-7",
+   "rank": null,
+   "top1": "33090-06-1 Acrylic acid, compound with 2-aminoethanol (1:1) (2-aminoethan-1-ol; prop-2-enoic acid)"
+  },
+  {
+   "type": "cas",
+   "q": "79-10-7",
+   "cas": "79-10-7",
+   "rank": 1,
+   "top1": "79-10-7 아크릴산 (Acrylic acid)"
+  },
+  {
+   "type": "ko",
+   "q": "클로로아세트산",
+   "cas": "79-11-8",
+   "rank": 1,
+   "top1": "79-11-8 클로로아세트산 (Chloroacetic acid)"
+  },
+  {
+   "type": "en",
+   "q": "Chloroacetic Acid",
+   "cas": "79-11-8",
+   "rank": 1,
+   "top1": "79-11-8 클로로아세트산 (Chloroacetic acid)"
+  },
+  {
+   "type": "iupac",
+   "q": "2-chloroacetic acid",
+   "cas": "79-11-8",
+   "rank": null,
+   "top1": "139734-67-1 N-(2-Aminoethyl)-1,2-ethanediamine, N-mono and dialkyl(C=8-18) deriivs, reaction products with 2-chloroacetic acid"
+  },
+  {
+   "type": "cas",
+   "q": "79-11-8",
+   "cas": "79-11-8",
+   "rank": 1,
+   "top1": "79-11-8 클로로아세트산 (Chloroacetic acid)"
+  },
+  {
+   "type": "ko",
+   "q": "비스페놀A",
+   "cas": "80-05-7",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "en",
+   "q": "Bisphenol A",
+   "cas": "80-05-7",
+   "rank": 1,
+   "top1": "80-05-7 비스페놀 ( 관용명 : BISPHENOL A )"
+  },
+  {
+   "type": "iupac",
+   "q": "4-[2-(4-hydroxyphenyl)propan-2-yl]phenol",
+   "cas": "80-05-7",
+   "rank": null,
+   "top1": "68992-17-6 Phenol, 4,4'-(1-methylethylidene)bis-, polymer with 2-(chloromethyl)oxirane, phosphate, compd. with 2-(dimethylamino)ethanol (2-(chloromethyl)oxirane;2-(dimethylamino)ethanol;4-[2-(4-hydroxyphenyl)propan-2-yl]phenol;phosphoric acid)"
+  },
+  {
+   "type": "cas",
+   "q": "80-05-7",
+   "cas": "80-05-7",
+   "rank": 1,
+   "top1": "80-05-7 비스페놀 ( 관용명 : BISPHENOL A )"
+  },
+  {
+   "type": "alias",
+   "q": "BPA",
+   "cas": "80-05-7",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "alias",
+   "q": "비스페놀 A",
+   "cas": "80-05-7",
+   "rank": 1,
+   "top1": "80-05-7 비스페놀 ( 관용명 : BISPHENOL A )"
+  },
+  {
+   "type": "ko",
+   "q": "메타크릴산메틸",
+   "cas": "80-62-6",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "en",
+   "q": "Methyl methacrylate",
+   "cas": "80-62-6",
+   "rank": 1,
+   "top1": "80-62-6 메틸메타크릴레이트 (Methyl methacrylate)"
+  },
+  {
+   "type": "iupac",
+   "q": "methyl 2-methylprop-2-enoate",
+   "cas": "80-62-6",
+   "rank": null,
+   "top1": "37953-21-2 2-Propenoic acid, 2-methyl-, methyl ester, polymer with butyl 2-propenoate, ethenylbenzene and 2-oxiranylmethyl 2-methyl-2-propenoate (butyl prop-2-enoate;methyl 2-methylprop-2-enoate;oxiran-2-ylmethyl 2-methylprop-2-enoate;styrene)"
+  },
+  {
+   "type": "cas",
+   "q": "80-62-6",
+   "cas": "80-62-6",
+   "rank": 1,
+   "top1": "80-62-6 메틸메타크릴레이트 (Methyl methacrylate)"
+  },
+  {
+   "type": "alias",
+   "q": "MMA",
+   "cas": "80-62-6",
+   "rank": null,
+   "top1": "123209-67-6 P(MMA) Reaction product with methyl amine"
+  },
+  {
+   "type": "alias",
+   "q": "메틸메타크릴레이트",
+   "cas": "80-62-6",
+   "rank": 1,
+   "top1": "80-62-6 메틸메타크릴레이트 (Methyl methacrylate)"
+  },
+  {
+   "type": "ko",
+   "q": "라벤더 오일",
+   "cas": "8000-28-0",
+   "rank": 1,
+   "top1": "8000-28-0 라벤더 오일(LAVENDER OIL)"
+  },
+  {
+   "type": "en",
+   "q": "Lavender oils",
+   "cas": "8000-28-0",
+   "rank": null,
+   "top1": "68916-86-9 Oils, lavender, terpene-free"
+  },
+  {
+   "type": "cas",
+   "q": "8000-28-0",
+   "cas": "8000-28-0",
+   "rank": 1,
+   "top1": "8000-28-0 라벤더 오일(LAVENDER OIL)"
+  },
+  {
+   "type": "ko",
+   "q": "가솔린",
+   "cas": "8006-61-9",
+   "rank": 1,
+   "top1": "8006-61-9 가솔린 (Gasoline)"
+  },
+  {
+   "type": "en",
+   "q": "Light gasoline",
+   "cas": "8006-61-9",
+   "rank": null,
+   "top1": "68919-05-1 Gases (petroleum), light straight run gasoline fractionation stabilizer off"
+  },
+  {
+   "type": "cas",
+   "q": "8006-61-9",
+   "cas": "8006-61-9",
+   "rank": 1,
+   "top1": "8006-61-9 가솔린 (Gasoline)"
+  },
+  {
+   "type": "ko",
+   "q": "콜타르",
+   "cas": "8007-45-2",
+   "rank": 1,
+   "top1": "8007-45-2 콜타르 (COAL TAR)"
+  },
+  {
+   "type": "en",
+   "q": "Coal tar",
+   "cas": "8007-45-2",
+   "rank": 1,
+   "top1": "8007-45-2 콜타르 (COAL TAR)"
+  },
+  {
+   "type": "cas",
+   "q": "8007-45-2",
+   "cas": "8007-45-2",
+   "rank": 1,
+   "top1": "8007-45-2 콜타르 (COAL TAR)"
+  },
+  {
+   "type": "ko",
+   "q": "발연황산",
+   "cas": "8014-95-7",
+   "rank": 1,
+   "top1": "8014-95-7 발연황산 (Fuming sulfuric acid)"
+  },
+  {
+   "type": "en",
+   "q": "Fuming sulfuric acid",
+   "cas": "8014-95-7",
+   "rank": 1,
+   "top1": "8014-95-7 발연황산 (Fuming sulfuric acid)"
+  },
+  {
+   "type": "iupac",
+   "q": "sulfuric acid;sulfur trioxide",
+   "cas": "8014-95-7",
+   "rank": 12,
+   "top1": "126-92-1 2-에틸헥실 황산 나트륨 ( 관용명 : 황 산, 모노(2-에틸헥실) 에스터, 나트륨 염(SULFURIC ACID, ) (SODIUM 2-ETHYLHEXYL SULFATE)"
+  },
+  {
+   "type": "cas",
+   "q": "8014-95-7",
+   "cas": "8014-95-7",
+   "rank": 1,
+   "top1": "8014-95-7 발연황산 (Fuming sulfuric acid)"
+  },
+  {
+   "type": "ko",
+   "q": "카나우바 왁스",
+   "cas": "8015-86-9",
+   "rank": 1,
+   "top1": "8015-86-9 카나우바 왁스(CARNAUBA WAX) ( 관용명 : 브라질 밀랍(BRAZIL WAX); )"
+  },
+  {
+   "type": "en",
+   "q": "Carnauba wax",
+   "cas": "8015-86-9",
+   "rank": 1,
+   "top1": "8015-86-9 카나우바 왁스(CARNAUBA WAX) ( 관용명 : 브라질 밀랍(BRAZIL WAX); )"
+  },
+  {
+   "type": "cas",
+   "q": "8015-86-9",
+   "cas": "8015-86-9",
+   "rank": 1,
+   "top1": "8015-86-9 카나우바 왁스(CARNAUBA WAX) ( 관용명 : 브라질 밀랍(BRAZIL WAX); )"
+  },
+  {
+   "type": "ko",
+   "q": "아스팔트",
+   "cas": "8052-42-4",
+   "rank": 1,
+   "top1": "8052-42-4 아스팔트 (Asphalt(Petroleum)fumes)"
+  },
+  {
+   "type": "en",
+   "q": "Asphalt",
+   "cas": "8052-42-4",
+   "rank": 3,
+   "top1": "91995-23-2 Asphaltenes (petroleum) -"
+  },
+  {
+   "type": "cas",
+   "q": "8052-42-4",
+   "cas": "8052-42-4",
+   "rank": 1,
+   "top1": "8052-42-4 아스팔트 (Asphalt(Petroleum)fumes)"
+  },
+  {
+   "type": "ko",
+   "q": "와파린",
+   "cas": "81-81-2",
+   "rank": 1,
+   "top1": "81-81-2 와파린 (Warfarin)"
+  },
+  {
+   "type": "en",
+   "q": "Warfarin",
+   "cas": "81-81-2",
+   "rank": 1,
+   "top1": "81-81-2 와파린 (Warfarin)"
+  },
+  {
+   "type": "iupac",
+   "q": "4-hydroxy-3-(3-oxo-1-phenylbutyl)chromen-2-one",
+   "cas": "81-81-2",
+   "rank": null,
+   "top1": "63610-50-4 Retinol, acetate, mixt. with 4-hydroxy-3-(3-oxo-1-phenylbutyl)-2H-1-benzopyran-2-one12"
+  },
+  {
+   "type": "cas",
+   "q": "81-81-2",
+   "cas": "81-81-2",
+   "rank": 1,
+   "top1": "81-81-2 와파린 (Warfarin)"
+  },
+  {
+   "type": "ko",
+   "q": "1,1,1,2-테트라플루오로에테인",
+   "cas": "811-97-2",
+   "rank": 1,
+   "top1": "811-97-2 1,1,1,2-테트라플루오로에테인(1,1,1,2-TETRAFLUOROETHANE)"
+  },
+  {
+   "type": "en",
+   "q": "1,1,1,2-Tetrafluoroethane",
+   "cas": "811-97-2",
+   "rank": 1,
+   "top1": "811-97-2 1,1,1,2-테트라플루오로에테인(1,1,1,2-TETRAFLUOROETHANE)"
+  },
+  {
+   "type": "cas",
+   "q": "811-97-2",
+   "cas": "811-97-2",
+   "rank": 1,
+   "top1": "811-97-2 1,1,1,2-테트라플루오로에테인(1,1,1,2-TETRAFLUOROETHANE)"
+  },
+  {
+   "type": "ko",
+   "q": "아세나프텐",
+   "cas": "83-32-9",
+   "rank": 1,
+   "top1": "83-32-9 아세나프텐 (Acenaphthene)"
+  },
+  {
+   "type": "en",
+   "q": "Acenaphthene",
+   "cas": "83-32-9",
+   "rank": 1,
+   "top1": "83-32-9 아세나프텐 (Acenaphthene)"
+  },
+  {
+   "type": "iupac",
+   "q": "1,2-dihydroacenaphthylene",
+   "cas": "83-32-9",
+   "rank": null,
+   "top1": "84989-11-7 Distillates (coal tar), upper, fluorene-rich (1,2-dihydroacenaphthylene; 8-oxatricyclo[7.4.0.0²,⁷]trideca-1(9),2,4,6,10,12-hexaene; 9H-fluorene)"
+  },
+  {
+   "type": "cas",
+   "q": "83-32-9",
+   "cas": "83-32-9",
+   "rank": 1,
+   "top1": "83-32-9 아세나프텐 (Acenaphthene)"
+  },
+  {
+   "type": "ko",
+   "q": "필로퀴논",
+   "cas": "84-80-0",
+   "rank": 1,
+   "top1": "84-80-0 필로퀴논 ( 관용명 : 피토나디온(PHYTONADIONE); )"
+  },
+  {
+   "type": "en",
+   "q": "Phylloquinone",
+   "cas": "84-80-0",
+   "rank": 1,
+   "top1": "84-80-0 필로퀴논 ( 관용명 : 피토나디온(PHYTONADIONE); )"
+  },
+  {
+   "type": "iupac",
+   "q": "2-methyl-3-[(E,7R,11R)-3,7,11,15-tetramethylhexadec-2-enyl]naphthalene-1,4-dione",
+   "cas": "84-80-0",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "84-80-0",
+   "cas": "84-80-0",
+   "rank": 1,
+   "top1": "84-80-0 필로퀴논 ( 관용명 : 피토나디온(PHYTONADIONE); )"
+  },
+  {
+   "type": "ko",
+   "q": "무수프탈산",
+   "cas": "85-44-9",
+   "rank": 1,
+   "top1": "85-44-9 프탈산 언하이드라이드 (Phthalic anhydride)"
+  },
+  {
+   "type": "en",
+   "q": "Phthalic anhydride",
+   "cas": "85-44-9",
+   "rank": 1,
+   "top1": "85-44-9 프탈산 언하이드라이드 (Phthalic anhydride)"
+  },
+  {
+   "type": "iupac",
+   "q": "2-benzofuran-1,3-dione",
+   "cas": "85-44-9",
+   "rank": null,
+   "top1": "69898-25-5 Nitric acid, zinc salt (2:1), reaction products with phthalic anhydride (zinc;2-benzofuran-1,3-dione;dinitrate)"
+  },
+  {
+   "type": "cas",
+   "q": "85-44-9",
+   "cas": "85-44-9",
+   "rank": 1,
+   "top1": "85-44-9 프탈산 언하이드라이드 (Phthalic anhydride)"
+  },
+  {
+   "type": "ko",
+   "q": "N-메틸피롤리돈",
+   "cas": "872-50-4",
+   "rank": 1,
+   "top1": "872-50-4 1-methyl-2-pyrrolidone (n-methyl-2-pyrrolidone)"
+  },
+  {
+   "type": "en",
+   "q": "N-methyl-2-pyrrolidone",
+   "cas": "872-50-4",
+   "rank": 1,
+   "top1": "872-50-4 1-methyl-2-pyrrolidone (n-methyl-2-pyrrolidone)"
+  },
+  {
+   "type": "iupac",
+   "q": "1-methylpyrrolidin-2-one",
+   "cas": "872-50-4",
+   "rank": null,
+   "top1": "72102-46-6 2-Pyrrolidinone, 1-methyl-, reaction products with aluminum chloride and titanium chloride (TiCl3) (3:1:3) (1-methylpyrrolidin-2-one;trichloroalumane;trichlorotitanium)"
+  },
+  {
+   "type": "cas",
+   "q": "872-50-4",
+   "cas": "872-50-4",
+   "rank": 1,
+   "top1": "872-50-4 1-methyl-2-pyrrolidone (n-methyl-2-pyrrolidone)"
+  },
+  {
+   "type": "ko",
+   "q": "1-나프톨",
+   "cas": "90-15-3",
+   "rank": 1,
+   "top1": "90-15-3 1-나프톨 (1-NAPHTHOL)"
+  },
+  {
+   "type": "en",
+   "q": "1-Naphthol",
+   "cas": "90-15-3",
+   "rank": 1,
+   "top1": "90-15-3 1-나프톨 (1-NAPHTHOL)"
+  },
+  {
+   "type": "iupac",
+   "q": "naphthalen-1-ol",
+   "cas": "90-15-3",
+   "rank": null,
+   "top1": "2834-90-4 4-AMINO-NAPHTHALEN-1-OL (4-aminonaphthalen-1-ol)"
+  },
+  {
+   "type": "cas",
+   "q": "90-15-3",
+   "cas": "90-15-3",
+   "rank": 1,
+   "top1": "90-15-3 1-나프톨 (1-NAPHTHOL)"
+  },
+  {
+   "type": "ko",
+   "q": "나이트로셀룰로스",
+   "cas": "9004-70-0",
+   "rank": 1,
+   "top1": "9004-70-0 나이트로셀룰로스"
+  },
+  {
+   "type": "en",
+   "q": "Nitrocellulose",
+   "cas": "9004-70-0",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "cas",
+   "q": "9004-70-0",
+   "cas": "9004-70-0",
+   "rank": 1,
+   "top1": "9004-70-0 나이트로셀룰로스"
+  },
+  {
+   "type": "ko",
+   "q": "나프탈렌",
+   "cas": "91-20-3",
+   "rank": 1,
+   "top1": "91-20-3 나프탈렌 (Naphthalene)"
+  },
+  {
+   "type": "en",
+   "q": "Naphthalene",
+   "cas": "91-20-3",
+   "rank": 1,
+   "top1": "91-20-3 나프탈렌 (Naphthalene)"
+  },
+  {
+   "type": "cas",
+   "q": "91-20-3",
+   "cas": "91-20-3",
+   "rank": 1,
+   "top1": "91-20-3 나프탈렌 (Naphthalene)"
+  },
+  {
+   "type": "ko",
+   "q": "구아이페네신",
+   "cas": "93-14-1",
+   "rank": 1,
+   "top1": "93-14-1 구아이페네신 (GUAIFENESIN)"
+  },
+  {
+   "type": "en",
+   "q": "Guaifenesin",
+   "cas": "93-14-1",
+   "rank": 1,
+   "top1": "93-14-1 구아이페네신 (GUAIFENESIN)"
+  },
+  {
+   "type": "iupac",
+   "q": "3-(2-methoxyphenoxy)propane-1,2-diol",
+   "cas": "93-14-1",
+   "rank": null,
+   "top1": "821-91-0 3-(Dodecylamino)propane-1,2-diol"
+  },
+  {
+   "type": "cas",
+   "q": "93-14-1",
+   "cas": "93-14-1",
+   "rank": 1,
+   "top1": "93-14-1 구아이페네신 (GUAIFENESIN)"
+  },
+  {
+   "type": "ko",
+   "q": "o-자일렌",
+   "cas": "95-47-6",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "en",
+   "q": "o-Xylene",
+   "cas": "95-47-6",
+   "rank": 1,
+   "top1": "95-47-6 o-크실렌 ( 관용명 : o-디메틸벤젠 )"
+  },
+  {
+   "type": "iupac",
+   "q": "1,2-xylene",
+   "cas": "95-47-6",
+   "rank": null,
+   "top1": "68411-40-5 Benzene, 1,2-dimethyl-, reaction products with styrene (1,2-xylene; ethenylbenzene)"
+  },
+  {
+   "type": "cas",
+   "q": "95-47-6",
+   "cas": "95-47-6",
+   "rank": 1,
+   "top1": "95-47-6 o-크실렌 ( 관용명 : o-디메틸벤젠 )"
+  },
+  {
+   "type": "alias",
+   "q": "ortho-xylene",
+   "cas": "95-47-6",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "alias",
+   "q": "오르토자일렌",
+   "cas": "95-47-6",
+   "rank": null,
+   "top1": ""
+  },
+  {
+   "type": "ko",
+   "q": "사이클로펜탄올",
+   "cas": "96-41-3",
+   "rank": 1,
+   "top1": "96-41-3 사이클로펜탄올 (CYCLOPENTANOL)"
+  },
+  {
+   "type": "en",
+   "q": "Cyclopentanol",
+   "cas": "96-41-3",
+   "rank": 1,
+   "top1": "96-41-3 사이클로펜탄올 (CYCLOPENTANOL)"
+  },
+  {
+   "type": "cas",
+   "q": "96-41-3",
+   "cas": "96-41-3",
+   "rank": 1,
+   "top1": "96-41-3 사이클로펜탄올 (CYCLOPENTANOL)"
+  },
+  {
+   "type": "ko",
+   "q": "쿠멘",
+   "cas": "98-82-8",
+   "rank": 1,
+   "top1": "98-82-8 Cumene ((propan-2-yl)benzene)"
+  },
+  {
+   "type": "en",
+   "q": "Cumene",
+   "cas": "98-82-8",
+   "rank": 1,
+   "top1": "98-82-8 Cumene ((propan-2-yl)benzene)"
+  },
+  {
+   "type": "cas",
+   "q": "98-82-8",
+   "cas": "98-82-8",
+   "rank": 1,
+   "top1": "98-82-8 Cumene ((propan-2-yl)benzene)"
+  },
+  {
+   "type": "alias",
+   "q": "isopropylbenzene",
+   "cas": "98-82-8",
+   "rank": null,
+   "top1": "680972-33-2 Ammonium 4-isopropylbenzenesulphonate"
+  },
+  {
+   "type": "ko",
+   "q": "니트로벤젠",
+   "cas": "98-95-3",
+   "rank": 1,
+   "top1": "98-95-3 니트로벤젠 (Nitrobenzene)"
+  },
+  {
+   "type": "en",
+   "q": "Nitrobenzene",
+   "cas": "98-95-3",
+   "rank": 1,
+   "top1": "98-95-3 니트로벤젠 (Nitrobenzene)"
+  },
+  {
+   "type": "cas",
+   "q": "98-95-3",
+   "cas": "98-95-3",
+   "rank": 1,
+   "top1": "98-95-3 니트로벤젠 (Nitrobenzene)"
+  }
+ ]
+}

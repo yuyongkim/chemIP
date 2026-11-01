@@ -1,0 +1,1350 @@
+{
+ "_comment": "NASA CEA thermo.inp species -> CAS (thermo.inp has no CAS). Candidates from tp_nasa_map.py (name lookup + Hill-formula check), then reviewed by hand on 2026-10-31: atoms (except noble gases), radicals/odd-electron species (except NO, NO2, ClO2), ions, metal salts and their melts, boron species other than BF3/BCl3/BBr3/B2H6, and equilibrium isomer mixtures were removed; wrong lookups fixed by hand (how = manual). Every pair re-checked: Hill formula of the CAS = NASA formula.",
+ "reviewed": "2026-10-31",
+ "pairs": [
+  {
+   "species": "Ar",
+   "cas": "7440-37-1",
+   "name": "argon",
+   "how": "Ar"
+  },
+  {
+   "species": "BBr3",
+   "cas": "10294-33-4",
+   "name": "boron tribromide",
+   "how": "BBr3"
+  },
+  {
+   "species": "BCL3",
+   "cas": "10294-34-5",
+   "name": "boron trichloride",
+   "how": "BCl3"
+  },
+  {
+   "species": "BF3",
+   "cas": "7637-07-2",
+   "name": "boron trifluoride",
+   "how": "BF3"
+  },
+  {
+   "species": "B2H6",
+   "cas": "19287-45-7",
+   "name": "diborane",
+   "how": "B2H6"
+  },
+  {
+   "species": "BrCL",
+   "cas": "13863-41-7",
+   "name": "bromine chloride",
+   "how": "BrCL"
+  },
+  {
+   "species": "BrF3",
+   "cas": "7787-71-5",
+   "name": "bromine trifluoride",
+   "how": "BrF3"
+  },
+  {
+   "species": "BrF5",
+   "cas": "7789-30-2",
+   "name": "bromine pentafluoride",
+   "how": "BrF5"
+  },
+  {
+   "species": "Br2",
+   "cas": "7726-95-6",
+   "name": "bromine",
+   "how": "Br2"
+  },
+  {
+   "species": "CBr4",
+   "cas": "558-13-4",
+   "name": "carbon tetrabromide",
+   "how": "CBr4"
+  },
+  {
+   "species": "CCLBr3",
+   "cas": "594-15-0",
+   "name": "tribromochloromethane",
+   "how": "CClBr3"
+  },
+  {
+   "species": "CCL2Br2",
+   "cas": "594-18-3",
+   "name": "dibromodichloromethane",
+   "how": "CCl2Br2"
+  },
+  {
+   "species": "CCL3Br",
+   "cas": "75-62-7",
+   "name": "bromotrichloromethane",
+   "how": "CCl3Br"
+  },
+  {
+   "species": "CCL4",
+   "cas": "56-23-5",
+   "name": "carbon tetrachloride",
+   "how": "CCL4"
+  },
+  {
+   "species": "CFBr3",
+   "cas": "353-54-8",
+   "name": "tribromofluoromethane",
+   "how": "CFBr3"
+  },
+  {
+   "species": "CFCL3",
+   "cas": "75-69-4",
+   "name": "trichlorofluoromethane",
+   "how": "CFCL3"
+  },
+  {
+   "species": "CF2Br2",
+   "cas": "75-61-6",
+   "name": "dibromodifluoromethane",
+   "how": "CF2Br2"
+  },
+  {
+   "species": "CF2CLBr",
+   "cas": "353-59-3",
+   "name": "methane, bromochlorodifluoro-",
+   "how": "CF2ClBr"
+  },
+  {
+   "species": "CF2CL2",
+   "cas": "75-71-8",
+   "name": "dichlorodifluoromethane",
+   "how": "CF2Cl2"
+  },
+  {
+   "species": "CF3Br",
+   "cas": "75-63-8",
+   "name": "bromofluoroform",
+   "how": "CF3Br"
+  },
+  {
+   "species": "CF3CL",
+   "cas": "75-72-9",
+   "name": "methane, chlorotrifluoro-",
+   "how": "CF3Cl"
+  },
+  {
+   "species": "CF4",
+   "cas": "75-73-0",
+   "name": "carbon tetrafluoride",
+   "how": "CF4"
+  },
+  {
+   "species": "CHBr3",
+   "cas": "75-25-2",
+   "name": "bromoform",
+   "how": "CHBr3"
+  },
+  {
+   "species": "CHCLBr2",
+   "cas": "124-48-1",
+   "name": "chlorodibromomethane",
+   "how": "CHClBr2"
+  },
+  {
+   "species": "CHCL2Br",
+   "cas": "75-27-4",
+   "name": "bromodichloromethane",
+   "how": "CHCl2Br"
+  },
+  {
+   "species": "CHCL3",
+   "cas": "67-66-3",
+   "name": "chloroform",
+   "how": "CHCL3"
+  },
+  {
+   "species": "CHFCL2",
+   "cas": "75-43-4",
+   "name": "dichlorofluoromethane",
+   "how": "CHFCl2"
+  },
+  {
+   "species": "CHF2Br",
+   "cas": "1511-62-2",
+   "name": "bromodifluoromethane",
+   "how": "CHF2Br"
+  },
+  {
+   "species": "CHF2CL",
+   "cas": "75-45-6",
+   "name": "difluorochloromethane",
+   "how": "CHF2Cl"
+  },
+  {
+   "species": "CHF3",
+   "cas": "75-46-7",
+   "name": "fluoroform",
+   "how": "CHF3"
+  },
+  {
+   "species": "CHI3",
+   "cas": "75-47-8",
+   "name": "iodoform",
+   "how": "CHI3"
+  },
+  {
+   "species": "CH2Br2",
+   "cas": "74-95-3",
+   "name": "dibromomethane",
+   "how": "CH2Br2"
+  },
+  {
+   "species": "CH2CLBr",
+   "cas": "74-97-5",
+   "name": "bromochloromethane",
+   "how": "CH2ClBr"
+  },
+  {
+   "species": "CH2CL2",
+   "cas": "75-09-2",
+   "name": "dichloromethane",
+   "how": "CH2CL2"
+  },
+  {
+   "species": "CH2FBr",
+   "cas": "373-52-4",
+   "name": "bromofluoromethane",
+   "how": "CH2FBr"
+  },
+  {
+   "species": "CH2FCL",
+   "cas": "593-70-4",
+   "name": "chlorofluoromethane",
+   "how": "CH2FCl"
+  },
+  {
+   "species": "CH2F2",
+   "cas": "75-10-5",
+   "name": "difluoromethane",
+   "how": "CH2F2"
+  },
+  {
+   "species": "CH2I2",
+   "cas": "75-11-6",
+   "name": "diiodomethane",
+   "how": "CH2I2"
+  },
+  {
+   "species": "CH3Br",
+   "cas": "74-83-9",
+   "name": "bromomethane",
+   "how": "CH3Br"
+  },
+  {
+   "species": "CH3CL",
+   "cas": "74-87-3",
+   "name": "chloromethane",
+   "how": "CH3CL"
+  },
+  {
+   "species": "CH3F",
+   "cas": "593-53-3",
+   "name": "fluoromethane",
+   "how": "CH3F"
+  },
+  {
+   "species": "CH3I",
+   "cas": "74-88-4",
+   "name": "methyl iodide",
+   "how": "CH3I"
+  },
+  {
+   "species": "CH4",
+   "cas": "74-82-8",
+   "name": "methane",
+   "how": "CH4"
+  },
+  {
+   "species": "CH3OH",
+   "cas": "67-56-1",
+   "name": "methanol",
+   "how": "CH3OH"
+  },
+  {
+   "species": "CI4",
+   "cas": "507-25-5",
+   "name": "tetraiodomethane",
+   "how": "CI4"
+  },
+  {
+   "species": "CO",
+   "cas": "630-08-0",
+   "name": "carbon monoxide",
+   "how": "CO"
+  },
+  {
+   "species": "COCL2",
+   "cas": "75-44-5",
+   "name": "phosgene",
+   "how": "COCl2"
+  },
+  {
+   "species": "COFCL",
+   "cas": "353-49-1",
+   "name": "carbonyl chloride fluoride",
+   "how": "COFCl"
+  },
+  {
+   "species": "COF2",
+   "cas": "353-50-4",
+   "name": "carbonyl fluoride",
+   "how": "COF2"
+  },
+  {
+   "species": "COS",
+   "cas": "463-58-1",
+   "name": "carbonyl sulfide",
+   "how": "COS"
+  },
+  {
+   "species": "CO2",
+   "cas": "124-38-9",
+   "name": "carbon dioxide",
+   "how": "CO2"
+  },
+  {
+   "species": "CS2",
+   "cas": "75-15-0",
+   "name": "carbon disulfide",
+   "how": "CS2"
+  },
+  {
+   "species": "C2CL2",
+   "cas": "7572-29-4",
+   "name": "dichloroethyne",
+   "how": "C2Cl2"
+  },
+  {
+   "species": "C2CL4",
+   "cas": "127-18-4",
+   "name": "tetrachloroethylene",
+   "how": "C2CL4"
+  },
+  {
+   "species": "C2CL6",
+   "cas": "67-72-1",
+   "name": "hexachloroethane",
+   "how": "C2CL6"
+  },
+  {
+   "species": "C2F3CL",
+   "cas": "79-38-9",
+   "name": "chlorotrifluoroethylene",
+   "how": "C2F3Cl"
+  },
+  {
+   "species": "C2F4",
+   "cas": "116-14-3",
+   "name": "tetrafluoroethene",
+   "how": "C2F4"
+  },
+  {
+   "species": "C2F6",
+   "cas": "76-16-4",
+   "name": "perfluoroethane",
+   "how": "C2F6"
+  },
+  {
+   "species": "C2HCL",
+   "cas": "593-63-5",
+   "name": "chloroethyne",
+   "how": "C2HCl"
+  },
+  {
+   "species": "C2HCL3",
+   "cas": "79-01-6",
+   "name": "trichloroethylene",
+   "how": "C2HCL3"
+  },
+  {
+   "species": "C2HF",
+   "cas": "24981-14-4",
+   "name": "fluoroacetylene",
+   "how": "C2HF"
+  },
+  {
+   "species": "C2HF3",
+   "cas": "359-11-5",
+   "name": "trifluoroethylene",
+   "how": "C2HF3"
+  },
+  {
+   "species": "C2H2,acetylene",
+   "cas": "74-86-2",
+   "name": "acetylene",
+   "how": "acetylene"
+  },
+  {
+   "species": "CH2CO,ketene",
+   "cas": "463-51-4",
+   "name": "ethenone",
+   "how": "ketene"
+  },
+  {
+   "species": "O(CH)2O",
+   "cas": "107-22-2",
+   "name": "glyoxal",
+   "how": "O(CH)2O"
+  },
+  {
+   "species": "HO(CO)2OH",
+   "cas": "144-62-7",
+   "name": "oxalic acid",
+   "how": "HO(CO)2OH"
+  },
+  {
+   "species": "C2H3CL",
+   "cas": "75-01-4",
+   "name": "ethene, chloro-",
+   "how": "C2H3Cl"
+  },
+  {
+   "species": "CH2CL-COOH",
+   "cas": "79-11-8",
+   "name": "chloroacetic acid",
+   "how": "Chloroacetic"
+  },
+  {
+   "species": "C2H3F",
+   "cas": "75-02-5",
+   "name": "ethene, fluoro-",
+   "how": "C2H3F"
+  },
+  {
+   "species": "CH3CN",
+   "cas": "75-05-8",
+   "name": "acetonitrile",
+   "how": "CH3CN"
+  },
+  {
+   "species": "C2H4",
+   "cas": "74-85-1",
+   "name": "ethene",
+   "how": "C2H4"
+  },
+  {
+   "species": "CH3CHO,ethanal",
+   "cas": "75-07-0",
+   "name": "acetaldehyde",
+   "how": "ethanal"
+  },
+  {
+   "species": "CH3COOH",
+   "cas": "64-19-7",
+   "name": "acetic acid",
+   "how": "manual"
+  },
+  {
+   "species": "OHCH2COOH",
+   "cas": "79-14-1",
+   "name": "glycolic acid",
+   "how": "manual"
+  },
+  {
+   "species": "C2H5Br",
+   "cas": "74-96-4",
+   "name": "bromoethane",
+   "how": "C2H5Br"
+  },
+  {
+   "species": "C2H6",
+   "cas": "74-84-0",
+   "name": "ethane",
+   "how": "C2H6"
+  },
+  {
+   "species": "C2H5OH",
+   "cas": "64-17-5",
+   "name": "ethanol",
+   "how": "manual"
+  },
+  {
+   "species": "CH3OCH3",
+   "cas": "115-10-6",
+   "name": "dimethyl ether",
+   "how": "CH3OCH3"
+  },
+  {
+   "species": "C2N2",
+   "cas": "460-19-5",
+   "name": "ethanedinitrile",
+   "how": "C2N2"
+  },
+  {
+   "species": "C3H4,allene",
+   "cas": "463-49-0",
+   "name": "allene",
+   "how": "allene"
+  },
+  {
+   "species": "C3H4,propyne",
+   "cas": "74-99-7",
+   "name": "propyne",
+   "how": "propyne"
+  },
+  {
+   "species": "C3H6,propylene",
+   "cas": "115-07-1",
+   "name": "propene",
+   "how": "propylene"
+  },
+  {
+   "species": "C3H6O,acetone",
+   "cas": "67-64-1",
+   "name": "acetone",
+   "how": "acetone"
+  },
+  {
+   "species": "C3H6O,propanal",
+   "cas": "123-38-6",
+   "name": "propionaldehyde",
+   "how": "propanal"
+  },
+  {
+   "species": "C3H8",
+   "cas": "74-98-6",
+   "name": "propane",
+   "how": "C3H8"
+  },
+  {
+   "species": "C4H2,butadiyne",
+   "cas": "460-12-8",
+   "name": "1,3-butadiyne",
+   "how": "butadiyne"
+  },
+  {
+   "species": "C4H6,butadiene",
+   "cas": "106-99-0",
+   "name": "1,3-butadiene",
+   "how": "butadiene"
+  },
+  {
+   "species": "C4H6,cyclo-",
+   "cas": "822-35-5",
+   "name": "cyclobutene",
+   "how": "Cyclobutene"
+  },
+  {
+   "species": "C4H8,1-butene",
+   "cas": "106-98-9",
+   "name": "1-butene",
+   "how": "1-butene"
+  },
+  {
+   "species": "C4H8,isobutene",
+   "cas": "115-11-7",
+   "name": "isobutene",
+   "how": "isobutene"
+  },
+  {
+   "species": "C4H8,cyclo-",
+   "cas": "287-23-0",
+   "name": "cyclobutane",
+   "how": "Cyclobutane"
+  },
+  {
+   "species": "C4H10,n-butane",
+   "cas": "106-97-8",
+   "name": "butane",
+   "how": "n-butane"
+  },
+  {
+   "species": "C4H10,isobutane",
+   "cas": "75-28-5",
+   "name": "isobutane",
+   "how": "isobutane"
+  },
+  {
+   "species": "C5H6,1,3cyclo-",
+   "cas": "542-92-7",
+   "name": "cyclopentadiene",
+   "how": "1,3-Cyclopentadiene"
+  },
+  {
+   "species": "C5H8,cyclo-",
+   "cas": "142-29-0",
+   "name": "cyclopentene",
+   "how": "Cyclopentene"
+  },
+  {
+   "species": "C5H10,1-pentene",
+   "cas": "109-67-1",
+   "name": "1-pentene",
+   "how": "1-pentene"
+  },
+  {
+   "species": "C5H10,cyclo-",
+   "cas": "287-92-3",
+   "name": "cyclopentane",
+   "how": "Cyclopentane"
+  },
+  {
+   "species": "C5H12,n-pentane",
+   "cas": "109-66-0",
+   "name": "pentane",
+   "how": "n-pentane"
+  },
+  {
+   "species": "C5H12,i-pentane",
+   "cas": "78-78-4",
+   "name": "isopentane",
+   "how": "i-pentane"
+  },
+  {
+   "species": "CH3C(CH3)2CH3",
+   "cas": "463-82-1",
+   "name": "neopentane",
+   "how": "manual"
+  },
+  {
+   "species": "C6D6",
+   "cas": "1076-43-3",
+   "name": "benzene-d6",
+   "how": "Benzene-d6"
+  },
+  {
+   "species": "C6H6",
+   "cas": "71-43-2",
+   "name": "benzene",
+   "how": "C6H6"
+  },
+  {
+   "species": "C6H5OH,phenol",
+   "cas": "108-95-2",
+   "name": "phenol",
+   "how": "phenol"
+  },
+  {
+   "species": "C6H10,cyclo-",
+   "cas": "110-83-8",
+   "name": "cyclohexene",
+   "how": "Cyclohexene"
+  },
+  {
+   "species": "C6H12,1-hexene",
+   "cas": "592-41-6",
+   "name": "1-hexene",
+   "how": "1-hexene"
+  },
+  {
+   "species": "C6H12,cyclo-",
+   "cas": "110-82-7",
+   "name": "cyclohexane",
+   "how": "Cyclohexane"
+  },
+  {
+   "species": "C6H14,n-hexane",
+   "cas": "110-54-3",
+   "name": "hexane",
+   "how": "n-hexane"
+  },
+  {
+   "species": "C7H8",
+   "cas": "108-88-3",
+   "name": "toluene",
+   "how": "C7H8"
+  },
+  {
+   "species": "C7H14,1-heptene",
+   "cas": "592-76-7",
+   "name": "1-heptene",
+   "how": "1-heptene"
+  },
+  {
+   "species": "C7H16,n-heptane",
+   "cas": "142-82-5",
+   "name": "heptane",
+   "how": "n-heptane"
+  },
+  {
+   "species": "C7H16,2-methylh",
+   "cas": "591-76-4",
+   "name": "2-methylhexane",
+   "how": "2-methylhexane"
+  },
+  {
+   "species": "C8H8,styrene",
+   "cas": "100-42-5",
+   "name": "styrene",
+   "how": "styrene"
+  },
+  {
+   "species": "C8H10,ethylbenz",
+   "cas": "100-41-4",
+   "name": "ethylbenzene",
+   "how": "Ethylbenzene"
+  },
+  {
+   "species": "C8H16,1-octene",
+   "cas": "111-66-0",
+   "name": "1-octene",
+   "how": "1-octene"
+  },
+  {
+   "species": "C8H18,n-octane",
+   "cas": "111-65-9",
+   "name": "octane",
+   "how": "n-octane"
+  },
+  {
+   "species": "C8H18,isooctane",
+   "cas": "540-84-1",
+   "name": "2,2,4-trimethylpentane",
+   "how": "isooctane"
+  },
+  {
+   "species": "C10H8,naphthale",
+   "cas": "91-20-3",
+   "name": "naphthalene",
+   "how": "Naphthalene"
+  },
+  {
+   "species": "C12H10,biphenyl",
+   "cas": "92-52-4",
+   "name": "biphenyl",
+   "how": "biphenyl"
+  },
+  {
+   "species": "CLCN",
+   "cas": "506-77-4",
+   "name": "cyanogen chloride",
+   "how": "ClCN"
+  },
+  {
+   "species": "CLF",
+   "cas": "7790-89-8",
+   "name": "chlorine monofluoride",
+   "how": "ClF"
+  },
+  {
+   "species": "CLF3",
+   "cas": "7790-91-2",
+   "name": "chlorine trifluoride",
+   "how": "CLF3"
+  },
+  {
+   "species": "CLF5",
+   "cas": "13637-63-3",
+   "name": "chlorine pentafluoride",
+   "how": "ClF5"
+  },
+  {
+   "species": "CLO2",
+   "cas": "10049-04-4",
+   "name": "chlorine dioxide",
+   "how": "ClO2"
+  },
+  {
+   "species": "CL2",
+   "cas": "7782-50-5",
+   "name": "chlorine",
+   "how": "Cl2"
+  },
+  {
+   "species": "CL2O",
+   "cas": "7791-21-1",
+   "name": "chlorine monoxide",
+   "how": "Cl2O"
+  },
+  {
+   "species": "DBr",
+   "cas": "13536-59-9",
+   "name": "hydrobromic acid-d",
+   "how": "DBr"
+  },
+  {
+   "species": "DCL",
+   "cas": "7698-05-7",
+   "name": "deuterium chloride",
+   "how": "DCl"
+  },
+  {
+   "species": "DF",
+   "cas": "14333-26-7",
+   "name": "hydrofluoric acid-d",
+   "how": "DF"
+  },
+  {
+   "species": "D2",
+   "cas": "7782-39-0",
+   "name": "deuterium",
+   "how": "D2"
+  },
+  {
+   "species": "D2O",
+   "cas": "7789-20-0",
+   "name": "deuterium oxide",
+   "how": "D2O"
+  },
+  {
+   "species": "F2",
+   "cas": "7782-41-4",
+   "name": "fluorine",
+   "how": "F2"
+  },
+  {
+   "species": "F2O",
+   "cas": "7783-41-7",
+   "name": "oxygen difluoride",
+   "how": "F2O"
+  },
+  {
+   "species": "F2O2",
+   "cas": "7783-44-0",
+   "name": "fluorine dioxide",
+   "how": "F2O2"
+  },
+  {
+   "species": "HBr",
+   "cas": "10035-10-6",
+   "name": "hydrogen bromide",
+   "how": "HBr"
+  },
+  {
+   "species": "HCN",
+   "cas": "74-90-8",
+   "name": "hydrogen cyanide",
+   "how": "HCN"
+  },
+  {
+   "species": "HCL",
+   "cas": "7647-01-0",
+   "name": "hydrochloric acid",
+   "how": "HCL"
+  },
+  {
+   "species": "HF",
+   "cas": "7664-39-3",
+   "name": "hydrofluoric acid",
+   "how": "HF"
+  },
+  {
+   "species": "HI",
+   "cas": "10034-85-2",
+   "name": "hydrogen iodide",
+   "how": "HI"
+  },
+  {
+   "species": "HNO2",
+   "cas": "7782-77-6",
+   "name": "nitrous acid",
+   "how": "HNO2"
+  },
+  {
+   "species": "HNO3",
+   "cas": "7697-37-2",
+   "name": "nitric acid",
+   "how": "HNO3"
+  },
+  {
+   "species": "HOCL",
+   "cas": "7790-92-3",
+   "name": "hypochlorous acid",
+   "how": "HOCL"
+  },
+  {
+   "species": "HSO3F",
+   "cas": "7789-21-1",
+   "name": "fluorosulfonic acid",
+   "how": "HSO3F"
+  },
+  {
+   "species": "H2",
+   "cas": "1333-74-0",
+   "name": "hydrogen",
+   "how": "H2"
+  },
+  {
+   "species": "HCOOH",
+   "cas": "64-18-6",
+   "name": "formic acid",
+   "how": "HCOOH"
+  },
+  {
+   "species": "H2O",
+   "cas": "7732-18-5",
+   "name": "water",
+   "how": "H2O"
+  },
+  {
+   "species": "H2O2",
+   "cas": "7722-84-1",
+   "name": "hydrogen peroxide",
+   "how": "H2O2"
+  },
+  {
+   "species": "H2S",
+   "cas": "7783-06-4",
+   "name": "hydrogen sulfide",
+   "how": "H2S"
+  },
+  {
+   "species": "H2SO4",
+   "cas": "7664-93-9",
+   "name": "sulfuric acid",
+   "how": "H2SO4"
+  },
+  {
+   "species": "He",
+   "cas": "7440-59-7",
+   "name": "helium",
+   "how": "He"
+  },
+  {
+   "species": "IF5",
+   "cas": "7783-66-6",
+   "name": "iodine pentafluoride",
+   "how": "IF5"
+  },
+  {
+   "species": "IF7",
+   "cas": "16921-96-3",
+   "name": "iodine heptafluoride",
+   "how": "IF7"
+  },
+  {
+   "species": "I2",
+   "cas": "7553-56-2",
+   "name": "iodine",
+   "how": "I2"
+  },
+  {
+   "species": "Kr",
+   "cas": "7439-90-9",
+   "name": "krypton",
+   "how": "Kr"
+  },
+  {
+   "species": "ND3",
+   "cas": "13550-49-7",
+   "name": "ammonia-d3",
+   "how": "ND3"
+  },
+  {
+   "species": "NF3",
+   "cas": "7783-54-2",
+   "name": "nitrogen trifluoride",
+   "how": "NF3"
+  },
+  {
+   "species": "NH3",
+   "cas": "7664-41-7",
+   "name": "ammonia",
+   "how": "NH3"
+  },
+  {
+   "species": "NH2OH",
+   "cas": "7803-49-8",
+   "name": "hydroxylamine",
+   "how": "NH2OH"
+  },
+  {
+   "species": "NO",
+   "cas": "10102-43-9",
+   "name": "nitric oxide",
+   "how": "NO"
+  },
+  {
+   "species": "NOCL",
+   "cas": "2696-92-6",
+   "name": "nitrosyl chloride",
+   "how": "NOCl"
+  },
+  {
+   "species": "NO2",
+   "cas": "10102-44-0",
+   "name": "nitrogen dioxide",
+   "how": "NO2"
+  },
+  {
+   "species": "N2",
+   "cas": "7727-37-9",
+   "name": "nitrogen",
+   "how": "N2"
+  },
+  {
+   "species": "N2F4",
+   "cas": "10036-47-2",
+   "name": "tetrafluorohydrazine",
+   "how": "N2F4"
+  },
+  {
+   "species": "N2H4",
+   "cas": "302-01-2",
+   "name": "hydrazine",
+   "how": "N2H4"
+  },
+  {
+   "species": "N2O",
+   "cas": "10024-97-2",
+   "name": "nitrous oxide",
+   "how": "N2O"
+  },
+  {
+   "species": "N2O3",
+   "cas": "10544-73-7",
+   "name": "dinitrogen trioxide",
+   "how": "N2O3"
+  },
+  {
+   "species": "N2O4",
+   "cas": "10544-72-6",
+   "name": "nitrogen oxide (N2O4)",
+   "how": "N2O4"
+  },
+  {
+   "species": "N2O5",
+   "cas": "10102-03-1",
+   "name": "nitrogen pentoxide",
+   "how": "N2O5"
+  },
+  {
+   "species": "N3H",
+   "cas": "7782-79-8",
+   "name": "hydrazoic acid",
+   "how": "N3H"
+  },
+  {
+   "species": "Ne",
+   "cas": "7440-01-9",
+   "name": "neon",
+   "how": "Ne"
+  },
+  {
+   "species": "O2",
+   "cas": "7782-44-7",
+   "name": "oxygen",
+   "how": "O2"
+  },
+  {
+   "species": "O3",
+   "cas": "10028-15-6",
+   "name": "ozone",
+   "how": "O3"
+  },
+  {
+   "species": "PCL3",
+   "cas": "7719-12-2",
+   "name": "phosphorus trichloride",
+   "how": "PCL3"
+  },
+  {
+   "species": "PCL5",
+   "cas": "10026-13-8",
+   "name": "phosphorus pentachloride",
+   "how": "PCL5"
+  },
+  {
+   "species": "PF3",
+   "cas": "7783-55-3",
+   "name": "phosphorus trifluoride",
+   "how": "PF3"
+  },
+  {
+   "species": "PF5",
+   "cas": "7647-19-0",
+   "name": "pentafluorophosphorane",
+   "how": "PF5"
+  },
+  {
+   "species": "PH3",
+   "cas": "7803-51-2",
+   "name": "phosphine (PH3)",
+   "how": "PH3"
+  },
+  {
+   "species": "POCL3",
+   "cas": "10025-87-3",
+   "name": "phosphoryl chloride",
+   "how": "POCL3"
+  },
+  {
+   "species": "POF3",
+   "cas": "13478-20-1",
+   "name": "phosphoryl fluoride",
+   "how": "POF3"
+  },
+  {
+   "species": "SCL2",
+   "cas": "10545-99-0",
+   "name": "sulfur chloride (scl2)",
+   "how": "SCl2"
+  },
+  {
+   "species": "SF4",
+   "cas": "7783-60-0",
+   "name": "sulfur tetrafluoride",
+   "how": "SF4"
+  },
+  {
+   "species": "SF6",
+   "cas": "2551-62-4",
+   "name": "sulfur hexafluoride",
+   "how": "SF6"
+  },
+  {
+   "species": "SOF2",
+   "cas": "7783-42-8",
+   "name": "thionyl fluoride",
+   "how": "SOF2"
+  },
+  {
+   "species": "SO2",
+   "cas": "7446-09-5",
+   "name": "sulfur dioxide",
+   "how": "SO2"
+  },
+  {
+   "species": "SO2CL2",
+   "cas": "7791-25-5",
+   "name": "sulfuryl chloride",
+   "how": "SO2CL2"
+  },
+  {
+   "species": "SO2FCL",
+   "cas": "13637-84-8",
+   "name": "sulfuryl chloride fluoride",
+   "how": "SO2FCL"
+  },
+  {
+   "species": "SO2F2",
+   "cas": "2699-79-8",
+   "name": "sulfonyl fluoride",
+   "how": "SO2F2"
+  },
+  {
+   "species": "SO3",
+   "cas": "7446-11-9",
+   "name": "sulfur trioxide",
+   "how": "SO3"
+  },
+  {
+   "species": "S2CL2",
+   "cas": "10025-67-9",
+   "name": "sulfur monochloride",
+   "how": "S2CL2"
+  },
+  {
+   "species": "SiBr4",
+   "cas": "7789-66-4",
+   "name": "tetrabromosilane",
+   "how": "SiBr4"
+  },
+  {
+   "species": "SiCL4",
+   "cas": "10026-04-7",
+   "name": "tetrachlorosilane",
+   "how": "SiCl4"
+  },
+  {
+   "species": "SiF4",
+   "cas": "7783-61-1",
+   "name": "silane, tetrafluoro-",
+   "how": "SiF4"
+  },
+  {
+   "species": "SiHCL3",
+   "cas": "10025-78-2",
+   "name": "trichlorosilane",
+   "how": "SiHCl3"
+  },
+  {
+   "species": "SiH2CL2",
+   "cas": "4109-96-0",
+   "name": "dichlorosilane",
+   "how": "SiH2CL2"
+  },
+  {
+   "species": "SiH3CL",
+   "cas": "13465-78-6",
+   "name": "chlorosilane",
+   "how": "SiH3Cl"
+  },
+  {
+   "species": "SiH4",
+   "cas": "7803-62-5",
+   "name": "silane",
+   "how": "SiH4"
+  },
+  {
+   "species": "Xe",
+   "cas": "7440-63-3",
+   "name": "xenon",
+   "how": "Xe"
+  },
+  {
+   "species": "Br2(L)",
+   "cas": "7726-95-6",
+   "name": "bromine",
+   "how": "Br2"
+  },
+  {
+   "species": "H2O(L)",
+   "cas": "7732-18-5",
+   "name": "water",
+   "how": "H2O"
+  },
+  {
+   "species": "H2SO4(L)",
+   "cas": "7664-93-9",
+   "name": "sulfuric acid",
+   "how": "H2SO4"
+  },
+  {
+   "species": "H3PO4(L)",
+   "cas": "7664-38-2",
+   "name": "phosphoric acid",
+   "how": "H3PO4"
+  },
+  {
+   "species": "I2(L)",
+   "cas": "7553-56-2",
+   "name": "iodine",
+   "how": "I2"
+  },
+  {
+   "species": "SCL2(L)",
+   "cas": "10545-99-0",
+   "name": "sulfur chloride (scl2)",
+   "how": "SCl2"
+  },
+  {
+   "species": "S2CL2(L)",
+   "cas": "10025-67-9",
+   "name": "sulfur monochloride",
+   "how": "S2CL2"
+  },
+  {
+   "species": "CH3OH(L)",
+   "cas": "67-56-1",
+   "name": "methanol",
+   "how": "CH3OH"
+  },
+  {
+   "species": "C2H5OH(L)",
+   "cas": "64-17-5",
+   "name": "ethanol",
+   "how": "manual"
+  },
+  {
+   "species": "C6H6(L)",
+   "cas": "71-43-2",
+   "name": "benzene",
+   "how": "C6H6"
+  },
+  {
+   "species": "C6H5NH2(L)",
+   "cas": "62-53-3",
+   "name": "aniline",
+   "how": "manual"
+  },
+  {
+   "species": "C7H8(L)",
+   "cas": "108-88-3",
+   "name": "toluene",
+   "how": "C7H8"
+  },
+  {
+   "species": "CLO3F",
+   "cas": "7616-94-6",
+   "name": "perchloryl fluoride",
+   "how": "ClO3F"
+  },
+  {
+   "species": "H2O2(L)",
+   "cas": "7722-84-1",
+   "name": "hydrogen peroxide",
+   "how": "H2O2"
+  },
+  {
+   "species": "N2H4(L)",
+   "cas": "302-01-2",
+   "name": "hydrazine",
+   "how": "N2H4"
+  },
+  {
+   "species": "C2H4O,ethylen-o",
+   "cas": "75-21-8",
+   "name": "oxirane",
+   "how": "manual"
+  },
+  {
+   "species": "C3H6,cyclo-",
+   "cas": "75-19-4",
+   "name": "cyclopropane",
+   "how": "manual"
+  },
+  {
+   "species": "C3H6O,propylox",
+   "cas": "75-56-9",
+   "name": "propylene oxide",
+   "how": "manual"
+  },
+  {
+   "species": "C3H8O,1propanol",
+   "cas": "71-23-8",
+   "name": "1-propanol",
+   "how": "manual"
+  },
+  {
+   "species": "C3H8O,2propanol",
+   "cas": "67-63-0",
+   "name": "isopropanol",
+   "how": "manual"
+  },
+  {
+   "species": "C4H6,1butyne",
+   "cas": "107-00-6",
+   "name": "1-butyne",
+   "how": "manual"
+  },
+  {
+   "species": "C4H6,2butyne",
+   "cas": "503-17-3",
+   "name": "2-butyne",
+   "how": "manual"
+  },
+  {
+   "species": "C4H8,cis2-buten",
+   "cas": "590-18-1",
+   "name": "cis-2-butene",
+   "how": "manual"
+  },
+  {
+   "species": "C4H8,tr2-butene",
+   "cas": "624-64-6",
+   "name": "trans-2-butene",
+   "how": "manual"
+  },
+  {
+   "species": "HCHO,formaldehy",
+   "cas": "50-00-0",
+   "name": "formaldehyde",
+   "how": "manual"
+  },
+  {
+   "species": "HNCO",
+   "cas": "75-13-8",
+   "name": "isocyanic acid",
+   "how": "manual"
+  },
+  {
+   "species": "Fe(CO)5",
+   "cas": "13463-40-6",
+   "name": "iron(0) carbonyl",
+   "how": "manual"
+  },
+  {
+   "species": "CH2Br-COOH",
+   "cas": "79-08-3",
+   "name": "bromoacetic acid",
+   "how": "manual"
+  }
+ ]
+}

@@ -1,12 +1,15 @@
-// Trade controls · 중소기업 체크리스트 — "체크리스트 인쇄/PDF"(인쇄 전용 배치, checklist_print.css) + "CSV 내려받기".
+// Trade controls · 체크리스트 — "체크리스트 인쇄/PDF"(인쇄 전용 배치, checklist_print.css) + "CSV 내려받기".
 // 행 만들기: trade_controls_checklist_helpers.jsx, 문구: trade_controls_checklist_labels.jsx.
 
 function tcChecklistHeading(data, selected, direction, country) {
   const L = TC_CHECKLIST_LABELS;
-  const name = selected?.name || selected?.name_en || data.substance?.name_ko || data.cas;
+  const name = tcSubstanceName(selected, data);
   const phrase = TRADE_LABELS.directions[direction]?.phrase(name, tcCountryName(country)) || "";
+  const s = data.substance || {};
+  // 한국어 화면은 "벤젠 / Benzene", 영어 화면은 영문명(없으면 한글명).
+  const substance = CHEMIP_LANG === "en" ? tcLocalized(s.name_ko, s.name_en) : [s.name_ko, s.name_en].filter(Boolean).join(" / ");
   return [
-    [L.substance, [data.substance?.name_ko, data.substance?.name_en].filter(Boolean).join(" / ") || name],
+    [L.substance, substance || name],
     [L.cas, data.cas],
     [L.situation, phrase],
     [L.generated, tcTodayKst()],

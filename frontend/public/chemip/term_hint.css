@@ -1,0 +1,34 @@
+/* 공용 용어 설명 "?" (term_hint.jsx, .th-*). 색·간격은 tokens.css 변수만 쓴다.
+   상자 좌표(top·left)만 term_hint.jsx 가 단추 위치로 계산해 넣는다(넓은 화면). */
+
+.th { display: inline-flex; align-items: center; vertical-align: middle; margin-left: calc(var(--unit) * 1); }
+.th-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: calc(var(--unit) * 4); height: calc(var(--unit) * 4); padding: 0;
+  border: 1px solid var(--border-strong); border-radius: 50%;
+  background: var(--bg-elevated); color: var(--fg-muted);
+  font-size: calc(10px * var(--fs)); font-weight: 700; line-height: 1; cursor: help;
+}
+.th-btn:hover, .th-btn[aria-expanded="true"] { border-color: var(--accent); color: var(--accent-ink); background: var(--accent-soft); }
+.th-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.th-tip {
+  position: fixed; top: 0; left: 0; z-index: 1000;
+  display: grid; gap: calc(var(--unit) * 1);
+  width: max-content; max-width: min(320px, calc(100vw - var(--unit) * 8));
+  padding: calc(var(--unit) * 2.5) calc(var(--unit) * 3);
+  border: 1px solid var(--border); border-radius: var(--r-3);
+  background: var(--bg-elevated); color: var(--fg); box-shadow: var(--shadow-2);
+  font-size: calc(12px * var(--fs)); font-weight: 400; line-height: 1.55; text-align: left; white-space: normal; overflow-wrap: anywhere;
+}
+.th-tip[hidden] { display: none; }
+.th-tip.is-placing { visibility: hidden; }
+.th-term { font-size: calc(12px * var(--fs)); font-weight: 600; color: var(--fg); }
+.th-def { color: var(--fg); }
+.th-meta { color: var(--fg-muted); font-size: calc(11px * var(--fs)); }
+
+/* 좁은 화면(term_hint.jsx TERM_HINT_NARROW 와 같은 560px): 화면 아래쪽에 양옆 16px 을 두고 폭에 맞춰 띄운다 — 390px 폭에서도 넘치지 않게 */
+@media (max-width: 560px) {
+  .th-tip { top: auto; left: calc(var(--unit) * 4); right: calc(var(--unit) * 4); bottom: calc(var(--unit) * 4); width: auto; max-width: none; }
+  .th-btn { width: calc(var(--unit) * 5); height: calc(var(--unit) * 5); font-size: calc(11px * var(--fs)); }
+}

@@ -1,0 +1,41 @@
+{
+ "raw_dir": "G:/MSDS/data/portal_raw/intl_reg",
+ "sources": {
+  "us_dot_hmt": {
+   "files": {
+    "ecfr_49_172_101.xml": "https://www.ecfr.gov/api/versioner/v1/full/{ecfr49}/title-49.xml?part=172&section=172.101",
+    "ecfr_40_302_4.xml": "https://www.ecfr.gov/api/versioner/v1/full/{ecfr40}/title-40.xml?part=302&section=302.4"
+   },
+   "page": "https://www.ecfr.gov/current/title-49/subtitle-B/chapter-I/subchapter-C/part-172/subpart-B/section-172.101",
+   "license": "US federal government work (eCFR, Office of the Federal Register / GPO): public domain, 17 U.S.C. 105. eCFR is an editorial compilation, not the official legal edition (the annual CFR is)."
+  },
+  "jp_prtr": {
+   "files": {
+    "R3_PRTR_SDS_ALL_LIST.xlsx": "https://www.nite.go.jp/chem/prtr/data/R3_PRTR_SDS_ALL_LIST.xlsx"
+   },
+   "page": "https://www.nite.go.jp/chem/prtr/msds/msmate.html",
+   "license": "List content = 化管法施行令 (令和3年政令第199号, 2023-04-01 施行) 別表第一・第二: laws are not subject to copyright (日本著作権法 第13条). CAS correspondence = NITE 「化管法物質CAS登録番号入りリスト」; NITE site terms (ホームページのご利用について) reserve copyright on site content and do not adopt 政府標準利用規約 — only the 政令番号↔CAS facts and 政令 names are used, with attribution. The NITE file itself says the CAS numbers are reference only and not exhaustive."
+  },
+  "jp_ishl": {
+   "files": {
+    "label_sds_list_20250401.xlsx": "https://anzeninfo.mhlw.go.jp/anzen/gmsds/label_sds_list_20250401.xlsx",
+    "egov_347CO0000000318.xml": "https://laws.e-gov.go.jp/api/1/lawdata/347CO0000000318"
+   },
+   "page": "https://anzeninfo.mhlw.go.jp/anzen/gmsds/gmsds640.html",
+   "license": "MHLW 職場のあんぜんサイト list: 厚生労働省 公共データ利用規約(第1.0版, PDL1.0 — successor of 政府標準利用規約 2.0, CC BY 4.0 compatible; attribution 「出典：厚生労働省 職場のあんぜんサイト」). Law text (労働安全衛生法施行令 別表第三・第六の二) via e-Gov 法令API: not subject to copyright (著作権法 第13条). MHLW: CAS numbers are not part of the law and are given for reference; applicability is decided by the substance name."
+  },
+  "jp_cscl_priority": {
+   "files": {},
+   "jcheck_category": 230,
+   "page": "https://www.nite.go.jp/chem/jcheck/list6.action?category=230&request_locale=ja",
+   "license": "優先評価化学物質 = 官報公示 (化審法 第2条第5項). CAS correspondence = NITE J-CHECK (MHLW·METI·MOE·NITE); J-CHECK states 「公示整理番号(MITI番号)とCAS登録番号(CAS RN)の関連は、最終的に確認されたものではありません」. Same basis as the existing JP_CSCL_* lists (scripts/trade_controls/intl/sources/jp_cscl.json)."
+  },
+  "ca_npri": {
+   "files": {
+    "npri_substance_list_2025_2027.xlsx": "https://www.canada.ca/content/dam/eccc/documents/xlsx/inrp-npri/substance-lists/2025-2027%20NPRI%20Substance%20List_Liste%20des%20substances%20INRP%202025-2027%20(10-04-2026).xlsx"
+   },
+   "page": "https://www.canada.ca/en/environment-climate-change/services/national-pollutant-release-inventory/substances-list/threshold.html",
+   "license": "Environment and Climate Change Canada: Open Government Licence – Canada (attribution). Legal text: Canada Gazette Part I notice with respect to substances in the NPRI for 2025-2027."
+  }
+ }
+}

@@ -1,0 +1,71 @@
+// 화학사고 소식 화면(?view=feed) 문구 — 한국어(기준 모양, FEED_LABELS_KO). 영어: feed_labels_en.jsx → 화면이 읽는 FEED_LABELS.
+// 출처 이름·라이선스 원문은 자료 파일(feed/latest.json sources)에 있고, 여기에는 짧은 이름만 둔다.
+
+const FEED_LABELS_KO = {
+  title: "화학사고 소식",
+  titleEn: "Incident feed",
+  intro: "국내외 화학사고 조사·기록과 최근 보도를 한곳에 모았습니다. 사고 기록은 미국 CSB·EPA RMP, 유럽 eMARS, 한국 KOSHA·화학물질안전원 자료이고, 보도는 제목과 원문 링크만 보입니다. 물질 이름을 누르면 그 물질의 사고 사례 패널로 갑니다.",
+  loading: "불러오는 중…",
+  unavailable: "화학사고 소식 자료를 아직 받지 못했습니다. 잠시 후 다시 열어 주세요.",
+  error: "소식을 불러오지 못했습니다.",
+  filters: {
+    aria: "소식 거르기",
+    country: "나라",
+    source: "출처",
+    substance: "물질",
+    allCountries: "모든 나라",
+    allSources: "모든 출처",
+    unknownCountry: "나라 미상",
+    substancePlaceholder: "물질 이름 또는 CAS 번호 (예: 암모니아, 7664-41-7)",
+    substanceList: "자주 나온 물질",
+    clear: "거르기 지우기",
+    apply: "찾기",
+  },
+  count: (shown, total) => `${Number(shown).toLocaleString("ko-KR")}건 표시 · 전체 ${Number(total).toLocaleString("ko-KR")}건`,
+  scopeLatest: "최근 소식 기준입니다. 물질을 CAS 번호로 고르면 그 물질의 모든 기록에서 찾습니다.",
+  scopeCas: (name, cas, total) => `${name ? `${name} ` : ""}(${cas}) 기록 ${Number(total).toLocaleString("ko-KR")}건 중 최근 순`,
+  none: "조건에 맞는 소식이 없습니다.",
+  noneCas: (cas) => `${cas} 에 대한 소식이 아직 없습니다.`,
+  more: (n) => `${Number(n).toLocaleString("ko-KR")}건 더 보기`,
+  noDate: "날짜 미상",
+  open: "원문 ↗",
+  openTitle: "새 창에서 원문 열기",
+  substanceLink: (name) => `${name} · 사고 사례 보기`,
+  substanceLinkTitle: "물질 화면의 사고 사례 패널로",
+  equipment: "설비",
+  updated: (d) => `자료 기준 ${d}`,
+  cronUpdated: (d) => `CSB 소식 자동 갱신 ${d}`,
+  kinds: { incident: "사고 기록", news: "기관 소식", press: "보도" },
+  sourceNames: {
+    chemeng_csb: "미국 CSB 조사",
+    chemeng_rmp: "미국 EPA RMP",
+    chemeng_emars: "유럽 eMARS",
+    chemeng_kosha: "KOSHA 재해사례",
+    chemeng_nics: "화학물질안전원",
+    csb_rss: "CSB 소식",
+    press_gnews: "언론 보도",
+  },
+  // 나라 이름 — INTL_JURISDICTIONS(intl_regions.jsx)에 없는 유럽 나라만
+  countries: {
+    DE: "독일", FR: "프랑스", ES: "스페인", IT: "이탈리아", BE: "벨기에", DK: "덴마크", GR: "그리스", BG: "불가리아",
+    PL: "폴란드", NO: "노르웨이", PT: "포르투갈", IE: "아일랜드", FI: "핀란드", AT: "오스트리아", SE: "스웨덴",
+    CZ: "체코", SK: "슬로바키아", SI: "슬로베니아", HR: "크로아티아", HU: "헝가리", RO: "루마니아", LU: "룩셈부르크",
+    CY: "키프로스", MT: "몰타", EE: "에스토니아", LV: "라트비아", LT: "리투아니아",
+  },
+  attribution: {
+    title: "출처와 이용 조건",
+    note: "사고 기록은 각 기관 공개 자료를 출처별 조건 그대로 씁니다. 보도는 제목과 원문 링크만 보이며 기사 본문은 저장하지 않습니다.",
+    items: (n) => `${Number(n).toLocaleString("ko-KR")}건`,
+  },
+  usearch: {
+    screenTitle: "화학사고 소식",
+    screenHint: "국내외 화학사고 기록·기관 소식·보도를 나라·출처·물질로 거르는 화면",
+    keywords: ["화학사고", "사고 소식", "사고 뉴스", "누출 사고", "폭발 사고", "화재 사고", "CSB", "eMARS", "RMP", "화학물질안전원"],
+    badge: "사고 소식",
+    substanceTitle: (name) => `${name} · 화학사고 소식`,
+    substanceSub: (cas, n) => `CAS ${cas} · 기록 ${Number(n).toLocaleString("ko-KR")}건`,
+    itemSub: (date, source) => [date, source].filter(Boolean).join(" · "),
+  },
+};
+
+Object.assign(window, { FEED_LABELS_KO });

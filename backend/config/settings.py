@@ -187,6 +187,15 @@ class Settings:
         "./data/global_patent_index.db",
     )
     USPTO_INDEX_DB_PATH = _resolve_path(os.getenv("USPTO_INDEX_DB_PATH"), "./data/uspto_index.db")
+    # Legacy /api/patents/global|uspto/{chem_id} (old index DBs, noisy rows): 410 Gone unless this is true.
+    # Replaced by the substance → patent mapping below (scripts/patent_export/README.md).
+    LEGACY_PATENT_INDEX_ROUTES = _bool_env("LEGACY_PATENT_INDEX_ROUTES", False)
+    # Substance → patent mapping files <dir>/<CAS>/index.json + <JUR>.json.gz (read-only).
+    # Served at /data/v1/pat/* (backend/api/routes/patent_mapping.py) and used as AI evidence (titles only).
+    PATENT_MAPPING_DIR = _resolve_path(
+        os.getenv("PATENT_MAPPING_DIR"),
+        "E:/dev-cache/chemip-patents/out/v1",
+    )
     KOSHA_GUIDE_DATA_DIR = _resolve_path(
         os.getenv("KOSHA_GUIDE_DATA_DIR"),
         "./data/kosha_guide",

@@ -1,0 +1,56 @@
+// Substance "Korean legal basis" panel · short English law names for the citation chips (full Korean name in the tooltip).
+// Same shape as LAW_SHORT_KO (law_short_labels.jsx); read by law_cite_format.jsx lawShortName / lawShortLabel.
+
+const LAW_SHORT_EN = {
+  names: {
+    "화학물질관리법": "Chemicals Control Act",
+    "화학물질의 등록 및 평가 등에 관한 법률": "K-REACH",
+    "산업안전보건법": "OSH Act",
+    "산업안전보건기준에 관한 규칙": "OSH Standards Rules",
+    "고압가스 안전관리법": "High-Pressure Gas Act",
+    "대기환경보전법": "Clean Air Act",
+    "물환경보전법": "Water Environment Act",
+    "폐기물관리법": "Wastes Control Act",
+    "토양환경보전법": "Soil Environment Act",
+    "위험물안전관리법": "Hazardous Materials Act",
+    "선박안전법": "Ship Safety Act",
+    "위험물 선박운송 및 저장규칙": "Ship Dangerous Goods Rules",
+    "위험물 선박운송 기준": "Ship Dangerous Goods Notice",
+    "해양환경관리법": "Marine Environment Act",
+    "선박에서의 오염방지에 관한 규칙": "Ship Pollution Prevention Rules",
+    "생활화학제품 및 살생물제의 안전관리에 관한 법률": "Consumer Chemicals and Biocides Act",
+    "안전확인대상생활화학제품 지정 및 안전·표시기준": "Safety-Confirmed Products Notice",
+    "승인유예대상 기존살생물물질의 지정": "Deferred Biocides Notice",
+    "위해성이 낮은 살생물물질": "Low-Risk Biocides Notice",
+    "농약관리법": "Pesticide Control Act",
+    "농약 및 원제의 등록기준": "Pesticide Registration Notice",
+    "농약등 및 원제의 취급제한기준": "Pesticide Handling Notice",
+    "농약의 수출입 승인기준": "Pesticide Import/Export Notice",
+    "먹는물관리법": "Drinking Water Act",
+    "먹는물 수질기준 및 검사 등에 관한 규칙": "Drinking Water Quality Rules",
+    "실내공기질 관리법": "Indoor Air Quality Act",
+    "악취방지법": "Malodor Prevention Act",
+    "어린이제품 안전 특별법": "Children's Products Safety Act",
+    "어린이제품 공통안전기준": "Children's Products Common Standard",
+    "오존층 보호 등을 위한 특정물질의 관리에 관한 법률": "Ozone Layer Protection Act",
+    "잔류성오염물질 관리법": "POPs Control Act",
+    "잔류성오염물질의 종류 및 특정면제에 관한 규정": "POPs List Notice",
+    "전기ㆍ전자제품 및 자동차의 자원순환에 관한 법률": "EEE and Vehicles Recycling Act",
+    "중대재해 처벌 등에 관한 법률": "Serious Accidents Punishment Act",
+    "화재의 예방 및 안전관리에 관한 법률": "Fire Prevention Act",
+    "화장품법": "Cosmetics Act",
+    "화장품 안전기준 등에 관한 규정": "Cosmetics Safety Notice",
+    "화학물질 및 물리적 인자의 노출기준": "Exposure Limits Notice",
+    "화학물질 배출저감계획서의 작성 등에 관한 규정": "Emission Reduction Plan Notice",
+    "화학물질의 배출량조사 및 산정계수에 관한 규정": "PRTR Survey Notice",
+    "화학물질의 분류·표시 및 물질안전보건자료에 관한 기준": "GHS/MSDS Notice",
+    "환경오염시설의 통합관리에 관한 법률": "Integrated Pollution Control Act",
+    "휘발성유기화합물 지정 고시": "VOC Designation Notice",
+  },
+  suffix: { 시행령: "Decree", 시행규칙: "Rule" },
+  label: { art: "Art.", para: "¶", item: "No.", annex: "Annex" },
+};
+
+const LAW_SHORT = langPick(LAW_SHORT_KO, LAW_SHORT_EN);
+
+Object.assign(window, { LAW_SHORT_EN, LAW_SHORT });

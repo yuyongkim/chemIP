@@ -12,9 +12,9 @@ const SOURCES = [
   { code: "NAVER", kr: "네이버 뉴스 API", en: "News Fallback", desc: "NAVER search results shown as a separate, labelled block (never merged with KOTRA).", endpoint: "/api/trade/naver-news", live: true },
 ];
 
-// Acronym glossary — hover tooltips for data-source / regulation abbreviations.
-// Keys are UPPERCASE (lookup is case-insensitive via Abbr).
-const GLOSSARY = {
+// Acronym glossary — hover tooltips for data-source / regulation abbreviations (Korean; English: data_en.jsx,
+// which builds GLOSSARY for the screen language). Keys are UPPERCASE (lookup is case-insensitive via Abbr).
+const GLOSSARY_KO = {
   KOSHA:     { name: "Korea Occupational Safety & Health Agency", kr: "한국산업안전보건공단", desc: "국내 공식 MSDS·작업환경측정·노출기준(OEL)을 제공하는 기관." },
   ECHA:      { name: "European Chemicals Agency", kr: "유럽화학물질청", desc: "EU REACH·CLP 규제를 총괄. SVHC 후보목록·인가(Annex XIV)·제한(Annex XVII)을 관리." },
   NIOSH:     { name: "US National Institute for Occupational Safety and Health", kr: "미 국립산업안전보건연구원", desc: "REL 권고노출기준·Pocket Guide·IDLH 값 등 직업보건 데이터를 제공." },
@@ -85,23 +85,24 @@ const WORKFLOWS = [
   },
 ];
 
+// MSDS 16 sections: kr = Korean title, en = English title. Shown in the screen language via msdsSectionName (data_en.jsx).
 const MSDS_SECTIONS = [
-  { n: 1,  en: "Product & Supplier", kr: "제품 및 회사정보" },
-  { n: 2,  en: "Hazards Identification", kr: "유해성·위험성", hazard: true },
-  { n: 3,  en: "Composition & Ingredients", kr: "구성성분" },
-  { n: 4,  en: "First-Aid Measures", kr: "응급조치 요령" },
-  { n: 5,  en: "Fire-Fighting Measures", kr: "폭발·화재시 대처" },
-  { n: 6,  en: "Accidental Release", kr: "누출 사고시 대처" },
-  { n: 7,  en: "Handling & Storage", kr: "취급 및 저장방법" },
-  { n: 8,  en: "Exposure Controls / PPE", kr: "노출방지·개인보호구" },
-  { n: 9,  en: "Physical & Chemical", kr: "물리화학적 특성" },
-  { n: 10, en: "Stability & Reactivity", kr: "안정성 및 반응성" },
-  { n: 11, en: "Toxicological Info", kr: "독성에 관한 정보", hazard: true },
-  { n: 12, en: "Ecological Info", kr: "환경에 미치는 영향" },
-  { n: 13, en: "Disposal Considerations", kr: "폐기시 주의사항" },
-  { n: 14, en: "Transport Info", kr: "운송에 필요한 정보" },
-  { n: 15, en: "Regulatory Info", kr: "법적 규제현황" },
-  { n: 16, en: "Other Information", kr: "그 밖의 참고사항" },
+  { n: 1,  en: "Identification", kr: "제품 및 회사정보" },
+  { n: 2,  en: "Hazard identification", kr: "유해성·위험성", hazard: true },
+  { n: 3,  en: "Composition / ingredients", kr: "구성성분" },
+  { n: 4,  en: "First-aid measures", kr: "응급조치 요령" },
+  { n: 5,  en: "Fire-fighting measures", kr: "폭발·화재시 대처" },
+  { n: 6,  en: "Accidental release measures", kr: "누출 사고시 대처" },
+  { n: 7,  en: "Handling and storage", kr: "취급 및 저장방법" },
+  { n: 8,  en: "Exposure controls / PPE", kr: "노출방지·개인보호구" },
+  { n: 9,  en: "Physical and chemical properties", kr: "물리화학적 특성" },
+  { n: 10, en: "Stability and reactivity", kr: "안정성 및 반응성" },
+  { n: 11, en: "Toxicological information", kr: "독성에 관한 정보", hazard: true },
+  { n: 12, en: "Ecological information", kr: "환경에 미치는 영향" },
+  { n: 13, en: "Disposal considerations", kr: "폐기시 주의사항" },
+  { n: 14, en: "Transport information", kr: "운송에 필요한 정보" },
+  { n: 15, en: "Regulatory information", kr: "법적 규제현황" },
+  { n: 16, en: "Other information", kr: "그 밖의 참고사항" },
 ];
 
 const PATENTS = [
@@ -183,6 +184,6 @@ const CAPABILITIES_FRONTEND = [
 
 // Export everything
 Object.assign(window, {
-  SOURCES, WORKFLOWS, MSDS_SECTIONS, PATENTS, GUIDES, TRADE_ROWS, USERS, GAPS, PHASES,
+  SOURCES, GLOSSARY_KO, WORKFLOWS, MSDS_SECTIONS, PATENTS, GUIDES, TRADE_ROWS, USERS, GAPS, PHASES,
   CAPABILITIES_BACKEND, CAPABILITIES_FRONTEND,
 });

@@ -1,0 +1,21 @@
+{
+  "_comment": "Korean (ko) and English (en) display names for the toxic_probit substance list where the identifiers table gives a poor one. Read by gen_probit_data.py; a key here wins over portal_facts.db.",
+  "100-44-7": {"ko": "염화벤질"},
+  "151-56-4": {"ko": "에틸렌이민"},
+  "50-00-0": {"ko": "포름알데히드"},
+  "7664-93-9": {"ko": "황산 (삼산화황·발연황산 포함)", "en": "Sulfuric acid (incl. SO3, oleum)"},
+  "12607-70-4": {"ko": "염기성 탄산니켈"},
+  "78-00-2": {"ko": "테트라에틸납"},
+  "91-17-8": {"ko": "데칼린", "en": "Decalin (decahydronaphthalene)"},
+  "4109-96-0": {"ko": "디클로로실란"},
+  "541-41-3": {"ko": "클로로포름산 에틸"},
+  "75-55-8": {"ko": "프로필렌이민", "en": "Propyleneimine"},
+  "75-91-2": {"ko": "tert-부틸 하이드로퍼옥사이드", "en": "tert-Butyl hydroperoxide"},
+  "75-86-5": {"en": "Acetone cyanohydrin"},
+  "79-22-1": {"ko": "클로로포름산 메틸"},
+  "584-84-9": {"ko": "톨루엔 디이소시아네이트 (TDI)", "en": "Toluene diisocyanate (TDI)"},
+  "7719-12-2": {"ko": "삼염화인"},
+  "10026-04-7": {"ko": "사염화규소"},
+  "7784-42-1": {"ko": "아르신"},
+  "7664-39-3": {"ko": "불화수소"}
+}

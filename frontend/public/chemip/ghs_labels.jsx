@@ -1,0 +1,98 @@
+// GHS 그림문자·경고표지 만들기 문구(한국어, 기준 모양). 영어는 ghs_labels_en.jsx → 화면용 GHS_LABELS.
+// 표지 안의 글(sheet·pictograms·signal)은 화면 언어가 아니라 고른 표지 언어로 찍으므로 ghsSheetLabels(lang) 로 읽는다.
+
+const GHS_LABELS_KO = {
+  // 그림문자 이름(대체 글·제목). 코드 → 이름
+  pictograms: {
+    GHS01: "폭발성",
+    GHS02: "인화성",
+    GHS03: "산화성",
+    GHS04: "고압가스",
+    GHS05: "부식성",
+    GHS06: "급성 독성",
+    GHS07: "경고(자극성 등)",
+    GHS08: "건강 유해성",
+    GHS09: "수생환경 유해성",
+  },
+  signal: { danger: "위험", warning: "경고", none: "신호어 없음" },
+  row: {
+    aria: "GHS 그림문자",
+    unknown: (codes) => `알 수 없는 그림문자 코드: ${codes}`,
+  },
+  link: {
+    make: "경고표지 만들기",
+    hint: "이 물질의 MSDS 2항(그림문자·신호어·H/P 문구)으로 인쇄용 GHS 경고표지를 만듭니다.",
+  },
+  view: {
+    title: "경고표지 만들기",
+    titleSub: "GHS label maker",
+    lede: "MSDS 2항의 그림문자·신호어·유해·위험문구·예방조치문구로 인쇄용 GHS 경고표지를 만듭니다. 물질을 고르면 값이 채워지고, 직접 넣어도 됩니다. 공급자 정보는 이 브라우저에만 저장됩니다.",
+    from: (name) => `MSDS 2항에서 채움: ${name}`,
+    loading: "MSDS 를 불러오는 중…",
+    error: (msg) => `MSDS 를 불러오지 못했습니다(${msg}). 값을 직접 넣어 주세요.`,
+    noSection2: "이 물질은 MSDS 2항 자료가 없습니다. 값을 직접 넣어 주세요.",
+    manual: "물질 상세의 \"경고표지 만들기\"로 열면 MSDS 2항 값이 채워집니다. 지금은 직접 넣는 모드입니다.",
+    preview: "미리 보기",
+    phrasesMissing: "H/P 문구표를 불러오지 못해 코드만 쓴 줄은 문장 없이 찍힙니다.",
+    unofficial: "표시된 문장(*)은 국내 고시 문안이 아직 없어 ChemIP 가 옮긴 비공식 번역입니다.",
+    notes: [
+      "표지 내용의 책임은 표지를 붙이는 사업주·공급자에게 있습니다. 붙이기 전에 최신 MSDS 와 대조해 주세요.",
+      "국내 경고표지 항목: 명칭 · 그림문자 · 신호어 · 유해·위험문구 · 예방조치문구 · 공급자 정보(산업안전보건법 제115조, 고용노동부 고시 「화학물질의 분류·표시 및 물질안전보건자료에 관한 기준」).",
+      "예방조치문구가 7개 이상이면 예방·대응·저장·폐기 문구를 하나 이상 넣어 6개만 찍고 나머지는 MSDS 를 참고하도록 적을 수 있습니다(줄이기 선택).",
+      "그림문자 원본: UNECE GHS 공식 그림문자(공공 영역). H/P 문구: KOSHA MSDS 문안 · PubChem GHS 코드표(UN GHS Rev.11).",
+    ],
+  },
+  form: {
+    product: "명칭(제품명)",
+    cas: "CAS 번호",
+    signal: "신호어",
+    pictograms: "그림문자",
+    hazards: "유해·위험문구",
+    precautions: "예방조치문구",
+    statementHint: "한 줄에 하나. \"H225 : 문장\" 또는 코드만(문장은 문구표에서 채움).",
+    groups: { prevention: "예방", response: "대응", storage: "저장", disposal: "폐기" },
+    supplier: "공급자 정보",
+    supplierName: "공급자(회사명)",
+    supplierAddress: "주소",
+    supplierPhone: "전화번호",
+    emergency: "긴급 연락처",
+    placeholderPhone: "예: 02-000-0000",
+    resetMsds: "MSDS 값으로 되돌리기",
+    clear: "모두 비우기",
+  },
+  options: {
+    size: "크기",
+    sizes: { a4: "A4 가로", a5: "A5 가로", small: "소형 100×70 mm" },
+    lang: "표지 언어",
+    langs: { ko: "한국어", en: "English" },
+    abbreviate: "예방조치문구 줄이기(6개 + MSDS 참고)",
+    print: "인쇄 / PDF 저장",
+    printHint: "인쇄 창에서 용지 크기를 고른 크기와 같게, 배율은 100% 로 두세요.",
+  },
+  // 표지 안의 글 — 고른 표지 언어로 찍는다
+  sheet: {
+    title: "경고표지",
+    product: "명칭",
+    signal: "신호어",
+    hazards: "유해·위험문구",
+    precautions: "예방조치문구",
+    groups: { general: "일반", prevention: "예방", response: "대응", storage: "저장", disposal: "폐기" },
+    seeSds: "그 밖의 예방조치문구는 물질안전보건자료(MSDS)를 참고하시오.",
+    supplier: "공급자",
+    address: "주소",
+    phone: "전화",
+    emergency: "긴급 연락처",
+    blank: "",
+    unofficialMark: "*",
+  },
+  search: {
+    title: "경고표지(GHS 라벨) 만들기",
+    desc: "MSDS 2항 → 인쇄용 GHS 경고표지(A4·A5·소형, 한국어·영어)",
+    badge: "도구",
+    keywords: ["경고표지", "경고 표지", "GHS 라벨", "라벨", "표지", "그림문자", "신호어", "MSDS 라벨", "용기 표시"],
+    pictTitle: (code, name) => `${code} · ${name}`,
+    pictDesc: "이 그림문자를 넣은 경고표지 만들기",
+  },
+};
+
+Object.assign(window, { GHS_LABELS_KO });

@@ -1,4 +1,4 @@
-// Landing · 중소기업 안내 띠 — "무료·오픈소스(AGPL-3.0)·중소기업 누구나". 랜딩의 .section 형식을 그대로 쓴다.
+// Landing · 안내 띠 — "무료·오픈소스(AGPL-3.0)·누구나". 랜딩의 .section 형식을 그대로 쓴다.
 // 문구: ABOUT_LABELS.sme (about_labels.jsx). 이용 집계 안내: UsageNotice (usage_notice.jsx).
 
 function LandingSmeNotice({ setView }) {

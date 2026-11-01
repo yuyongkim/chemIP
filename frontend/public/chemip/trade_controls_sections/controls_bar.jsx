@@ -13,7 +13,7 @@ function TradeControlsBar({ direction, setDirection, country, setCountry }) {
         <span className="muted">{L.countryLabel}</span>
         <select className="tc-select" value={country} onChange={e => setCountry(e.target.value)}>
           <option value="">{L.countryNone}</option>
-          {tcCountryOptions(INTL_JURISDICTIONS).map(c => <option key={c} value={c}>{jurisdictionLabel(c)}</option>)}
+          {tcCountryOptions(INTL_JURISDICTIONS).map(c => <option key={c} value={c}>{tcCountryLabel(c)}</option>)}
         </select>
       </label>
     </div>

@@ -1,0 +1,5 @@
+{
+  "type": "module",
+  "private": true,
+  "description": "Marks coolprop.js (official CoolProp 8.0.0 Emscripten ES module) as ESM for Node tests and build scripts. Not used by the browser."
+}

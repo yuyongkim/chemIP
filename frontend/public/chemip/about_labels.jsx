@@ -1,9 +1,9 @@
-// Labels for 소개 문구(랜딩의 중소기업 안내 띠)와 "자료 출처·라이선스" 화면, 익명 이용 집계 안내.
-// 화면 코드(landing_sme.jsx · sources_view.jsx)는 ABOUT_LABELS 만 읽는다. 출처 목록 자체는 sources_data.jsx.
+// Labels for 소개 문구(랜딩의 안내 띠)와 "자료 출처·라이선스" 화면, 익명 이용 집계 안내.
+// 화면 코드(landing_sme.jsx · sources_view.jsx)는 ABOUT_LABELS 만 읽는다(영어: about_labels_en.jsx). 출처 목록 자체는 sources_data.jsx.
 
-const ABOUT_LABELS = {
+const ABOUT_LABELS_KO = {
   sme: {
-    kicker: "무료 · 오픈소스(AGPL-3.0) · 중소기업 누구나",
+    kicker: "무료 · 오픈소스(AGPL-3.0) · 누구나",
     title: "규제·MSDS 담당자가 없는 회사도 바로 씁니다.",
     body: "ChemIP 는 가입·요금 없이 누구나 쓸 수 있습니다. 물질 하나를 고르면 국내 법령별 규제, 인허가·신고, 수출입 의무와 근거 조문을 한 화면에 모아 보여 드리고, 체크리스트로 인쇄할 수 있습니다. 소스 코드는 AGPL-3.0 으로 공개되어 있어 사내에 직접 설치해도 됩니다.",
     points: [
@@ -16,7 +16,7 @@ const ABOUT_LABELS = {
   },
   usage: {
     title: "익명 이용 집계 안내",
-    body: "서비스 개선과 연구(중소기업 활용 근거)를 위해 날짜별 물질 상세 조회 수와 규제·인허가 / 수출입 조회 수만 셉니다. IP 주소·브라우저 정보·계정 등 개인을 알아볼 수 있는 정보는 수집하지 않습니다. 집계 결과는 /api/usage/summary 에서 누구나 볼 수 있습니다.",
+    body: "서비스 개선과 연구(활용 근거)를 위해 날짜별 물질 상세 조회 수와 규제·인허가 / 수출입 조회 수만 셉니다. IP 주소·브라우저 정보·계정 등 개인을 알아볼 수 있는 정보는 수집하지 않습니다. 집계 결과는 /api/usage/summary 에서 누구나 볼 수 있습니다.",
     statsTitle: "최근 30일 집계",
     metricNames: { substance_view: "물질 상세 조회", trade_controls: "규제·인허가 / 수출입 조회" },
     distinct: n => `서로 다른 물질 ${n}개`,
@@ -38,4 +38,4 @@ const ABOUT_LABELS = {
   },
 };
 
-Object.assign(window, { ABOUT_LABELS });
+Object.assign(window, { ABOUT_LABELS_KO });

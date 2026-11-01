@@ -1,0 +1,14 @@
+# 2-syllable Korean substance names that are NOT everyday words; allowed despite config.MIN_CJK_LEN = 3.
+벤젠
+벤졸
+황산
+질산
+염산
+인산
+붕산
+불산
+초산
+페놀
+오존
+석면
+불소

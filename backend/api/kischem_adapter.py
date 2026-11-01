@@ -10,11 +10,25 @@ import xml.etree.ElementTree as ET
 from typing import Any, Dict, List
 
 from backend.api.http_client import safe_get
+from backend.api.text_utils import xml_item_fields
 from backend.config.settings import settings
 
 logger = logging.getLogger(__name__)
 
 KISCHEM_URL = "http://apis.data.go.kr/1480802/iciskischem/kischemlist"
+# XML tag → output field, in output order.
+KISCHEM_FIELDS = {
+    "dataNo": "data_no",
+    "chemEn": "name_en",
+    "chemKo": "name_ko",
+    "casNo": "cas_no",
+    "symptom": "symptom",
+    "inhale": "inhale",
+    "skin": "skin",
+    "eyeball": "eye",
+    "oral": "oral",
+    "etc": "etc",
+}
 
 
 class KischemAdapter:
@@ -56,29 +70,9 @@ class KischemAdapter:
 
     @staticmethod
     def _parse_xml(xml_text: str) -> List[Dict[str, str]]:
-        items = []
         try:
-            root = ET.fromstring(xml_text)
-            for item in root.findall(".//item"):
-                record: dict[str, str] = {}
-                field_map = {
-                    "dataNo": "data_no",
-                    "chemEn": "name_en",
-                    "chemKo": "name_ko",
-                    "casNo": "cas_no",
-                    "symptom": "symptom",
-                    "inhale": "inhale",
-                    "skin": "skin",
-                    "eyeball": "eye",
-                    "oral": "oral",
-                    "etc": "etc",
-                }
-                for xml_tag, key in field_map.items():
-                    el = item.find(xml_tag)
-                    if el is not None and el.text:
-                        record[key] = el.text.strip()
-                if record:
-                    items.append(record)
+            return [{KISCHEM_FIELDS[tag]: value for tag, value in record.items()}
+                    for record in xml_item_fields(xml_text, KISCHEM_FIELDS)]
         except ET.ParseError as e:
             logger.error("KISCHEM XML parse error: %s", e)
-        return items
+            return []
